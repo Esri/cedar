@@ -32,8 +32,6 @@ Cedar.chart = function(params) {
   });
 }
 
-console.log(url)
-
 Cedar.parse = function(el, spec) {
   vg.parse.spec(spec, function(chart) { console.log(el, spec); chart({el: el}).update(); });
 }
