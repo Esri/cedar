@@ -1,0 +1,322 @@
+[
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Chip Seal",
+        "PROJECT_VALUE_SUM": 0
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Local/MPO/Other Agency Pass-Through",
+        "PROJECT_VALUE_SUM": 19000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "School Zone Safety",
+        "PROJECT_VALUE_SUM": 25000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Other - Traffic & Safety Project",
+        "PROJECT_VALUE_SUM": 36600
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Research",
+        "PROJECT_VALUE_SUM": 40000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Safety",
+        "PROJECT_VALUE_SUM": 45000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Striping",
+        "PROJECT_VALUE_SUM": 50000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Barrier - Maint",
+        "PROJECT_VALUE_SUM": 86000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Traveler Information",
+        "PROJECT_VALUE_SUM": 100000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "HOV/Express Lane",
+        "PROJECT_VALUE_SUM": 100000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Grade & Drainage",
+        "PROJECT_VALUE_SUM": 120000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Rest Areas",
+        "PROJECT_VALUE_SUM": 200000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Ramp Meters",
+        "PROJECT_VALUE_SUM": 200000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Emergency Repair - Structure",
+        "PROJECT_VALUE_SUM": 200000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Avalanche",
+        "PROJECT_VALUE_SUM": 200000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Other - Enhancement Project",
+        "PROJECT_VALUE_SUM": 200000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Study",
+        "PROJECT_VALUE_SUM": 221289
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Pedestrian/Bike facility",
+        "PROJECT_VALUE_SUM": 245090
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Rural Road Safety",
+        "PROJECT_VALUE_SUM": 250000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Safe Sidewalk/ADA ramps",
+        "PROJECT_VALUE_SUM": 276210
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Wildlife",
+        "PROJECT_VALUE_SUM": 280000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Fencing",
+        "PROJECT_VALUE_SUM": 332500
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Jurisdictional Transfer",
+        "PROJECT_VALUE_SUM": 518000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Reimbursement/Settlement",
+        "PROJECT_VALUE_SUM": 640810
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Concept Development",
+        "PROJECT_VALUE_SUM": 1040000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Lighting",
+        "PROJECT_VALUE_SUM": 1061430
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Scenic Byways",
+        "PROJECT_VALUE_SUM": 1066000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Enviro. Mitigation/Storm Water Pollution/ etc",
+        "PROJECT_VALUE_SUM": 1066300
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "ROW",
+        "PROJECT_VALUE_SUM": 1067000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Traffic",
+        "PROJECT_VALUE_SUM": 1331000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Planning",
+        "PROJECT_VALUE_SUM": 1473308
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Contingency Funds",
+        "PROJECT_VALUE_SUM": 1552925
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Signing-T&S",
+        "PROJECT_VALUE_SUM": 1653500
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Scour Repair",
+        "PROJECT_VALUE_SUM": 1855459.87
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Highway Safety Improvement",
+        "PROJECT_VALUE_SUM": 2000000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "New Wall",
+        "PROJECT_VALUE_SUM": 2100000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Document EA/EIS",
+        "PROJECT_VALUE_SUM": 2200000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Railroad Safety",
+        "PROJECT_VALUE_SUM": 2393177
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Major Rehabilitation - Structure",
+        "PROJECT_VALUE_SUM": 3350000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Pedestrian/Bicycle Safety",
+        "PROJECT_VALUE_SUM": 5305567.47
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Other structure item repair",
+        "PROJECT_VALUE_SUM": 5580692.75
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Minor Rehabilitation - Structure",
+        "PROJECT_VALUE_SUM": 6156000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Drainage",
+        "PROJECT_VALUE_SUM": 6248479.82
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Traffic Signal - New",
+        "PROJECT_VALUE_SUM": 6401000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Spot improvement",
+        "PROJECT_VALUE_SUM": 6413000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Other-Roadway Project",
+        "PROJECT_VALUE_SUM": 7975299.22
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Signing - T/S",
+        "PROJECT_VALUE_SUM": 8015000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Signing - Maint",
+        "PROJECT_VALUE_SUM": 8573400
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Drainage - Maint",
+        "PROJECT_VALUE_SUM": 9880200
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Traffic Signal - Upgrade",
+        "PROJECT_VALUE_SUM": 10115000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Spot Safety",
+        "PROJECT_VALUE_SUM": 11357309.08
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "ATMS",
+        "PROJECT_VALUE_SUM": 11656422.07
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "PE",
+        "PROJECT_VALUE_SUM": 13861100
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Barrier - T/S",
+        "PROJECT_VALUE_SUM": 18132014.52
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Intersection Improvements",
+        "PROJECT_VALUE_SUM": 19368092.6
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "ITS Communications",
+        "PROJECT_VALUE_SUM": 24732100
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Trails",
+        "PROJECT_VALUE_SUM": 26222555.47
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Federal Funds Exchange Program",
+        "PROJECT_VALUE_SUM": 26457000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Deck Repair/Replacement",
+        "PROJECT_VALUE_SUM": 27403000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Roadside Improvements",
+        "PROJECT_VALUE_SUM": 35084204
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Reconstruct no widening",
+        "PROJECT_VALUE_SUM": 48620434
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Corridor Preservation",
+        "PROJECT_VALUE_SUM": 100010000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Preservation - Structure",
+        "PROJECT_VALUE_SUM": 142024696.96
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Concrete Pavement, Rehabilitation",
+        "PROJECT_VALUE_SUM": 167170024.53
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Preservation - Roadway",
+        "PROJECT_VALUE_SUM": 173146604.43
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Intersection Modification",
+        "PROJECT_VALUE_SUM": 177062849.23
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Passing Lane",
+        "PROJECT_VALUE_SUM": 201800000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Upgrade Existing Interchange",
+        "PROJECT_VALUE_SUM": 226000000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Major Rehabilitation - Roadway",
+        "PROJECT_VALUE_SUM": 226907758.09
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Adding a lane/shoulder",
+        "PROJECT_VALUE_SUM": 241971026.92
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Choke Point",
+        "PROJECT_VALUE_SUM": 264438968.19
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "New Interchange on Existing Freeway",
+        "PROJECT_VALUE_SUM": 276852467.8
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "New Bridge/Bridge Replacement",
+        "PROJECT_VALUE_SUM": 305000000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Reconstruct widening",
+        "PROJECT_VALUE_SUM": 325320018.91
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Interchange",
+        "PROJECT_VALUE_SUM": 465000000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Minor Rehabilitation - Roadway",
+        "PROJECT_VALUE_SUM": 528438643.43
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "New Capacity",
+        "PROJECT_VALUE_SUM": 797026000
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": " ",
+        "PROJECT_VALUE_SUM": 896584964.31
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "Widen Existing Facility",
+        "PROJECT_VALUE_SUM": 1196649346.29
+    }},
+    { "attributes": {
+        "PRIMARY_CONCEPT": "New Construction",
+        "PROJECT_VALUE_SUM": 1458433865.85
+    }}
+]

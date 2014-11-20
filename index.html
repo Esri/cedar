@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>index</title>
+</head>
+
+<body id="index" onload="">
+
+  <h2>DC Schools</h2>
+  <div id="dc_capacity"></div>
+  <div id="dc_use"></div>
+
+  <h2>Utah Planning</h2>
+  <div id="bar"></div>
+  <div id="word"></div>
+
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  <script type="text/javascript" src="chart.js"></script>
+  <script type="text/javascript" src="cedar.js"></script>
+  
+  <script type="text/javascript">
+    // DC
+    Cedar.chart({el: "#dc_capacity", style: "scatter", data: "/schools.json", x: "CAPACITY", y: "POPULATION_ENROLLED_2008", color: "FACUSE"})
+    Cedar.chart({el: "#dc_use", style: "bar", data: "/schools_use_count.json", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
+
+    // Utah
+    Cedar.chart({el: "#bar", style: "bar", data: "/utah.json", count: "PROJECT_VALUE", group: "PRIMARY_CONCEPT"})
+    // Cedar.chart({el: "#word", style: "word", data: "/data.json", value: "PROJECT_VALUE", text: "PRIMARY_CONCEPT"})
+    
+  </script>
+</body>
+</html>
