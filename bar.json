@@ -12,7 +12,10 @@
     "data": [
         {
             "name": "table",
-            "url": "{data}"
+            "url": "{data}",
+            "format": {
+              "property": "features"
+            }
         }
     ],
     "height": 200,

@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-  <title>index</title>
+  <title>Cedar vega demo</title>
 </head>
 
 <body id="index" onload="">
@@ -22,11 +22,11 @@
   
   <script type="text/javascript">
     // DC
-    Cedar.chart({el: "#dc_capacity", style: "scatter", data: "schools.json", x: "CAPACITY", y: "POPULATION_ENROLLED_2008", color: "FACUSE"})
-    Cedar.chart({el: "#dc_use", style: "bar", data: "schools_use_count.json", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
+    Cedar.chart({el: "#dc_capacity", style: "scatter", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", x: "CAPACITY", y: "POPULATION_ENROLLED_2008", color: "FACUSE"})
+    Cedar.chart({el: "#dc_use", style: "bar", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
 
     // Utah
-    Cedar.chart({el: "#bar", style: "bar", data: "utah.json", count: "PROJECT_VALUE", group: "PRIMARY_CONCEPT"})
+    Cedar.chart({el: "#bar", style: "bar", url: "http://maps.udot.utah.gov/arcgis/rest/services/ThreeYearPlan/FeatureServer/1", count: "PROJECT_VALUE", group: "PRIMARY_CONCEPT"})
     // Cedar.chart({el: "#word", style: "word", data: "/data.json", value: "PROJECT_VALUE", text: "PRIMARY_CONCEPT"})
     
   </script>

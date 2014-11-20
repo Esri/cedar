@@ -4,7 +4,10 @@
   "data": [
     {
       "name": "iris",
-      "url": "{data}"
+      "url": "{data}",
+      "format": {
+        "property": "features"
+      }
     }
   ],
   "scales": [
