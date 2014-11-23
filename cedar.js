@@ -22,11 +22,21 @@ Cedar.query = function(params) {
   }
   return params.url + "/query?" + Cedar.serialize(options);
 }
+Cedar._agolData = "http://arcgis.com/sharing/rest/content/items/{item}/data?f=json"
 
 Cedar.chart = function(params) {
   params.data = params.data || Cedar.query(params);
   console.log(params)
-  d3.json(params.style + ".json", function(spec) {
+  var style;
+  if(params.style.indexOf("http") > -1) {
+    style = params.style;
+  } else if(params.style.match(/^[a-f0-9]{32}$/)) {
+    style = Cedar._agolData.supplant({item: params.style});
+  } else {
+    style = params.style + ".json"
+  }
+
+  d3.json(style, function(spec) {
     var chart = JSON.stringify(spec).supplant(params);
     Cedar.parse(params.el, JSON.parse(chart));
   });

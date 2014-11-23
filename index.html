@@ -10,24 +10,31 @@
   <h2>DC Schools</h2>
   <div id="dc_capacity"></div>
   <div id="dc_use"></div>
+  <div id="dc_use_pie"></div>
 
   <h2>Utah Planning</h2>
   <div id="bar"></div>
   <div id="word"></div>
 
-  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+  <script src="d3.layout.cloud.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="cedar.js"></script>
   
   <script type="text/javascript">
     // DC
-    Cedar.chart({el: "#dc_capacity", style: "scatter", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", x: "CAPACITY", y: "POPULATION_ENROLLED_2008", color: "FACUSE"})
-    Cedar.chart({el: "#dc_use", style: "bar", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
+    Cedar.chart({el: "#dc_capacity", style: "bf8b9ecffac54bda99b0b6f3058f160a", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", x: "CAPACITY", y: "POPULATION_ENROLLED_2008", color: "FACUSE"})
+    Cedar.chart({el: "#dc_use_pie", style: "https://gist.githubusercontent.com/ajturner/2ca3cc5ed48d4969797d/raw/7189ff3982b1c38ce0cb54acd932df77003293a3/pie.json", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", count: "POPULATION_ENROLLED_2008", group: "FACUSE", label: "FACUSE"})
+    Cedar.chart({el: "#dc_use", style: "de60300993c5442dbb6d48c9b757986b", url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
 
     // Utah
     Cedar.chart({el: "#bar", style: "bar", url: "http://maps.udot.utah.gov/arcgis/rest/services/ThreeYearPlan/FeatureServer/1", count: "PROJECT_VALUE", group: "PRIMARY_CONCEPT"})
-    // Cedar.chart({el: "#word", style: "word", data: "/data.json", value: "PROJECT_VALUE", text: "PRIMARY_CONCEPT"})
+    // Cedar.chart({el: "#word", style: "word", url: "http://maps.udot.utah.gov/arcgis/rest/services/ThreeYearPlan/FeatureServer/1", value: "PROJECT_VALUE", text: "PRIMARY_CONCEPT"})
     
+    // Item Id's
+    // pie: 80264b9a1bc6435e955c82968c615b21
+    // scatter: bf8b9ecffac54bda99b0b6f3058f160a
+    // bar: de60300993c5442dbb6d48c9b757986b
   </script>
 </body>
 </html>

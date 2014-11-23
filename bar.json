@@ -64,6 +64,13 @@
         "right": 10,
         "top": 10
     },
+    "axes": [
+       {
+         "type": "x",
+         "scale": "x",
+         "title": "X-Axis"
+       }
+     ],
     "scales": [
         {
             "domain": {
