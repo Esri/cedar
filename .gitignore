@@ -22,6 +22,9 @@ coverage
 # Grunt
 .grunt/
 
+# bower_components in site 
+site/source/bower_components
+
 # Debugging Files
 working
 debug/*.html
