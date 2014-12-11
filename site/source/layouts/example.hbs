@@ -13,19 +13,19 @@ layout: page.hbs
   {{> body }}
 </div>
 {{#markdown}}
-```xml
+```html
 <html>
 <head>
   <meta charset=utf-8 />
   <title>{{page.data.title}}</title>
   <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-  <!-- Load Leaflet from CDN-->
-  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <!-- Load D3 -->
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
 
-  <!-- Load Esri Leaflet from CDN -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script>
+  <!-- Load Cedar -->
+  <script type="text/javascript" src="cedar.js"></script>
 
   <style>
     body {margin:0;padding:0;}
