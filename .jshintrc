@@ -1,0 +1,27 @@
+{
+  "node": true,
+  "esnext": true,
+  "bitwise": true,
+  "camelcase": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "indent": 2,
+  "latedef": true,
+  "newcap": true,
+  "noarg": true,
+  "quotmark": false,
+  "regexp": true,
+  "undef": true,
+  "unused": true,
+  "strict": true,
+  "trailing": true,
+  "smarttabs": true,
+  "white": true,
+  "validthis": true,
+  "predef": ["console", "process", "require", "module", "exports", "define",  "sinon", "mocha", "describe", "expect", "beforeEach", "afterEach", "it"],
+  "globals": {
+    "vg":false,
+    "d3":false
+  }
+}
