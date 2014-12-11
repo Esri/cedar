@@ -1,13 +1,11 @@
 ---
-title: Esri Leaflet Quickstart
-description: A quick template to get started with Esri Leaflet.
+title: Esri Cedar Quickstart
+description: A quick template to get started with Esri Cedar.
 layout: example.hbs
 ---
 
-<div id="map"></div>
-
-<script>
-  var map = L.map('map').setView([37.75, -122.23], 10);
-  console.log(L, L.esri);
-  L.esri.basemapLayer('Topographic').addTo(map);
+<div id="chart"></div>
+  
+<script type="text/javascript">
+  Cedar.chart({el: "#chart", style: "bar", data: "/schools_use_count.json", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
 </script>
