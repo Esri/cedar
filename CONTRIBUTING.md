@@ -9,11 +9,6 @@ Please take a look at [previous issues](https://github.com/Esri/cedar/issues?lab
 
 The Esri Cedar website is written using http://assemble.io/ and can be found at https://github.com/Esri/cedar/tree/master/site/source. You can use the existing examples as a reference.
 
-##### More tests
-
-Esri Cedar has a fairly comprehensive test suite built with [Mocha](http://visionmedia.github.io/mocha/), [Chai](http://chaijs.com/), [Sinon](http://sinonjs.org), [Karma](http://karma-runner.github.io/0.12/index.html) and [Grunt](http://gruntjs.com/). Tests can be found in at https://github.com/Esri/cedar/tree/master/spec.
-
-You can run the tests with the `grunt karma:watch` to watch files and rerun test automatically and `grunt karma:coverage` (to generate a code coverage report.)
 
 ##### Support for new chart types types
 
