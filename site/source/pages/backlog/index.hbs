@@ -1,0 +1,47 @@
+---
+layout: page.hbs
+---
+<div class="col-lg-12">
+{{#markdown}}
+# Development Backlog
+
+### Dev Questions
+- what type of item are we using to store charts? 
+
+### Notes / Random ideas
+- when we bind the data source into the spec, it's kinda 
+   - i.e. the chart json is tightly bound to the datasource
+
+### Dev Housekeeping
+- [x] update example layout so we can have the live example with the source below that
+
+### Ideas
+- optimize for Cedar.render(spec, callback);
+- Cedar.render({chart:'ABC123', data:'4625ADS'}, callback);
+
+- all other things secondary
+  - i.e. generateChart requires that you pass an obj, meaning that a dev needs to
+  get the chart template from SOMEWHERE.
+
+
+### Chart Templates
+- example loading a template from a file (url)
+- example loading a template from an AGO Item
+
+### Charts
+- [x] example loading a pie/scatter/bar from a file
+- [x] example loading an inlined chart (scatter)
+
+### Data
+- example loading data from a service 
+- example passing in data 
+- example with data inlined into chart
+
+### Events
+- example showing how to bind to simple (cedar) events
+- example showing how to bind to advanced (vega) events
+{{/markdown}}
+  <div class="wrap">
+    <p><a href="http://github.com/esridc/cedar/edit/master/{{page.src}}">Edit this sample on GitHub</a></p>
+  </div>
+</div>

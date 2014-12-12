@@ -2,45 +2,15 @@
 layout: page.hbs
 ---
 
-{{> sidebar-examples }}
 
-<div class="example-content">
-<div class="wrap">
-  <h1>{{ title }}</h1>
-  <p>{{{description}}}</p>
-</div>
-<div id="map-wrapper">
+
+<div class="col-lg-10">
   {{> body }}
+  <div class="wrap">
+    <p><a href="http://github.com/esridc/cedar/edit/master/{{page.src}}">Edit this sample on GitHub</a></p>
+  </div>
 </div>
-{{#markdown}}
-```html
-<html>
-<head>
-  <meta charset=utf-8 />
-  <title>{{page.data.title}}</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
 
-  <!-- Load D3 -->
-  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
-  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
-
-  <!-- Load Cedar -->
-  <script type="text/javascript" src="cedar.js"></script>
-
-  <style>
-    body {margin:0;padding:0;}
-    #map {position: absolute;top:0;bottom:0;right:0;left:0;}
-  </style>
-</head>
-<body>
-
-{{#each this.pages}}{{#if isCurrentPage}}{{{trim page}}}{{/if}}{{/each}}
-
-</body>
-</html>
-```
-{{/markdown}}
-<div class="wrap">
-  <p><a href="http://github.com/esri/esri-leaflet/edit/master/{{page.src}}">Edit this sample on GitHub</a></p>
-</div>
+<div class="col-lg-2">
+  {{> sidebar-examples }}
 </div>

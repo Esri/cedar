@@ -86,7 +86,7 @@ module.exports = function(grunt) {
           'src/**/*.js',
           'spec/**/*.js'
         ],
-        tasks: ['jshint'],
+        tasks: ['jshint', 'copy:scripts'],
         options: {
           spawn: false
         }
@@ -132,8 +132,8 @@ module.exports = function(grunt) {
       options: {
         sourceMap: true,
         separator: '\n\n',
-        banner: copyright + umdHeader,
-        footer: umdFooter,
+        //banner: copyright + umdHeader,
+        //footer: umdFooter,
       },
       complete: {
         src: complete,
@@ -155,14 +155,13 @@ module.exports = function(grunt) {
         },
         preserveComments: 'some',
         report: 'gzip',
-        banner: copyright + umdHeader,
-        footer: umdFooter,
+        //banner: copyright + umdHeader,
+        //footer: umdFooter,
       },
       dist: {
         files: {
-          'dist/cedarjs': complete,
+          'dist/cedar.js': complete,
           'dist/builds/core/cedar-core.js': core
-          
         }
       }
     },
@@ -235,7 +234,7 @@ module.exports = function(grunt) {
       },
       build: {
         options: {
-          assets: 'esri-leaflet/'
+          assets: 'cedar/'
         },
         files: [{
           cwd: 'site/source/pages',
@@ -249,7 +248,14 @@ module.exports = function(grunt) {
     copy: {
       assemble: {
         files: [
-          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
+          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
+          { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
+        ]
+      },
+      scripts: {
+        files: [
+          { src: 'src/cedar.js', dest: 'site/build/js/cedar-core.js'},
+          { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
       }
     },

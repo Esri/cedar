@@ -3,12 +3,21 @@ layout: page.hbs
 ---
 
 <div class="row">
-  <div class="jumbotron">
-    <h1 class="center-text page-title">Cedar</h1>
-    <p class="large page-description">A lightweight set of charting tools for the ArcGIS platform.</p>
-  </div>
+  <h1>cedar.js <small>Lightweight charting for the ArcGIS platform</small></h1>
   
-  <h2>Example 1</h2>
-  <p>Add Example</p>
+  <div class="col-lg-12" id="chart">
+  </div>
 
 </div>
+
+
+<script>
+Cedar.render({
+    elementId: "#chart",
+    spec: "/data/charts/simple-scatter-chart.json"
+  });
+
+
+
+
+</script>
