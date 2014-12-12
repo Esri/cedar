@@ -21,12 +21,15 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../../esri-leaflet/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
 
   <!-- Cedar -->
 
   <!-- esri Cedar -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-Cedar/1.0.0-rc.2/esri-Cedar.js"></script>
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  
+  <script type="text/javascript" src="/js/cedar-core.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -49,17 +52,16 @@
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../../esri-leaflet/">Esri Cedar</a>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="../../../esri-leaflet/examples/">Examples</a></li>
-        <li><a href="../../../esri-leaflet/api-reference/">Api Documentation</a></li>
-        <li><a href="../../../esri-leaflet/download/">Download</a></li>
+        <li><a href="../../../cedar/backlog/">Backlog</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -76,24 +78,8 @@
 <h3 id="cedar">cedar</h3>
 <p>The sidebar is in /site/source/partials/sidebar-documentation.hbs</p>
 <ul>
-<li><a href="../../../esri-leaflet/api-reference/chart-specs.html"><code>Chart Specs</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html"><code>L.esri.Layers.HeatmapFeatureLayer</code></a></li>
-</ul>
-<h3 id="l-esri-services">L.esri.Services</h3>
-<p>Services wrap ArcGIS API endpoints exposing common methods for interacting with the APIs and handling proxying and authentication.</p>
-<ul>
-<li><a href="../../../esri-leaflet/api-reference/services/service.html"><code>L.esri.Services.Service</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/services/map-service.html"><code>L.esri.Services.MapService</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/services/image-service.html"><code>L.esri.Services.ImageService</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/services/feature-layer.html"><code>L.esri.Services.FeatureLayer</code></a></li>
-</ul>
-<h3 id="l-esri-tasks">L.esri.Tasks</h3>
-<p>Wrappers for commonly used API methods on ArcGIS services. Commonly used parameters to make them more accessible to Leaflet.</p>
-<ul>
-<li><a href="../../../esri-leaflet/api-reference/tasks/query.html"><code>L.esri.Tasks.Query</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/tasks/identify-features.html"><code>L.esri.Tasks.IdentifyFeatures</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/tasks/identify-image.html"><code>L.esri.Tasks.IdentifyImage</code></a></li>
-<li><a href="../../../esri-leaflet/api-reference/tasks/find.html"><code>L.esri.Tasks.Find</code></a></li>
+<li><a href="../../../cedar/api-reference/chart-specs.html"><code>Chart Specs</code></a></li>
+<li><a href="../../../cedar/api-reference/"><code>Cedar.chart</code></a></li>
 </ul>
 
   <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/index.hbs">Edit this page on GitHub</a></p>
@@ -101,77 +87,10 @@
 
 <div class="col-lg-4">
   <aside class="sidebar">
-  <h5>cedar</h5>
+  <h5>Cedar Api</h5>
   <ul>
     <li>
-      <a href="../../../esri-leaflet/api-reference/request.html">Request</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/utils.html">Utils</a>
-    </li>
-  </ul>
-
-  <h5>L.esri.Layers</h5>
-  <ul>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/basemap-layer.html">BasemapLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/tiled-map-layer.html">TiledMapLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/dynamic-map-layer.html">DynamicMapLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/image-map-layer.html">ImageMapLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/feature-layer.html">FeatureLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/clustered-feature-layer.html">ClusteredFeatureLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/layers/heatmap-feature-layer.html">HeatmapFeatureLayer</a>
-    </li>
-  </ul>
-
-  <h5>L.esri.Services</h5>
-  <ul>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/services/feature-layer.html">FeatureLayer</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/services/map-service.html">MapService</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/services/image-service.html">ImageService</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/services/service.html">Service</a>
-    </li>
-  </ul>
-
-  <h5>L.esri.Tasks</h5>
-  <ul>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/tasks/identify-features.html">Identify Features</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/tasks/identify-image.html">Identify Image</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/tasks/query.html">Query</a>
-    </li>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/tasks/find.html">Find</a>
-    </li>
-  </ul>
-
-  <h5>Misc.</h5>
-  <ul>
-    <li>
-      <a href="../../../esri-leaflet/api-reference/events.html">Events</a>
+      <a href="../../../cedar/api-reference/indext.html">Getting Started</a>
     </li>
   </ul>
 </aside>
@@ -179,10 +98,10 @@
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">
-  <p class="copyright">Esri Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
 </div>
 
   </div>
-  <script src="../../../esri-leaflet/js/script.js"></script>
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
   </body>
 </html>

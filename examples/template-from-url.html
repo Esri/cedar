@@ -8,11 +8,9 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar Quickstart | Esri Cedar</title>
+    <title>Esri Cedar</title>
   
 
-  
-    <meta name="description" content="A quick template to get started with Esri Cedar.">
   
 
   <meta name="description" content="Esri Cedar">
@@ -81,14 +79,14 @@
   
 
 
-
-<div id="chart"></div>
-
+  <h1>Templates <small>Load template from a json file</small></h1>
+  
+  <div id="chart"></div>
 
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
   &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Esri Cedar Quickstart&lt;/title&gt;
+  &lt;title&gt;&lt;/title&gt;
   &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
 
   &lt;!-- Load D3 --&gt;
@@ -109,12 +107,30 @@
 
 
 
-  //render
-  Cedar.render({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/scatter-chart.json&quot;
-  });
+  var fieldMappings = {
+    &quot;x&quot;: &quot;POPULATION_ENROLLED_2008&quot;,
+    &quot;y&quot;: &quot;SQUARE_FOOTAGE&quot;,
+    &quot;color&quot;:&quot;FACUSE&quot;
+  }
+  var serviceUrl = &quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;
+  var tmplUrl = &quot;/data/templates/scatter-template.json&quot;;
+  Cedar.getJson(tmplUrl, function(err,template){
+    if(err){
+      console.error(err);
+      return;
+    }
+    //cook the spec
+    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    console.info()
+    var opts = {
+      elementId: &quot;#chart&quot;,
+      spec: chartJson
+    };
 
+    //render
+    Cedar.render( opts );
+
+  });
 
 
 &lt;/script&gt;
@@ -126,16 +142,34 @@
 
 <script>
 
-  //render
-  Cedar.render({
-    elementId: "#chart",
-    spec: "/data/charts/simple-scatter-chart.json"
+  var fieldMappings = {
+    "x": "POPULATION_ENROLLED_2008",
+    "y": "SQUARE_FOOTAGE",
+    "color":"FACUSE"
+  }
+  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  var tmplUrl = "/data/templates/scatter-template.json";
+  Cedar.getJson(tmplUrl, function(err,template){
+    if(err){
+      console.error(err);
+      return;
+    }
+    //cook the spec
+    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    console.info()
+    var opts = {
+      elementId: "#chart",
+      spec: chartJson
+    };
+
+    //render
+    Cedar.render( opts );
+
   });
 
 </script>
-
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/template-from-url.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

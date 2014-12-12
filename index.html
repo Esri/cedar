@@ -21,12 +21,15 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../esri-leaflet/css/style.css">
+  <link rel="stylesheet" href="../../cedar/css/style.css">
 
   <!-- Cedar -->
 
   <!-- esri Cedar -->
-  <script src="http://cdn-geoweb.s3.amazonaws.com/esri-Cedar/1.0.0-rc.2/esri-Cedar.js"></script>
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  
+  <script type="text/javascript" src="/js/cedar-core.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -49,17 +52,16 @@
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../esri-leaflet/">Esri Cedar</a>
+      <a class="navbar-brand" href="../../cedar/">cedar.js</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="../../esri-leaflet/examples/">Examples</a></li>
-        <li><a href="../../esri-leaflet/api-reference/">Api Documentation</a></li>
-        <li><a href="../../esri-leaflet/download/">Download</a></li>
+        <li><a href="../../cedar/backlog/">Backlog</a></li>
+        <li><a href="../../cedar/examples/">Examples</a></li>
+        <li><a href="../../cedar/api-reference/">Api Documentation</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
@@ -72,23 +74,31 @@
   
 
 <div class="row">
-  <div class="jumbotron">
-    <h1 class="center-text page-title">Cedar</h1>
-    <p class="large page-description">A lightweight set of charting tools for the ArcGIS platform.</p>
-  </div>
+  <h1>cedar.js <small>Lightweight charting for the ArcGIS platform</small></h1>
   
-  <h2>Example 1</h2>
-  <p>Add Example</p>
+  <div class="col-lg-12" id="chart">
+  </div>
 
 </div>
 
+
+<script>
+Cedar.render({
+    elementId: "#chart",
+    spec: "/data/charts/simple-scatter-chart.json"
+  });
+
+
+
+
+</script>
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">
-  <p class="copyright">Esri Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
 </div>
 
   </div>
-  <script src="../../esri-leaflet/js/script.js"></script>
+  <!-- <script src="../../cedar/js/script.js"></script>-->
   </body>
 </html>

@@ -8,11 +8,9 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar Quickstart | Esri Cedar</title>
+    <title>Esri Cedar</title>
   
 
-  
-    <meta name="description" content="A quick template to get started with Esri Cedar.">
   
 
   <meta name="description" content="Esri Cedar">
@@ -74,120 +72,60 @@
 
 <div class="container white">
   
-
-
-
-<div class="col-lg-10">
-  
-
-
-
-<div id="chart"></div>
-
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Esri Cedar Quickstart&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-
-
-
-  //render
-  Cedar.render({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/scatter-chart.json&quot;
-  });
-
-
-
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-
-
-
-
-<script>
-
-  //render
-  Cedar.render({
-    elementId: "#chart",
-    spec: "/data/charts/simple-scatter-chart.json"
-  });
-
-</script>
+<div class="col-lg-12">
+<h1 id="development-backlog">Development Backlog</h1>
+<h3 id="dev-questions">Dev Questions</h3>
+<ul>
+<li>what type of item are we using to store charts? </li>
+</ul>
+<h3 id="notes-random-ideas">Notes / Random ideas</h3>
+<ul>
+<li>when we bind the data source into the spec, it&#39;s kinda <ul>
+<li>i.e. the chart json is tightly bound to the datasource</li>
+</ul>
+</li>
+</ul>
+<h3 id="dev-housekeeping">Dev Housekeeping</h3>
+<ul>
+<li>[x] update example layout so we can have the live example with the source below that</li>
+</ul>
+<h3 id="ideas">Ideas</h3>
+<ul>
+<li>optimize for Cedar.render(spec, callback);</li>
+<li><p>Cedar.render({chart:&#39;ABC123&#39;, data:&#39;4625ADS&#39;}, callback);</p>
+</li>
+<li><p>all other things secondary</p>
+<ul>
+<li>i.e. generateChart requires that you pass an obj, meaning that a dev needs to
+get the chart template from SOMEWHERE.</li>
+</ul>
+</li>
+</ul>
+<h3 id="chart-templates">Chart Templates</h3>
+<ul>
+<li>example loading a template from a file (url)</li>
+<li>example loading a template from an AGO Item</li>
+</ul>
+<h3 id="charts">Charts</h3>
+<ul>
+<li>[x] example loading a pie/scatter/bar from a file</li>
+<li>[x] example loading an inlined chart (scatter)</li>
+</ul>
+<h3 id="data">Data</h3>
+<ul>
+<li>example loading data from a service </li>
+<li>example passing in data </li>
+<li>example with data inlined into chart</li>
+</ul>
+<h3 id="events">Events</h3>
+<ul>
+<li>example showing how to bind to simple (cedar) events</li>
+<li>example showing how to bind to advanced (vega) events</li>
+</ul>
 
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/backlog/index.hbs">Edit this sample on GitHub</a></p>
   </div>
-</div>
-
-<div class="col-lg-2">
-  <aside class="sidebar">
-  <h5>Simple Charts</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
-    </ul>
-  </nav>
-
-  <h5>Chart Templates</h5>
-  <nav>
-    <ul>
-      <li>Chart-Template inlined</li>
-      <li>Chart-Template from AGO</li>
-      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
-    </ul>
-  </nav>
-
-  <h5>Charts</h5>
-  <nav>
-    <ul>
-      <li>Chart inlined</li>
-      <li>Chart from AGO</li>
-      <li>Chart from url</li>
-    </ul>
-  </nav>
-
-  <h5>Data</h5>
-  <nav>
-    <ul>
-      <li>Data from Service</li>
-      <li>Data inlined</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
-
-  <h5>Map Integration</h5>
-  <nav>
-    <ul>
-      <li>Link to JS API Map</li>
-      <li>Link to Leaflet Map</li>
-      <li>Link to pop-over</li>
-    </ul>
-  </nav>
-   <a href="../../../cedar/examples/helper.html">Helper</a>
-</aside>
-
 </div>
   <div style='clear:both;'></div>
 </div>

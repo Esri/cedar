@@ -8,11 +8,9 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar Quickstart | Esri Cedar</title>
+    <title>Esri Cedar</title>
   
 
-  
-    <meta name="description" content="A quick template to get started with Esri Cedar.">
   
 
   <meta name="description" content="Esri Cedar">
@@ -81,14 +79,16 @@
   
 
 
+<h1>Simple Pie Chart</h1>
 
 <div id="chart"></div>
+
 
 
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
   &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Esri Cedar Quickstart&lt;/title&gt;
+  &lt;title&gt;&lt;/title&gt;
   &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
 
   &lt;!-- Load D3 --&gt;
@@ -112,7 +112,7 @@
   //render
   Cedar.render({
     elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/scatter-chart.json&quot;
+    spec: &quot;/data/charts/simple-pie-chart.json&quot;
   });
 
 
@@ -123,19 +123,15 @@
 
 
 
-
 <script>
-
   //render
   Cedar.render({
     elementId: "#chart",
-    spec: "/data/charts/simple-scatter-chart.json"
+    spec: "/data/charts/simple-pie-chart.json"
   });
-
 </script>
-
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-pie.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
