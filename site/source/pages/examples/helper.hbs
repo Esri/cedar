@@ -1,0 +1,47 @@
+---
+layout: page.hbs
+---
+
+<div class="row">
+  <h1>Helper Page for cooking samples</h1>
+  <p>This will not be part of the site in prod</p>
+  
+  <div class="col-lg-12" id="chart">
+  </div>
+
+  <p>Compiled Spec Json</p>
+  <textarea rows="20" id="output" style="width:100%"></textarea>
+
+
+</div>
+
+
+<script>
+
+  var fieldMappings = {
+    "x": "POPULATION_ENROLLED_2008",
+    "y": "SQUARE_FOOTAGE",
+    "color":"FACUSE"
+  }
+  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  var tmplUrl = "/data/templates/scatter-template.json";
+  Cedar.getJson(tmplUrl, function(err,template){
+    if(err){
+      console.error(err);
+      return;
+    }
+    //cook the spec
+    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    console.info()
+    var opts = {
+      elementId: "#chart",
+      spec: chartJson
+    };
+
+    document.getElementById('output').value = JSON.stringify(chartJson);
+    //render
+    Cedar.render( opts );
+
+  });
+
+</script>

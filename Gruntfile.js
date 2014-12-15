@@ -27,87 +27,17 @@ module.exports = function(grunt) {
                   '}));';
 
   var complete = [
-    'src/EsriLeaflet.js',
-    'src/Util.js',
-    'src/Request.js',
-    'src/Services/Service.js',
-    'src/Services/FeatureLayer.js',
-    'src/Services/MapService.js',
-    'src/Services/ImageService.js',
-    'src/Tasks/Task.js',
-    'src/Tasks/Query.js',
-    'src/Tasks/Find.js',
-    'src/Tasks/Identify.js',
-    'src/Tasks/IdentifyImage.js',
-    'src/Tasks/IdentifyFeatures.js',
-    'src/Layers/BasemapLayer.js',
-    'src/Layers/RasterLayer.js',
-    'src/Layers/DynamicMapLayer.js',
-    'src/Layers/ImageMapLayer.js',
-    'src/Layers/TiledMapLayer.js',
-    'src/Layers/FeatureLayer/FeatureGrid.js',
-    'src/Layers/FeatureLayer/FeatureManager.js',
-    'src/Layers/FeatureLayer/FeatureLayer.js',
-    'src/Controls/Logo.js'
+    'bower_components/d3/d3.js',
+    'bower_components/vega/vega.js',
+    'src/Cedar.js'
   ];
 
+  //core is just cedar
   var core = [
-    'src/EsriLeaflet.js',
-    'src/Util.js',
-    'src/Request.js',
-    'src/Tasks/Task.js',
-    'src/Services/Service.js'
+    'src/Cedar.js',
   ];
 
-  var basemaps = [
-    'src/EsriLeaflet.js',
-    'src/Request.js',
-    'src/Layers/BasemapLayer.js',
-    'src/Controls/Logo.js'
-  ];
-
-  var mapservice = [
-    'src/EsriLeaflet.js',
-    'src/Util.js',
-    'src/Request.js',
-    'src/Services/Service.js',
-    'src/Services/MapService.js',
-    'src/Tasks/Task.js',
-    'src/Tasks/Identify.js',
-    'src/Tasks/IdentifyFeatures.js',
-    'src/Tasks/Query.js',
-    'src/Tasks/Find.js',
-    'src/Layers/RasterLayer.js',
-    'src/Layers/DynamicMapLayer.js',
-    'src/Layers/TiledMapLayer.js'
-  ];
-
-  var imageservice = [
-    'src/EsriLeaflet.js',
-    'src/Util.js',
-    'src/Request.js',
-    'src/Services/Service.js',
-    'src/Services/ImageService.js',
-    'src/Tasks/Task.js',
-    'src/Tasks/Query.js',
-    'src/Tasks/Identify.js',
-    'src/Tasks/Identify/IdentifyImage.js',
-    'src/Layers/RasterLayer.js',
-    'src/Layers/ImageMapLayer.js'
-  ];
-
-  var featureservice = [
-    'src/EsriLeaflet.js',
-    'src/Util.js',
-    'src/Request.js',
-    'src/Services/Service.js',
-    'src/Services/FeatureLayer.js',
-    'src/Tasks/Task.js',
-    'src/Tasks/Query.js',
-    'src/Layers/FeatureLayer/FeatureGrid.js',
-    'src/Layers/FeatureLayer/FeatureManager.js',
-    'src/Layers/FeatureLayer/FeatureLayer.js'
-  ];
+  
 
   var customLaunchers = {
     sl_chrome: {
@@ -156,7 +86,7 @@ module.exports = function(grunt) {
           'src/**/*.js',
           'spec/**/*.js'
         ],
-        tasks: ['jshint'],
+        tasks: ['jshint', 'copy:scripts'],
         options: {
           spawn: false
         }
@@ -202,32 +132,16 @@ module.exports = function(grunt) {
       options: {
         sourceMap: true,
         separator: '\n\n',
-        banner: copyright + umdHeader,
-        footer: umdFooter,
+        //banner: copyright + umdHeader,
+        //footer: umdFooter,
       },
       complete: {
         src: complete,
-        dest: 'dist/esri-leaflet-src.js'
+        dest: 'dist/cedar-src.js'
       },
       core: {
         src: core,
-        dest: 'dist/builds/core/esri-leaflet-core-src.js'
-      },
-      basemaps: {
-        src: basemaps,
-        dest: 'dist/builds/basemaps/esri-leaflet-basemaps-src.js'
-      },
-      mapservice: {
-        src: mapservice,
-        dest: 'dist/builds/map-service/esri-leaflet-map-service-src.js'
-      },
-      imageservice: {
-        src: imageservice,
-        dest: 'dist/builds/image-service/esri-leaflet-image-service-src.js'
-      },
-      featureservice: {
-        src: featureservice,
-        dest: 'dist/builds/feature-layer/esri-leaflet-feature-layer-src.js'
+        dest: 'dist/builds/core/cedar-core-src.js'
       }
     },
 
@@ -241,17 +155,13 @@ module.exports = function(grunt) {
         },
         preserveComments: 'some',
         report: 'gzip',
-        banner: copyright + umdHeader,
-        footer: umdFooter,
+        //banner: copyright + umdHeader,
+        //footer: umdFooter,
       },
       dist: {
         files: {
-          'dist/esri-leaflet.js': complete,
-          'dist/builds/core/esri-leaflet-core.js': core,
-          'dist/builds/basemaps/esri-leaflet-basemaps.js': basemaps,
-          'dist/builds/map-service/esri-leaflet-map-service.js': mapservice,
-          'dist/builds/image-service/esri-leaflet-image-service.js': imageservice,
-          'dist/builds/feature-layer/esri-leaflet-feature-layer.js': featureservice
+          'dist/cedar.js': complete,
+          'dist/builds/core/cedar-core.js': core
         }
       }
     },
@@ -278,7 +188,7 @@ module.exports = function(grunt) {
       },
       sauce: {
         sauceLabs: {
-          testName: 'Esri Leaflet Unit Tests'
+          testName: 'Cedar Unit Tests'
         },
         customLaunchers: customLaunchers,
         browsers: Object.keys(customLaunchers),
@@ -324,7 +234,7 @@ module.exports = function(grunt) {
       },
       build: {
         options: {
-          assets: 'esri-leaflet/'
+          assets: 'cedar/'
         },
         files: [{
           cwd: 'site/source/pages',
@@ -338,7 +248,14 @@ module.exports = function(grunt) {
     copy: {
       assemble: {
         files: [
-          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'}
+          { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
+          { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
+        ]
+      },
+      scripts: {
+        files: [
+          { src: 'src/cedar.js', dest: 'site/build/js/cedar-core.js'},
+          { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
       }
     },
@@ -365,32 +282,32 @@ module.exports = function(grunt) {
     'gh-pages': {
       options: {
         base: 'site/build',
-        repo: 'git@github.com:Esri/esri-leaflet.git'
+        repo: 'git@github.com:esridc/cedar.git'
       },
       src: ['**']
     },
 
-    s3: {
-      options: {
-        key: '<%= aws.key %>',
-        secret: '<%= aws.secret %>',
-        bucket: '<%= aws.bucket %>',
-        access: 'public-read',
-        headers: {
-          // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
-          'Cache-Control': 'max-age=630720000, public',
-          'Expires': new Date(Date.now() + 63072000000).toUTCString()
-        }
-      },
-      upload: {
-        upload: [
-          {
-            src: 'dist/**/*',
-            dest: 'esri-leaflet/<%= pkg.version %>/'
-          }
-        ]
-      }
-    },
+    // s3: {
+    //   options: {
+    //     key: '<%= aws.key %>',
+    //     secret: '<%= aws.secret %>',
+    //     bucket: '<%= aws.bucket %>',
+    //     access: 'public-read',
+    //     headers: {
+    //       // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
+    //       'Cache-Control': 'max-age=630720000, public',
+    //       'Expires': new Date(Date.now() + 63072000000).toUTCString()
+    //     }
+    //   },
+    //   upload: {
+    //     upload: [
+    //       {
+    //         src: 'dist/**/*',
+    //         dest: 'esri-leaflet/<%= pkg.version %>/'
+    //       }
+    //     ]
+    //   }
+    // },
 
     releaseable: {
       release: {
@@ -404,11 +321,11 @@ module.exports = function(grunt) {
     }
   });
 
-  var awsExists = fs.existsSync(process.env.HOME + '/esri-leaflet-s3.json');
+  // var awsExists = fs.existsSync(process.env.HOME + '/esri-leaflet-s3.json');
 
-  if (awsExists) {
-    grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/esri-leaflet-s3.json'));
-  }
+  // if (awsExists) {
+  //   grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/esri-leaflet-s3.json'));
+  // }
 
   // Development Tasks
   grunt.registerTask('default', ['concurrent:dev']);

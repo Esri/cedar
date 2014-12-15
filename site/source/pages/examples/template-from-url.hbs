@@ -1,0 +1,70 @@
+---
+layout: example.hbs
+---
+
+
+  <h1>Templates <small>Load template from a json file</small></h1>
+  
+  <div id="chart"></div>
+
+{{#markdown}}
+```html
+{{>example-code-header}}
+  var fieldMappings = {
+    "x": "POPULATION_ENROLLED_2008",
+    "y": "SQUARE_FOOTAGE",
+    "color":"FACUSE"
+  }
+  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  var tmplUrl = "/data/templates/scatter-template.json";
+  Cedar.getJson(tmplUrl, function(err,template){
+    if(err){
+      console.error(err);
+      return;
+    }
+    //cook the spec
+    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    console.info()
+    var opts = {
+      elementId: "#chart",
+      spec: chartJson
+    };
+
+    //render
+    Cedar.render( opts );
+
+  });
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+
+
+<script>
+
+  var fieldMappings = {
+    "x": "POPULATION_ENROLLED_2008",
+    "y": "SQUARE_FOOTAGE",
+    "color":"FACUSE"
+  }
+  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  var tmplUrl = "/data/templates/scatter-template.json";
+  Cedar.getJson(tmplUrl, function(err,template){
+    if(err){
+      console.error(err);
+      return;
+    }
+    //cook the spec
+    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    console.info()
+    var opts = {
+      elementId: "#chart",
+      spec: chartJson
+    };
+
+    //render
+    Cedar.render( opts );
+
+  });
+
+</script>

@@ -1,12 +1,12 @@
 ---
-title: Esri Cedar Quickstart
-description: A quick template to get started with Esri Cedar.
 layout: example.hbs
 ---
 
 
+<h1>Simple Pie Chart</h1>
 
 <div id="chart"></div>
+
 
 
 {{#markdown}}
@@ -15,7 +15,7 @@ layout: example.hbs
   //render
   Cedar.render({
     elementId: "#chart",
-    spec: "/data/charts/scatter-chart.json"
+    spec: "/data/charts/simple-pie-chart.json"
   });
  
 {{>example-code-footer}}
@@ -23,13 +23,10 @@ layout: example.hbs
 {{/markdown}}
 
 
-
 <script>
-
   //render
   Cedar.render({
     elementId: "#chart",
-    spec: "/data/charts/simple-scatter-chart.json"
+    spec: "/data/charts/simple-pie-chart.json"
   });
-
 </script>

@@ -23,7 +23,7 @@ coverage
 .grunt/
 
 # bower_components in site 
-site/source/bower_components
+bower_components
 
 # Debugging Files
 working
