@@ -1,0 +1,93 @@
+---
+layout: example.hbs
+---
+
+<div class="row">
+<div class="col-lg-8" >
+  <h3>School size by Students</h3>
+  <div id="chart"></div>
+</div>
+<div class="col-lg-4" >
+  <h3>School Details <small>Click on chart</small></h3>
+  <div id="details"></div>
+</div>
+</div>
+
+
+{{#markdown}}
+```html
+
+{{>example-code-header}}
+  //render
+  function showItem(item){
+    var tmpl = document.getElementById("school-detail-template").innerHTML;
+    compiled = _.template(tmpl);
+
+    document.getElementById('details').innerHTML = compiled(item.datum.data.attributes);
+  }
+
+  var cb = function(err, chart){
+    chart.on('mouseover', function(evt, item){
+      console.log('mouseover ' + evt.currentTarget);
+      
+    });
+    chart.on('mouseout', function(evt, item){
+      console.log('mouseout');
+      
+    });
+    chart.on('click', function(evt, item){
+      console.log('click');
+      showItem(item);
+    });
+  };
+
+  Cedar.render({
+    elementId: "#chart",
+    spec: "{{assets}}data/charts/evt-scatter-chart.json"
+  }, cb);
+ 
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+<script type="tmpl" id="school-detail-template">
+
+  <ul>
+    <li>Name: <%=NAME%></li>
+    <li>Type: <%=FACUSE%></li>
+    <li>Address: <%=ADDRESS%></li>
+    <li>Phone: <%=PHONE%></li>
+    <li>Web: <%=WEB_URL%></li>
+  </ul>
+
+</script>
+
+<script>
+  //render
+function showItem(item){
+    var tmpl = document.getElementById("school-detail-template").innerHTML;
+    compiled = _.template(tmpl);
+
+    document.getElementById('details').innerHTML = compiled(item.datum.data.attributes);
+  }
+
+  var cb = function(err, chart){
+    chart.on('mouseover', function(evt, item){
+      console.log('mouseover ' + evt.currentTarget);
+      
+    });
+    chart.on('mouseout', function(evt, item){
+      console.log('mouseout');
+      
+    });
+    chart.on('click', function(evt, item){
+      console.log('click');
+      showItem(item);
+    });
+  };
+
+  Cedar.render({
+    elementId: "#chart",
+    spec: "{{assets}}data/charts/evt-scatter-chart.json"
+  }, cb);
+</script>
