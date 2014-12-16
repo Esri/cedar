@@ -79,14 +79,20 @@
 <div class="col-lg-10">
   
 
+<div class="row">
+<div class="col-lg-8" >
+  <h3>School size by Students</h3>
+  <div id="chart"></div>
+</div>
+<div class="col-lg-4" >
+  <h3>School Details <small>Click on chart</small></h3>
+  <div id="details"></div>
+</div>
+</div>
 
-<h1>Simple Pie Chart</h1>
 
-<div id="chart"></div>
-
-
-
-<pre><code class="language-html">&lt;html&gt;
+<pre><code class="language-html">
+&lt;html&gt;
 &lt;head&gt;
   &lt;meta charset=utf-8 /&gt;
   &lt;title&gt;&lt;/title&gt;
@@ -111,10 +117,32 @@
 
 
   //render
+  function showItem(item){
+    var tmpl = document.getElementById(&quot;school-detail-template&quot;).innerHTML;
+    compiled = _.template(tmpl);
+
+    document.getElementById(&#39;details&#39;).innerHTML = compiled(item.datum.data.attributes);
+  }
+
+  var cb = function(err, chart){
+    chart.on(&#39;mouseover&#39;, function(evt, item){
+      console.log(&#39;mouseover &#39; + evt.currentTarget);
+
+    });
+    chart.on(&#39;mouseout&#39;, function(evt, item){
+      console.log(&#39;mouseout&#39;);
+
+    });
+    chart.on(&#39;click&#39;, function(evt, item){
+      console.log(&#39;click&#39;);
+      showItem(item);
+    });
+  };
+
   Cedar.render({
     elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/simple-pie-chart.json&quot;
-  });
+    spec: &quot;../../../cedar/data/charts/evt-scatter-chart.json&quot;
+  }, cb);
 
 
 
@@ -123,16 +151,49 @@
 &lt;/html&gt;</code></pre>
 
 
+<script type="tmpl" id="school-detail-template">
+
+  <ul>
+    <li>Name: <%=NAME%></li>
+    <li>Type: <%=FACUSE%></li>
+    <li>Address: <%=ADDRESS%></li>
+    <li>Phone: <%=PHONE%></li>
+    <li>Web: <%=WEB_URL%></li>
+  </ul>
+
+</script>
 
 <script>
   //render
+function showItem(item){
+    var tmpl = document.getElementById("school-detail-template").innerHTML;
+    compiled = _.template(tmpl);
+
+    document.getElementById('details').innerHTML = compiled(item.datum.data.attributes);
+  }
+
+  var cb = function(err, chart){
+    chart.on('mouseover', function(evt, item){
+      console.log('mouseover ' + evt.currentTarget);
+      
+    });
+    chart.on('mouseout', function(evt, item){
+      console.log('mouseout');
+      
+    });
+    chart.on('click', function(evt, item){
+      console.log('click');
+      showItem(item);
+    });
+  };
+
   Cedar.render({
     elementId: "#chart",
-    spec: "../../../cedar/data/charts/simple-pie-chart.json"
-  });
+    spec: "../../../cedar/data/charts/evt-scatter-chart.json"
+  }, cb);
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-pie.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/scatter-events.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

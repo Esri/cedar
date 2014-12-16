@@ -28,7 +28,7 @@
   <!-- esri Cedar -->
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
-  
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
   <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
 
 
@@ -76,109 +76,29 @@
 
 <div class="col-lg-8">
   <h1 id="esri-cedar-api-reference">Esri Cedar API Reference</h1>
-<h2 id="cedar-render-options-">Cedar.render( options )</h2>
-<p>Create <code>vega view</code> (aka chart) attached to the specified dom node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)</p>
-<p><code>Cedar.create(options, callback)</code></p>
-<h4 id="arguments-amp-options">Arguments &amp; Options</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>options.domId</code></td>
-<td><code>string</code></td>
-<td>yes</td>
-<td>Id of the DOM node to render the chart into.</td>
-</tr>
-<tr>
-<td><code>options.chart</code></td>
-<td><code>object or url</code></td>
-<td>yes</td>
-<td>Cedar chart object, or url to a cedar chart</td>
-</tr>
-<tr>
-<td><code>options.token</code></td>
-<td><code>string</code></td>
-<td>no</td>
-<td>token to use if item / url is on a secured server</td>
-</tr>
-</tbody>
-</table>
-<h4 id="example-code">Example Code</h4>
-<pre><code>var options = {
-  elementId: &quot;chartContainer&quot;,
-  spec: myChartJsonObj
-};
-
-var myChart;
-//create and render a chart
-Cedar.render(options, function(chart){
-  myChart = chart;
-  //attach event handlers
-  myChart
-     .on(&#39;mouseover&#39;, function(evt){...})
-     .on(&#39;mouseout&#39;,function(evt){...})
-});
-//elsewhere...
-$(&#39;#someButton&#39;).on(&#39;click&#39;, function(){
-  //remove handlers
-  myChart
-    .off(&#39;mouseover&#39;)
-    .off(&#39;mouseout&#39;);
-});</code></pre>
-<h2 id="cedar-compile-template-mappings-">Cedar.compile( template, mappings )</h2>
-<p>Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the <code>.render()</code> method. This will be used in tools that allow a user to associate a chart template with data + styling.</p>
-<p><em>NOTE</em>: If the data is passed in as an array, it will be embedded into the chart json that is emitted.</p>
-<p><code>Cedar.compile(options)</code></p>
-<h4 id="arguments">Arguments</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>options.template</code></td>
-<td>&lt;<code>object</code>&gt;</td>
-<td>yes</td>
-<td>Cedar template json.</td>
-</tr>
-<tr>
-<td><code>options.mappings</code></td>
-<td>&lt;<code>object</code>&gt;</td>
-<td>yes</td>
-<td>Hash of field mappings.</td>
-</tr>
-<tr>
-<td><code>options.data</code></td>
-<td>&lt;`url</td>
-<td>array`&gt;</td>
-<td>yes</td>
-<td>data</td>
-</tr>
-</tbody>
-</table>
+<h2 id="public-methods">Public Methods</h2>
+<ul>
+<li><a href="../../../cedar/api-reference/render.html"><code>Cedar.render</code></a></li>
+<li><a href="../../../cedar/api-reference/compile.html"><code>Cedar.compile</code></a></li>
+</ul>
+<h2 id="helpers">Helpers</h2>
+<ul>
+<li><a href="../../../cedar/api-reference/getjson.html"><code>Cedar.getJson</code></a></li>
+</ul>
 
   <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/index.hbs">Edit this page on GitHub</a></p>
 </div>
 
 <div class="col-lg-4">
   <aside class="sidebar">
-  <h5>Cedar Api</h5>
+  <h5><a href="../../../cedar/api-reference/index.html">Cedar Api</a></h5>
   <ul>
-    <li>
-      <a href="../../../cedar/api-reference/indext.html">Getting Started</a>
-    </li>
+    <li><a href="../../../cedar/api-reference/render.html">Cedar.render()</a></li>
+    <li><a href="../../../cedar/api-reference/compile.html">Cedar.compile()</a></li>
+  </ul>
+  <h5>Helpers</h5>
+  <ul>
+    <li><a href="../../../cedar/api-reference/getjson.html">Cedar.getJson()</a></li>
   </ul>
 </aside>
 </div>
