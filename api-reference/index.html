@@ -76,12 +76,98 @@
 
 <div class="col-lg-8">
   <h1 id="esri-cedar-api-reference">Esri Cedar API Reference</h1>
-<h3 id="cedar">cedar</h3>
-<p>The sidebar is in /site/source/partials/sidebar-documentation.hbs</p>
-<ul>
-<li><a href="../../../cedar/api-reference/chart-specs.html"><code>Chart Specs</code></a></li>
-<li><a href="../../../cedar/api-reference/"><code>Cedar.chart</code></a></li>
-</ul>
+<h2 id="cedar-render-options-">Cedar.render( options )</h2>
+<p>Create <code>vega view</code> (aka chart) attached to the specified dom node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)</p>
+<p><code>Cedar.create(options, callback)</code></p>
+<h4 id="arguments-amp-options">Arguments &amp; Options</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>options.domId</code></td>
+<td><code>string</code></td>
+<td>yes</td>
+<td>Id of the DOM node to render the chart into.</td>
+</tr>
+<tr>
+<td><code>options.chart</code></td>
+<td><code>object or url</code></td>
+<td>yes</td>
+<td>Cedar chart object, or url to a cedar chart</td>
+</tr>
+<tr>
+<td><code>options.token</code></td>
+<td><code>string</code></td>
+<td>no</td>
+<td>token to use if item / url is on a secured server</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-code">Example Code</h4>
+<pre><code>var options = {
+  elementId: &quot;chartContainer&quot;,
+  spec: myChartJsonObj
+};
+
+var myChart;
+//create and render a chart
+Cedar.render(options, function(chart){
+  myChart = chart;
+  //attach event handlers
+  myChart
+     .on(&#39;mouseover&#39;, function(evt){...})
+     .on(&#39;mouseout&#39;,function(evt){...})
+});
+//elsewhere...
+$(&#39;#someButton&#39;).on(&#39;click&#39;, function(){
+  //remove handlers
+  myChart
+    .off(&#39;mouseover&#39;)
+    .off(&#39;mouseout&#39;);
+});</code></pre>
+<h2 id="cedar-compile-template-mappings-">Cedar.compile( template, mappings )</h2>
+<p>Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the <code>.render()</code> method. This will be used in tools that allow a user to associate a chart template with data + styling.</p>
+<p><em>NOTE</em>: If the data is passed in as an array, it will be embedded into the chart json that is emitted.</p>
+<p><code>Cedar.compile(options)</code></p>
+<h4 id="arguments">Arguments</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>options.template</code></td>
+<td>&lt;<code>object</code>&gt;</td>
+<td>yes</td>
+<td>Cedar template json.</td>
+</tr>
+<tr>
+<td><code>options.mappings</code></td>
+<td>&lt;<code>object</code>&gt;</td>
+<td>yes</td>
+<td>Hash of field mappings.</td>
+</tr>
+<tr>
+<td><code>options.data</code></td>
+<td>&lt;`url</td>
+<td>array`&gt;</td>
+<td>yes</td>
+<td>data</td>
+</tr>
+</tbody>
+</table>
 
   <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/index.hbs">Edit this page on GitHub</a></p>
 </div>

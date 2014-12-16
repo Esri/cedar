@@ -121,7 +121,7 @@
       return;
     }
     //cook the spec
-    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.compile(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: &quot;#chart&quot;,
@@ -156,7 +156,7 @@
       return;
     }
     //cook the spec
-    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.compile(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",

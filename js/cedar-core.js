@@ -66,7 +66,7 @@ Cedar.render = function(options, callback){
  * @param  {array} mappings      Array of mappings between the template's inputs and fields in a dataset
  * @return {object}              Cedar chart json
  */
-Cedar.processTemplate = function( chartTemplate, serviceUrl, mappings ){
+Cedar.compile = function( chartTemplate, serviceUrl, mappings ){
   //TODO: add more validation of chart template object
   if( chartTemplate !== null && typeof chartTemplate === 'object'){
     

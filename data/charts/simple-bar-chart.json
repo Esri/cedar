@@ -1,0 +1,102 @@
+{
+  "inputs": [
+    {
+      "name": "count",
+      "type": [
+        "numeric",
+        "string"
+      ],
+      "required": true
+    },
+    {
+      "name": "group",
+      "type": [
+        "string"
+      ],
+      "required": false
+    }
+  ],
+  "axes": [
+    {
+      "type": "x",
+      "scale": "x",
+      "title": "X-Axis"
+    }
+  ],
+  "data": [
+    {
+      "name": "table",
+      "url": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json&groupByFieldsForStatistics=ZIP_CODE&orderByFields=TOTAL_STUD_SUM&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22TOTAL_STUD%22%2C%22outStatisticFieldName%22%3A%22TOTAL_STUD_SUM%22%7D%5D",
+      "format": {
+        "property": "features"
+      }
+    }
+  ],
+  "height": 600,
+  "marks": [
+    {
+      "from": {
+        "data": "table"
+      },
+      "properties": {
+        "enter": {
+          "width": {
+            "band": true,
+            "offset": -1,
+            "scale": "x"
+          },
+          "x": {
+            "field": "data.attributes.ZIP_CODE",
+            "scale": "x"
+          },
+          "y": {
+            "field": "data.attributes.TOTAL_STUD_SUM",
+            "scale": "y"
+          },
+          "y2": {
+            "scale": "y",
+            "value": 0
+          }
+        },
+        "hover": {
+          "fill": {
+            "value": "red"
+          }
+        },
+        "update": {
+          "fill": {
+            "value": "steelblue"
+          }
+        }
+      },
+      "type": "rect"
+    }
+  ],
+  "padding": {
+    "bottom": 20,
+    "left": 80,
+    "right": 10,
+    "top": 10
+  },
+  "scales": [
+    {
+      "domain": {
+        "data": "table",
+        "field": "data.attributes.ZIP_CODE"
+      },
+      "name": "x",
+      "range": "width",
+      "type": "ordinal"
+    },
+    {
+      "domain": {
+        "data": "table",
+        "field": "data.attributes.TOTAL_STUD_SUM"
+      },
+      "name": "y",
+      "nice": true,
+      "range": "height"
+    }
+  ],
+  "width": 850
+}
