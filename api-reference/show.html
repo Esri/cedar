@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Render | Esri Cedar</title>
   
 
   
@@ -75,124 +75,79 @@
 <div class="container white">
   
 
+<div class="col-lg-8">
+  <h2 id="cedar-show-options-">Cedar.show( options )</h2>
+<p>Create <code>vega view</code> (aka chart) attached to the specified dom node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)</p>
+<p><code>Cedar.show(options, callback)</code></p>
+<h4 id="arguments-amp-options">Arguments &amp; Options</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>options.domId</code></td>
+<td><code>string</code></td>
+<td>yes</td>
+<td>Id of the DOM node to render the chart into.</td>
+</tr>
+<tr>
+<td><code>options.chart</code></td>
+<td><code>object or url</code></td>
+<td>yes</td>
+<td>Cedar chart object, or url to a cedar chart</td>
+</tr>
+<tr>
+<td><code>options.token</code></td>
+<td><code>string</code></td>
+<td>no</td>
+<td>token to use if item / url is on a secured server</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-code">Example Code</h4>
+<pre><code>var options = {
+  elementId: &quot;chartContainer&quot;,
+  spec: myChartJsonObj
+};
 
+var myChart;
+//create and render a chart
+Cedar.show(options, function(chart){
+  myChart = chart;
+  //attach event handlers
+  myChart
+     .on(&#39;mouseover&#39;, function(evt){...})
+     .on(&#39;mouseout&#39;,function(evt){...})
+});
+//elsewhere...
+$(&#39;#someButton&#39;).on(&#39;click&#39;, function(){
+  //remove handlers
+  myChart
+    .off(&#39;mouseover&#39;)
+    .off(&#39;mouseout&#39;);
+});</code></pre>
 
-<div class="col-lg-10">
-  
-
-
-<h1>Simple Bar Chart</h1>
-
-<div id="chart"></div>
-
-
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-
-
-
-  //render
-  Cedar.show({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/simple-pie-chart.json&quot;
-  });
-
-
-
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-
-
-
-<script>
-  //render
-  Cedar.show({
-    elementId: "#chart",
-    spec: "../../../cedar/data/charts/simple-bar-chart.json"
-  });
-</script>
-  <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-bar.hbs">Edit this sample on GitHub</a></p>
-  </div>
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/show.hbs">Edit this page on GitHub</a></p>
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-4">
   <aside class="sidebar">
-  <h5>Simple Charts</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
-    </ul>
-  </nav>
-
-  <h5>Chart Templates</h5>
-  <nav>
-    <ul>
-      <li>Chart-Template inlined</li>
-      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
-    </ul>
-  </nav>
-
-  <h5>Charts</h5>
-  <nav>
-    <ul>
-      <li>Chart inlined</li>
-      <li>Chart from AGO</li>
-      <li>Chart from url</li>
-    </ul>
-  </nav>
-
-  <h5>Data</h5>
-  <nav>
-    <ul>
-      <li>Data from Service</li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
-  <h5>Events</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
-  <h5>Map Integration</h5>
-  <nav>
-    <ul>
-      <li>Link to JS API Map</li>
-      <li>Link to Leaflet Map</li>
-      <li>Link to pop-over</li>
-    </ul>
-  </nav>
-   <a href="../../../cedar/examples/helper.html">Helper</a>
-   <a href="../../../cedar/examples/eventshelper.html">Evt Helper</a>
+  <h5><a href="../../../cedar/api-reference/index.html">Cedar Api</a></h5>
+  <ul>
+    <li><a href="../../../cedar/api-reference/render.html">Cedar.show()</a></li>
+    <li><a href="../../../cedar/api-reference/compile.html">Cedar.create()</a></li>
+  </ul>
+  <h5>Helpers</h5>
+  <ul>
+    <li>Cedar.getJson()</li>
+  </ul>
 </aside>
-
 </div>
   <div style='clear:both;'></div>
 </div>

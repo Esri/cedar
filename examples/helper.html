@@ -104,7 +104,7 @@
       return;
     }
     //cook the spec
-    var chartJson = Cedar.compile(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -113,7 +113,7 @@
 
     document.getElementById('output').value = JSON.stringify(chartJson);
     //render
-    Cedar.render( opts );
+    Cedar.show( opts );
 
   });
 
