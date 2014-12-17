@@ -15,7 +15,7 @@ var Cedar = Cedar || {};
  * options.token     [optional] Token to be used if the data or spec are on a secured server
  * callback  [optional] Callback with signature (err,chartObj)
  */
-Cedar.render = function(options, callback){
+Cedar.show = function(options, callback){
   var err;
   //ensure we got an elementId
   if( !options.elementId ){
@@ -66,7 +66,7 @@ Cedar.render = function(options, callback){
  * @param  {array} mappings      Array of mappings between the template's inputs and fields in a dataset
  * @return {object}              Cedar chart json
  */
-Cedar.compile = function( chartTemplate, serviceUrl, mappings ){
+Cedar.create = function( chartTemplate, serviceUrl, mappings ){
   //TODO: add more validation of chart template object
   if( chartTemplate !== null && typeof chartTemplate === 'object'){
     

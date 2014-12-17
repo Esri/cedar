@@ -23,7 +23,7 @@ layout: example.hbs
       return;
     }
     //cook the spec
-    var chartJson = Cedar.compile(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -31,7 +31,7 @@ layout: example.hbs
     };
 
     //render
-    Cedar.render( opts );
+    Cedar.show( opts );
 
   });
 {{>example-code-footer}}
@@ -55,7 +55,7 @@ layout: example.hbs
       return;
     }
     //cook the spec
-    var chartJson = Cedar.compile(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -63,7 +63,7 @@ layout: example.hbs
     };
 
     //render
-    Cedar.render( opts );
+    Cedar.show( opts );
 
   });
 

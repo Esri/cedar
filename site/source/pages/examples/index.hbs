@@ -1,10 +1,10 @@
 ---
-title: Esri Cedar Quickstart
+title: Cedar Quickstart
 description: A quick template to get started with Esri Cedar.
 layout: example.hbs
 ---
 
-
+<h2>{{page.title}}</h2>
 
 <div id="chart"></div>
 
@@ -13,7 +13,7 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
   //render
-  Cedar.render({
+  Cedar.show({
     elementId: "#chart",
     spec: "/data/charts/scatter-chart.json"
   });
@@ -27,9 +27,9 @@ layout: example.hbs
 <script>
 
   //render
-  Cedar.render({
+  Cedar.show({
     elementId: "#chart",
-    spec: "/data/charts/simple-scatter-chart.json"
+    spec: "{{assets}}data/charts/simple-scatter-chart.json"
   });
 
 </script>
