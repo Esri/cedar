@@ -1,0 +1,41 @@
+---
+title: Render
+layout: documentation.hbs
+---
+
+## Cedar.show( options )
+Create `vega view` (aka chart) attached to the specified dom node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)
+
+`Cedar.show(options, callback)`
+
+#### Arguments &amp; Options
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `options.domId` | `string` | yes | Id of the DOM node to render the chart into. |
+| `options.chart` | `object or url` | yes | Cedar chart object, or url to a cedar chart |
+| `options.token` | `string` |  no | token to use if item / url is on a secured server |
+
+#### Example Code
+```
+var options = {
+  elementId: "chartContainer",
+  spec: myChartJsonObj
+};
+
+var myChart;
+//create and render a chart
+Cedar.show(options, function(chart){
+  myChart = chart;
+  //attach event handlers
+  myChart
+     .on('mouseover', function(evt){...})
+     .on('mouseout',function(evt){...})
+});
+//elsewhere...
+$('#someButton').on('click', function(){
+  //remove handlers
+  myChart
+    .off('mouseover')
+    .off('mouseout');
+});
+```

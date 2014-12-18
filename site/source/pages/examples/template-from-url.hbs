@@ -23,7 +23,7 @@ layout: example.hbs
       return;
     }
     //cook the spec
-    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -31,7 +31,7 @@ layout: example.hbs
     };
 
     //render
-    Cedar.render( opts );
+    Cedar.show( opts );
 
   });
 {{>example-code-footer}}
@@ -48,14 +48,14 @@ layout: example.hbs
     "color":"FACUSE"
   }
   var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  var tmplUrl = "/data/templates/scatter-template.json";
+  var tmplUrl = "{{assets}}data/templates/scatter-template.json";
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = Cedar.generateChart(template, serviceUrl, fieldMappings);
+    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -63,7 +63,7 @@ layout: example.hbs
     };
 
     //render
-    Cedar.render( opts );
+    Cedar.show( opts );
 
   });
 

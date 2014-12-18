@@ -5,7 +5,6 @@
 
 var Cedar = Cedar || {};
 
-Cedar._agolData = "http://arcgis.com/sharing/rest/content/items/{item}/data?f=json";
 
 /**
  * Render a chart in the specified element
@@ -14,9 +13,9 @@ Cedar._agolData = "http://arcgis.com/sharing/rest/content/items/{item}/data?f=js
  * options.elementId [required] Id of the Dom element into which the chart will be rendered
  * options.spec      [required] Cedar chart spec
  * options.token     [optional] Token to be used if the data or spec are on a secured server
- * options.callback  [optional] Callback with signature (err,chartObj)
+ * callback  [optional] Callback with signature (err,chartObj)
  */
-Cedar.render = function(options, callback){
+Cedar.show = function(options, callback){
   var err;
   //ensure we got an elementId
   if( !options.elementId ){
@@ -67,7 +66,7 @@ Cedar.render = function(options, callback){
  * @param  {array} mappings      Array of mappings between the template's inputs and fields in a dataset
  * @return {object}              Cedar chart json
  */
-Cedar.generateChart = function( chartTemplate, serviceUrl, mappings ){
+Cedar.create = function( chartTemplate, serviceUrl, mappings ){
   //TODO: add more validation of chart template object
   if( chartTemplate !== null && typeof chartTemplate === 'object'){
     
@@ -77,7 +76,7 @@ Cedar.generateChart = function( chartTemplate, serviceUrl, mappings ){
       input = chartTemplate.inputs[i];
       if(input.required){
         if(!mappings[input.name]){
-          err += 'Missing mapping for template inputs ' + input.name + ' ';
+          err += 'Missing mapping for template input: ' + input.name + ' ';
         }
       }
     }
