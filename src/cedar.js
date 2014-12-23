@@ -3,7 +3,17 @@
  * Cedar
  */
 
-var Cedar = Cedar || {};
+
+/**
+ * Constructor
+ * @param {object} options Cedar options
+ */
+var Cedar = function Cedar(options){
+  
+  this.view = {};
+  this.options = options;
+  this._events = [];
+};
 
 
 /**
@@ -13,10 +23,9 @@ var Cedar = Cedar || {};
  * options.elementId [required] Id of the Dom element into which the chart will be rendered
  * options.spec      [required] Cedar chart spec
  * options.token     [optional] Token to be used if the data or spec are on a secured server
- * callback  [optional] Callback with signature (err,chartObj)
  */
-Cedar.show = function(options, callback){
-  var err;
+Cedar.prototype.show = function(options){
+  var err, self = this;
   //ensure we got an elementId
   if( !options.elementId ){
     err= "Cedar.render requires options.elementId";
@@ -29,11 +38,7 @@ Cedar.show = function(options, callback){
 
   //if we have any errors, fire callback or throw
   if( err ){
-    if( callback ){
-      callback( err );
-    }else{
-      throw err;
-    }
+    throw err;
   }
 
   try{
@@ -41,23 +46,33 @@ Cedar.show = function(options, callback){
     //it will handle the spec as an object or url
     vg.parse.spec(options.spec, function(chartCtor) { 
       //create the view
-      var vegaView = chartCtor({el: options.elementId});
+      self.view = chartCtor({el: options.elementId});
       //render
-      vegaView.update(); 
-      //if we have a callback, send the vegaView
-      if(callback){
-        callback(null, vegaView);
-      }
+      self.view.update(); 
+      self.attach(self.view);
+
     });
   }
   catch(ex){
-     if(callback){
-      callback(ex);
-    }else{
-      throw(ex);
-    }
+    throw(ex);
   }
 };
+
+
+
+
+
+/**
+ * Attach the generic handler to the chart view
+ */
+Cedar.prototype.attach = function(view){
+
+  view.on('mouseover', this._handler('mouseover'));
+  view.on('mouseout', this._handler('mouseout'));
+  view.on('click', this._handler("click"));
+  
+};
+
 
 /**
  * Generate chart json by merging a chart template with
@@ -66,7 +81,7 @@ Cedar.show = function(options, callback){
  * @param  {array} mappings      Array of mappings between the template's inputs and fields in a dataset
  * @return {object}              Cedar chart json
  */
-Cedar.create = function( chartTemplate, serviceUrl, mappings ){
+Cedar.prototype.create = function( chartTemplate, serviceUrl, mappings ){
   //TODO: add more validation of chart template object
   if( chartTemplate !== null && typeof chartTemplate === 'object'){
     
@@ -85,11 +100,11 @@ Cedar.create = function( chartTemplate, serviceUrl, mappings ){
     }
 
     //add the query string to the serviceUrl
-    var dataUrl = this._generateServiceQueryUrl(serviceUrl, mappings);
+    var dataUrl = Cedar._generateServiceQueryUrl(serviceUrl, mappings);
     //append that as data
     mappings.data = dataUrl;
     //interpolate the template and return the object
-    return  JSON.parse(this._supplant(JSON.stringify(chartTemplate), mappings)); 
+    return  JSON.parse(Cedar._supplant(JSON.stringify(chartTemplate), mappings)); 
   
   }else{
     throw new Error('Cedar.generateChart requires a chart template object. You can use Cedar.getJson() to fetch a from a remote location.');
@@ -97,6 +112,44 @@ Cedar.create = function( chartTemplate, serviceUrl, mappings ){
 };
 
 
+/**
+ * Generic event handler proxy
+ */
+Cedar.prototype._handler = function(evtName) {
+  var self = this;
+  //return a handler function w/ the events hash closed over
+  var handler = function(evt, item){
+    self._events.forEach( function(registeredHandler){
+      if(registeredHandler.type === evtName){
+        //invoke the callback with the data
+        registeredHandler.callback(item.datum.data.attributes);
+      }
+    });
+  };
+  return handler;
+  //alt option if events[type]
+  //
+};
+
+/**
+ * Add a handler for the named event
+ */
+Cedar.prototype.on = function(evtName, callback){
+
+  this._events.push({"type":evtName, "callback":callback});
+
+  //or should we hold the hash by type
+  //events = this._events[evtName] || (this._events[evtName]=[]);
+  //events.push(callback);
+
+};
+
+/**
+ * Remove a handler for the named event
+ */
+Cedar.prototype.off = function(evtName, callback){
+  console.log('Handler for ' + evtName +' removed...');
+};
 
 /**
  * fetch json from a url

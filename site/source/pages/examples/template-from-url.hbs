@@ -10,37 +10,7 @@ layout: example.hbs
 {{#markdown}}
 ```html
 {{>example-code-header}}
-  var fieldMappings = {
-    "x": "POPULATION_ENROLLED_2008",
-    "y": "SQUARE_FOOTAGE",
-    "color":"FACUSE"
-  }
-  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  var tmplUrl = "/data/templates/scatter-template.json";
-  Cedar.getJson(tmplUrl, function(err,template){
-    if(err){
-      console.error(err);
-      return;
-    }
-    //cook the spec
-    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
-    console.info()
-    var opts = {
-      elementId: "#chart",
-      spec: chartJson
-    };
-
-    //render
-    Cedar.show( opts );
-
-  });
-{{>example-code-footer}}
-```
-{{/markdown}}
-
-
-
-<script>
+  var cedar = new Cedar();
 
   var fieldMappings = {
     "x": "POPULATION_ENROLLED_2008",
@@ -49,13 +19,14 @@ layout: example.hbs
   }
   var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
   var tmplUrl = "{{assets}}data/templates/scatter-template.json";
+
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
+    var chartJson = cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -63,7 +34,41 @@ layout: example.hbs
     };
 
     //render
-    Cedar.show( opts );
+    cedar.show( opts );
+
+  });
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+
+
+<script>  
+  var cedar = new Cedar();
+
+  var fieldMappings = {
+    "x": "POPULATION_ENROLLED_2008",
+    "y": "SQUARE_FOOTAGE",
+    "color":"FACUSE"
+  }
+  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  var tmplUrl = "{{assets}}data/templates/scatter-template.json";
+
+  Cedar.getJson(tmplUrl, function(err,template){
+    if(err){
+      console.error(err);
+      return;
+    }
+    //cook the spec
+    var chartJson = cedar.create(template, serviceUrl, fieldMappings);
+    console.info()
+    var opts = {
+      elementId: "#chart",
+      spec: chartJson
+    };
+
+    //render
+    cedar.show( opts );
 
   });
 
