@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+
+  <!-- Cedar -->
+
+  <!-- esri Cedar -->
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', 'UA-44963317-3', 'auto');
+    // ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
+        <li><a href="https://github.com/esridc/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+  
+
+<div class="container white">
+  
+
+
+
+<div class="col-lg-10">
+  
+
+
+<h1>Simple Pie Chart</h1>
+
+<div id="chart"></div>
+
+
+
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=utf-8 /&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
+
+  &lt;!-- Load D3 --&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- Load Cedar --&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+
+
+
+  var cedar = new Cedar();
+  cedar.show({
+    elementId: &quot;#chart&quot;,
+    spec: &quot;../../../cedar/data/charts/simple-pie-chart.json&quot;
+  });
+
+
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+
+
+<script>
+  
+  var cedar = new Cedar();
+  cedar.show({
+    elementId: "#chart",
+    spec: "../../../cedar/data/charts/simple-pie-chart.json"
+  });
+</script>
+  <div class="wrap">
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-pie.hbs">Edit this sample on GitHub</a></p>
+  </div>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5>Simple Charts</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
+    </ul>
+  </nav>
+
+  <h5>Chart Templates</h5>
+  <nav>
+    <ul>
+      <li>Chart-Template inlined</li>
+      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
+    </ul>
+  </nav>
+
+  <h5>Charts</h5>
+  <nav>
+    <ul>
+      <li>Chart inlined</li>
+      <li>Chart from AGO</li>
+      <li>Chart from url</li>
+    </ul>
+  </nav>
+
+  <h5>Data</h5>
+  <nav>
+    <ul>
+      <li>Data from Service</li>
+      <li>Data passed in</li>
+      <li>Data in Chart</li>
+    </ul>
+  </nav>
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li>Data passed in</li>
+      <li>Data in Chart</li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li>Link to JS API Map</li>
+      <li>Link to Leaflet Map</li>
+      <li>Link to pop-over</li>
+    </ul>
+  </nav>
+   <a href="../../../cedar/examples/helper.html">Helper</a>
+   <a href="../../../cedar/examples/eventshelper.html">Evt Helper</a>
+</aside>
+
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  </div>
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

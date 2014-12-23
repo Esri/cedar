@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>compile | Esri Cedar</title>
   
 
   
@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../cedar/js/cedar-core.js"></script>
+  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -54,15 +54,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../cedar/">cedar.js</a>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../../cedar/examples/">Examples</a></li>
-        <li><a href="../../cedar/api-reference/">Api Documentation</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -75,27 +75,61 @@
 <div class="container white">
   
 
-<div class="row">
-  <h1>cedar.js <small>Lightweight charting for the ArcGIS platform</small></h1>
-  
-  <div class="col-lg-12" id="chart">
-  </div>
+<div class="col-lg-8">
+  <h2 id="cedar-create-template-mappings-">Cedar.create( template, mappings )</h2>
+<p>Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the <code>.show()</code> method. This will be used in tools that allow a user to associate a chart template with data + styling.</p>
+<p><em>NOTE</em>: If the data is passed in as an array, it will be embedded into the chart json that is emitted. (not implemented yet)</p>
+<p><code>Cedar.create(options)</code></p>
+<h4 id="arguments">Arguments</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>options.template</code></td>
+<td>&lt;<code>object</code>&gt;</td>
+<td>yes</td>
+<td>Cedar template json.</td>
+</tr>
+<tr>
+<td><code>options.mappings</code></td>
+<td>&lt;<code>object</code>&gt;</td>
+<td>yes</td>
+<td>Hash of field mappings.</td>
+</tr>
+<tr>
+<td><code>options.data</code></td>
+<td>&lt;`url</td>
+<td>array`&gt;</td>
+<td>yes</td>
+<td>data</td>
+</tr>
+</tbody>
+</table>
+<h3 id="examples">Examples</h3>
 
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/create.hbs">Edit this page on GitHub</a></p>
 </div>
 
-
-<script>
-
-var cedar = new Cedar();
-cedar.show({
-    elementId: "#chart",
-    spec: "../../cedar/data/charts/home-scatter-chart.json"
-  });
-
-
-
-
-</script>
+<div class="col-lg-4">
+  <aside class="sidebar">
+  <h5><a href="../../../cedar/api-reference/index.html">Cedar Api</a></h5>
+  <ul>
+    <li><a href="../../../cedar/api-reference/render.html">Cedar.show()</a></li>
+    <li><a href="../../../cedar/api-reference/compile.html">Cedar.create()</a></li>
+  </ul>
+  <h5>Helpers</h5>
+  <ul>
+    <li>Cedar.getJson()</li>
+  </ul>
+</aside>
+</div>
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">
@@ -103,6 +137,6 @@ cedar.show({
 </div>
 
   </div>
-  <!-- <script src="../../cedar/js/script.js"></script>-->
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
   </body>
 </html>

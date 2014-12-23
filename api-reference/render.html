@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Render | Esri Cedar</title>
   
 
   
@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../cedar/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../cedar/js/cedar-core.js"></script>
+  <script type="text/javascript" src="../js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -54,15 +54,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../cedar/">cedar.js</a>
+      <a class="navbar-brand" href="../">cedar.js</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../../cedar/examples/">Examples</a></li>
-        <li><a href="../../cedar/api-reference/">Api Documentation</a></li>
+        <li><a href="../examples/">Examples</a></li>
+        <li><a href="../api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -75,27 +75,80 @@
 <div class="container white">
   
 
-<div class="row">
-  <h1>cedar.js <small>Lightweight charting for the ArcGIS platform</small></h1>
-  
-  <div class="col-lg-12" id="chart">
-  </div>
+<div class="col-lg-8">
+  <h2 id="cedar-show-options-">Cedar.show( options )</h2>
+<p>Create <code>vega view</code> (aka chart) attached to the specified dom node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)</p>
+<p><code>Cedar.create(options, callback)</code></p>
+<h4 id="arguments-amp-options">Arguments &amp; Options</h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>options.domId</code></td>
+<td><code>string</code></td>
+<td>yes</td>
+<td>Id of the DOM node to render the chart into.</td>
+</tr>
+<tr>
+<td><code>options.chart</code></td>
+<td><code>object or url</code></td>
+<td>yes</td>
+<td>Cedar chart object, or url to a cedar chart</td>
+</tr>
+<tr>
+<td><code>options.token</code></td>
+<td><code>string</code></td>
+<td>no</td>
+<td>token to use if item / url is on a secured server</td>
+</tr>
+</tbody>
+</table>
+<h4 id="example-code">Example Code</h4>
+<pre><code>var options = {
+  elementId: &quot;chartContainer&quot;,
+  spec: myChartJsonObj
+};
 
+var myChart;
+//create and render a chart
+Cedar.show(options, function(chart){
+  myChart = chart;
+  //attach event handlers
+  myChart
+     .on(&#39;mouseover&#39;, function(evt){...})
+     .on(&#39;mouseout&#39;,function(evt){...})
+});
+//elsewhere...
+$(&#39;#someButton&#39;).on(&#39;click&#39;, function(){
+  //remove handlers
+  myChart
+    .off(&#39;mouseover&#39;)
+    .off(&#39;mouseout&#39;);
+});</code></pre>
+
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/render.hbs">Edit this page on GitHub</a></p>
 </div>
 
-
-<script>
-
-var cedar = new Cedar();
-cedar.show({
-    elementId: "#chart",
-    spec: "../../cedar/data/charts/home-scatter-chart.json"
-  });
-
-
-
-
-</script>
+<div class="col-lg-4">
+  <aside class="sidebar">
+  <h5><a href="../api-reference/index.html">Cedar Api</a></h5>
+  <ul>
+    <li><a href="../api-reference/render.html">Cedar.show()</a></li>
+    <li><a href="../api-reference/compile.html">Cedar.create()</a></li>
+  </ul>
+  <h5>Helpers</h5>
+  <ul>
+    <li>Cedar.getJson()</li>
+  </ul>
+</aside>
+</div>
   <div style='clear:both;'></div>
 </div>
 <div class="container centered-text">
@@ -103,6 +156,6 @@ cedar.show({
 </div>
 
   </div>
-  <!-- <script src="../../cedar/js/script.js"></script>-->
+  <!-- <script src="../js/script.js"></script>-->
   </body>
 </html>
