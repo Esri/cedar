@@ -117,33 +117,23 @@
 
 
 
-  //render
-  function showItem(item){
+ function showItem(data){
     var tmpl = document.getElementById(&quot;school-detail-template&quot;).innerHTML;
     compiled = _.template(tmpl);
-
-    document.getElementById(&#39;details&#39;).innerHTML = compiled(item.datum.data.attributes);
+    document.getElementById(&#39;details&#39;).innerHTML = compiled(data);
   }
 
-  var cb = function(err, chart){
-    chart.on(&#39;mouseover&#39;, function(evt, item){
-      console.log(&#39;mouseover &#39; + evt.currentTarget);
-
-    });
-    chart.on(&#39;mouseout&#39;, function(evt, item){
-      console.log(&#39;mouseout&#39;);
-
-    });
-    chart.on(&#39;click&#39;, function(evt, item){
-      console.log(&#39;click&#39;);
-      showItem(item);
-    });
-  };
-
-  Cedar.show({
+  var chart = new Cedar();
+  //attach handlers before the view exists
+  chart.on(&#39;mouseover&#39;, showItem);
+  //show the chart
+  chart.show({
     elementId: &quot;#chart&quot;,
     spec: &quot;../../../cedar/data/charts/evt-scatter-chart.json&quot;
-  }, cb);
+  });
+  //add more handlers after starting chart creation
+  chart.on(&#39;mouseout&#39;, showItem);
+  chart.on(&#39;click&#39;, showItem);
 
 
 
@@ -166,32 +156,30 @@
 
 <script>
   //render
-function showItem(item){
+  function showItem(data){
     var tmpl = document.getElementById("school-detail-template").innerHTML;
     compiled = _.template(tmpl);
-
-    document.getElementById('details').innerHTML = compiled(item.datum.data.attributes);
+    document.getElementById('details').innerHTML = compiled(data);
+  }
+  function report(data){
+    console.log('caught event ' + data);
   }
 
-  var cb = function(err, chart){
-    chart.on('mouseover', function(evt, item){
-      console.log('mouseover ' + evt.currentTarget);
-      
-    });
-    chart.on('mouseout', function(evt, item){
-      console.log('mouseout');
-      
-    });
-    chart.on('click', function(evt, item){
-      console.log('click');
-      showItem(item);
-    });
-  };
 
-  Cedar.show({
+
+  var chart = new Cedar();
+  //attach handlers before the view exists
+  chart.on('mouseover', report);
+  
+  chart.show({
     elementId: "#chart",
     spec: "../../../cedar/data/charts/evt-scatter-chart.json"
-  }, cb);
+  });
+  //and after
+  chart.on('mouseout', report);
+  chart.on('click', showItem);
+
+
 </script>
   <div class="wrap">
     <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/scatter-events.hbs">Edit this sample on GitHub</a></p>

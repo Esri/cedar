@@ -111,12 +111,11 @@
 
 
 
-  //render
-  Cedar.show({
+  var cedar = new Cedar();
+  cedar.show({
     elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/scatter-chart.json&quot;
+    spec: &quot;../../../cedar/data/charts/simple-scatter-chart.json&quot;
   });
-
 
 
 &lt;/script&gt;
@@ -128,8 +127,8 @@
 
 <script>
 
-  //render
-  Cedar.show({
+  var cedar = new Cedar();
+  cedar.show({
     elementId: "#chart",
     spec: "../../../cedar/data/charts/simple-scatter-chart.json"
   });

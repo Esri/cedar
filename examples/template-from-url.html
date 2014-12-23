@@ -109,20 +109,23 @@
 
 
 
+  var cedar = new Cedar();
+
   var fieldMappings = {
     &quot;x&quot;: &quot;POPULATION_ENROLLED_2008&quot;,
     &quot;y&quot;: &quot;SQUARE_FOOTAGE&quot;,
     &quot;color&quot;:&quot;FACUSE&quot;
   }
   var serviceUrl = &quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;
-  var tmplUrl = &quot;/data/templates/scatter-template.json&quot;;
+  var tmplUrl = &quot;../../../cedar/data/templates/scatter-template.json&quot;;
+
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
+    var chartJson = cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: &quot;#chart&quot;,
@@ -130,7 +133,7 @@
     };
 
     //render
-    Cedar.show( opts );
+    cedar.show( opts );
 
   });
 
@@ -142,7 +145,8 @@
 
 
 
-<script>
+<script>  
+  var cedar = new Cedar();
 
   var fieldMappings = {
     "x": "POPULATION_ENROLLED_2008",
@@ -151,13 +155,14 @@
   }
   var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
   var tmplUrl = "../../../cedar/data/templates/scatter-template.json";
+
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
+    var chartJson = cedar.create(template, serviceUrl, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -165,7 +170,7 @@
     };
 
     //render
-    Cedar.show( opts );
+    cedar.show( opts );
 
   });
 

@@ -111,10 +111,11 @@
 
 
 
-  //render
-  Cedar.show({
+
+  var cedar = new Cedar();
+  cedar.show({
     elementId: &quot;#chart&quot;,
-    spec: &quot;/data/charts/simple-pie-chart.json&quot;
+    spec: &quot;../../../cedar/data/charts/simple-bar-chart.json&quot;
   });
 
 
@@ -127,7 +128,8 @@
 
 <script>
   //render
-  Cedar.show({
+  var cedar = new Cedar();
+  cedar.show({
     elementId: "#chart",
     spec: "../../../cedar/data/charts/simple-bar-chart.json"
   });
