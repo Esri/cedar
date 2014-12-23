@@ -12,10 +12,11 @@ layout: example.hbs
 {{#markdown}}
 ```html
 {{>example-code-header}}
-  //render
-  Cedar.show({
+  
+  var cedar = new Cedar();
+  cedar.show({
     elementId: "#chart",
-    spec: "/data/charts/simple-pie-chart.json"
+    spec: "{{assets}}data/charts/simple-bar-chart.json"
   });
  
 {{>example-code-footer}}
@@ -25,7 +26,8 @@ layout: example.hbs
 
 <script>
   //render
-  Cedar.show({
+  var cedar = new Cedar();
+  cedar.show({
     elementId: "#chart",
     spec: "{{assets}}data/charts/simple-bar-chart.json"
   });
