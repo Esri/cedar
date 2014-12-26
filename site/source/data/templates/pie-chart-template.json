@@ -5,66 +5,69 @@
     {"name": "aggregate", "type": ["option"], "options": ["sum","avg"], "required": false},
     {"name": "label", "type": ["string"], "required": false}
   ],
-  "name": "arc",
-  "width": 450,
-  "height": 500,
-  "data": [
-    {
-      "name": "table",
-      "url": "{data}",
-      "format": {
-        "property": "features"
+  "template":{
+    "name": "arc",
+    "width": 450,
+    "height": 500,
+    "data": [
+      {
+        "name": "table",
+        "url": "{data}",
+        "format": {
+          "property": "features"
+        },
+        "transform": [
+          {"type": "pie", "value": "data.attributes.{count}_SUM"}
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "r",
+        "type": "sqrt",
+        "domain": {"data": "table", "field": "data.attributes.{count}_SUM"},
+        "range": [0,200]
+      }
+    ],
+    "marks": [
+      {
+        "type": "arc",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"group": "width", "mult": 0.5},
+            "y": {"group": "height", "mult": 0.5},
+            "startAngle": {"field": "startAngle"},
+            "endAngle": {"field": "endAngle"},
+            "innerRadius": {"value": 40},
+            "outerRadius": {"value": 80},
+            "stroke": {"value": "#fff"}
+          },
+          "update": {
+            "fill": {"value": "#ccc"}
+          },
+          "hover": {
+            "fill": {"value": "green"}
+          }
+        }
       },
-      "transform": [
-        {"type": "pie", "value": "data.attributes.{count}_SUM"}
-      ]
-    }
-  ],
-  "scales": [
-    {
-      "name": "r",
-      "type": "sqrt",
-      "domain": {"data": "table", "field": "data.attributes.{count}_SUM"},
-      "range": [0,200]
-    }
-  ],
-  "marks": [
-    {
-      "type": "arc",
-      "from": {"data": "table"},
-      "properties": {
-        "enter": {
-          "x": {"group": "width", "mult": 0.5},
-          "y": {"group": "height", "mult": 0.5},
-          "startAngle": {"field": "startAngle"},
-          "endAngle": {"field": "endAngle"},
-          "innerRadius": {"value": 40},
-          "outerRadius": {"value": 80},
-          "stroke": {"value": "#fff"}
-        },
-        "update": {
-          "fill": {"value": "#ccc"}
-        },
-        "hover": {
-          "fill": {"value": "green"}
+      {
+        "type": "text",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"group": "width", "mult": 0.5},
+            "y": {"group": "height", "mult": 0.5},
+            "radius": {"scale": "r", "offset": 8},
+            "theta": {"field": "midAngle"},
+            "fill": {"value": "#000"},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"},
+            "text": {"field": "data.attributes.{label}"}
+          }
         }
       }
-    },
-    {
-      "type": "text",
-      "from": {"data": "table"},
-      "properties": {
-        "enter": {
-          "x": {"group": "width", "mult": 0.5},
-          "y": {"group": "height", "mult": 0.5},
-          "radius": {"scale": "r", "offset": 8},
-          "theta": {"field": "midAngle"},
-          "fill": {"value": "#000"},
-          "align": {"value": "center"},
-          "baseline": {"value": "middle"},
-          "text": {"field": "data.attributes.{label}"}
-        }
-      }
-    }
-  ]
+    ]
+  }
+  
 }

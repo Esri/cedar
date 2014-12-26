@@ -22,6 +22,7 @@
   "predef": ["console", "process", "require", "module", "exports", "define",  "sinon", "mocha", "describe", "expect", "beforeEach", "afterEach", "it"],
   "globals": {
     "vg":false,
-    "d3":false
+    "d3":false,
+    "_":false
   }
 }

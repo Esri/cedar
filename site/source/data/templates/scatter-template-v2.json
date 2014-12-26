@@ -23,7 +23,7 @@
         "range": "width",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{x}"
+          "field": "data.attributes.{x.field}"
         }
       },
       {
@@ -32,7 +32,7 @@
         "range": "height",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{y}"
+          "field": "data.attributes.{y.field}"
         }
       },
       {
@@ -40,7 +40,7 @@
         "type": "ordinal",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{color}"
+          "field": "data.attributes.{color.field}"
         },
         "range": [
           "#800",
@@ -55,14 +55,14 @@
         "scale": "x",
         "offset": 5,
         "ticks": 5,
-        "title": "{x}"
+        "title": "{x.label}"
       },
       {
         "type": "y",
         "scale": "y",
         "offset": 5,
         "ticks": 5,
-        "title": "{y}"
+        "title": "{y.label}"
       }
     ],
     "legends": [
@@ -92,15 +92,15 @@
           "enter": {
             "x": {
               "scale": "x",
-              "field": "data.attributes.{x}"
+              "field": "data.attributes.{x.field}"
             },
             "y": {
               "scale": "y",
-              "field": "data.attributes.{y}"
+              "field": "data.attributes.{y.field}"
             },
             "fill": {
               "scale": "c",
-              "field": "data.attributes.{color}"
+              "field": "data.attributes.{color.field}"
             },
             "fillOpacity": {
               "value": 0.5

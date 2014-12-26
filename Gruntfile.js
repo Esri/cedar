@@ -281,7 +281,10 @@ module.exports = function(grunt) {
 
     'gh-pages': {
       options: {
-        base: 'site/build',
+
+        base: 'site/build'
+        //repo: 'git@github.com:esridc/cedar.git'
+
       },
       src: ['**']
     },
