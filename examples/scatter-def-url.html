@@ -110,11 +110,14 @@
 
 
 
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;../../../cedar/data/charts/simple-scatter-chart.json&quot;
+  var chart = new Cedar({
+    &quot;definition&quot;:&quot;../../../cedar/data/definitions/dc-schools-scatter-chart.json&quot;
   });
+
+  chart.show({
+    elementId: &quot;#chart&quot;,
+  });
+
 
 
 
@@ -126,60 +129,44 @@
 
 
 <script>
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: "#chart",
-    spec: "../../../cedar/data/charts/simple-scatter-chart.json"
+  var chart = new Cedar({
+    "definition":"../../../cedar/data/definitions/dc-schools-scatter-chart.json"
   });
+
+  chart.show({
+    elementId: "#chart",
+  });
+
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-scatter.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/scatter-def-url.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Simple Charts</h5>
+  <h5>Using Definitions</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from Url</a></li>
+      <li>In-lined</li>
     </ul>
   </nav>
 
-  <h5>Chart Templates</h5>
+  <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li>Chart-Template inlined</li>
-      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Load From Url</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-inlined.html">In-lined</a></li>
     </ul>
   </nav>
 
-  <h5>Charts</h5>
-  <nav>
-    <ul>
-      <li>Chart inlined</li>
-      <li>Chart from AGO</li>
-      <li>Chart from url</li>
-    </ul>
-  </nav>
-
-  <h5>Data</h5>
-  <nav>
-    <ul>
-      <li>Data from Service</li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
+  
   <h5>Events</h5>
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
@@ -190,8 +177,9 @@
       <li>Link to pop-over</li>
     </ul>
   </nav>
-   <a href="../../../cedar/examples/helper.html">Helper</a>
-   <a href="../../../cedar/examples/eventshelper.html">Evt Helper</a>
+
+   
+   
 </aside>
 
 </div>

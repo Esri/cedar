@@ -109,33 +109,7 @@
 
 
 
-  var cedar = new Cedar();
 
-  var fieldMappings = {
-    &quot;x&quot;: &quot;POPULATION_ENROLLED_2008&quot;,
-    &quot;y&quot;: &quot;SQUARE_FOOTAGE&quot;,
-    &quot;color&quot;:&quot;FACUSE&quot;
-  }
-  var serviceUrl = &quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;
-  var tmplUrl = &quot;../../../cedar/data/templates/scatter-template.json&quot;;
-
-  Cedar.getJson(tmplUrl, function(err,template){
-    if(err){
-      console.error(err);
-      return;
-    }
-    //cook the spec
-    var chartJson = cedar.create(template, serviceUrl, fieldMappings);
-    console.info()
-    var opts = {
-      elementId: &quot;#chart&quot;,
-      spec: chartJson
-    };
-
-    //render
-    cedar.show( opts );
-
-  });
 
 
 &lt;/script&gt;
@@ -148,21 +122,26 @@
 <script>  
   var cedar = new Cedar();
 
+  var dataSource = {
+    url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  };
+
   var fieldMappings = {
     "x": "POPULATION_ENROLLED_2008",
     "y": "SQUARE_FOOTAGE",
     "color":"FACUSE"
-  }
-  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  var tmplUrl = "../../../cedar/data/templates/scatter-template.json";
-
+  };
+  
+  var tmplUrl = "../../../cedar/data/templates/scatter-template-v2.json";
+  
+  //use helper to get the template...
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = cedar.create(template, serviceUrl, fieldMappings);
+    var chartJson = cedar.cook(template, dataSource, fieldMappings);
     console.info()
     var opts = {
       elementId: "#chart",
@@ -182,46 +161,27 @@
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Simple Charts</h5>
+  <h5>Using Definitions</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from Url</a></li>
+      <li>In-lined</li>
     </ul>
   </nav>
 
-  <h5>Chart Templates</h5>
+  <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li>Chart-Template inlined</li>
-      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Load From Url</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-inlined.html">In-lined</a></li>
     </ul>
   </nav>
 
-  <h5>Charts</h5>
-  <nav>
-    <ul>
-      <li>Chart inlined</li>
-      <li>Chart from AGO</li>
-      <li>Chart from url</li>
-    </ul>
-  </nav>
-
-  <h5>Data</h5>
-  <nav>
-    <ul>
-      <li>Data from Service</li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
+  
   <h5>Events</h5>
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
@@ -232,8 +192,9 @@
       <li>Link to pop-over</li>
     </ul>
   </nav>
-   <a href="../../../cedar/examples/helper.html">Helper</a>
-   <a href="../../../cedar/examples/eventshelper.html">Evt Helper</a>
+
+   
+   
 </aside>
 
 </div>

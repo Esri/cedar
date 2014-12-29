@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
+  <script type="text/javascript" src="../js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -54,15 +54,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+      <a class="navbar-brand" href="../">cedar.js</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../../../cedar/examples/">Examples</a></li>
-        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
+        <li><a href="../examples/">Examples</a></li>
+        <li><a href="../api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -83,39 +83,74 @@
   </div>
 
   <p>Compiled Spec Json</p>
-  <textarea rows="20" id="output" style="width:100%"></textarea>
+  <pre id="output" style="width:100%"></pre>
 
 
 </div>
 
 
 <script>
+  var cedar = new Cedar();
+
+  var dataSource = {
+    url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  };
 
   var fieldMappings = {
-    "count": "TOTAL_STUD",
-    "group": "ZIP_CODE"
-  }
-  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  var tmplUrl = "../../../cedar/data/templates/bar-chart-template.json";
-
+    "x": {"field": "POPULATION_ENROLLED_2008", "label":"Enrollment 2008"},
+    "y": {"field": "SQUARE_FOOTAGE", "label":"Square Footage"},
+    "color":{"field": "FACUSE", "label":"Facility Type"}
+  };
+  
+  var tmplUrl = "../data/templates/scatter-template-v2.json";
+  
+  //use helper to get the template...
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
-    console.info()
+    var chartJson = cedar.cook(template, dataSource, fieldMappings);
+    //dump the chart json into the page so we can look at it
+    document.getElementById('output').innerHTML = JSON.stringify(chartJson, undefined, 2);
+
     var opts = {
       elementId: "#chart",
       spec: chartJson
     };
 
-    document.getElementById('output').value = JSON.stringify(chartJson);
     //render
-    Cedar.show( opts );
+    //cedar.show( opts );
 
   });
+
+
+  // var fieldMappings = {
+  //   "count": "TOTAL_STUD",
+  //   "group": "ZIP_CODE"
+  // }
+  // var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  // var tmplUrl = "../data/templates/bar-chart-template.json";
+
+  // Cedar.getJson(tmplUrl, function(err,template){
+  //   if(err){
+  //     console.error(err);
+  //     return;
+  //   }
+  //   //cook the spec
+  //   var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
+  //   console.info()
+  //   var opts = {
+  //     elementId: "#chart",
+  //     spec: chartJson
+  //   };
+
+  //   document.getElementById('output').value = JSON.stringify(chartJson);
+  //   //render
+  //   Cedar.show( opts );
+
+  // });
 
 </script>
   <div style='clear:both;'></div>
@@ -125,6 +160,6 @@
 </div>
 
   </div>
-  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  <!-- <script src="../js/script.js"></script>-->
   </body>
 </html>

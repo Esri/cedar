@@ -86,12 +86,13 @@
 
 <script>
 
-var cedar = new Cedar();
-cedar.show({
-    elementId: "#chart",
-    spec: "../../cedar/data/charts/home-scatter-chart.json"
+ var chart = new Cedar({
+    "definition":"../../cedar/data/definitions/home-scatter-chart.json"
   });
 
+  chart.show({
+    elementId: "#chart",
+  });
 
 
 

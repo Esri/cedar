@@ -15,7 +15,7 @@
       {"name":"color","type":["string"], "required":true}
     ],
     "template":{
-      "width": 650,
+      "width": 550,
       "height": 500,
       "data": [
         {
@@ -75,23 +75,7 @@
           "title": "{y.label}"
         }
       ],
-      "legends": [
-        {
-          "fill": "c",
-          "title": "{color.label} ",
-          "offset": 0,
-          "properties": {
-            "symbols": {
-              "fillOpacity": {
-                "value": 0.5
-              },
-              "stroke": {
-                "value": "transparent"
-              }
-            }
-          }
-        }
-      ],
+      
       "marks": [
         {
           "type": "symbol",

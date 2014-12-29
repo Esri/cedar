@@ -15,7 +15,7 @@
       {"name":"color","type":["string"], "required":true}
     ],
     "template":{
-      "width": 650,
+      "width": 850,
       "height": 500,
       "data": [
         {

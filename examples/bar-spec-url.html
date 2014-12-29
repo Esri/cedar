@@ -81,7 +81,7 @@
   
 
 
-<h1>Simple Pie Chart</h1>
+<h1>Bar Chart: Specification loaded from Url</h1>
 
 <div id="chart"></div>
 
@@ -111,12 +111,24 @@
 
 
 
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;../../../cedar/data/charts/simple-pie-chart.json&quot;
-  });
+  //create a cedar chart, passing a url to a spec
+  var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar-chart-template.json&quot;});
+  //create the dataset w/ mappings
+  var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+    }
+  };
 
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: &quot;#chart&quot;
+  });
 
 
 &lt;/script&gt;
@@ -126,15 +138,27 @@
 
 
 <script>
-  
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: "#chart",
-    spec: "../../../cedar/data/charts/simple-pie-chart.json"
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"../../../cedar/data/templates/bar-chart-template.json"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
   });
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-pie.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-spec-url.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

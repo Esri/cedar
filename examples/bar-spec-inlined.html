@@ -81,7 +81,7 @@
   
 
 
-<h1>Simple Bar Chart</h1>
+<h1>Bar Chart: Inlined Specification </h1>
 
 <div id="chart"></div>
 
@@ -111,13 +111,24 @@
 
 
 
+//create a cedar chart
+  var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar-chart-template.json&quot;});
+  //create the dataset w/ mappings
+  var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+    }
+  };
 
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;../../../cedar/data/charts/simple-bar-chart.json&quot;
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: &quot;#chart&quot;
   });
-
 
 
 &lt;/script&gt;
@@ -127,60 +138,150 @@
 
 
 <script>
-  //render
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: "#chart",
-    spec: "../../../cedar/data/charts/simple-bar-chart.json"
+  //create a cedar chart
+  var chart = new Cedar();
+
+  //create the specification
+  var spec = {
+  "inputs": [
+    {"name": "count", "type": ["numeric","string"], "required": true},
+    {"name": "group", "type": ["string"], "required": false}
+  ],
+  "template":{
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "X-Axis"
+      }
+    ],
+    "data": [
+      {
+        "name": "table",
+        "url": "{data}",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "height": 600,
+    "marks": [
+      {
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "width": {
+              "band": true,
+              "offset": -1,
+              "scale": "x"
+            },
+            "x": {
+              "field": "data.attributes.{group.field}",
+              "scale": "x"
+            },
+            "y": {
+              "field": "data.attributes.{count.field}_SUM",
+              "scale": "y"
+            },
+            "y2": {
+              "scale": "y",
+              "value": 0
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "red"
+            }
+          },
+          "update": {
+            "fill": {
+              "value": "steelblue"
+            }
+          }
+        },
+        "type": "rect"
+      }
+    ],
+    "padding": {
+      "bottom": 20,
+      "left": 80,
+      "right": 10,
+      "top": 10
+    },
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{group.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
+      },
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{count.field}_SUM"
+        },
+        "name": "y",
+        "nice": true,
+        "range": "height"
+      }
+    ],
+    "width": 850
+  }
+}
+
+  //assign to chart
+  chart.specification = spec;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
   });
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-bar.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-spec-inlined.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Simple Charts</h5>
+  <h5>Using Definitions</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from Url</a></li>
+      <li>In-lined</li>
     </ul>
   </nav>
 
-  <h5>Chart Templates</h5>
+  <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li>Chart-Template inlined</li>
-      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Load From Url</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-inlined.html">In-lined</a></li>
     </ul>
   </nav>
 
-  <h5>Charts</h5>
-  <nav>
-    <ul>
-      <li>Chart inlined</li>
-      <li>Chart from AGO</li>
-      <li>Chart from url</li>
-    </ul>
-  </nav>
-
-  <h5>Data</h5>
-  <nav>
-    <ul>
-      <li>Data from Service</li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
+  
   <h5>Events</h5>
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
@@ -191,8 +292,9 @@
       <li>Link to pop-over</li>
     </ul>
   </nav>
-   <a href="../../../cedar/examples/helper.html">Helper</a>
-   <a href="../../../cedar/examples/eventshelper.html">Evt Helper</a>
+
+   
+   
 </aside>
 
 </div>
