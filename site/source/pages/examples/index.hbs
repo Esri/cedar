@@ -12,7 +12,13 @@ layout: example.hbs
 {{#markdown}}
 ```html
 {{>example-code-header}}
+  var chart = new Cedar({
+    "definition":"{{assets}}data/definitions/dc-schools-scatter-chart.json"
+  });
 
+  chart.show({
+    elementId: "#chart",
+  });
 {{>example-code-footer}}
 ```
 {{/markdown}}
@@ -23,7 +29,7 @@ layout: example.hbs
   //Create a cedar chart, passing in a url to a defintion
   //a defintion allows a chart to be visualized AND manipulated
   var chart = new Cedar({
-    "definition":"{{assets}}data/charts/dc-schools-scatter-chart.json"
+    "definition":"{{assets}}data/definitions/dc-schools-scatter-chart.json"
   });
 
   chart.show({

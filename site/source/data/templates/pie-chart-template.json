@@ -17,7 +17,7 @@
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{count}_SUM"}
+          {"type": "pie", "value": "data.attributes.{count.field}_SUM"}
         ]
       }
     ],
@@ -25,7 +25,7 @@
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{count}_SUM"},
+        "domain": {"data": "table", "field": "data.attributes.{count.field}_SUM"},
         "range": [0,200]
       }
     ],

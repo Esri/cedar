@@ -15,6 +15,7 @@ module.exports = function(config) {
     files: [
       'bower_components/d3/d3.js',
       'bower_components/vega/vega.js',
+      'bower_components/underscore/underscore.js',
       'spec/**/*.spec.js',
       'src/cedar.js'
     ],

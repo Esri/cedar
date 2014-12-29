@@ -1,6 +1,9 @@
 'use strict';
 /**
  * Cedar
+ *
+ * Generic charting / visualization library for the ArcGIS Platform
+ * that leverages vega + d3 internally.
  */
 
 
@@ -23,10 +26,10 @@ var Cedar = function Cedar(options){
   this._events = [];
 
   //initialize the internal definition hash
-  this._definition = Cedar._getDefaultDefinition();
+  this._definition = Cedar._defaultDefinition();
 
   //the vega view aka the chart
-  this._view = {};
+  this._view = undefined;
 
   //queue to hold methods called while
   //xhrs are in progress
@@ -44,8 +47,8 @@ var Cedar = function Cedar(options){
     if(typeof opts.definition === 'object'){
       //hold onto the definition
       this._definition = opts.definition;
-    }else if(typeof opts.definition === 'string') {
-      //need to fetch the definition object
+    }else if(typeof opts.definition === 'string' ){ 
+      //assume it's a url (relative or abs) and fetch the definition object
       this._pendingXhr = true;
       Cedar.getJson(opts.definition, function(err,data){
         self._pendingXhr = false;
@@ -58,18 +61,18 @@ var Cedar = function Cedar(options){
   }
 
   //template
-  if(opts.template){
+  if(opts.specification){
     //is it an object or string(assumed to be url)
-    if(typeof opts.template === 'object'){
+    if(typeof opts.specification === 'object'){
       //hold onto the template
-      this._definition.template = opts.template;
+      this._definition.specification = opts.specification;
 
-    }else if(typeof opts.template === 'string') {
-      //need to fetch the template object
+    }else if(typeof opts.specification === 'string' ){ 
+      //assume it's a url (relative or abs) and fetch the template object
       this._pendingXhr = true;
-      Cedar.getJson(opts.template, function(err,data){
+      Cedar.getJson(opts.specification, function(err,data){
         self._pendingXhr = false;
-        self._definition.template = data; 
+        self._definition.specification = data; 
         self._purgeMethodQueue();
       });
     }else{
@@ -83,8 +86,19 @@ var Cedar = function Cedar(options){
   }
 
   /**
-   * Setup properties
+   * Properties
+   *
+   * ES 5.1 syntax, so IE 8 & lower won't work
+   * 
+   * If the val is a url, should we expect
+   * cedar to fetch the object? 
+   * 
+   * I'd say no... as that violates the principal 
+   * of least suprise. Also - cedar has a .getJSON
+   * helper method the dev should use.
+   * 
    */
+      
   Object.defineProperty(this, 'dataset', {
     get: function() {
         return this._definition.dataset;
@@ -94,17 +108,38 @@ var Cedar = function Cedar(options){
     }
   });
 
-  Object.defineProperty(this, 'template', {
+  Object.defineProperty(this, 'specification', {
     get: function() {
-        return this._definition.template;
+        return this._definition.specification;
     },
     set: function(val) {
-       this._definition.template = val;
+
+      this._definition.specification = val;
     }
   });
 
 };
 
+
+/**
+ * Inspect the current state of the object
+ * and determine if we have sufficient information
+ * to render the chart
+ * @return {object} Hash of the draw state + any missing requirements
+ */
+Cedar.prototype.canDraw = function(){
+
+  //dataset?
+  //dataset.url || dataset.data?
+  //dataset.mappings?
+  //specification?
+  //specification.template?
+  //specification.inputs?
+  //specification.inputs ~ dataset.mappings?
+  
+  return {drawable:true, errs:[]};
+
+};
 
 /**
  * Render a chart in the specified element
@@ -119,50 +154,81 @@ Cedar.prototype.show = function(options){
     this._addToMethodQueue('show', [options]);
 
   }else{
-    var err, self = this;
+
+    var err;
     //ensure we got an elementId
     if( !options.elementId ){
-      err= "Cedar.render requires options.elementId";
+      err= "Cedar.show requires options.elementId";
+    }
+    //TODO: check if element exists in the page
+  
+    //hold onto the id
+    this._elementId = options.elementId;
+
+    //hold onto the token
+    if(options.token){
+      this._token = options.token;
     }
 
-    //if we have any errors, fire callback or throw
     if( err ){
-      //TODO: make this an error object
-      throw err;
+      throw new Error( err );
     }
-
-    try{
-      //extend the mappings w the data
-      var compiledMappings = Cedar._compileMappings(this._definition.dataset);
-
-      //compile the template + dataset --> vega spec
-      var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
-      //use vega to parse the spec 
-      //it will handle the spec as an object or url
-      vg.parse.spec(spec, function(chartCtor) { 
-
-        //create the view
-        self._view = chartCtor({el: options.elementId});
-        
-        //render into the element
-        self._view.update(); 
-
-        //attach event proxies
-        self.attach(self._view);
-
-      });
+    var chk = this.canDraw();
+    if(chk.drawable){
+      //update centralizes the spec compilation & drawing
+      this.update();  
+    }else{
+      //report the issues
+      var errs = chk.issues.join(',');
+      throw new Error('Chart can not be drawn because: ' + errs);  
     }
-    catch(ex){
-      throw(ex);
-    }
+    
   }
 };
 
+/**
+ * Render the chart using the internal state
+ * Should be called after a user modifies the 
+ * of the dataset, query, mappings or template
+ */
+Cedar.prototype.update = function(){
+  var self = this;
+  
+  if(this._view){
+    //remove handlers
+    //TODO Remove existing handlers
+    this._remove(this._view);
+  }
+  try{
+    //extend the mappings w the data
+    var compiledMappings = Cedar._compileMappings(this._definition.dataset);
+
+    //compile the template + dataset --> vega spec
+    var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
+    //use vega to parse the spec 
+    //it will handle the spec as an object or url
+    vg.parse.spec(spec, function(chartCtor) { 
+
+      //create the view
+      self._view = chartCtor({el: self._elementId});
+      
+      //render into the element
+      self._view.update(); 
+
+      //attach event proxies
+      self._attach(self._view);
+
+    });
+  }
+  catch(ex){
+    throw(ex);
+  }
+};
 
 /**
  * Attach the generic proxy handlers to the chart view
  */
-Cedar.prototype.attach = function(view){
+Cedar.prototype._attach = function(view){
 
   view.on('mouseover', this._handler('mouseover'));
   view.on('mouseout', this._handler('mouseout'));
@@ -170,38 +236,16 @@ Cedar.prototype.attach = function(view){
   
 };
 
-
 /**
- * Generate chart json by merging a chart template with
- * a set of input mappings
- * @param  {object} chartTemplate Cedar Chart Template object
- * @param  {array} mappings      Array of mappings between the template's inputs and fields in a dataset
- * @return {object}              Cedar chart json
+ * Remove all event handlers from the view
  */
-// Cedar.prototype.create = function( chartTemplate, serviceUrl, mappings ){
-//   //TODO: add more validation of chart template object
-//   if( chartTemplate !== null && typeof chartTemplate === 'object'){
-//     //check that we have mappings for the inputs 
-//     var missingFields = this._validateMappings(chartTemplate.inputs, mappings);
-//     if(missingFields.length > 0){
-//       throw new Error( "Missing mappings for " + missingFields.join(',') );
-//     }
+Cedar.prototype._remove = function(view){
 
-//     //hold onto the mappings
-//     this.mappings = mappings;
-//     this._template = chartTemplate;
-
-//     //add the query string to the serviceUrl
-//     var dataUrl = Cedar._generateServiceQueryUrl(serviceUrl, mappings);
-//     //append that as data
-//     mappings.data = dataUrl;
-//     //interpolate the template and return the object
-//     return  JSON.parse(Cedar._supplant(JSON.stringify(chartTemplate), mappings)); 
+  view.off('mouseover');
+  view.off('mouseout');
+  view.off('click');
   
-//   }else{
-//     throw new Error('Cedar.generateChart requires a chart template object. You can use Cedar.getJson() to fetch a from a remote location.');
-//   }
-// };
+};
 
 /**
  * Helper function that validates that the 
@@ -227,71 +271,36 @@ Cedar._validateMappings = function(inputs, mappings){
 /**
  * Return a default definition object
  */
-Cedar._getDefaultDefinition = function(){
+Cedar._defaultDefinition = function(){
   var defn = {
     "dataset": {
-      "url":"",
-      "query":{
-        "where": "1=1",
-        "returnGeometry": false,
-        "returnDistinctValues": false,
-        "returnIdsOnly": false,
-        "returnCountOnly": false,
-        "outFields": "*",
-        "f": "json"
-      }
+      "url":""
     },
     "template":{}
   };
+
+  defn.dataset.query = Cedar._defaultQuery();
+
   return defn;
 };
 
-
 /**
- * Compile a template + dataSource + mappings 
- * into a chart spec.
+ * Default Query Object
  */
-
-// Cedar.prototype.cook = function(template, dataSource, mappings){
-  
-//   var missingFields = Cedar._validateMappings(template.inputs, mappings);
-//   if(missingFields.length > 0){
-//     throw new Error( "Missing mappings for " + missingFields.join(',') );
-//   }
-
-//   //create a chart json object from the inputs
-//   var chart = {
-//     "configuration":{
-//       "inputs": template.inputs,
-//       "data": dataSource,
-//       "mappings": mappings
-//     },
-//     "template":template
-//   };
-//   //remove the inputs from the template
-//   if(chart.template.inputs){
-//     delete chart.template.inputs;
-//   }
-
-//   //assign to the chart property
-//   this.chart = chart;
-
-//   var dataUrl = Cedar._generateServiceQueryUrl(dataSource, mappings);
-
-//   //append that as data
-//   mappings.dataUrl = dataUrl;
-
-//   //compile the chart into a vega spec
-//   return JSON.parse(Cedar._supplant(JSON.stringify(chart.template), mappings));
-
-// };
-
-/**
- * Re-Render the chart using the internal state of things...
- */
-Cedar.prototype.update = function(){
-
+Cedar._defaultQuery = function(){
+  var defaultQuery = {
+    "where": "1=1",
+    "returnGeometry": false,
+    "returnDistinctValues": false,
+    "returnIdsOnly": false,
+    "returnCountOnly": false,
+    "outFields": "*",
+    "f": "json"
+  };
+  return defaultQuery;
 };
+
+
 
 /**
  * Generic event handler proxy
@@ -323,6 +332,8 @@ Cedar.prototype.on = function(evtName, callback){
 Cedar.prototype.off = function(evtName /*, callback */){
   console.log('Handler for ' + evtName +' removed...');
 };
+
+
 /**
  * Creates an entry in the method queue, excuted 
  * once a pending xhr is completed 
@@ -330,22 +341,20 @@ Cedar.prototype.off = function(evtName /*, callback */){
 Cedar.prototype._addToMethodQueue = function(name, args){
   this._methodQueue.push({ method: name, args: args });
 };
+
 /**
- * empties the method queue
- * @return {[type]} [description]
+ * empties the method queue by calling the queued methods
+ * This helps build a more syncronous api, while still
+ * doing async things in the code
  */
 Cedar.prototype._purgeMethodQueue = function(){
   var self = this;
   if(self._methodQueue.length > 0){
-    console.log('    Purge method queue'); 
+
     for(var i=0;i<self._methodQueue.length;i++){
       var action = self._methodQueue[i];
-      console.log('   * methodQueue Calling ' + action.method);
       self[action.method].apply(self, action.args);  
     }
-    // _.each(this.methodQueue, function(action, i){
-      
-    // });
   }
 };
 
@@ -363,90 +372,41 @@ Cedar.getJson = function( url, callback ){
   });
 };
 
-/**
- * Generate a correct service url w/ query string
- * so that vega can fetch data
- * @param  {object} params Hash of params for the query
- * @return {string}        Data url
- */
-// Cedar._generateServiceQueryUrl = function(dataSource, mappings) {
 
-//   var defaultQuery = {
-//     "where": "1=1",
-//     "returnGeometry": false,
-//     "returnDistinctValues": false,
-//     "returnIdsOnly": false,
-//     "returnCountOnly": false,
-//     "outFields": "*",
-//     "f": "json"
-//   };
-
-//   //ensure that we have a query
-//   if(!dataSource.query){
-//     dataSource.query = defaultQuery;
-//   }else{
-//     //TODO: use a microlib instead of underscore
-//     _.defaults(dataSource.query, defaultQuery);
-//   }
-
-//   // add any aggregations
-//   if(mappings.group) {
-//     dataSource.query.groupByFieldsForStatistics = mappings.group.field;
-//   }
-  
-//   if(mappings.count) {
-//     dataSource.query.orderByFields = mappings.count.field + "_SUM";
-//     dataSource.query.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": mappings.count.field, "outStatisticFieldName": mappings.count.field + "_SUM"}]);
-//   }
-
-//   var dataUrl = dataSource.url + "/query?" + this._serializeQueryParams(dataSource.query);
-  
-//   return dataUrl;
-// };
 
 
 /**
- * compile the data url into the mappings
+ * Compile the data url into the mappings
  */
 Cedar._compileMappings = function(dataset){
 
   //clone the query so we don't modifiy it
-  var compiledQuery; 
-
-  //TODO: centralize the default query
-  var defaultQuery = {
-    "where": "1=1",
-    "returnGeometry": false,
-    "returnDistinctValues": false,
-    "returnIdsOnly": false,
-    "returnCountOnly": false,
-    "outFields": "*",
-    "f": "json"
-  };
+  var mergedQuery; 
+  var defaultQuery = Cedar._defaultQuery();
   
   //ensure that we have a query
   if(dataset.query){
-    compiledQuery = _.clone(dataset.query);
+    mergedQuery = _.clone(dataset.query);
     //ensure we have all needed properties on the query
     //TODO: use a microlib instead of underscore
-    _.defaults(compiledQuery, defaultQuery);
+    _.defaults(mergedQuery, defaultQuery);
   }else{
-    compiledQuery = defaultQuery;
+    mergedQuery = defaultQuery;
     
   }
 
   // add any aggregations
   if(dataset.mappings.group) {
-    compiledQuery.groupByFieldsForStatistics = dataset.mappings.group.field;
+    mergedQuery.groupByFieldsForStatistics = dataset.mappings.group.field;
   }
   
   if(dataset.mappings.count) {
-    compiledQuery.orderByFields = dataset.mappings.count.field + "_SUM";
-    compiledQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
+    mergedQuery.orderByFields = dataset.mappings.count.field + "_SUM";
+    mergedQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
   }
 
   //compile the url
-  var dataUrl = dataset.url + "/query?" + this._serializeQueryParams(compiledQuery);
+  var dataUrl = dataset.url + "/query?" + this._serializeQueryParams(mergedQuery);
   
   //clone the mappings and extend it
   //TODO: add cloning microlib
@@ -470,7 +430,7 @@ Cedar._supplant = function( tmpl, params ){
   console.log('Mappings: ', params);
   return tmpl.replace(/{([^{}]*)}/g,
     function (a, b) {
-      var r = Cedar._getTokenValue(params, b);//params[b];
+      var r = Cedar._getTokenValue(params, b);
       return typeof r === 'string' || typeof r === 'number' ? r : a;
     }
   );
