@@ -4,7 +4,9 @@
   "description": "Visualization framework for the ArcGIS Platform",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepublish": "node -e \"require('grunt').tasks(['prepublish']);\"",
+    "start": "node -e \"require('grunt').tasks(['default']);\"",
+    "test": "node -e \"require('grunt').tasks(['test']);\""
   },
   "repository": {
     "type": "git",
@@ -52,11 +54,10 @@
     "karma-safari-launcher": "^0.1.1",
     "karma-sauce-launcher": "^0.2.10",
     "load-grunt-tasks": "^0.4.0",
-    "sinon": "^1.11.1"
+    "sinon": "^1.11.1",
+    "browserify": "~8.0.2"
   },
-  "scripts": {
-    "prepublish": "node -e \"require('grunt').tasks(['prepublish']);\"",
-    "start": "node -e \"require('grunt').tasks(['default']);\"",
-    "test": "node -e \"require('grunt').tasks(['test']);\""
+  "dependencies": {
+    "underscore": "~1.7.0"
   }
 }

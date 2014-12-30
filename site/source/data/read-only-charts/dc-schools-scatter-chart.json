@@ -1,28 +1,5 @@
 {
-  "inputs": [
-    {
-      "name": "x",
-      "type": [
-        "numeric"
-      ],
-      "required": true
-    },
-    {
-      "name": "y",
-      "type": [
-        "numeric"
-      ],
-      "required": true
-    },
-    {
-      "name": "color",
-      "type": [
-        "string"
-      ],
-      "required": true
-    }
-  ],
-  "width": 850,
+  "width": 500,
   "height": 500,
   "data": [
     {
@@ -80,23 +57,6 @@
       "offset": 5,
       "ticks": 5,
       "title": "SQUARE_FOOTAGE"
-    }
-  ],
-  "legends": [
-    {
-      "fill": "c",
-      "title": "FACUSE ",
-      "offset": 0,
-      "properties": {
-        "symbols": {
-          "fillOpacity": {
-            "value": 0.5
-          },
-          "stroke": {
-            "value": "transparent"
-          }
-        }
-      }
     }
   ],
   "marks": [

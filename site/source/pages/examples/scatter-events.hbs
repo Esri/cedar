@@ -47,7 +47,6 @@ layout: example.hbs
     <li>Type: <%=FACUSE%></li>
     <li>Address: <%=ADDRESS%></li>
     <li>Phone: <%=PHONE%></li>
-    <li>Web: <%=WEB_URL%></li>
   </ul>
 
 </script>
@@ -63,15 +62,14 @@ layout: example.hbs
     console.log('caught event ' + data);
   }
 
-
-
-  var chart = new Cedar();
+  var chart = new Cedar({
+    "definition":"{{assets}}data/definitions/scatter-events.json"
+  });
   //attach handlers before the view exists
   chart.on('mouseover', report);
   
   chart.show({
-    elementId: "#chart",
-    spec: "{{assets}}data/charts/evt-scatter-chart.json"
+    elementId: "#chart"
   });
   //and after
   chart.on('mouseout', report);

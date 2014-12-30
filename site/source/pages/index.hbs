@@ -13,12 +13,13 @@ layout: page.hbs
 
 <script>
 
-var cedar = new Cedar();
-cedar.show({
-    elementId: "#chart",
-    spec: "{{assets}}data/charts/home-scatter-chart.json"
+ var chart = new Cedar({
+    "definition":"{{assets}}data/definitions/home-scatter-chart.json"
   });
 
+  chart.show({
+    elementId: "#chart",
+  });
 
 
 
