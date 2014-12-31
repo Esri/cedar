@@ -60,6 +60,10 @@ var Cedar = function Cedar(options){
     }
   }
 
+  if(opts.override) {
+    this._definition.override = opts.override;
+  }
+
   //template
   if(opts.specification){
     //is it an object or string(assumed to be url)
@@ -113,10 +117,18 @@ var Cedar = function Cedar(options){
         return this._definition.specification;
     },
     set: function(val) {
-
       this._definition.specification = val;
     }
   });
+
+  Object.defineProperty(this, 'override', {
+    get: function() {
+        return this._definition.override;
+    },
+    set: function(val) {
+      this._definition.override = val;
+    }
+  });  
 
 };
 
@@ -205,6 +217,10 @@ Cedar.prototype.update = function(){
 
     //compile the template + dataset --> vega spec
     var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
+
+    // merge in user specified style overrides
+    spec = Cedar._mergeRecursive(spec, this._definition.override);
+
     //use vega to parse the spec 
     //it will handle the spec as an object or url
     vg.parse.spec(spec, function(chartCtor) { 
@@ -435,6 +451,31 @@ Cedar._supplant = function( tmpl, params ){
     }
   );
 };
+
+/*
+* Recursively merge properties of two objects 
+*/
+Cedar._mergeRecursive = function(obj1, obj2) {
+  for (var p in obj2) {
+    try {
+      // Property in destination object set; update its value.
+      if ( obj2[p].constructor===Object || obj2[p].constructor===Array) {
+        obj1[p] = Cedar._mergeRecursive(obj1[p], obj2[p]);
+
+      } else {
+        obj1[p] = obj2[p];
+
+      }
+
+    } catch(e) {
+      // Property in destination object not set; create it and set its value.
+      obj1[p] = obj2[p];
+
+    }
+  }
+
+  return obj1;
+}
 
 /**
  * Get the value of a token from a hash

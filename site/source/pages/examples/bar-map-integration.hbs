@@ -6,10 +6,10 @@ layout: example.hbs
 <script src="http://js.arcgis.com/3.12/"></script>
 
 
-<h1>Bar Chart + JSAPI Map Interaction</h1>
+<h1>Bar Chart + Map Interaction</h1>
 
-<div id="map"></div>
 <div id="chart"></div>
+<div id="map"></div>
 
 
 
@@ -49,7 +49,15 @@ layout: example.hbs
 
     map.addLayer(featureLayer);
     //create a cedar chart
-    var chart = new Cedar({"specification":"{{assets}}data/templates/bar-chart-template.json"});
+    var chart = new Cedar({"specification":"../data/templates/bar-chart-spec.json"});
+
+    //set custom colors
+    chart.override = {
+      "height": 400,
+      "marks": [{"properties": {
+        "hover": {"fill": {"r": {"value": 210}, "g": {"value": 105}, "b":{"value": 30}}},
+        "update": {"fill": {"value": "#c15000"}}}}]};
+
     //create the dataset w/ mappings
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
@@ -73,10 +81,10 @@ layout: example.hbs
     function onChartHover(d) {
       
       //get selected value for attribute in chart marker
-      var selected = d["ZIP_CODE"];
+      var selected = d[dataset.mappings.group.field];
       
       //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, "ZIP_CODE");
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
 
       //add symbol selected value
       renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
@@ -125,103 +133,14 @@ layout: example.hbs
     map.addLayer(featureLayer);
     
     //create a cedar chart
-    var chart = new Cedar();
+    var chart = new Cedar({"specification":"../data/templates/bar-chart-spec.json"});
 
-    //create the specification
-    var spec = {
-    "inputs": [
-      {"name": "count", "type": ["numeric","string"], "required": true},
-      {"name": "group", "type": ["string"], "required": false}
-    ],
-    "template":{
-      "axes": [
-        {
-          "type": "x",
-          "scale": "x",
-          "title": "X-Axis"
-        }
-      ],
-      "data": [
-        {
-          "name": "table",
-          "url": "{data}",
-          "format": {
-            "property": "features"
-          }
-        }
-      ],
-      "height": 600,
-      "marks": [
-        {
-          "from": {
-            "data": "table"
-          },
-          "properties": {
-            "enter": {
-              "width": {
-                "band": true,
-                "offset": -1,
-                "scale": "x"
-              },
-              "x": {
-                "field": "data.attributes.{group.field}",
-                "scale": "x"
-              },
-              "y": {
-                "field": "data.attributes.{count.field}_SUM",
-                "scale": "y"
-              },
-              "y2": {
-                "scale": "y",
-                "value": 0
-              }
-            },
-            "hover": {
-              "fill": {
-                "value": "#d2691e"
-              }
-            },
-            "update": {
-              "fill": {
-                "value": "#c15000"
-              }
-            }
-          },
-          "type": "rect"
-        }
-      ],
-      "padding": {
-        "bottom": 20,
-        "left": 80,
-        "right": 10,
-        "top": 10
-      },
-      "scales": [
-        {
-          "domain": {
-            "data": "table",
-            "field": "data.attributes.{group.field}"
-          },
-          "name": "x",
-          "range": "width",
-          "type": "ordinal"
-        },
-        {
-          "domain": {
-            "data": "table",
-            "field": "data.attributes.{count.field}_SUM"
-          },
-          "name": "y",
-          "nice": true,
-          "range": "height"
-        }
-      ],
-      "width": 850
-    }
-  }
+    chart.override = {
+      "height": 400,
+      "marks": [{"properties": {
+        "hover": {"fill": {"r": {"value": 210}, "g": {"value": 105}, "b":{"value": 30}}},
+        "update": {"fill": {"value": "#c15000"}}}}]};
 
-    //assign to chart
-    chart.specification = spec;
 
     //create the dataset w/ mappings
     var dataset = {
@@ -247,10 +166,10 @@ layout: example.hbs
     function onChartHover(d) {
       
       //get selected value for attribute in chart marker
-      var selected = d["ZIP_CODE"];
+      var selected = d[dataset.mappings.group.field];
       
       //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, "ZIP_CODE");
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
 
       //add symbol selected value
       renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
