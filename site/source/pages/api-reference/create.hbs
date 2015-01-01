@@ -4,20 +4,42 @@ layout: documentation.hbs
 ---
 
 
-## Cedar.create( template, mappings )
-Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the `.show()` method. This will be used in tools that allow a user to associate a chart template with data + styling.
+## Cedar( object )
+Create a new chart using an object that can include specification from a template, dataset and mappings, and style overrides.  This is optional and any of the parameters can be later specified through accessors. 
 
-*NOTE*: If the data is passed in as an array, it will be embedded into the chart json that is emitted. (not implemented yet)
+The chart will not appear until `Cedar.show` is called.
 
-`Cedar.create(options)`
+`new Cedar(options)`
 
 #### Arguments
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `options.template` | <`object`> | yes | Cedar template json. |
-| `options.mappings` | <`object`> | yes | Hash of field mappings. |
-| `options.data` | <`url | array`> | yes | data |
+| `options.specification` | <`string | object`> | no | URL to a Vega extended template or an inline Vega object. |
+| `options.dataset` | <`object`> | no | Hash of layer URL and field to input mappings as required by the `specification`. |
+| `options.override` | <`object`> | no | Object that is merged with the `specification.template` for runtime styling. |
 
 
 ### Examples
+
+```
+var chart = new Cedar({"specification":"{{assets}}data/templates/bar-chart-template.json"});
+
+//create the dataset w/ mappings
+var dataset = {
+  "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+  "mappings":{
+    "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+    "count": {"field":"TOTAL_STUD","label":"Total Students"}
+  }
+};
+
+//assign to the chart
+chart.dataset = dataset;
+
+
+// make the chart visible by attaching it to a DOM node
+chart.show({
+  elementId: "#chart"
+});
+```

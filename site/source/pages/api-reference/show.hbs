@@ -3,39 +3,28 @@ title: Render
 layout: documentation.hbs
 ---
 
-## Cedar.show( options )
-Create `vega view` (aka chart) attached to the specified dom node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)
+## Cedar.show( object )
+Create `vega view` (aka chart) attached to the specified DOM node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)
 
-`Cedar.show(options, callback)`
+`chart.show(options)`
 
-#### Arguments &amp; Options
+#### Arguments
+
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `options.domId` | `string` | yes | Id of the DOM node to render the chart into. |
-| `options.chart` | `object or url` | yes | Cedar chart object, or url to a cedar chart |
-| `options.token` | `string` |  no | token to use if item / url is on a secured server |
+| `options.elementId` | `string` | yes | Id of the DOM node to render the chart into. |
 
 #### Example Code
 ```
-var options = {
-  elementId: "chartContainer",
-  spec: myChartJsonObj
-};
+<div id='chartDiv'></div>
 
-var myChart;
+<script>
+var chart = new Cedar({'specification': 'http://example.org/url_to_specification.json'})
+
 //create and render a chart
-Cedar.show(options, function(chart){
-  myChart = chart;
-  //attach event handlers
-  myChart
-     .on('mouseover', function(evt){...})
-     .on('mouseout',function(evt){...})
+chart.show({
+  'elementId': '#chartDiv'
 });
-//elsewhere...
-$('#someButton').on('click', function(){
-  //remove handlers
-  myChart
-    .off('mouseover')
-    .off('mouseout');
-});
+
+</script>
 ```
