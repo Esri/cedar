@@ -23,7 +23,7 @@
         "range": "width",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{x.field}"
+          "field": "data.attributes.{x}"
         }
       },
       {
@@ -32,7 +32,7 @@
         "range": "height",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{y.field}"
+          "field": "data.attributes.{y}"
         }
       },
       {
@@ -40,7 +40,7 @@
         "type": "ordinal",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{color.field}"
+          "field": "data.attributes.{color}"
         },
         "range": [
           "#800",
@@ -55,20 +55,20 @@
         "scale": "x",
         "offset": 5,
         "ticks": 5,
-        "title": "{x.label}"
+        "title": "{x}"
       },
       {
         "type": "y",
         "scale": "y",
         "offset": 5,
         "ticks": 5,
-        "title": "{y.label}"
+        "title": "{y}"
       }
     ],
     "legends": [
       {
         "fill": "c",
-        "title": "{color.field} ",
+        "title": "{color} ",
         "offset": 0,
         "properties": {
           "symbols": {
@@ -92,15 +92,15 @@
           "enter": {
             "x": {
               "scale": "x",
-              "field": "data.attributes.{x.field}"
+              "field": "data.attributes.{x}"
             },
             "y": {
               "scale": "y",
-              "field": "data.attributes.{y.field}"
+              "field": "data.attributes.{y}"
             },
             "fill": {
               "scale": "c",
-              "field": "data.attributes.{color.field}"
+              "field": "data.attributes.{color}"
             },
             "fillOpacity": {
               "value": 0.5

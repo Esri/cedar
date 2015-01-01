@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
+  <script type="text/javascript" src="../js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -54,15 +54,15 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+      <a class="navbar-brand" href="../">cedar.js</a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../../../cedar/examples/">Examples</a></li>
-        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
+        <li><a href="../examples/">Examples</a></li>
+        <li><a href="../api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -110,11 +110,14 @@
 
 
 
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;../../../cedar/data/charts/simple-scatter-chart.json&quot;
+  var chart = new Cedar({
+    &quot;definition&quot;:&quot;../data/definitions/dc-schools-scatter-chart.json&quot;
   });
+
+  chart.show({
+    elementId: &quot;#chart&quot;,
+  });
+
 
 
 
@@ -126,72 +129,57 @@
 
 
 <script>
-  var cedar = new Cedar();
-  cedar.show({
-    elementId: "#chart",
-    spec: "../../../cedar/data/charts/simple-scatter-chart.json"
+  var chart = new Cedar({
+    "definition":"../data/definitions/dc-schools-scatter-chart.json"
   });
+
+  chart.show({
+    elementId: "#chart",
+  });
+
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-scatter.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/scatter-def-url.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Simple Charts</h5>
+  <h5>Using Definitions</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/simple-bar.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/simple-scatter.html">Scatter Plot</a></li>
+      <li><a href="../examples/scatter-def-url.html">Load from Url</a></li>
+      <li>In-lined</li>
     </ul>
   </nav>
 
-  <h5>Chart Templates</h5>
+  <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li>Chart-Template inlined</li>
-      <li><a href="../../../cedar/examples/template-from-url.html">Chart-Template from url</a></li>
+      <li><a href="../examples/bar-spec-url.html">Load From Url</a></li>
+      <li><a href="../examples/bar-spec-inlined.html">In-lined</a></li>
     </ul>
   </nav>
 
-  <h5>Charts</h5>
-  <nav>
-    <ul>
-      <li>Chart inlined</li>
-      <li>Chart from AGO</li>
-      <li>Chart from url</li>
-    </ul>
-  </nav>
-
-  <h5>Data</h5>
-  <nav>
-    <ul>
-      <li>Data from Service</li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
-    </ul>
-  </nav>
+  
   <h5>Events</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
-      <li>Data passed in</li>
-      <li>Data in Chart</li>
+      <li><a href="../examples/scatter-events.html">Scatter Plot Events</a></li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
   <nav>
     <ul>
-      <li>Link to JS API Map</li>
-      <li>Link to Leaflet Map</li>
+      <li><a href="../examples/bar-map-integration.html">Link to JS API Map</a></li>
+      <li><a href="../examples/bar-map-leaflet-integration.html">Link to Leaflet Map</a></li>
       <li>Link to pop-over</li>
     </ul>
   </nav>
-   <a href="../../../cedar/examples/helper.html">Helper</a>
-   <a href="../../../cedar/examples/eventshelper.html">Evt Helper</a>
+
+   
+   
 </aside>
 
 </div>
@@ -202,6 +190,6 @@
 </div>
 
   </div>
-  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  <!-- <script src="../js/script.js"></script>-->
   </body>
 </html>

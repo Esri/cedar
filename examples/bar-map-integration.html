@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Cedar -->
+
+  <!-- esri Cedar -->
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+  <script type="text/javascript" src="../js/cedar-core.js"></script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', 'UA-44963317-3', 'auto');
+    // ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../">cedar.js</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../examples/">Examples</a></li>
+        <li><a href="../api-reference/">Api Documentation</a></li>
+        <li><a href="https://github.com/esridc/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+  
+
+<div class="container white">
+  
+
+
+
+<div class="col-lg-10">
+  
+
+<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="http://js.arcgis.com/3.12/"></script>
+
+
+<h1>Bar Chart + Map Interaction</h1>
+
+<div id="chart"></div>
+<div id="map"></div>
+
+
+
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=utf-8 /&gt;
+  &lt;title&gt;&lt;/title&gt;
+  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
+
+  &lt;!-- Load D3 --&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- Load Cedar --&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+
+
+
+
+  require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
+    &quot;esri/renderers/SimpleRenderer&quot;,  &quot;esri/renderers/UniqueValueRenderer&quot;, &quot;esri/Color&quot;, &quot;dojo/domReady!&quot;], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([220,220,220]), 0.5),
+      new Color([210,105,30,0.55]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer(&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: [&quot;*&quot;]
+    });
+
+    //create esri map
+    var map = new Map(&quot;map&quot;, {
+      center: [-77, 38.9],
+      zoom: 11,
+      basemap: &quot;topo&quot;,
+      smartNavigation: false
+    });
+
+    map.on(&#39;load&#39;, function() {
+      map.disableScrollWheelZoom();
+    });
+
+    featureLayer.setRenderer(rend);
+
+    map.addLayer(featureLayer);
+    //create a cedar chart
+    var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar-chart-spec.json&quot;});
+
+    //set custom colors
+    chart.override = {
+      &quot;height&quot;: 400,
+      &quot;marks&quot;: [{&quot;properties&quot;: {
+        &quot;hover&quot;: {&quot;fill&quot;: {&quot;r&quot;: {&quot;value&quot;: 210}, &quot;g&quot;: {&quot;value&quot;: 105}, &quot;b&quot;:{&quot;value&quot;: 30}}},
+        &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c15000&quot;}}}}]};
+
+    //create the dataset w/ mappings
+    var dataset = {
+      &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+      &quot;mappings&quot;:{
+        &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+        &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+      }
+    };
+
+    //assign to the chart
+    chart.dataset = dataset;
+
+    //show the chart
+    chart.show({
+      elementId: &quot;#chart&quot;
+    });
+
+    //CHART EVENTS
+    chart.on(&#39;mouseover&#39;, onChartHover);
+
+    function onChartHover(d) {
+
+      //get selected value for attribute in chart marker
+      var selected = d[dataset.mappings.group.field];
+
+      //create renderer
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+
+      //add symbol selected value
+      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
+
+      featureLayer.setRenderer(renderer);
+      featureLayer.refresh();
+
+    } 
+  });
+
+
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+
+
+<script>
+
+  require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([220,220,220]), 0.5),
+      new Color([210,105,30,0.55]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: ["*"]
+    });
+
+    //create esri map
+    var map = new Map("map", {
+      center: [-77, 38.9],
+      zoom: 11,
+      basemap: "topo",
+      smartNavigation: false
+    });
+
+    map.on('load', function() {
+      map.disableScrollWheelZoom();
+    });
+
+    featureLayer.setRenderer(rend);
+    map.addLayer(featureLayer);
+    
+    //create a cedar chart
+    var chart = new Cedar({"specification":"../data/templates/bar-chart-spec.json"});
+
+    chart.override = {
+      "height": 400,
+      "marks": [{"properties": {
+        "hover": {"fill": {"r": {"value": 210}, "g": {"value": 105}, "b":{"value": 30}}},
+        "update": {"fill": {"value": "#c15000"}}}}]};
+
+
+    //create the dataset w/ mappings
+    var dataset = {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "mappings":{
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    };
+
+    //assign to the chart
+    chart.dataset = dataset;
+
+    //show the chart
+    chart.show({
+      elementId: "#chart"
+    });
+    
+
+    //CHART EVENTS
+    chart.on('mouseover', onChartHover);
+
+    function onChartHover(d) {
+      
+      //get selected value for attribute in chart marker
+      var selected = d[dataset.mappings.group.field];
+      
+      //create renderer
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+
+      //add symbol selected value
+      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
+
+      featureLayer.setRenderer(renderer);
+      featureLayer.refresh();
+
+    } 
+
+    //MAP EVENTS
+    featureLayer.on('mouse-over', function(d) {
+      var val = d.graphic.attributes["ZIP_CODE"];
+    })
+
+  });
+
+</script>
+  <div class="wrap">
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-map-integration.hbs">Edit this sample on GitHub</a></p>
+  </div>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../examples/scatter-def-url.html">Load from Url</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+
+  <h5>Using Specifications</h5>
+  <nav>
+    <ul>
+      <li><a href="../examples/bar-spec-url.html">Load From Url</a></li>
+      <li><a href="../examples/bar-spec-inlined.html">In-lined</a></li>
+    </ul>
+  </nav>
+
+  
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../examples/scatter-events.html">Scatter Plot Events</a></li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li><a href="../examples/bar-map-integration.html">Link to JS API Map</a></li>
+      <li><a href="../examples/bar-map-leaflet-integration.html">Link to Leaflet Map</a></li>
+      <li>Link to pop-over</li>
+    </ul>
+  </nav>
+
+   
+   
+</aside>
+
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  </div>
+  <!-- <script src="../js/script.js"></script>-->
+  </body>
+</html>

@@ -81,9 +81,11 @@
   
 
 
-  <h1>Templates <small>Load template from a json file</small></h1>
-  
-  <div id="chart"></div>
+<h1>Bar Chart: Inlined Specification </h1>
+
+<div id="chart"></div>
+
+
 
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
@@ -109,7 +111,24 @@
 
 
 
+//create a cedar chart
+  var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar-chart-template.json&quot;});
+  //create the dataset w/ mappings
+  var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+    }
+  };
 
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: &quot;#chart&quot;
+  });
 
 
 &lt;/script&gt;
@@ -118,44 +137,125 @@
 
 
 
+<script>
+  //create a cedar chart
+  var chart = new Cedar();
 
-<script>  
-  var cedar = new Cedar();
+  //create the specification
+  var spec = {
+  "inputs": [
+    {"name": "count", "type": ["numeric","string"], "required": true},
+    {"name": "group", "type": ["string"], "required": false}
+  ],
+  "template":{
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "X-Axis"
+      }
+    ],
+    "data": [
+      {
+        "name": "table",
+        "url": "{data}",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "height": 600,
+    "marks": [
+      {
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "width": {
+              "band": true,
+              "offset": -1,
+              "scale": "x"
+            },
+            "x": {
+              "field": "data.attributes.{group.field}",
+              "scale": "x"
+            },
+            "y": {
+              "field": "data.attributes.{count.field}_SUM",
+              "scale": "y"
+            },
+            "y2": {
+              "scale": "y",
+              "value": 0
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "red"
+            }
+          },
+          "update": {
+            "fill": {
+              "value": "steelblue"
+            }
+          }
+        },
+        "type": "rect"
+      }
+    ],
+    "padding": {
+      "bottom": 20,
+      "left": 80,
+      "right": 10,
+      "top": 10
+    },
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{group.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
+      },
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{count.field}_SUM"
+        },
+        "name": "y",
+        "nice": true,
+        "range": "height"
+      }
+    ],
+    "width": 850
+  }
+}
 
-  var dataSource = {
-    url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  };
+  //assign to chart
+  chart.specification = spec;
 
-  var fieldMappings = {
-    "x": "POPULATION_ENROLLED_2008",
-    "y": "SQUARE_FOOTAGE",
-    "color":"FACUSE"
-  };
-  
-  var tmplUrl = "../data/templates/scatter-template-v2.json";
-  
-  //use helper to get the template...
-  Cedar.getJson(tmplUrl, function(err,template){
-    if(err){
-      console.error(err);
-      return;
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
     }
-    //cook the spec
-    var chartJson = cedar.cook(template, dataSource, fieldMappings);
-    console.info()
-    var opts = {
-      elementId: "#chart",
-      spec: chartJson
-    };
+  };
 
-    //render
-    cedar.show( opts );
+  //assign to the chart
+  chart.dataset = dataset;
 
+  //show the chart
+  chart.show({
+    elementId: "#chart"
   });
-
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/template-from-url.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-spec-inlined.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
