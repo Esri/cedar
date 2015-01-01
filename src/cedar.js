@@ -475,7 +475,7 @@ Cedar._mergeRecursive = function(obj1, obj2) {
   }
 
   return obj1;
-}
+};
 
 /**
  * Get the value of a token from a hash
