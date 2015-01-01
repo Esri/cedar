@@ -15,8 +15,8 @@ layout: example.hbs
 
 <h1>Bar Chart + Esri Leaflet Map Interaction</h1>
 
-<div id="map"></div>
 <div id="chart"></div>
+<div id="map"></div>
 
 
 
@@ -24,196 +24,16 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
   
-  var map = L.map('map').setView([38.9,-77], 11);
+   //create a cedar chart
+  var chart = new Cedar({"specification":"../data/templates/bar-chart-spec.json"});
+  var style = {
+      "height": 400,
+      "width": 850,
+      "marks": [{"properties": {
+        "hover": {"fill": {"value": "#c15000"}},
+        "update": {"fill": {"value": "#0079c1"}}}}]};
 
-  var geojsonMarkerOptions = {
-    radius: 8,
-    fillColor: "#0079c1",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-  };
-
-  L.esri.basemapLayer('Streets').addTo(map);
-  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
-   pointToLayer: function (geojson, latlng) {
-      return L.circleMarker(latlng, geojsonMarkerOptions);
-    },
-  });
-
-  featureLayer.addTo(map);
-
-    //create a cedar chart
-    var chart = new Cedar({"specification":"{{assets}}data/templates/bar-chart-template.json"});
-    //create the dataset w/ mappings
-    var dataset = {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-      "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
-      }
-    };
-
-    //assign to the chart
-    chart.dataset = dataset;
-
-    //show the chart
-    chart.show({
-      elementId: "#chart"
-    });
-
-    //CHART EVENTS
-    chart.on('mouseover', onChartHover);
-
-    function onChartHover(d) {
-         
-      //get selected value for attribute in chart marker
-      var selected = d["ZIP_CODE"];
-
-      var hoverStyle = {
-        radius: 8,
-        fillColor: "red",
-        color: "#000",
-        weight: 1,
-        opacity: 1,
-        fillOpacity: 0.8
-      };
-
-      featureLayer.setStyle(function(point) {
-        if (point.properties["ZIP_CODE"] === selected ) {
-          return hoverStyle;
-        } else {
-          return geojsonMarkerOptions;
-        }
-      });
-
-    } 
-{{>example-code-footer}}
-```
-{{/markdown}}
-
-
-<script>
-  
-  var map = L.map('map').setView([38.9,-77], 11);
-
-  var geojsonMarkerOptions = {
-    radius: 8,
-    fillColor: "#0079c1",
-    color: "#000",
-    weight: 1,
-    opacity: 1,
-    fillOpacity: 0.8
-  };
-
-  L.esri.basemapLayer('Streets').addTo(map);
-  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
-   pointToLayer: function (geojson, latlng) {
-      return L.circleMarker(latlng, geojsonMarkerOptions);
-    },
-  });
-
-  featureLayer.addTo(map);
-
-  //create a cedar chart
-  var chart = new Cedar();
-
-  //create the specification
-  var spec = {
-  "inputs": [
-    {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false}
-  ],
-  "template":{
-    "axes": [
-      {
-        "type": "x",
-        "scale": "x",
-        "title": "X-Axis"
-      }
-    ],
-    "data": [
-      {
-        "name": "table",
-        "url": "{data}",
-        "format": {
-          "property": "features"
-        }
-      }
-    ],
-    "height": 600,
-    "marks": [
-      {
-        "from": {
-          "data": "table"
-        },
-        "properties": {
-          "enter": {
-            "width": {
-              "band": true,
-              "offset": -1,
-              "scale": "x"
-            },
-            "x": {
-              "field": "data.attributes.{group.field}",
-              "scale": "x"
-            },
-            "y": {
-              "field": "data.attributes.{count.field}_SUM",
-              "scale": "y"
-            },
-            "y2": {
-              "scale": "y",
-              "value": 0
-            }
-          },
-          "hover": {
-            "fill": {
-              "value": "#34495e"
-            }
-          },
-          "update": {
-            "fill": {
-              "value": "#0079c1"
-            }
-          }
-        },
-        "type": "rect"
-      }
-    ],
-    "padding": {
-      "bottom": 20,
-      "left": 80,
-      "right": 10,
-      "top": 10
-    },
-    "scales": [
-      {
-        "domain": {
-          "data": "table",
-          "field": "data.attributes.{group.field}"
-        },
-        "name": "x",
-        "range": "width",
-        "type": "ordinal"
-      },
-      {
-        "domain": {
-          "data": "table",
-          "field": "data.attributes.{count.field}_SUM"
-        },
-        "name": "y",
-        "nice": true,
-        "range": "height"
-      }
-    ],
-    "width": 850
-  }
-}
-
-  //assign to chart
-  chart.specification = spec;
+  chart.override = style;
 
   //create the dataset w/ mappings
   var dataset = {
@@ -233,17 +53,38 @@ layout: example.hbs
   });
   
 
+  var map = L.map('map').setView([38.9,-77], 11);
+
+  var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: style.marks[0].properties.update.fill.value,
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
+   pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+  });
+
+  featureLayer.addTo(map);
+
+
   //CHART EVENTS
   chart.on('mouseover', onChartHover);
 
   function onChartHover(d) {
     
     //get selected value for attribute in chart marker
-    var selected = d["ZIP_CODE"];
+    var selected = d[dataset.mappings.group.field];
 
     var hoverStyle = {
       radius: 8,
-      fillColor: "red",
+      fillColor: style.marks[0].properties.hover.fill.value,
       color: "#000",
       weight: 1,
       opacity: 1,
@@ -251,7 +92,91 @@ layout: example.hbs
     };
 
     featureLayer.setStyle(function(point) {
-      if (point.properties["ZIP_CODE"] === selected ) {
+      if (point.properties[dataset.mappings.group.field] === selected ) {
+        return hoverStyle;
+      } else {
+        return geojsonMarkerOptions;
+      }
+    });
+
+  } 
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+
+<script>
+  
+
+  //create a cedar chart
+  var chart = new Cedar({"specification":"../data/templates/bar-chart-spec.json"});
+  var style = {
+      "height": 400,
+      "width": 850,
+      "marks": [{"properties": {
+        "hover": {"fill": {"value": "#c15000"}},
+        "update": {"fill": {"value": "#0079c1"}}}}]};
+
+  chart.override = style;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+  
+
+  var map = L.map('map').setView([38.9,-77], 11);
+
+  var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: style.marks[0].properties.update.fill.value,
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
+   pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+  });
+
+  featureLayer.addTo(map);
+
+
+  //CHART EVENTS
+  chart.on('mouseover', onChartHover);
+
+  function onChartHover(d) {
+    
+    //get selected value for attribute in chart marker
+    var selected = d[dataset.mappings.group.field];
+
+    var hoverStyle = {
+      radius: 8,
+      fillColor: style.marks[0].properties.hover.fill.value,
+      color: "#000",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    };
+
+    featureLayer.setStyle(function(point) {
+      if (point.properties[dataset.mappings.group.field] === selected ) {
         return hoverStyle;
       } else {
         return geojsonMarkerOptions;
