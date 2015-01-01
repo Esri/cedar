@@ -1,0 +1,30 @@
+---
+title: Render
+layout: documentation.hbs
+---
+
+## Cedar.show( object )
+Create `vega view` (aka chart) attached to the specified DOM node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)
+
+`chart.show(options)`
+
+#### Arguments
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `options.elementId` | `string` | yes | Id of the DOM node to render the chart into. |
+
+#### Example Code
+```
+<div id='chartDiv'></div>
+
+<script>
+var chart = new Cedar({'specification': 'http://example.org/url_to_specification.json'})
+
+//create and render a chart
+chart.show({
+  'elementId': '#chartDiv'
+});
+
+</script>
+```

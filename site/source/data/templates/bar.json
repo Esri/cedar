@@ -4,6 +4,14 @@
     {"name": "group", "type": ["string"], "required": false}
   ],
   "template":{
+    "height": 300,
+    "width": 850,    
+    "padding": {
+      "bottom": 20,
+      "left": 10,
+      "right": 10,
+      "top": 10
+    },
     "axes": [
       {
         "type": "x",
@@ -19,8 +27,7 @@
           "property": "features"
         }
       }
-    ],
-    "height": 600,
+    ],    
     "marks": [
       {
         "from": {
@@ -48,24 +55,18 @@
           },
           "hover": {
             "fill": {
-              "value": "red"
+              "value": "green"
             }
           },
           "update": {
             "fill": {
-              "value": "steelblue"
+              "value": "#ccc"
             }
           }
         },
         "type": "rect"
       }
-    ],
-    "padding": {
-      "bottom": 20,
-      "left": 80,
-      "right": 10,
-      "top": 10
-    },
+    ],    
     "scales": [
       {
         "domain": {
@@ -85,7 +86,6 @@
         "nice": true,
         "range": "height"
       }
-    ],
-    "width": 850
+    ]
   }
 }
