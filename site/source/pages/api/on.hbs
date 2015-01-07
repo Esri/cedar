@@ -1,0 +1,40 @@
+---
+title: Render
+layout: documentation.hbs
+---
+
+## Cedar.on( string, function)
+
+Bind chart to interaction events such as mouse clicks and mouse hovers.
+
+`chart.on(event, callback)`
+
+#### Arguments
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `options.event` | `string` | yes | Name of the interaction event to bind the function. (`on`,`mouseover`) |
+| `options.callback` | `function` | yes | Function that is called when the event occurs.  |
+
+#### Example Code
+```
+<div id='chartDiv'></div>
+
+<script>
+var chart = new Cedar({'specification': 'http://example.org/url_to_specification.json'})
+
+//create and render a chart
+chart.show({
+  'elementId': '#chartDiv'
+});
+
+
+chart.on('mouseover', function(value){
+  console.log("Chart value hovered", value);
+});
+
+chart.on('click', function(value){
+  console.log("Chart value clicked", value);
+});
+</script>
+```
