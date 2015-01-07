@@ -16,7 +16,7 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
   //create a cedar chart, passing a url to a spec
-  var chart = new Cedar({"specification":"../data/templates/pie-chart-template.json"});
+  var chart = new Cedar({"specification":"../data/templates/pie.json"});
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
@@ -46,7 +46,7 @@ layout: example.hbs
 
 <script>
   //create a cedar chart - passing a url to the spec
-  var chart = new Cedar({"specification":"{{assets}}data/templates/pie-chart-template.json"});
+  var chart = new Cedar({"specification":"{{assets}}data/templates/pie.json"});
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
