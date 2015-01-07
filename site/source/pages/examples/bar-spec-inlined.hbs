@@ -13,7 +13,100 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
 //create a cedar chart
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar-chart-template.json"});
+  var chart = new Cedar();
+
+  var spec = {
+    "inputs": [
+      {"name": "count", "type": ["numeric","string"], "required": true},
+      {"name": "group", "type": ["string"], "required": false}
+    ],
+    "template":{
+      "axes": [
+        {
+          "type": "x",
+          "scale": "x",
+          "title": "X-Axis"
+        }
+      ],
+      "data": [
+        {
+          "name": "table",
+          "url": "{data}",
+          "format": {
+            "property": "features"
+          }
+        }
+      ],
+      "height": 300,
+      "marks": [
+        {
+          "from": {
+            "data": "table"
+          },
+          "properties": {
+            "enter": {
+              "width": {
+                "band": true,
+                "offset": -1,
+                "scale": "x"
+              },
+              "x": {
+                "field": "data.attributes.{group.field}",
+                "scale": "x"
+              },
+              "y": {
+                "field": "data.attributes.{count.field}_SUM",
+                "scale": "y"
+              },
+              "y2": {
+                "scale": "y",
+                "value": 0
+              }
+            },
+            "hover": {
+              "fill": {
+                "value": "red"
+              }
+            },
+            "update": {
+              "fill": {
+                "value": "steelblue"
+              }
+            }
+          },
+          "type": "rect"
+        }
+      ],
+      "padding": {
+        "bottom": 20,
+        "left": 80,
+        "right": 10,
+        "top": 10
+      },
+      "scales": [
+        {
+          "domain": {
+            "data": "table",
+            "field": "data.attributes.{group.field}"
+          },
+          "name": "x",
+          "range": "width",
+          "type": "ordinal"
+        },
+        {
+          "domain": {
+            "data": "table",
+            "field": "data.attributes.{count.field}_SUM"
+          },
+          "name": "y",
+          "nice": true,
+          "range": "height"
+        }
+      ],
+      "width": 850
+    }
+  }
+  chart.specification = spec;
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
@@ -62,7 +155,7 @@ layout: example.hbs
         }
       }
     ],
-    "height": 600,
+    "height": 300,
     "marks": [
       {
         "from": {

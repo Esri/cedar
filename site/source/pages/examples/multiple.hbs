@@ -3,17 +3,15 @@ layout: example.hbs
 ---
 
 
-<h1>Simple Pie Chart</h1>
+<h1>Multiple Charts</h1>
 
-<div id="chart"></div>
-
+<div id="chart1"></div>
+<div id="chart2"></div>
 
 
 {{#markdown}}
 ```html
 {{>example-code-header}}
-  var chart = new Cedar({"specification":"{{assets}}data/templates/pie.json"});
-  //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "mappings":{
@@ -21,18 +19,24 @@ layout: example.hbs
       "count": {"field":"CAPACITY","label":"Student Capacity"}
     }
   };
-  chart.dataset = dataset;
-  chart.show({
-    elementId: "#chart",
-  }); 
+
+  var chart1 = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
+
+  chart1.show({
+    elementId: "#chart1",
+  });  
+
+  var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
+
+  chart2.show({
+    elementId: "#chart2",
+  });    
 {{>example-code-footer}}
 ```
 {{/markdown}}
 
 
 <script>
-  
-  var chart = new Cedar({"specification":"{{assets}}data/templates/pie.json"});
 
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
@@ -41,10 +45,17 @@ layout: example.hbs
       "count": {"field":"CAPACITY","label":"Student Capacity"}
     }
   };
-  chart.dataset = dataset;
 
-  chart.show({
-    elementId: "#chart",
+  var chart1 = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
+
+  chart1.show({
+    elementId: "#chart1",
   });  
+
+  var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
+
+  chart2.show({
+    elementId: "#chart2",
+  });    
 
 </script>

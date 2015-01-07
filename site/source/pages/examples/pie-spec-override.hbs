@@ -1,0 +1,77 @@
+---
+layout: example.hbs
+---
+
+
+<h1>Pie Chart: Override styles in the Specification</h1>
+
+<p>Demonstrate how to override the specification such as changing colors or adding legend or marks.</p>
+
+<div id="chart"></div>
+<cite>DC Schools that are Capital Gains?</cite>
+
+
+
+{{#markdown}}
+```html
+{{>example-code-header}}
+  //create a cedar chart, passing a url to a spec
+  var chart = new Cedar({"specification":"../data/templates/pie.json"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    }
+  };
+
+  chart.override = {
+    "marks": [{"properties": {
+      "hover": {"fill": {"value": "orange"}},
+      "update": {"fill": {"value": "#c15000"}}}}]};
+
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+
+<script>
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"{{assets}}data/templates/pie.json"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    }
+  };
+
+
+  chart.override = {
+    "marks": [
+      {"properties": {
+        "hover": {"fill": {"value": "orange"}},
+        "update": {"fill": {"value": "#c15000"}}}},
+      {"properties": {
+        "enter": {"fill": {"value": "white"}}}}
+    ]};
+
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+</script>

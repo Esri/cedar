@@ -1,0 +1,45 @@
+---
+title: compile
+layout: documentation.hbs
+---
+
+
+## Cedar( object )
+Create a new chart using an object that can include specification from a template, dataset and mappings, and style overrides.  This is optional and any of the parameters can be later specified through accessors as `chart.dataset` is shown in the example below.
+
+The chart will not appear until `Cedar.show` is called.
+
+`new Cedar(options)`
+
+#### Arguments
+
+| Name | Type | Required? | Description |
+| --- | --- | --- | --- |
+| `options.specification` | <`string or object`> | no | URL to a extended Vega template or an inline Vega object. |
+| `options.dataset` | <`object`> | no | Hash of layer URL and field to input mappings as required by the `specification`. |
+| `options.override` | <`object`> | no | Object that is merged with the `specification.template` for runtime styling. |
+
+
+### Examples
+
+```json
+var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+
+//create the dataset w/ mappings
+var dataset = {
+  "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+  "mappings":{
+    "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+    "count": {"field":"TOTAL_STUD","label":"Total Students"}
+  }
+};
+
+//assign to the chart
+chart.dataset = dataset;
+
+
+// make the chart visible by attaching it to a DOM node
+chart.show({
+  elementId: "#chart"
+});
+```
