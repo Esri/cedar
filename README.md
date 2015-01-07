@@ -6,38 +6,28 @@ At the highest level, Cedar provides a simple chart API. Beyond that it is possi
 
 **Currently Esri Cedar is in development and should be thought of as a beta or preview.**
 
-### Demos
+## Components of a Cedar Chart
+
+Cedar charts are defined by the following ingredients:
+
+- a `Specification` is a JSON document which includes,
+ - `inputs` that declare the variables of the chart such as category or value to be summarized
+ - `template` is a declarative syntax for chart design using the [Vega](http://trifacta.github.io/vega/) visualization grammar. 
+- a `dataset` 
+ - either `url` link to the ArcGIS Feature Layer; 
+ - ...or `values` can be an array of inline features
+ - `mappings` bind the Feature Layer attributes to the `Specification inputs`
+- and `overrides` are specific modifications to the `Specification template`
+
+## Types of Charts
+
+While Cedar provides a set of commonly used chart types including `Bar`, `Line`, `Scatterplot`, and `Pyramid` through use of the Vega grammar it is possible for developers to create unique and custom charts that can be used by other developers with new data sources. 
+
+When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
+
+## Demos
+
 There are is a [simple user interface](http://dbouwman.github.com/cypress] and [a few demos](http://esridc.github.io/cedar/) showing the basic concepts of Cedar.
-
-### Example
-Here is a quick example to get you started. Just change the paths to point to the proper libraries and go.
-
-![App](https://raw.github.com/Esri/esri-leaflet/master/esri-leaflet.png)
-
-```html
-<h2>DC Schools</h2>
-<div id="dc_capacity"></div>
-<div id="dc_use"></div>
-
-<h2>Utah Planning</h2>
-<div id="bar"></div>
-<div id="word"></div>
-
-<script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
-<script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
-<script type="text/javascript" src="chart.js"></script>
-<script type="text/javascript" src="cedar.js"></script>
-
-<script type="text/javascript">
-  // DC
-  Cedar.chart({el: "#dc_capacity", style: "scatter", data: "/schools.json", x: "CAPACITY", y: "POPULATION_ENROLLED_2008", color: "FACUSE"})
-  Cedar.chart({el: "#dc_use", style: "bar", data: "/schools_use_count.json", count: "POPULATION_ENROLLED_2008", group: "FACUSE"})
-  // Utah
-  Cedar.chart({el: "#bar", style: "bar", data: "/utah.json", count: "PROJECT_VALUE", group: "PRIMARY_CONCEPT"})
-  // Cedar.chart({el: "#word", style: "word", data: "/data.json", value: "PROJECT_VALUE", text: "PRIMARY_CONCEPT"})
-    
-```
-
 
 ### Development Instructions
 
@@ -48,11 +38,12 @@ Make Sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 1. Install additional dependencies with `bower install`
 1. Run `grunt docs` from the command line. This will start the web server locally at [http://localhost:8001](http://localhost:8001) and start watching the source files and running linting and testing commands.
 1. Push your changes using `grunt docs:build` which pushes to your `origin/gh-pages`
-1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esridc/cedar/gh-pages`
+1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esridc/cedar/master`
 
 ### Dependencies
 
 * [D3](http://d3js.org/) version 3 or higher is required but the latest version is recommended.
+* [Vega](http://trifacta.github.io/vega/)
 
 ### Versioning
  
@@ -70,17 +61,6 @@ And constructed with the following guidelines:
 
 For more information on SemVer, please visit <http://semver.org/>.
 
-### Issues
-
-Find a bug or want to request a new feature?  Please let us know by submitting an [issue](https://github.com/esridc/cedar/issues).
-
-### Contributing
-
-Esri welcomes contributions from anyone and everyone. Please see our [guidelines for contributing](https://github.com/Esri/esri-leaflet/blob/master/CONTRIBUTING.md).
-
-### Credit
-
-`L.esri.Layers.DynamicMapLayer` originally used code from https://github.com/sanborn/leaflet-ags/blob/master/src/AGS.Layer.Dynamic.js
 
 ### Licensing
 Copyright 2014 Esri
@@ -99,5 +79,5 @@ limitations under the License.
 
 A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
 
-[](Esri Tags: ArcGIS Web Mapping Leaflet)
+[](Esri Tags: Visualization)
 [](Esri Language: JavaScript)
