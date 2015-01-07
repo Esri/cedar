@@ -12,7 +12,16 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
   var chart = new Cedar({
-    "definition":"{{assets}}data/definitions/dc-schools-scatter-chart.json"
+    "specification":"{{assets}}data/templates/scatter.json",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "color":{"field":"FACUSE","label":"Facility Type"}
+      }
+    }
   });
 
   chart.show({
@@ -28,7 +37,16 @@ layout: example.hbs
 
 <script>
   var chart = new Cedar({
-    "definition":"{{assets}}data/definitions/dc-schools-scatter-chart.json"
+    "specification":"{{assets}}data/templates/scatter.json",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "color":{"field":"FACUSE","label":"Facility Type"}
+      }
+    }
   });
 
   chart.show({

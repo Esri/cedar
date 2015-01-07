@@ -25,6 +25,38 @@ While Cedar provides a set of commonly used chart types including `Bar`, `Line`,
 
 When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
 
+## Example
+
+```json
+  var barChart = new Cedar({"specification": "bar.json"});
+
+  var schools = {
+    "url": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": { "field": "ZIP_CODE" },
+      "count": { "field": "TOTAL_STUD" }
+    }
+  };
+
+  barChart.dataset = schools;
+
+  barChart.show({
+    elementId: "#bar"
+  });
+```
+
+and it is simple to add more charts re-using the same `dataset` definition: 
+
+
+```json
+  var pieChart = new Cedar({"specification": "pie.json", "dataset": schools});
+
+  pieChart.show({
+    elementId: "#pie"
+  });
+```
+
+
 ## Demos
 
 There are is a [simple user interface](http://dbouwman.github.com/cypress] and [a few demos](http://esridc.github.io/cedar/) showing the basic concepts of Cedar.
