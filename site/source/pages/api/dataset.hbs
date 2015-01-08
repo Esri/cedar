@@ -1,0 +1,42 @@
+---
+title: .dataset property
+layout: documentation.hbs
+---
+
+## .dataset Property
+Getter/Setter for the <a href="{{assets}}api/json/dataset-json.html">`dataset`</a>. Allows the developer to make changes to the dataset, most usefully the <a href="{{assets}}api/json/dataset-json.html#dataset-query">`.query`</a> hash.
+
+
+### Getter Syntax
+`var ds = chart.dataset;`
+
+
+### Setter Syntax
+`chart.dataset = myDatasetObject;`
+
+#### Example Code
+```
+<div id='chartDiv'></div>
+
+<script>
+var chart = new Cedar({'specification': 'http://example.org/url_to_specification.json'})
+
+//create dataset object
+var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    }
+  };
+
+//assign to chart
+chart.dataset = dataset;
+
+//create and render a chart
+chart.show({
+  'elementId': '#chartDiv'
+});
+
+</script>
+```

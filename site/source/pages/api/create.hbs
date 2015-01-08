@@ -1,23 +1,24 @@
 ---
-title: compile
+title: new Cedar( opts )
 layout: documentation.hbs
 ---
 
 
-## Cedar( object )
+## new Cedar( opts )
 Create a new chart using an object that can include specification from a template, dataset and mappings, and style overrides.  This is optional and any of the parameters can be later specified through accessors as `chart.dataset` is shown in the example below.
 
-The chart will not appear until `Cedar.show` is called.
+The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> is called.
 
-`new Cedar(options)`
+`new Cedar( opts )`
 
-#### Arguments
+### Arguments
 
 | Name | Type | Required? | Description |
 | --- | --- | --- | --- |
-| `options.specification` | <`string or object`> | no | URL to a extended Vega template or an inline Vega object. |
-| `options.dataset` | <`object`> | no | Hash of layer URL and field to input mappings as required by the `specification`. |
-| `options.override` | <`object`> | no | Object that is merged with the `specification.template` for runtime styling. |
+| `definition` | <`string or object`> | no | URL to a complete chart <a href="{{assets}}api/json/definition-json.html">definition</a> (dataset + specification) or an inline <a href="{{assets}}api/json/definition-json.html">definition</a> object. |
+| `specification` | <`string or object`> | no | URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a> or an inline <a href="{{assets}}api/json/specification-json.html">specification</a> object. |
+| `dataset` | <`object`> | no | <a href="{{assets}}api/json/dataset-json.html">dataset</a> object. |
+
 
 
 ### Examples

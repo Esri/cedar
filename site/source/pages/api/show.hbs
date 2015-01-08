@@ -1,25 +1,33 @@
 ---
-title: Render
+title: Cedar.show Method
 layout: documentation.hbs
 ---
 
-## Cedar.show( object )
-Create `vega view` (aka chart) attached to the specified DOM node. Expected to be the most commonly used method, and the only required function for purely  displaying a chart (i.e. chart-embeds)
+## .show( opt )
+Renders a cedar chart object into the specified element in the DOM.
 
-`chart.show(options)`
+`chart.show({elementId:"#chartDiv"})`
 
 #### Arguments
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
-| `options.elementId` | `string` | yes | Id of the DOM node to render the chart into. |
+| `elementId` | `string` | yes | Id of the DOM node to render the chart into. |
 
 #### Example Code
 ```
 <div id='chartDiv'></div>
 
 <script>
-var chart = new Cedar({'specification': 'http://example.org/url_to_specification.json'})
+var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    }
+  };
+
+  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
 
 //create and render a chart
 chart.show({

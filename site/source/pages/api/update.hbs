@@ -1,0 +1,39 @@
+---
+title: Cedar.update()
+layout: documentation.hbs
+---
+
+## .update( )
+Re-renders an existing cedar chart. Typically used after changing the <a href="{{assets}}api/json/dataset-json.html#dataset-query">`dataset.query`</a> or <a href="{{assets}}api/json/specification-json.html#template">`specification.template`</a> properties.
+
+`chart.update( )`
+
+
+
+#### Example Code
+```
+<div id='chartDiv'></div>
+
+<script>
+var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    }
+  };
+
+var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
+
+//create and render a chart
+chart.show({
+  'elementId': '#chartDiv'
+});
+//some user action that sets the zip code... and thus updates the where clause on the query
+chart.dataset.query.where = "ZIP_CODE = 20007";
+
+//update the chart
+chart.update();
+
+</script>
+```
