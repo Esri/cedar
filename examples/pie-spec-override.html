@@ -8,11 +8,9 @@
   <meta charset="utf-8">
 
   
-    <title>Cedar Quickstart | Esri Cedar</title>
+    <title>Esri Cedar</title>
   
 
-  
-    <meta name="description" content="A quick template to get started with Esri Cedar.">
   
 
   <meta name="description" content="Esri Cedar">
@@ -80,15 +78,20 @@
 <div class="col-lg-10">
   
 
-<h2>Cedar Quickstart</h2>
+
+<h1>Pie Chart: Override styles in the Specification</h1>
+
+<p>Demonstrate how to override the specification such as changing colors or adding legend or marks.</p>
 
 <div id="chart"></div>
+<cite>DC Schools that are Capital Gains?</cite>
+
 
 
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
   &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Cedar Quickstart&lt;/title&gt;
+  &lt;title&gt;&lt;/title&gt;
   &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
 
   &lt;!-- Load D3 --&gt;
@@ -107,12 +110,29 @@
 
 &lt;script&gt;
 
-  var chart = new Cedar({
-    &quot;definition&quot;:&quot;../../../cedar/data/definitions/dc-schools-scatter-chart.json&quot;
-  });
+  //create a cedar chart, passing a url to a spec
+  var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/pie.json&quot;});
+  //create the dataset w/ mappings
+  var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
+    }
+  };
 
+  chart.override = {
+    &quot;marks&quot;: [{&quot;properties&quot;: {
+      &quot;hover&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;orange&quot;}},
+      &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c15000&quot;}}}}]};
+
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
   chart.show({
-    elementId: &quot;#chart&quot;,
+    elementId: &quot;#chart&quot;
   });
 
 &lt;/script&gt;
@@ -121,22 +141,39 @@
 
 
 
-
 <script>
-  //Create a cedar chart, passing in a url to a defintion
-  //a defintion allows a chart to be visualized AND manipulated
-  var chart = new Cedar({
-    "definition":"../../../cedar/data/definitions/dc-schools-scatter-chart.json"
-  });
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"../../../cedar/data/templates/pie.json"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    }
+  };
 
+
+  chart.override = {
+    "marks": [
+      {"properties": {
+        "hover": {"fill": {"value": "orange"}},
+        "update": {"fill": {"value": "#c15000"}}}},
+      {"properties": {
+        "enter": {"fill": {"value": "white"}}}}
+    ]};
+
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
   chart.show({
-    elementId: "#chart",
+    elementId: "#chart"
   });
-
 </script>
-
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/pie-spec-override.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

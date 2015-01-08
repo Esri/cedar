@@ -8,11 +8,9 @@
   <meta charset="utf-8">
 
   
-    <title>Cedar Quickstart | Esri Cedar</title>
+    <title>Cedar.on( evt, fn ) | Esri Cedar</title>
   
 
-  
-    <meta name="description" content="A quick template to get started with Esri Cedar.">
   
 
   <meta name="description" content="Esri Cedar">
@@ -75,120 +73,118 @@
 <div class="container white">
   
 
-
-
 <div class="col-lg-10">
-  
-
-<h2>Cedar Quickstart</h2>
-
-<div id="chart"></div>
-
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Cedar Quickstart&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
+  <h2 id="-on-evtname-fn-">.on( evtName, fn)</h2>
+<p>Bind event handler functions to the chart.</p>
+<p><code>chart.on(event, fn)</code></p>
+<h3 id="arguments">Arguments</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>event</code></td>
+<td><code>string</code></td>
+<td>yes</td>
+<td>Name of the interaction event to bind the function. (<code>mouseover</code>)</td>
+</tr>
+<tr>
+<td><code>fn</code></td>
+<td><code>function</code></td>
+<td>yes</td>
+<td>Function that is called when the event occurs.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="available-events">Available Events</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mouseover</code></td>
+<td>fires when the mouse moves over elements on the chart</td>
+</tr>
+<tr>
+<td><code>mouseout</code></td>
+<td>fires when the mouse leaves an elements on the chart</td>
+</tr>
+<tr>
+<td><code>click</code></td>
+<td>fires when on clicking an element on the chart</td>
+</tr>
+</tbody>
+</table>
+<h3 id="handler-parameters">Handler Parameters</h3>
+<p>When a handler is fired, the data associated with the chart element is passed along.</p>
+<h3 id="example-code">Example Code</h3>
+<pre><code>&lt;div class=&quot;row&quot;&gt;
   &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
 &lt;/div&gt;
 
 &lt;script&gt;
 
+   //define a handler for chart events 
+  function showItem(data){
+    //dump data to console...
+    console.dir(data);
+  }
+
+  //setup a chart using a json file that is the complete definition
   var chart = new Cedar({
-    &quot;definition&quot;:&quot;../../../cedar/data/definitions/dc-schools-scatter-chart.json&quot;
+    &quot;definition&quot;:&quot;../../../cedar/data/definitions/scatter-events.json&quot;
   });
 
+  //render the chart
   chart.show({
-    elementId: &quot;#chart&quot;,
+    elementId: &quot;#chart&quot;
   });
 
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+  //attach handler (can also be done before .show())
+  chart.on(&#39;click&#39;, showItem);
 
+&lt;/script&gt;</code></pre>
 
-
-
-<script>
-  //Create a cedar chart, passing in a url to a defintion
-  //a defintion allows a chart to be visualized AND manipulated
-  var chart = new Cedar({
-    "definition":"../../../cedar/data/definitions/dc-schools-scatter-chart.json"
-  });
-
-  chart.show({
-    elementId: "#chart",
-  });
-
-</script>
-
-  <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
-  </div>
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/on.hbs">Edit this page on GitHub</a></p>
 </div>
 
 <div class="col-lg-2">
   <aside class="sidebar">
+  <h5><a href="../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <ul>
+    <li><a href="../../../cedar/api/create.html">new Cedar( opt )</a></li>
+  </ul>
+  <h5>Properties</h5>
+  <ul>
+    <li><a href="../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../cedar/api/specification.html">.specification</a></li>
+  </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../cedar/api/off.html">.off( evt )</a></li>
+  </ul>
 
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../cedar/api/json/definition-json.html">Definition</a></li>
+  </ul>
 
-  <h5>Chart Types</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/bar-spec-url.html">Bar Chart</a></li>
-      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
-      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
-      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
-    </ul>
-  </nav>
-
-  <h5>Using Specifications</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/bar-spec-url.html">Specification URL</a></li>
-      <li><a href="../../../cedar/examples/bar-spec-inlined.html">Inline Specification</a></li>
-      <li><a href="../../../cedar/examples/bar-spec-override.html">Style Overrides</a></li>
-    </ul>
-  </nav>
-
-<!--  <h5>Using Definitions</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
-      <li>In-lined</li>
-    </ul>
-  </nav>
-  -->
-  <h5>Events</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
-    </ul>
-  </nav>
-  <h5>Map Integration</h5>
-  <nav>
-    <ul>
-      <li><a href="../../../cedar/examples/bar-map-integration.html">With JS API Map</a></li>
-      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
-    </ul>
-  </nav>
-
-   
-   
 </aside>
-
 </div>
   <div style='clear:both;'></div>
 </div>

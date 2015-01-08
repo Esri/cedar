@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Chart Specification Json | Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../../cedar/css/style.css">
+
+  <!-- Cedar -->
+
+  <!-- esri Cedar -->
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+  <script type="text/javascript" src="../../../../cedar/js/cedar-core.js"></script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', 'UA-44963317-3', 'auto');
+    // ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../../cedar/api/">API Documentation</a></li>
+        <li><a href="../../../../cedar/examples/">Examples</a></li>
+        <li><a href="https://github.com/esridc/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+  
+
+<div class="container white">
+  
+
+<div class="col-lg-10">
+  <h1 id="chart-specifications">Chart Specifications</h1>
+<p>Charts are defined by JSON documents (<code>specification</code>) which are then linked to a data source. The specification used in Cedar has two main components: an inputs hash and a template.</p>
+<h2 id="specification-format">Specification Format</h2>
+<pre><code class="language-json">{
+  "<span class="attribute">inputs</span>": <span class="value">[ 
+    { 
+      "<span class="attribute">name</span>": <span class="value"><span class="string">"&lt;string&gt;"</span></span>, 
+      "<span class="attribute">type</span>": <span class="value">[<span class="string">"&lt;string&gt;"</span>]</span>, 
+      "<span class="attribute">required</span>": <span class="value">&lt;boolean&gt;
+    </span>} 
+  ]</span>,
+  "<span class="attribute">template</span>": <span class="value">{
+    "<span class="attribute">height</span>": <span class="value">&lt;integer (pixels)&gt;</span>,
+    "<span class="attribute">width</span>": <span class="value">&lt;integer (pixels)&gt;</span>,
+    "<span class="attribute">padding</span>": <span class="value">{
+      "<span class="attribute">bottom</span>": <span class="value">&lt;integer (pixels)&gt;</span>, 
+      "<span class="attribute">left</span>": <span class="value">&lt;integer (pixels)&gt;</span>, 
+      "<span class="attribute">right</span>": <span class="value">&lt;integer (pixels)&gt;</span>, 
+      "<span class="attribute">top</span>": <span class="value">&lt;integer (pixels)&gt; 
+    </span>}</span>,
+    "<span class="attribute">data</span>":  <span class="value">[ ]</span>,
+    "<span class="attribute">axes</span>":  <span class="value">[ ]</span>,
+    "<span class="attribute">scales</span>": <span class="value">[ ]</span>,
+    "<span class="attribute">marks</span>": <span class="value">[ ]
+  </span>}
+</span>}</code></pre>
+<h2 id="inputs">Inputs</h2>
+<p>The inputs array specifies the parameters required by the template, in order to generate a complete vega specification. The <code>dataset.mappings</code> hash must contain entries for all the <code>required:true</code> inputs.</p>
+<h3 id="inputs-example">Inputs Example</h3>
+<pre><code>{
+  &quot;inputs&quot;: [
+    {&quot;name&quot;: &quot;count&quot;, &quot;type&quot;: [&quot;numeric&quot;,&quot;string&quot;], &quot;required&quot;: true},
+    {&quot;name&quot;: &quot;group&quot;, &quot;type&quot;: [&quot;string&quot;], &quot;required&quot;: false}
+  ]
+}</code></pre>
+<h2 id="template">Template</h2>
+<p>The template is an extension of the <a href="https://github.com/trifacta/vega/wiki">Vega</a> visualization grammar, and in most respects is identical. The primary differece it that the template has some properties specified as <code>{tokens}</code>.</p>
+<p>The Cedar library takes the <code>dataset.mappings</code> object and uses that to interpolate the tokens in the template, to produce a valid vega specification, which is then used to generate the chart.</p>
+<h3 id="example-cedar-spec-for-a-bar-chart">Example Cedar Spec for a bar chart</h3>
+<pre><code class="language-`json">{
+  &quot;inputs&quot;: [
+    {&quot;name&quot;: &quot;count&quot;, &quot;type&quot;: [&quot;numeric&quot;,&quot;string&quot;], &quot;required&quot;: true},
+    {&quot;name&quot;: &quot;group&quot;, &quot;type&quot;: [&quot;string&quot;], &quot;required&quot;: false}
+  ],
+  &quot;template&quot;:{
+    &quot;axes&quot;: [
+      {
+        &quot;type&quot;: &quot;x&quot;,
+        &quot;scale&quot;: &quot;x&quot;,
+        &quot;title&quot;: &quot;X-Axis&quot;
+      }
+    ],
+    &quot;data&quot;: [
+      {
+        &quot;name&quot;: &quot;table&quot;,
+        &quot;url&quot;: &quot;{data}&quot;,
+        &quot;format&quot;: {
+          &quot;property&quot;: &quot;features&quot;
+        }
+      }
+    ],
+    &quot;height&quot;: 600,
+    &quot;marks&quot;: [
+      {
+        &quot;from&quot;: {
+          &quot;data&quot;: &quot;table&quot;
+        },
+        &quot;properties&quot;: {
+          &quot;enter&quot;: {
+            &quot;width&quot;: {
+              &quot;band&quot;: true,
+              &quot;offset&quot;: -1,
+              &quot;scale&quot;: &quot;x&quot;
+            },
+            &quot;x&quot;: {
+              &quot;field&quot;: &quot;data.attributes.{group}&quot;,
+              &quot;scale&quot;: &quot;x&quot;
+            },
+            &quot;y&quot;: {
+              &quot;field&quot;: &quot;data.attributes.{count}_SUM&quot;,
+              &quot;scale&quot;: &quot;y&quot;
+            },
+            &quot;y2&quot;: {
+              &quot;scale&quot;: &quot;y&quot;,
+              &quot;value&quot;: 0
+            }
+          },
+          &quot;hover&quot;: {
+            &quot;fill&quot;: {
+              &quot;value&quot;: &quot;red&quot;
+            }
+          },
+          &quot;update&quot;: {
+            &quot;fill&quot;: {
+              &quot;value&quot;: &quot;steelblue&quot;
+            }
+          }
+        },
+        &quot;type&quot;: &quot;rect&quot;
+      }
+    ],
+    &quot;padding&quot;: {
+      &quot;bottom&quot;: 20,
+      &quot;left&quot;: 80,
+      &quot;right&quot;: 10,
+      &quot;top&quot;: 10
+    },
+    &quot;scales&quot;: [
+      {
+        &quot;domain&quot;: {
+          &quot;data&quot;: &quot;table&quot;,
+          &quot;field&quot;: &quot;data.attributes.{group}&quot;
+        },
+        &quot;name&quot;: &quot;x&quot;,
+        &quot;range&quot;: &quot;width&quot;,
+        &quot;type&quot;: &quot;ordinal&quot;
+      },
+      {
+        &quot;domain&quot;: {
+          &quot;data&quot;: &quot;table&quot;,
+          &quot;field&quot;: &quot;data.attributes.{count}_SUM&quot;
+        },
+        &quot;name&quot;: &quot;y&quot;,
+        &quot;nice&quot;: true,
+        &quot;range&quot;: &quot;height&quot;
+      }
+    ],
+    &quot;width&quot;: 600
+  }
+}</code></pre>
+
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/json/specification-json.md">Edit this page on GitHub</a></p>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5><a href="../../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <ul>
+    <li><a href="../../../../cedar/api/create.html">new Cedar( opt )</a></li>
+  </ul>
+  <h5>Properties</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../../cedar/api/specification.html">.specification</a></li>
+  </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../../cedar/api/off.html">.off( evt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../../cedar/api/json/definition-json.html">Definition</a></li>
+  </ul>
+
+</aside>
+</div>
+  <div style='clear:both;'></div>
+</div>
+<div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  </div>
+  <!-- <script src="../../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

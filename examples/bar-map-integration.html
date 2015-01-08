@@ -78,10 +78,15 @@
 <div class="col-lg-10">
   
 
+<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="http://js.arcgis.com/3.12/"></script>
 
-<h1>Simple Scatter Plot</h1>
-  
+
+<h1>Bar Chart + Map Interaction</h1>
+
+<div id="map"></div>
 <div id="chart"></div>
+
 
 
 <pre><code class="language-html">&lt;html&gt;
@@ -106,24 +111,84 @@
 
 &lt;script&gt;
 
-  var chart = new Cedar({
-    &quot;specification&quot;:&quot;../../../cedar/data/templates/scatter.json&quot;,
-    &quot;dataset&quot;:{
+
+  require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
+    &quot;esri/renderers/SimpleRenderer&quot;,  &quot;esri/renderers/UniqueValueRenderer&quot;, &quot;esri/Color&quot;, &quot;dojo/domReady!&quot;], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([220,220,220]), 0.5),
+      new Color([210,105,30,0.55]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer(&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: [&quot;*&quot;]
+    });
+
+    //create esri map
+    var map = new Map(&quot;map&quot;, {
+      center: [-77, 38.9],
+      zoom: 11,
+      basemap: &quot;topo&quot;,
+      smartNavigation: false
+    });
+
+    map.on(&#39;load&#39;, function() {
+      map.disableScrollWheelZoom();
+    });
+
+    featureLayer.setRenderer(rend);
+
+    map.addLayer(featureLayer);
+    //create a cedar chart
+    var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;});
+
+    //set custom colors
+    chart.override = {
+      &quot;height&quot;: 400,
+      &quot;marks&quot;: [{&quot;properties&quot;: {
+        &quot;hover&quot;: {&quot;fill&quot;: {&quot;r&quot;: {&quot;value&quot;: 210}, &quot;g&quot;: {&quot;value&quot;: 105}, &quot;b&quot;:{&quot;value&quot;: 30}}},
+        &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c15000&quot;}}}}]};
+
+    //create the dataset w/ mappings
+    var dataset = {
       &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-      &quot;query&quot;:{},
       &quot;mappings&quot;:{
-        &quot;x&quot;: {&quot;field&quot;:&quot;POPULATION_ENROLLED_2008&quot;,&quot;label&quot;:&quot;Enrolment 2008&quot;},
-        &quot;y&quot;: {&quot;field&quot;:&quot;SQUARE_FOOTAGE&quot;,&quot;label&quot;:&quot;Square Footage&quot;},
-        &quot;color&quot;:{&quot;field&quot;:&quot;FACUSE&quot;,&quot;label&quot;:&quot;Facility Type&quot;}
+        &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+        &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
       }
-    }
+    };
+
+    //assign to the chart
+    chart.dataset = dataset;
+
+    //show the chart
+    chart.show({
+      elementId: &quot;#chart&quot;
+    });
+
+    //CHART EVENTS
+    chart.on(&#39;mouseover&#39;, onChartHover);
+
+    function onChartHover(d) {
+
+      //get selected value for attribute in chart marker
+      var selected = d[dataset.mappings.group.field];
+
+      //create renderer
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+
+      //add symbol selected value
+      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
+
+      featureLayer.setRenderer(renderer);
+      featureLayer.refresh();
+
+    } 
   });
-
-  chart.show({
-    elementId: &quot;#chart&quot;,
-  });
-
-
 
 &lt;/script&gt;
 &lt;/body&gt;
@@ -131,29 +196,96 @@
 
 
 
-
 <script>
-  var chart = new Cedar({
-    "specification":"../../../cedar/data/templates/scatter.json",
-    "dataset":{
+
+  require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([220,220,220]), 0.5),
+      new Color([210,105,30,0.55]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: ["*"]
+    });
+
+    //create esri map
+    var map = new Map("map", {
+      center: [-77, 38.9],
+      zoom: 11,
+      basemap: "topo",
+      smartNavigation: false
+    });
+
+    map.on('load', function() {
+      map.disableScrollWheelZoom();
+    });
+
+    featureLayer.setRenderer(rend);
+    map.addLayer(featureLayer);
+    
+    //create a cedar chart
+    var chart = new Cedar({"specification":"../data/templates/bar.json"});
+
+    chart.override = {
+      "height": 400,
+      "marks": [{"properties": {
+        "hover": {"fill": {"r": {"value": 210}, "g": {"value": 105}, "b":{"value": 30}}},
+        "update": {"fill": {"value": "#c15000"}}}}]};
+
+
+    //create the dataset w/ mappings
+    var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-      "query":{},
       "mappings":{
-        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
-        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "color":{"field":"FACUSE","label":"Facility Type"}
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
       }
-    }
-  });
+    };
 
-  chart.show({
-    elementId: "#chart",
-  });
+    //assign to the chart
+    chart.dataset = dataset;
 
+    //show the chart
+    chart.show({
+      elementId: "#chart"
+    });
+    
+
+    //CHART EVENTS
+    chart.on('mouseover', onChartHover);
+
+    function onChartHover(d) {
+      
+      //get selected value for attribute in chart marker
+      var selected = d[dataset.mappings.group.field];
+      
+      //create renderer
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+
+      //add symbol selected value
+      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
+
+      featureLayer.setRenderer(renderer);
+      featureLayer.refresh();
+
+    } 
+
+    //MAP EVENTS
+    featureLayer.on('mouse-over', function(d) {
+      var val = d.graphic.attributes["ZIP_CODE"];
+    })
+
+  });
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/scatter-def-url.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-map-integration.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

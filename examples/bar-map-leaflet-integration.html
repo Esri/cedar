@@ -8,11 +8,9 @@
   <meta charset="utf-8">
 
   
-    <title>Cedar Quickstart | Esri Cedar</title>
+    <title>Esri Cedar</title>
   
 
-  
-    <meta name="description" content="A quick template to get started with Esri Cedar.">
   
 
   <meta name="description" content="Esri Cedar">
@@ -80,15 +78,28 @@
 <div class="col-lg-10">
   
 
-<h2>Cedar Quickstart</h2>
+<!-- Load Leaflet from CDN-->
+<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
+<!-- Load Esri Leaflet from CDN -->
+<script src="http://cdn-geoweb.s3.amazonaws.com/esri-leaflet/1.0.0-rc.4/esri-leaflet.js"></script>
+
+<style>
+  #map {width:100%;height:400px;}
+</style>
+
+<h1>Bar Chart + Esri Leaflet Map Interaction</h1>
+
+<div id="map"></div>
 <div id="chart"></div>
+
 
 
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
   &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Cedar Quickstart&lt;/title&gt;
+  &lt;title&gt;&lt;/title&gt;
   &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
 
   &lt;!-- Load D3 --&gt;
@@ -107,13 +118,83 @@
 
 &lt;script&gt;
 
-  var chart = new Cedar({
-    &quot;definition&quot;:&quot;../../../cedar/data/definitions/dc-schools-scatter-chart.json&quot;
+
+   //create a cedar chart
+  var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;});
+  var style = {
+      &quot;height&quot;: 400,
+      &quot;width&quot;: 850,
+      &quot;marks&quot;: [{&quot;properties&quot;: {
+        &quot;hover&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c15000&quot;}},
+        &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#0079c1&quot;}}}}]};
+
+  chart.override = style;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: &quot;#chart&quot;
   });
 
-  chart.show({
-    elementId: &quot;#chart&quot;,
+
+  var map = L.map(&#39;map&#39;).setView([38.9,-77], 11);
+
+  var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: style.marks[0].properties.update.fill.value,
+    color: &quot;#000&quot;,
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+
+  L.esri.basemapLayer(&#39;Streets&#39;).addTo(map);
+  var featureLayer = L.esri.featureLayer(&#39;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&#39;, {
+   pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
   });
+
+  featureLayer.addTo(map);
+
+
+  //CHART EVENTS
+  chart.on(&#39;mouseover&#39;, onChartHover);
+
+  function onChartHover(d) {
+
+    //get selected value for attribute in chart marker
+    var selected = d[dataset.mappings.group.field];
+
+    var hoverStyle = {
+      radius: 8,
+      fillColor: style.marks[0].properties.hover.fill.value,
+      color: &quot;#000&quot;,
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    };
+
+    featureLayer.setStyle(function(point) {
+      if (point.properties[dataset.mappings.group.field] === selected ) {
+        return hoverStyle;
+      } else {
+        return geojsonMarkerOptions;
+      }
+    });
+
+  } 
 
 &lt;/script&gt;
 &lt;/body&gt;
@@ -121,22 +202,89 @@
 
 
 
-
 <script>
-  //Create a cedar chart, passing in a url to a defintion
-  //a defintion allows a chart to be visualized AND manipulated
-  var chart = new Cedar({
-    "definition":"../../../cedar/data/definitions/dc-schools-scatter-chart.json"
+  
+
+  //create a cedar chart
+  var chart = new Cedar({"specification":"../data/templates/bar.json"});
+  var style = {
+      "height": 400,
+      "width": 850,
+      "marks": [{"properties": {
+        "hover": {"fill": {"value": "#c15000"}},
+        "update": {"fill": {"value": "#0079c1"}}}}]};
+
+  chart.override = style;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+  
+
+  var map = L.map('map').setView([38.9,-77], 11);
+
+  var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: style.marks[0].properties.update.fill.value,
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
+   pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
   });
 
-  chart.show({
-    elementId: "#chart",
-  });
+  featureLayer.addTo(map);
+
+
+  //CHART EVENTS
+  chart.on('mouseover', onChartHover);
+
+  function onChartHover(d) {
+    
+    //get selected value for attribute in chart marker
+    var selected = d[dataset.mappings.group.field];
+
+    var hoverStyle = {
+      radius: 8,
+      fillColor: style.marks[0].properties.hover.fill.value,
+      color: "#000",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    };
+
+    featureLayer.setStyle(function(point) {
+      if (point.properties[dataset.mappings.group.field] === selected ) {
+        return hoverStyle;
+      } else {
+        return geojsonMarkerOptions;
+      }
+    });
+
+  } 
 
 </script>
-
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/index.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-map-leaflet-integration.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

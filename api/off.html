@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>compile | Esri Cedar</title>
+    <title>Cedar.off( evt ) | Esri Cedar</title>
   
 
   
@@ -52,17 +52,15 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
+        <li><a href="../../../cedar/api/">API Documentation</a></li>
         <li><a href="../../../cedar/examples/">Examples</a></li>
-        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -75,12 +73,11 @@
 <div class="container white">
   
 
-<div class="col-lg-8">
-  <h2 id="cedar-create-template-mappings-">Cedar.create( template, mappings )</h2>
-<p>Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the <code>.show()</code> method. This will be used in tools that allow a user to associate a chart template with data + styling.</p>
-<p><em>NOTE</em>: If the data is passed in as an array, it will be embedded into the chart json that is emitted. (not implemented yet)</p>
-<p><code>Cedar.create(options)</code></p>
-<h4 id="arguments">Arguments</h4>
+<div class="col-lg-10">
+  <h2 id="-off-evtname-">.off( evtName )</h2>
+<p>Remove all event handlers for the specified event. Should be called when a chart is disposed.</p>
+<p><code>chart.off( event )</code></p>
+<h3 id="arguments">Arguments</h3>
 <table>
 <thead>
 <tr>
@@ -92,42 +89,96 @@
 </thead>
 <tbody>
 <tr>
-<td><code>options.template</code></td>
-<td>&lt;<code>object</code>&gt;</td>
+<td><code>event</code></td>
+<td><code>string</code></td>
 <td>yes</td>
-<td>Cedar template json.</td>
-</tr>
-<tr>
-<td><code>options.mappings</code></td>
-<td>&lt;<code>object</code>&gt;</td>
-<td>yes</td>
-<td>Hash of field mappings.</td>
-</tr>
-<tr>
-<td><code>options.data</code></td>
-<td>&lt;`url</td>
-<td>array`&gt;</td>
-<td>yes</td>
-<td>data</td>
+<td>Name of the interaction event to bind the function. (<code>mouseover</code>)</td>
 </tr>
 </tbody>
 </table>
-<h3 id="examples">Examples</h3>
+<h3 id="available-events">Available Events</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&#39;mouseover&#39;</td>
+<td>fires when the mouse moves over elements on the chart</td>
+</tr>
+<tr>
+<td>&#39;mouseout&#39;</td>
+<td>fires when the mouse leaves an elements on the chart</td>
+</tr>
+<tr>
+<td>&#39;click&#39;</td>
+<td>fires when on clicking an element on the chart</td>
+</tr>
+</tbody>
+</table>
+<h3 id="example-code">Example Code</h3>
+<pre><code>&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
 
-  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/create.hbs">Edit this page on GitHub</a></p>
+&lt;script&gt;
+
+   //define a handler for chart events 
+  function showItem(data){
+    //dump data to console...
+    console.dir(data);
+  }
+
+  //setup a chart using a json file that is the complete definition
+  var chart = new Cedar({
+    &quot;definition&quot;:&quot;../../../cedar/data/definitions/scatter-events.json&quot;
+  });
+
+  //render the chart
+  chart.show({
+    elementId: &quot;#chart&quot;
+  });
+
+  //attach handler (can also be done before .show())
+  chart.on(&#39;click&#39;, showItem);
+
+  //remove handler
+  chart.off(&#39;click&#39;);
+
+&lt;/script&gt;</code></pre>
+
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/off.hbs">Edit this page on GitHub</a></p>
 </div>
 
-<div class="col-lg-4">
+<div class="col-lg-2">
   <aside class="sidebar">
-  <h5><a href="../../../cedar/api-reference/index.html">Cedar Api</a></h5>
+  <h5><a href="../../../cedar/api/index.html">Cedar Javascript API</a></h5>
   <ul>
-    <li><a href="../../../cedar/api-reference/render.html">Cedar.show()</a></li>
-    <li><a href="../../../cedar/api-reference/compile.html">Cedar.create()</a></li>
+    <li><a href="../../../cedar/api/create.html">new Cedar( opt )</a></li>
   </ul>
-  <h5>Helpers</h5>
+  <h5>Properties</h5>
   <ul>
-    <li>Cedar.getJson()</li>
+    <li><a href="../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../cedar/api/specification.html">.specification</a></li>
   </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../cedar/api/off.html">.off( evt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../cedar/api/json/definition-json.html">Definition</a></li>
+  </ul>
+
 </aside>
 </div>
   <div style='clear:both;'></div>

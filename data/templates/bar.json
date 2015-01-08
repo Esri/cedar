@@ -1,0 +1,91 @@
+{
+  "inputs": [
+    {"name": "count", "type": ["numeric","string"], "required": true},
+    {"name": "group", "type": ["string"], "required": false}
+  ],
+  "template":{
+    "height": 300,
+    "width": 850,    
+    "padding": {
+      "bottom": 20,
+      "left": 10,
+      "right": 10,
+      "top": 10
+    },
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "X-Axis"
+      }
+    ],
+    "data": [
+      {
+        "name": "table",
+        "url": "{data}",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],    
+    "marks": [
+      {
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "width": {
+              "band": true,
+              "offset": -1,
+              "scale": "x"
+            },
+            "x": {
+              "field": "data.attributes.{group.field}",
+              "scale": "x"
+            },
+            "y": {
+              "field": "data.attributes.{count.field}_SUM",
+              "scale": "y"
+            },
+            "y2": {
+              "scale": "y",
+              "value": 0
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "green"
+            }
+          },
+          "update": {
+            "fill": {
+              "value": "#ccc"
+            }
+          }
+        },
+        "type": "rect"
+      }
+    ],    
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{group.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
+      },
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{count.field}_SUM"
+        },
+        "name": "y",
+        "nice": true,
+        "range": "height"
+      }
+    ]
+  }
+}

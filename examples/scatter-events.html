@@ -52,17 +52,15 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
+        <li><a href="../../../cedar/api/">API Documentation</a></li>
         <li><a href="../../../cedar/examples/">Examples</a></li>
-        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -115,26 +113,26 @@
 
 &lt;script&gt;
 
-
-
- function showItem(data){
+  //define a handler for chart events 
+  function showItem(data){
     var tmpl = document.getElementById(&quot;school-detail-template&quot;).innerHTML;
+    //this uses underscore&#39;s templating library, but it could use anything
     compiled = _.template(tmpl);
     document.getElementById(&#39;details&#39;).innerHTML = compiled(data);
   }
 
-  var chart = new Cedar();
-  //attach handlers before the view exists
-  chart.on(&#39;mouseover&#39;, showItem);
-  //show the chart
-  chart.show({
-    elementId: &quot;#chart&quot;,
-    spec: &quot;../../../cedar/data/charts/evt-scatter-chart.json&quot;
+  //setup a chart using a json file that is the complete definition
+  var chart = new Cedar({
+    &quot;definition&quot;:&quot;../../../cedar/data/definitions/scatter-events.json&quot;
   });
-  //add more handlers after starting chart creation
-  chart.on(&#39;mouseout&#39;, showItem);
-  chart.on(&#39;click&#39;, showItem);
 
+  //render the chart
+  chart.show({
+    elementId: &quot;#chart&quot;
+  });
+
+  //attach handler (can also be done before .show())
+  chart.on(&#39;click&#39;, showItem);
 
 
 &lt;/script&gt;
@@ -154,27 +152,25 @@
 </script>
 
 <script>
-  //render
+  //define a handler for chart events 
   function showItem(data){
     var tmpl = document.getElementById("school-detail-template").innerHTML;
+    //this uses underscore's templating library, but it could use anything
     compiled = _.template(tmpl);
     document.getElementById('details').innerHTML = compiled(data);
   }
-  function report(data){
-    console.log('caught event ' + data);
-  }
 
+  //setup a chart using a json file that is the complete definition
   var chart = new Cedar({
     "definition":"../../../cedar/data/definitions/scatter-events.json"
   });
-  //attach handlers before the view exists
-  chart.on('mouseover', report);
-  
+
+  //render the chart
   chart.show({
     elementId: "#chart"
   });
-  //and after
-  chart.on('mouseout', report);
+
+  //attach handler (can also be done before .show())
   chart.on('click', showItem);
 
 
@@ -186,23 +182,35 @@
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Using Definitions</h5>
+
+
+  <h5>Chart Types</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from Url</a></li>
-      <li>In-lined</li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
     </ul>
   </nav>
 
   <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/bar-spec-url.html">Load From Url</a></li>
-      <li><a href="../../../cedar/examples/bar-spec-inlined.html">In-lined</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Specification URL</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-override.html">Style Overrides</a></li>
     </ul>
   </nav>
 
-  
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
   <h5>Events</h5>
   <nav>
     <ul>
@@ -212,9 +220,8 @@
   <h5>Map Integration</h5>
   <nav>
     <ul>
-      <li>Link to JS API Map</li>
-      <li>Link to Leaflet Map</li>
-      <li>Link to pop-over</li>
+      <li><a href="../../../cedar/examples/bar-map-integration.html">With JS API Map</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
     </ul>
   </nav>
 

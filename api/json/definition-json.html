@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>compile | Esri Cedar</title>
+    <title>Chart Definition Json | Esri Cedar</title>
   
 
   
@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../../../cedar/css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../js/cedar-core.js"></script>
+  <script type="text/javascript" src="../../../../cedar/js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -52,17 +52,15 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../">cedar.js</a>
+      <a class="navbar-brand" href="../../../../cedar/">cedar.js</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../examples/">Examples</a></li>
-        <li><a href="../api-reference/">Api Documentation</a></li>
+        <li><a href="../../../../cedar/api/">API Documentation</a></li>
+        <li><a href="../../../../cedar/examples/">Examples</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -75,59 +73,45 @@
 <div class="container white">
   
 
-<div class="col-lg-8">
-  <h2 id="cedar-create-template-mappings-">Cedar.create( template, mappings )</h2>
-<p>Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the <code>.show()</code> method. This will be used in tools that allow a user to associate a chart template with data + styling.</p>
-<p><em>NOTE</em>: If the data is passed in as an array, it will be embedded into the chart json that is emitted.</p>
-<p><code>Cedar.create(options)</code></p>
-<h4 id="arguments">Arguments</h4>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Type</th>
-<th>Required</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>options.template</code></td>
-<td>&lt;<code>object</code>&gt;</td>
-<td>yes</td>
-<td>Cedar template json.</td>
-</tr>
-<tr>
-<td><code>options.mappings</code></td>
-<td>&lt;<code>object</code>&gt;</td>
-<td>yes</td>
-<td>Hash of field mappings.</td>
-</tr>
-<tr>
-<td><code>options.data</code></td>
-<td>&lt;`url</td>
-<td>array`&gt;</td>
-<td>yes</td>
-<td>data</td>
-</tr>
-</tbody>
-</table>
-<h3 id="examples">Examples</h3>
+<div class="col-lg-10">
+  <h1 id="definition-json">Definition Json</h1>
+<p>A definition object is the combintion of a <a href="../../../../cedar/api/json/dataset-json.html">dataset</a> and a <a href="../../../../cedar/api/json/specification-json.html">specification</a> into a single object. This streamlines the process of hydrating a chart, as the complete definition can be stored in a file, database, or other location, and the url passed into the cedar constructor. </p>
+<p>This is also the internal structure used by Cedar.</p>
+<h2 id="specification-format">Specification Format</h2>
+<pre><code class="language-json">{
+  &quot;specifiction&quot;: {...specification object...},
+  &quot;dataset&quot;:{ ... dataset object... }
+}</code></pre>
 
-  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/compile.hbs">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/json/definition-json.md">Edit this page on GitHub</a></p>
 </div>
 
-<div class="col-lg-4">
+<div class="col-lg-2">
   <aside class="sidebar">
-  <h5><a href="../api-reference/index.html">Cedar Api</a></h5>
+  <h5><a href="../../../../cedar/api/index.html">Cedar Javascript API</a></h5>
   <ul>
-    <li><a href="../api-reference/render.html">Cedar.show()</a></li>
-    <li><a href="../api-reference/compile.html">Cedar.create()</a></li>
+    <li><a href="../../../../cedar/api/create.html">new Cedar( opt )</a></li>
   </ul>
-  <h5>Helpers</h5>
+  <h5>Properties</h5>
   <ul>
-    <li>Cedar.getJson()</li>
+    <li><a href="../../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../../cedar/api/specification.html">.specification</a></li>
   </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../../cedar/api/off.html">.off( evt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../../cedar/api/json/definition-json.html">Definition</a></li>
+  </ul>
+
 </aside>
 </div>
   <div style='clear:both;'></div>
@@ -137,6 +121,6 @@
 </div>
 
   </div>
-  <!-- <script src="../js/script.js"></script>-->
+  <!-- <script src="../../../../cedar/js/script.js"></script>-->
   </body>
 </html>

@@ -52,17 +52,15 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
+        <li><a href="../../../cedar/api/">API Documentation</a></li>
         <li><a href="../../../cedar/examples/">Examples</a></li>
-        <li><a href="../../../cedar/api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -109,10 +107,101 @@
 
 &lt;script&gt;
 
-
-
 //create a cedar chart
-  var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar-chart-template.json&quot;});
+  var chart = new Cedar();
+
+  var spec = {
+    &quot;inputs&quot;: [
+      {&quot;name&quot;: &quot;count&quot;, &quot;type&quot;: [&quot;numeric&quot;,&quot;string&quot;], &quot;required&quot;: true},
+      {&quot;name&quot;: &quot;group&quot;, &quot;type&quot;: [&quot;string&quot;], &quot;required&quot;: false}
+    ],
+    &quot;template&quot;:{
+      &quot;axes&quot;: [
+        {
+          &quot;type&quot;: &quot;x&quot;,
+          &quot;scale&quot;: &quot;x&quot;,
+          &quot;title&quot;: &quot;X-Axis&quot;
+        }
+      ],
+      &quot;data&quot;: [
+        {
+          &quot;name&quot;: &quot;table&quot;,
+          &quot;url&quot;: &quot;{data}&quot;,
+          &quot;format&quot;: {
+            &quot;property&quot;: &quot;features&quot;
+          }
+        }
+      ],
+      &quot;height&quot;: 300,
+      &quot;marks&quot;: [
+        {
+          &quot;from&quot;: {
+            &quot;data&quot;: &quot;table&quot;
+          },
+          &quot;properties&quot;: {
+            &quot;enter&quot;: {
+              &quot;width&quot;: {
+                &quot;band&quot;: true,
+                &quot;offset&quot;: -1,
+                &quot;scale&quot;: &quot;x&quot;
+              },
+              &quot;x&quot;: {
+                &quot;field&quot;: &quot;data.attributes.{group.field}&quot;,
+                &quot;scale&quot;: &quot;x&quot;
+              },
+              &quot;y&quot;: {
+                &quot;field&quot;: &quot;data.attributes.{count.field}_SUM&quot;,
+                &quot;scale&quot;: &quot;y&quot;
+              },
+              &quot;y2&quot;: {
+                &quot;scale&quot;: &quot;y&quot;,
+                &quot;value&quot;: 0
+              }
+            },
+            &quot;hover&quot;: {
+              &quot;fill&quot;: {
+                &quot;value&quot;: &quot;red&quot;
+              }
+            },
+            &quot;update&quot;: {
+              &quot;fill&quot;: {
+                &quot;value&quot;: &quot;steelblue&quot;
+              }
+            }
+          },
+          &quot;type&quot;: &quot;rect&quot;
+        }
+      ],
+      &quot;padding&quot;: {
+        &quot;bottom&quot;: 20,
+        &quot;left&quot;: 80,
+        &quot;right&quot;: 10,
+        &quot;top&quot;: 10
+      },
+      &quot;scales&quot;: [
+        {
+          &quot;domain&quot;: {
+            &quot;data&quot;: &quot;table&quot;,
+            &quot;field&quot;: &quot;data.attributes.{group.field}&quot;
+          },
+          &quot;name&quot;: &quot;x&quot;,
+          &quot;range&quot;: &quot;width&quot;,
+          &quot;type&quot;: &quot;ordinal&quot;
+        },
+        {
+          &quot;domain&quot;: {
+            &quot;data&quot;: &quot;table&quot;,
+            &quot;field&quot;: &quot;data.attributes.{count.field}_SUM&quot;
+          },
+          &quot;name&quot;: &quot;y&quot;,
+          &quot;nice&quot;: true,
+          &quot;range&quot;: &quot;height&quot;
+        }
+      ],
+      &quot;width&quot;: 850
+    }
+  }
+  chart.specification = spec;
   //create the dataset w/ mappings
   var dataset = {
     &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
@@ -129,7 +218,6 @@
   chart.show({
     elementId: &quot;#chart&quot;
   });
-
 
 &lt;/script&gt;
 &lt;/body&gt;
@@ -164,7 +252,7 @@
         }
       }
     ],
-    "height": 600,
+    "height": 300,
     "marks": [
       {
         "from": {
@@ -261,23 +349,35 @@
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Using Definitions</h5>
+
+
+  <h5>Chart Types</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from Url</a></li>
-      <li>In-lined</li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
     </ul>
   </nav>
 
   <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/bar-spec-url.html">Load From Url</a></li>
-      <li><a href="../../../cedar/examples/bar-spec-inlined.html">In-lined</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Specification URL</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-override.html">Style Overrides</a></li>
     </ul>
   </nav>
 
-  
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
   <h5>Events</h5>
   <nav>
     <ul>
@@ -287,9 +387,8 @@
   <h5>Map Integration</h5>
   <nav>
     <ul>
-      <li>Link to JS API Map</li>
-      <li>Link to Leaflet Map</li>
-      <li>Link to pop-over</li>
+      <li><a href="../../../cedar/examples/bar-map-integration.html">With JS API Map</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
     </ul>
   </nav>
 
