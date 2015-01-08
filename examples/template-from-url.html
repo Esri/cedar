@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../js/cedar-core.js"></script>
+  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -52,17 +52,15 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../">cedar.js</a>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../examples/">Examples</a></li>
-        <li><a href="../api-reference/">Api Documentation</a></li>
+        <li><a href="../../../cedar/api/">API Documentation</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -109,9 +107,6 @@
 
 
 
-
-
-
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
@@ -132,7 +127,7 @@
     "color":"FACUSE"
   };
   
-  var tmplUrl = "../data/templates/scatter-template-v2.json";
+  var tmplUrl = "../../../cedar/data/templates/scatter-template-v2.json";
   
   //use helper to get the template...
   Cedar.getJson(tmplUrl, function(err,template){
@@ -161,35 +156,46 @@
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5>Using Definitions</h5>
+
+
+  <h5>Chart Types</h5>
   <nav>
     <ul>
-      <li><a href="../examples/scatter-def-url.html">Load from Url</a></li>
-      <li>In-lined</li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
     </ul>
   </nav>
 
   <h5>Using Specifications</h5>
   <nav>
     <ul>
-      <li><a href="../examples/bar-spec-url.html">Load From Url</a></li>
-      <li><a href="../examples/bar-spec-inlined.html">In-lined</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-url.html">Specification URL</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/bar-spec-override.html">Style Overrides</a></li>
     </ul>
   </nav>
 
-  
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
   <h5>Events</h5>
   <nav>
     <ul>
-      <li><a href="../examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
   <nav>
     <ul>
-      <li><a href="../examples/bar-map-integration.html">Link to JS API Map</a></li>
-      <li><a href="../examples/bar-map-leaflet-integration.html">Link to Leaflet Map</a></li>
-      <li>Link to pop-over</li>
+      <li><a href="../../../cedar/examples/bar-map-integration.html">With JS API Map</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
     </ul>
   </nav>
 
@@ -205,6 +211,6 @@
 </div>
 
   </div>
-  <!-- <script src="../js/script.js"></script>-->
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
   </body>
 </html>

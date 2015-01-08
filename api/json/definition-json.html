@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Chart Definition Json | Esri Cedar</title>
   
 
   
@@ -21,7 +21,7 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../../cedar/css/style.css">
 
   <!-- Cedar -->
 
@@ -29,7 +29,7 @@
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
+  <script type="text/javascript" src="../../../../cedar/js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -53,14 +53,14 @@
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+      <a class="navbar-brand" href="../../../../cedar/">cedar.js</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../../../cedar/api/">API Documentation</a></li>
-        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../../cedar/api/">API Documentation</a></li>
+        <li><a href="../../../../cedar/examples/">Examples</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -72,55 +72,47 @@
 
 <div class="container white">
   
-<div class="col-lg-12">
-<h1 id="development-backlog">Development Backlog</h1>
-<h3 id="dev-questions">Dev Questions</h3>
-<ul>
-<li>what type of item are we using to store charts? </li>
-</ul>
-<h3 id="notes-random-ideas">Notes / Random ideas</h3>
-<ul>
-<li>the chart json is tightly bound to the datasource - the </li>
-</ul>
-<h3 id="dev-housekeeping">Dev Housekeeping</h3>
-<ul>
-<li>[x] update example layout so we can have the live example with the source below that</li>
-</ul>
-<h3 id="ideas">Ideas</h3>
-<ul>
-<li><p>optimize for Cedar.show(spec, callback);</p>
-</li>
-<li><p>all other things secondary</p>
-<ul>
-<li>i.e. generateChart requires that you pass an obj, meaning that a dev needs to
-get the chart template from SOMEWHERE.</li>
-</ul>
-</li>
-</ul>
-<h3 id="chart-templates">Chart Templates</h3>
-<ul>
-<li>[x] example loading a template from a file (url)</li>
-</ul>
-<h3 id="charts">Charts</h3>
-<ul>
-<li>[x] example loading a pie/scatter/bar from a file</li>
-<li>[x] example loading an inlined chart (scatter)</li>
-</ul>
-<h3 id="data">Data</h3>
-<ul>
-<li>[x] example loading data from a service </li>
-<li>example passing in data </li>
-<li>example with data inlined into chart</li>
-</ul>
-<h3 id="events">Events</h3>
-<ul>
-<li>example showing how to bind to simple (cedar) events</li>
-<li>example showing how to bind to advanced (vega) events</li>
-</ul>
 
-  <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/backlog/index.hbs">Edit this sample on GitHub</a></p>
-  </div>
+<div class="col-lg-10">
+  <h1 id="definition-json">Definition Json</h1>
+<p>A definition object is the combintion of a <a href="../../../../cedar/api/json/dataset-json.html">dataset</a> and a <a href="../../../../cedar/api/json/specification-json.html">specification</a> into a single object. This streamlines the process of hydrating a chart, as the complete definition can be stored in a file, database, or other location, and the url passed into the cedar constructor. </p>
+<p>This is also the internal structure used by Cedar.</p>
+<h2 id="specification-format">Specification Format</h2>
+<pre><code class="language-json">{
+  &quot;specifiction&quot;: {...specification object...},
+  &quot;dataset&quot;:{ ... dataset object... }
+}</code></pre>
+
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/json/definition-json.md">Edit this page on GitHub</a></p>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5><a href="../../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <ul>
+    <li><a href="../../../../cedar/api/create.html">new Cedar( opt )</a></li>
+  </ul>
+  <h5>Properties</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../../cedar/api/specification.html">.specification</a></li>
+  </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../../cedar/api/off.html">.off( evt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../../cedar/api/json/definition-json.html">Definition</a></li>
+  </ul>
+
+</aside>
 </div>
   <div style='clear:both;'></div>
 </div>
@@ -129,6 +121,6 @@ get the chart template from SOMEWHERE.</li>
 </div>
 
   </div>
-  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  <!-- <script src="../../../../cedar/js/script.js"></script>-->
   </body>
 </html>

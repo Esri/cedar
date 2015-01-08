@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Cedar.update() | Esri Cedar</title>
   
 
   
@@ -72,55 +72,67 @@
 
 <div class="container white">
   
-<div class="col-lg-12">
-<h1 id="development-backlog">Development Backlog</h1>
-<h3 id="dev-questions">Dev Questions</h3>
-<ul>
-<li>what type of item are we using to store charts? </li>
-</ul>
-<h3 id="notes-random-ideas">Notes / Random ideas</h3>
-<ul>
-<li>the chart json is tightly bound to the datasource - the </li>
-</ul>
-<h3 id="dev-housekeeping">Dev Housekeeping</h3>
-<ul>
-<li>[x] update example layout so we can have the live example with the source below that</li>
-</ul>
-<h3 id="ideas">Ideas</h3>
-<ul>
-<li><p>optimize for Cedar.show(spec, callback);</p>
-</li>
-<li><p>all other things secondary</p>
-<ul>
-<li>i.e. generateChart requires that you pass an obj, meaning that a dev needs to
-get the chart template from SOMEWHERE.</li>
-</ul>
-</li>
-</ul>
-<h3 id="chart-templates">Chart Templates</h3>
-<ul>
-<li>[x] example loading a template from a file (url)</li>
-</ul>
-<h3 id="charts">Charts</h3>
-<ul>
-<li>[x] example loading a pie/scatter/bar from a file</li>
-<li>[x] example loading an inlined chart (scatter)</li>
-</ul>
-<h3 id="data">Data</h3>
-<ul>
-<li>[x] example loading data from a service </li>
-<li>example passing in data </li>
-<li>example with data inlined into chart</li>
-</ul>
-<h3 id="events">Events</h3>
-<ul>
-<li>example showing how to bind to simple (cedar) events</li>
-<li>example showing how to bind to advanced (vega) events</li>
-</ul>
 
-  <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/backlog/index.hbs">Edit this sample on GitHub</a></p>
-  </div>
+<div class="col-lg-10">
+  <h2 id="-update-">.update( )</h2>
+<p>Re-renders an existing cedar chart. Typically used after changing the <a href="../../../cedar/api/json/dataset-json.html#dataset-query"><code>dataset.query</code></a> or <a href="../../../cedar/api/json/specification-json.html#template"><code>specification.template</code></a> properties. If the dataset is specified as a Url, the data will be re-fetched.</p>
+<p><code>chart.update( )</code></p>
+<h4 id="example-code">Example Code</h4>
+<pre><code>&lt;div id=&#39;chartDiv&#39;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
+    }
+  };
+
+var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
+
+//create and render a chart
+chart.show({
+  &#39;elementId&#39;: &#39;#chartDiv&#39;
+});
+//some user action that sets the zip code... and thus updates the where clause on the query
+chart.dataset.query.where = &quot;ZIP_CODE = 20007&quot;;
+
+//update the chart
+chart.update();
+
+&lt;/script&gt;</code></pre>
+
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/update.hbs">Edit this page on GitHub</a></p>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5><a href="../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <ul>
+    <li><a href="../../../cedar/api/create.html">new Cedar( opt )</a></li>
+  </ul>
+  <h5>Properties</h5>
+  <ul>
+    <li><a href="../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../cedar/api/specification.html">.specification</a></li>
+  </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../cedar/api/off.html">.off( evt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../cedar/api/json/definition-json.html">Definition</a></li>
+  </ul>
+
+</aside>
 </div>
   <div style='clear:both;'></div>
 </div>
