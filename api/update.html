@@ -81,7 +81,15 @@
 <pre><code>&lt;div id=&#39;chartDiv&#39;&gt;&lt;/div&gt;
 
 &lt;script&gt;
-var chart = new Cedar({&#39;specification&#39;: &#39;http://example.org/url_to_specification.json&#39;})
+var dataset = {
+    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+    &quot;mappings&quot;:{
+      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
+      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
+    }
+  };
+
+var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
 
 //create and render a chart
 chart.show({
