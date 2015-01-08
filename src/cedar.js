@@ -173,6 +173,7 @@ Cedar.prototype.show = function(options){
       err= "Cedar.show requires options.elementId";
     }
     //TODO: check if element exists in the page
+    
   
     //hold onto the id
     this._elementId = options.elementId;

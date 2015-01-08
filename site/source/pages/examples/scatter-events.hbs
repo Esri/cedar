@@ -18,22 +18,25 @@ layout: example.hbs
 ```html
 
 {{>example-code-header}}
- function showItem(data){
+  //define a handler for chart events 
+  function showItem(data){
     var tmpl = document.getElementById("school-detail-template").innerHTML;
+    //this uses underscore's templating library, but it could use anything
     compiled = _.template(tmpl);
     document.getElementById('details').innerHTML = compiled(data);
   }
-  
-  var chart = new Cedar();
-  //attach handlers before the view exists
-  chart.on('mouseover', showItem);
-  //show the chart
-  chart.show({
-    elementId: "#chart",
-    spec: "{{assets}}data/charts/evt-scatter-chart.json"
+
+  //setup a chart using a json file that is the complete definition
+  var chart = new Cedar({
+    "definition":"{{assets}}data/definitions/scatter-events.json"
   });
-  //add more handlers after starting chart creation
-  chart.on('mouseout', showItem);
+
+  //render the chart
+  chart.show({
+    elementId: "#chart"
+  });
+
+  //attach handler (can also be done before .show())
   chart.on('click', showItem);
  
 {{>example-code-footer}}
@@ -52,27 +55,25 @@ layout: example.hbs
 </script>
 
 <script>
-  //render
+  //define a handler for chart events 
   function showItem(data){
     var tmpl = document.getElementById("school-detail-template").innerHTML;
+    //this uses underscore's templating library, but it could use anything
     compiled = _.template(tmpl);
     document.getElementById('details').innerHTML = compiled(data);
   }
-  function report(data){
-    console.log('caught event ' + data);
-  }
 
+  //setup a chart using a json file that is the complete definition
   var chart = new Cedar({
     "definition":"{{assets}}data/definitions/scatter-events.json"
   });
-  //attach handlers before the view exists
-  chart.on('mouseover', report);
-  
+
+  //render the chart
   chart.show({
     elementId: "#chart"
   });
-  //and after
-  chart.on('mouseout', report);
+
+  //attach handler (can also be done before .show())
   chart.on('click', showItem);
 
 

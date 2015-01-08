@@ -1,32 +1,29 @@
 ---
-title: Cedar.on( evt, fn )
+title: Cedar.off( evt )
 layout: documentation.hbs
 ---
 
-## .on( evtName, fn)
+## .off( evtName )
 
-Bind event handler functions to the chart.
+Remove all event handlers for the specified event. Should be called when a chart is disposed.
 
-`chart.on(event, fn)`
+`chart.off( event )`
 
 ### Arguments
 
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `event` | `string` | yes | Name of the interaction event to bind the function. (`mouseover`) |
-| `fn` | `function` | yes | Function that is called when the event occurs.  |
+
 
 
 ### Available Events
 | Name |  Description |
 | --- |  --- |
-| `mouseover` | fires when the mouse moves over elements on the chart |
-| `mouseout` | fires when the mouse leaves an elements on the chart |
-| `click` | fires when on clicking an element on the chart |
+| 'mouseover' | fires when the mouse moves over elements on the chart |
+| 'mouseout' | fires when the mouse leaves an elements on the chart |
+| 'click' | fires when on clicking an element on the chart |
 
-
-### Handler Parameters
-When a handler is fired, the data associated with the chart element is passed along.
 
 
 
@@ -56,6 +53,9 @@ When a handler is fired, the data associated with the chart element is passed al
 
   //attach handler (can also be done before .show())
   chart.on('click', showItem);
+
+  //remove handler
+  chart.off('click');
  
 </script>
 ```
