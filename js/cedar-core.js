@@ -86,6 +86,14 @@ var Cedar = function Cedar(options){
 
   //allow a dataset to be passed in...
   if(opts.dataset && typeof opts.dataset === 'object'){
+    var defaultQuery = Cedar._defaultQuery();
+
+    if(!opts.dataset.query){
+      opts.dataset.query = defaultQuery;
+    }else{
+      opts.dataset.query = _.defaults(opts.dataset.query, defaultQuery);
+    }
+    //assign it
     this._definition.dataset = opts.dataset;
   }
 
@@ -173,7 +181,9 @@ Cedar.prototype.show = function(options){
       err= "Cedar.show requires options.elementId";
     }
     //TODO: check if element exists in the page
-    
+    if(d3.select(options.elementId)[0][0] === null){
+      err = "Element " + options.elementId + " is not present in the DOM";
+     }
   
     //hold onto the id
     this._elementId = options.elementId;
@@ -207,38 +217,45 @@ Cedar.prototype.show = function(options){
 Cedar.prototype.update = function(){
   var self = this;
   
-  if(this._view){
-    //remove handlers
-    //TODO Remove existing handlers
-    this._remove(this._view);
-  }
-  try{
-    //extend the mappings w the data
-    var compiledMappings = Cedar._compileMappings(this._definition.dataset);
+if(this._pendingXhr){
+    
+    this._addToMethodQueue('update');
 
-    //compile the template + dataset --> vega spec
-    var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
+  }else{
 
-    // merge in user specified style overrides
-    spec = Cedar._mergeRecursive(spec, this._definition.override);
+    if(this._view){
+      //remove handlers
+      //TODO Remove existing handlers
+      this._remove(this._view);
+    }
+    try{
+      //extend the mappings w the data
+      var compiledMappings = Cedar._compileMappings(this._definition.dataset);
 
-    //use vega to parse the spec 
-    //it will handle the spec as an object or url
-    vg.parse.spec(spec, function(chartCtor) { 
+      //compile the template + dataset --> vega spec
+      var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
 
-      //create the view
-      self._view = chartCtor({el: self._elementId});
-      
-      //render into the element
-      self._view.update(); 
+      // merge in user specified style overrides
+      spec = Cedar._mergeRecursive(spec, this._definition.override);
 
-      //attach event proxies
-      self._attach(self._view);
+      //use vega to parse the spec 
+      //it will handle the spec as an object or url
+      vg.parse.spec(spec, function(chartCtor) { 
 
-    });
-  }
-  catch(ex){
-    throw(ex);
+        //create the view
+        self._view = chartCtor({el: self._elementId});
+        
+        //render into the element
+        self._view.update(); 
+
+        //attach event proxies
+        self._attach(self._view);
+
+      });
+    }
+    catch(ex){
+      throw(ex);
+    }
   }
 };
 
@@ -291,7 +308,8 @@ Cedar._validateMappings = function(inputs, mappings){
 Cedar._defaultDefinition = function(){
   var defn = {
     "dataset": {
-      "url":""
+      "url":"",
+      "query": this._defaultQuery()
     },
     "template":{}
   };
@@ -410,6 +428,16 @@ Cedar._compileMappings = function(dataset){
   }else{
     mergedQuery = defaultQuery;
     
+  }
+
+  //Handle bbox
+  if(mergedQuery.bbox){
+    //get the bbox
+    //var bbox = mergedQuery.bbox;
+    //remove it
+    delete mergedQuery.bbox;
+    //cook it into the json required by the AGS rest api
+    //var 
   }
 
   // add any aggregations

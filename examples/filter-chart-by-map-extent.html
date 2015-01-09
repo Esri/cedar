@@ -78,11 +78,25 @@
 <div class="col-lg-10">
   
 
+<style>
+  #chart {
+    margin-bottom:50px;
+  }
+  #chart canvas {
+    margin: auto;
+    display: block;
+  }
+</style>
 
-<h1>Multiple Charts</h1>
+<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="http://js.arcgis.com/3.12/"></script>
 
-<div id="chart1"></div>
-<div id="chart2"></div>
+
+<h1>Filter Chart by Map Extent</h1>
+
+<div id="map"></div>
+<div id="chart"></div>
+
 
 
 <pre><code class="language-html">&lt;html&gt;
@@ -107,25 +121,81 @@
 
 &lt;script&gt;
 
-  var dataset = {
-    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-    &quot;mappings&quot;:{
-      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
-      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
+
+  require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
+    &quot;esri/renderers/SimpleRenderer&quot;,  &quot;esri/renderers/UniqueValueRenderer&quot;, &quot;esri/Color&quot;, &quot;dojo/domReady!&quot;], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([198,12,70,1]), 1),
+      new Color([248,187,37,0.9]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer(&quot;http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It&#39;s_a_Tornado_Map/FeatureServer/0&quot;,{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: [&quot;*&quot;]
+    });
+
+    //create esri map
+    var map = new Map(&quot;map&quot;, {
+      center: [-99, 38.9],
+      zoom: 4,
+      basemap: &quot;topo&quot;,
+      smartNavigation: false
+    });
+
+    map.on(&#39;load&#39;, function() {
+      map.disableScrollWheelZoom();
+    });
+
+    map.on(&#39;zoom-end&#39;, function() {
+      onMapZoomed();
+    });
+
+    window.map = map;
+
+    featureLayer.setRenderer(rend);
+    map.addLayer(featureLayer);
+
+    var dataset = {
+      &quot;url&quot;:&quot;http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It&#39;s_a_Tornado_Map/FeatureServer/0&quot;,
+      &quot;query&quot;: {},
+      &quot;mappings&quot;:{
+        &quot;group&quot;: {&quot;field&quot;:&quot;state&quot;,&quot;label&quot;:&quot;State&quot;},
+        &quot;count&quot;: {&quot;field&quot;:&quot;injuries&quot;,&quot;label&quot;:&quot;Injuries&quot;}
+      }
+    };
+
+    var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
+
+    chart.override = {
+      &quot;height&quot;: 300,
+      &quot;marks&quot;: [{&quot;properties&quot;: {
+          &quot;hover&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#f8bb25&quot;}},
+          &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c60c46&quot;}}
+        }
+      }]
+    };
+
+    //create and render a chart
+    chart.show({
+      &#39;elementId&#39;: &#39;#chart&#39;
+    });
+    window.chart = chart;
+
+
+    //filter by map extent when user zooms
+    function onMapZoomed() {
+      var extent = map.extent;
+      extent = JSON.stringify(extent);
+      chart.dataset.query.geometry = extent;
+      chart.update();
     }
-  };
 
-  var chart1 = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
+  });
 
-  chart1.show({
-    elementId: &quot;#chart1&quot;,
-  });  
-
-  var chart2 = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/pie.json&quot;, &quot;dataset&quot;: dataset});
-
-  chart2.show({
-    elementId: &quot;#chart2&quot;,
-  });    
 
 &lt;/script&gt;
 &lt;/body&gt;
@@ -134,30 +204,82 @@
 
 
 <script>
+  require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([198,12,70,1]), 1),
+      new Color([248,187,37,0.9]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: ["*"]
+    });
+
+    //create esri map
+    var map = new Map("map", {
+      center: [-99, 38.9],
+      zoom: 4,
+      basemap: "topo",
+      smartNavigation: false
+    });
+
+    map.on('load', function() {
+      map.disableScrollWheelZoom();
+    });
+
+    map.on('zoom-end', function() {
+      onMapZoomed();
+    });
+
+    window.map = map;
+
+    featureLayer.setRenderer(rend);
+    map.addLayer(featureLayer);
+    
+    var dataset = {
+      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {},
+      "mappings":{
+        "group": {"field":"state","label":"State"},
+        "count": {"field":"injuries","label":"Injuries"}
+      }
+    };
+
+    var chart = new Cedar({"specification":"../data/templates/bar.json", "dataset": dataset});
+
+    chart.override = {
+      "height": 300,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#f8bb25"}},
+          "update": {"fill": {"value": "#c60c46"}}
+        }
+      }]
+    };
+
+    //create and render a chart
+    chart.show({
+      'elementId': '#chart'
+    });
+    window.chart = chart;
+
+    //filter by map extent when user zooms
+    function onMapZoomed() {
+      var extent = map.extent;
+      extent = JSON.stringify(extent);
+      chart.dataset.query.geometry = extent;
+      chart.update();
     }
-  };
 
-  var chart1 = new Cedar({"specification":"../../../cedar/data/templates/bar.json", "dataset": dataset});
-
-  chart1.show({
-    elementId: "#chart1",
-  });  
-
-  var chart2 = new Cedar({"specification":"../../../cedar/data/templates/pie.json", "dataset": dataset});
-
-  chart2.show({
-    elementId: "#chart2",
-  });    
+  });
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/multiple.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/filter-chart-by-map-extent.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

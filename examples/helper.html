@@ -83,39 +83,74 @@
   </div>
 
   <p>Compiled Spec Json</p>
-  <textarea rows="20" id="output" style="width:100%"></textarea>
+  <pre id="output" style="width:100%"></pre>
 
 
 </div>
 
 
 <script>
+  var cedar = new Cedar();
+
+  var dataSource = {
+    url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  };
 
   var fieldMappings = {
-    "count": "TOTAL_STUD",
-    "group": "ZIP_CODE"
-  }
-  var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  var tmplUrl = "../data/templates/bar-chart-template.json";
-
+    "x": {"field": "POPULATION_ENROLLED_2008", "label":"Enrollment 2008"},
+    "y": {"field": "SQUARE_FOOTAGE", "label":"Square Footage"},
+    "color":{"field": "FACUSE", "label":"Facility Type"}
+  };
+  
+  var tmplUrl = "../data/templates/scatter-template-v2.json";
+  
+  //use helper to get the template...
   Cedar.getJson(tmplUrl, function(err,template){
     if(err){
       console.error(err);
       return;
     }
     //cook the spec
-    var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
-    console.info()
+    var chartJson = cedar.cook(template, dataSource, fieldMappings);
+    //dump the chart json into the page so we can look at it
+    document.getElementById('output').innerHTML = JSON.stringify(chartJson, undefined, 2);
+
     var opts = {
       elementId: "#chart",
       spec: chartJson
     };
 
-    document.getElementById('output').value = JSON.stringify(chartJson);
     //render
-    Cedar.show( opts );
+    //cedar.show( opts );
 
   });
+
+
+  // var fieldMappings = {
+  //   "count": "TOTAL_STUD",
+  //   "group": "ZIP_CODE"
+  // }
+  // var serviceUrl = "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+  // var tmplUrl = "../data/templates/bar-chart-template.json";
+
+  // Cedar.getJson(tmplUrl, function(err,template){
+  //   if(err){
+  //     console.error(err);
+  //     return;
+  //   }
+  //   //cook the spec
+  //   var chartJson = Cedar.create(template, serviceUrl, fieldMappings);
+  //   console.info()
+  //   var opts = {
+  //     elementId: "#chart",
+  //     spec: chartJson
+  //   };
+
+  //   document.getElementById('output').value = JSON.stringify(chartJson);
+  //   //render
+  //   Cedar.show( opts );
+
+  // });
 
 </script>
   <div style='clear:both;'></div>

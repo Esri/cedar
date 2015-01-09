@@ -7,8 +7,8 @@
   ],
   "template":{
     "name": "arc",
-    "width": 400,
-    "height": 400,
+    "width": 450,
+    "height": 500,
     "data": [
       {
         "name": "table",
@@ -17,13 +17,7 @@
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{count.field}_SUM"},
-          {"type": "formula", "field": "hyp", "expr": "60"},
-          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "200"},
-          {"type": "formula", "field": "y_mid", "expr": "200"},
-          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
-          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
+          {"type": "pie", "value": "data.attributes.{count.field}_SUM"}
         ]
       }
     ],
@@ -31,7 +25,8 @@
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{count.field}_SUM"}
+        "domain": {"data": "table", "field": "data.attributes.{count.field}_SUM"},
+        "range": [0,200]
       }
     ],
     "marks": [
@@ -61,12 +56,14 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "y": {"field": "y"},
-            "x": {"field": "x"},
+            "x": {"group": "width", "mult": 0.5},
+            "y": {"group": "height", "mult": 0.5},
+            "radius": {"scale": "r", "offset": 8},
+            "theta": {"field": "midAngle"},
             "fill": {"value": "#000"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{group.field}"}
+            "text": {"field": "data.attributes.{label}"}
           }
         }
       }
