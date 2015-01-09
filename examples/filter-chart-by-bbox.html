@@ -91,12 +91,14 @@
 <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
 <script src="http://js.arcgis.com/3.12/"></script>
 
+<h1 id="filter-chart-by-bbox">Filter Chart by BBOX</h1>
+<p>This example shows how to filter the charted data based on a bounding box (bbox). Setting <code>dataset.query.bbox</code> is simply a convenience method as compared to setting the <code>dataset.query.geometry</code>.</p>
+<p><strong>Note:</strong> BBOX expects comma delimited string of geographic (lat/long) coordinates as follows: West,East,South,North</p>
+<p><strong>Note:</strong> Setting both a <code>bbox</code> and a <code>geometry</code> on the <code>dataset.query</code> object will cause an exception to be thrown.</p>
 
-<h1>Filter Chart by Geometry</h1>
-<p>This example shows how to filter the charted data based on a geometry passed into to the `dataset.query`. For simplicity, the example simply uses the map extent, but it could be any arbitrary geometry.</p>
+
 <div id="map"></div>
 <div id="chart"></div>
-
 
 
 <pre><code class="language-html">&lt;html&gt;
@@ -122,7 +124,7 @@
 &lt;script&gt;
 
 
-  require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
+    require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
     &quot;esri/renderers/SimpleRenderer&quot;,  &quot;esri/renderers/UniqueValueRenderer&quot;, &quot;esri/Color&quot;, &quot;dojo/domReady!&quot;], function(Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
@@ -169,7 +171,7 @@
       }
     };
 
-    var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar//data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
+    var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
 
     chart.override = {
       &quot;height&quot;: 300,
@@ -187,9 +189,9 @@
     window.chart = chart;
 
     function onExtentChanged(){
-      var extent = map.extent;
-      extent = JSON.stringify(extent);
-      chart.dataset.query.geometry = extent;
+      var extent = map.geographicExtent.toJson();
+      //WESN order
+      chart.dataset.query.bbox = extent.xmin + &#39;,&#39; + extent.xmax + &#39;,&#39; + extent.ymin + &#39;,&#39; + extent.ymax;
       chart.update();
     }
 
@@ -269,9 +271,9 @@
     window.chart = chart;
 
     function onExtentChanged(){
-      var extent = map.extent;
-      extent = JSON.stringify(extent);
-      chart.dataset.query.geometry = extent;
+      var extent = map.geographicExtent.toJson();
+      //WESN order
+      chart.dataset.query.bbox = extent.xmin + ',' + extent.xmax + ',' + extent.ymin + ',' + extent.ymax;
       chart.update();
     }
 
@@ -280,7 +282,7 @@
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/filter-chart-by-map-extent.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/filter-chart-by-bbox.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

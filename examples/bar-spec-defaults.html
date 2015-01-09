@@ -77,80 +77,191 @@
 
 <div class="col-lg-10">
   
+<style>
+  #mappings:{min-height:150px;}
+</style>
+
+<h1 id="optional-inputs-with-defaults">Optional Inputs with Defaults</h1>
+<p>The specification can provide default values for non-required inputs. In this example, the <code>color</code> input is optional and defaults to <code>steelblue</code>.
+In the dataset, we specify <code>color:orange</code>, thus the chart is orange.</p>
+<p>Clicking the Clear Color button will remote color from the mappings, and then the default of <code>steelblue</code> will be used. </p>
+<p>You can also provide a color (name or #RRGGBB) in the input box and use the Add Color button, which will add it to the mappings and update the chart.</p>
 
 
-  <h1>Templates <small>Load template from a json file</small></h1>
+<div id="chart"></div>
+<div class="row">
+  <div class="col-lg-4">
+    <h3>Controls</h3>
+    <form>
+     
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" id="color" value="green">
+      </div>
+      <button id="removeColor" class="btn btn-default" type="button">Clear Color</button>
+      <button id="setColor" class="btn btn-default"  type="button">Add Color</button>
+    </form>
+  </div>
   
-  <div id="chart"></div>
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-
-
-
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+  <div class="col-lg-8">
+    <h3>Mappings</h3>
+    <pre id="mappings">
+      
+    </pre>
+  </div>
+</div>
 
 
 
 
-<script>  
-  var cedar = new Cedar();
 
-  var dataSource = {
-    url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
-  };
+<script>
+  //create a cedar chart
+  var chart = new Cedar();
 
-  var fieldMappings = {
-    "x": "POPULATION_ENROLLED_2008",
-    "y": "SQUARE_FOOTAGE",
-    "color":"FACUSE"
-  };
-  
-  var tmplUrl = "../../../cedar/data/templates/scatter-template-v2.json";
-  
-  //use helper to get the template...
-  Cedar.getJson(tmplUrl, function(err,template){
-    if(err){
-      console.error(err);
-      return;
+  //create the specification
+  var spec = {
+  "inputs": [
+    {"name": "count", "type": ["numeric","string"], "required": true},
+    {"name": "group", "type": ["string"], "required": false},
+    {"name": "color", "type":["string"], "required":false, "default":"steelblue"},
+    {"name": "hoverColor", "type":["string"], "required":false, "default":"#FF00FF"},
+  ],
+  "template":{
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "X-Axis"
+      }
+    ],
+    "data": [
+      {
+        "name": "table",
+        "url": "{data}",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "height": 300,
+    "marks": [
+      {
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "width": {
+              "band": true,
+              "offset": -1,
+              "scale": "x"
+            },
+            "x": {
+              "field": "data.attributes.{group.field}",
+              "scale": "x"
+            },
+            "y": {
+              "field": "data.attributes.{count.field}_SUM",
+              "scale": "y"
+            },
+            "y2": {
+              "scale": "y",
+              "value": 0
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "{hoverColor}"
+            }
+          },
+          "update": {
+            "fill": {
+              "value": "{color}"
+            }
+          }
+        },
+        "type": "rect"
+      }
+    ],
+    "padding": {
+      "bottom": 20,
+      "left": 80,
+      "right": 10,
+      "top": 10
+    },
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{group.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
+      },
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{count.field}_SUM"
+        },
+        "name": "y",
+        "nice": true,
+        "range": "height"
+      }
+    ],
+    "width": 850
+  }
+}
+
+  //assign to chart
+  chart.specification = spec;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"},
+      "color": "orange",
+      "hoverColor":"#CCCCCC"
+
     }
-    //cook the spec
-    var chartJson = cedar.cook(template, dataSource, fieldMappings);
-    console.info()
-    var opts = {
-      elementId: "#chart",
-      spec: chartJson
-    };
+  };
 
-    //render
-    cedar.show( opts );
+
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+
+  showMapping();
+
+  document.getElementById("removeColor").addEventListener("click", function( event ) {
+    delete chart.dataset.mappings.color
+    showMapping();
+    chart.update();
 
   });
 
+  document.getElementById("setColor").addEventListener("click", function( event ) {
+    //get the value from the text input
+    chart.dataset.mappings.color = document.getElementById('color').value;
+    showMapping();
+    chart.update();
+  });
+
+  function showMapping(){
+    document.querySelector('#mappings').innerHTML =JSON.stringify(chart.dataset.mappings, null, ' ');
+  }
+
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/template-from-url.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-spec-defaults.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
