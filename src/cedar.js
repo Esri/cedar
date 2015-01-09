@@ -86,7 +86,15 @@ var Cedar = function Cedar(options){
 
   //allow a dataset to be passed in...
   if(opts.dataset && typeof opts.dataset === 'object'){
-    this.dataset = opts.dataset;
+    var defaultQuery = Cedar._defaultQuery();
+
+    if(!opts.dataset.query){
+      opts.dataset.query = defaultQuery;
+    }else{
+      opts.dataset.query = _.defaults(opts.dataset.query, defaultQuery);
+    }
+    //assign it
+    this._definition.dataset = opts.dataset;
   }
 
   /**
@@ -420,6 +428,16 @@ Cedar._compileMappings = function(dataset){
   }else{
     mergedQuery = defaultQuery;
     
+  }
+
+  //Handle bbox
+  if(mergedQuery.bbox){
+    //get the bbox
+    //var bbox = mergedQuery.bbox;
+    //remove it
+    delete mergedQuery.bbox;
+    //cook it into the json required by the AGS rest api
+    //var 
   }
 
   // add any aggregations
