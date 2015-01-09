@@ -170,13 +170,10 @@ layout: example.hbs
     });
     window.chart = chart;
 
-    console.log('chart', chart);
-
     //filter by map extent when user zooms
     function onMapZoomed() {
       var extent = map.extent;
       extent = JSON.stringify(extent);
-      console.log('extent', extent);
       chart.dataset.query.geometry = extent;
       chart.update();
     }
