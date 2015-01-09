@@ -86,6 +86,14 @@ var Cedar = function Cedar(options){
 
   //allow a dataset to be passed in...
   if(opts.dataset && typeof opts.dataset === 'object'){
+    var defaultQuery = Cedar._defaultQuery();
+
+    if(!opts.dataset.query){
+      opts.dataset.query = defaultQuery;
+    }else{
+      opts.dataset.query = _.defaults(opts.dataset.query, defaultQuery);
+    }
+    //assign it
     this._definition.dataset = opts.dataset;
   }
 
@@ -173,7 +181,9 @@ Cedar.prototype.show = function(options){
       err= "Cedar.show requires options.elementId";
     }
     //TODO: check if element exists in the page
-    
+    if(d3.select(options.elementId)[0][0] === null){
+      err = "Element " + options.elementId + " is not present in the DOM";
+     }
   
     //hold onto the id
     this._elementId = options.elementId;
@@ -207,38 +217,45 @@ Cedar.prototype.show = function(options){
 Cedar.prototype.update = function(){
   var self = this;
   
-  if(this._view){
-    //remove handlers
-    //TODO Remove existing handlers
-    this._remove(this._view);
-  }
-  try{
-    //extend the mappings w the data
-    var compiledMappings = Cedar._compileMappings(this._definition.dataset);
+if(this._pendingXhr){
+    
+    this._addToMethodQueue('update');
 
-    //compile the template + dataset --> vega spec
-    var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
+  }else{
 
-    // merge in user specified style overrides
-    spec = Cedar._mergeRecursive(spec, this._definition.override);
+    if(this._view){
+      //remove handlers
+      //TODO Remove existing handlers
+      this._remove(this._view);
+    }
+    try{
+      //extend the mappings w the data
+      var compiledMappings = Cedar._compileMappings(this._definition.dataset, this._definition.specification.inputs);
 
-    //use vega to parse the spec 
-    //it will handle the spec as an object or url
-    vg.parse.spec(spec, function(chartCtor) { 
+      //compile the template + dataset --> vega spec
+      var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
 
-      //create the view
-      self._view = chartCtor({el: self._elementId});
-      
-      //render into the element
-      self._view.update(); 
+      // merge in user specified style overrides
+      spec = Cedar._mergeRecursive(spec, this._definition.override);
 
-      //attach event proxies
-      self._attach(self._view);
+      //use vega to parse the spec 
+      //it will handle the spec as an object or url
+      vg.parse.spec(spec, function(chartCtor) { 
 
-    });
-  }
-  catch(ex){
-    throw(ex);
+        //create the view
+        self._view = chartCtor({el: self._elementId});
+        
+        //render into the element
+        self._view.update(); 
+
+        //attach event proxies
+        self._attach(self._view);
+
+      });
+    }
+    catch(ex){
+      throw(ex);
+    }
   }
 };
 
@@ -291,7 +308,8 @@ Cedar._validateMappings = function(inputs, mappings){
 Cedar._defaultDefinition = function(){
   var defn = {
     "dataset": {
-      "url":""
+      "url":"",
+      "query": this._defaultQuery()
     },
     "template":{}
   };
@@ -395,12 +413,15 @@ Cedar.getJson = function( url, callback ){
 /**
  * Compile the data url into the mappings
  */
-Cedar._compileMappings = function(dataset){
+Cedar._compileMappings = function(dataset, inputs){
 
   //clone the query so we don't modifiy it
   var mergedQuery; 
   var defaultQuery = Cedar._defaultQuery();
   
+  //make sure that the mappings have all the required fields and/or have defaults applied
+  dataset.mappings = Cedar._applyDefaultsToMappings(dataset.mappings, inputs);
+
   //ensure that we have a query
   if(dataset.query){
     mergedQuery = _.clone(dataset.query);
@@ -410,6 +431,25 @@ Cedar._compileMappings = function(dataset){
   }else{
     mergedQuery = defaultQuery;
     
+  }
+
+  //Handle bbox
+  if(mergedQuery.bbox){
+    //make sure a geometry was not also passed in
+    if(mergedQuery.geometry){
+      throw new Error('Dataset.query can not have both a geometry and a bbox specified');
+    }
+    //get the bbox
+    var bboxArr = mergedQuery.bbox.split(',');
+
+    //remove it so it's not serialized as-is
+    delete mergedQuery.bbox;
+    
+    //cook it into the json string 
+    mergedQuery.geometry = JSON.stringify({"xmin": bboxArr[0], "ymin": bboxArr[2],"xmax": bboxArr[1], "ymax": bboxArr[3] });
+    //set the spatial ref as geographic
+    mergedQuery.inSR = '4326';
+
   }
 
   // add any aggregations
@@ -435,6 +475,32 @@ Cedar._compileMappings = function(dataset){
   return cloneMappings;
 };
 
+
+Cedar._applyDefaultsToMappings = function(mappings, inputs){
+  var errs = [];
+  //loop over the inputs
+  for(var i =0; i < inputs.length; i++){
+    //get the input
+    var input = inputs[i];
+
+    //if it's required and not in the mappings, add an exception
+    if(input.required && !mappings[input.name] ){
+      errs.push(input.name);
+    }
+    
+    //if it's not required, has a default and not in the mappings
+    if(!input.required && !mappings[input.name] && input.default){
+      //add the default
+      mappings[input.name] = input.default;
+    }
+  }
+
+  if(errs.length > 0){
+    throw new Error('Required Mappings Missing: ' + errs.join(','));
+  }else{
+    return mappings;
+  }
+};
 
 
 /**

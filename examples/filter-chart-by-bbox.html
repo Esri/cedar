@@ -78,15 +78,27 @@
 <div class="col-lg-10">
   
 
+<style>
+  #chart {
+    margin-bottom:50px;
+  }
+  #chart canvas {
+    margin: auto;
+    display: block;
+  }
+</style>
+
 <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
 <script src="http://js.arcgis.com/3.12/"></script>
 
+<h1 id="filter-chart-by-bbox">Filter Chart by BBOX</h1>
+<p>This example shows how to filter the charted data based on a bounding box (bbox). Setting <code>dataset.query.bbox</code> is simply a convenience method as compared to setting the <code>dataset.query.geometry</code>.</p>
+<p><strong>Note:</strong> BBOX expects comma delimited string of geographic (lat/long) coordinates as follows: West,East,South,North</p>
+<p><strong>Note:</strong> Setting both a <code>bbox</code> and a <code>geometry</code> on the <code>dataset.query</code> object will cause an exception to be thrown.</p>
 
-<h1>Bar Chart + Map Interaction</h1>
 
 <div id="map"></div>
 <div id="chart"></div>
-
 
 
 <pre><code class="language-html">&lt;html&gt;
@@ -112,26 +124,26 @@
 &lt;script&gt;
 
 
-  require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
+    require([&quot;esri/map&quot;, &quot;esri/layers/FeatureLayer&quot;, &quot;esri/symbols/SimpleMarkerSymbol&quot;, &quot;esri/symbols/SimpleLineSymbol&quot;,
     &quot;esri/renderers/SimpleRenderer&quot;,  &quot;esri/renderers/UniqueValueRenderer&quot;, &quot;esri/Color&quot;, &quot;dojo/domReady!&quot;], function(Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
     var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
       new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-      new Color([220,220,220]), 0.5),
-      new Color([210,105,30,0.55]));
+      new Color([198,12,70,1]), 1),
+      new Color([248,187,37,0.9]));
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer(&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,{
+    var featureLayer = new FeatureLayer(&quot;http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It&#39;s_a_Tornado_Map/FeatureServer/0&quot;,{
       mode: FeatureLayer.SNAPSHOT,
       outFields: [&quot;*&quot;]
     });
 
     //create esri map
     var map = new Map(&quot;map&quot;, {
-      center: [-77, 38.9],
-      zoom: 11,
+      center: [-99, 38.9],
+      zoom: 4,
       basemap: &quot;topo&quot;,
       smartNavigation: false
     });
@@ -140,55 +152,52 @@
       map.disableScrollWheelZoom();
     });
 
+    map.on(&#39;extent-change&#39;, function() {
+      onExtentChanged();
+    });
+
+
+    window.map = map;
+
     featureLayer.setRenderer(rend);
-
     map.addLayer(featureLayer);
-    //create a cedar chart
-    var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;});
 
-    //set custom colors
-    chart.override = {
-      &quot;height&quot;: 400,
-      &quot;marks&quot;: [{&quot;properties&quot;: {
-        &quot;hover&quot;: {&quot;fill&quot;: {&quot;r&quot;: {&quot;value&quot;: 210}, &quot;g&quot;: {&quot;value&quot;: 105}, &quot;b&quot;:{&quot;value&quot;: 30}}},
-        &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c15000&quot;}}}}]};
-
-    //create the dataset w/ mappings
     var dataset = {
-      &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+      &quot;url&quot;:&quot;http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It&#39;s_a_Tornado_Map/FeatureServer/0&quot;,
+      &quot;query&quot;: {},
       &quot;mappings&quot;:{
-        &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
-        &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+        &quot;group&quot;: {&quot;field&quot;:&quot;state&quot;,&quot;label&quot;:&quot;State&quot;},
+        &quot;count&quot;: {&quot;field&quot;:&quot;injuries&quot;,&quot;label&quot;:&quot;Injuries&quot;}
       }
     };
 
-    //assign to the chart
-    chart.dataset = dataset;
+    var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
 
-    //show the chart
+    chart.override = {
+      &quot;height&quot;: 300,
+      &quot;marks&quot;: [{&quot;properties&quot;: {
+          &quot;hover&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#f8bb25&quot;}},
+          &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c60c46&quot;}}
+        }
+      }]
+    };
+
+    //create and render a chart
     chart.show({
-      elementId: &quot;#chart&quot;
+      &#39;elementId&#39;: &#39;#chart&#39;
     });
+    window.chart = chart;
 
-    //CHART EVENTS
-    chart.on(&#39;mouseover&#39;, onChartHover);
+    function onExtentChanged(){
+      var extent = map.geographicExtent.toJson();
+      //WESN order
+      chart.dataset.query.bbox = extent.xmin + &#39;,&#39; + extent.xmax + &#39;,&#39; + extent.ymin + &#39;,&#39; + extent.ymax;
+      chart.update();
+    }
 
-    function onChartHover(d) {
 
-      //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
-
-      //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
-
-      //add symbol selected value
-      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
-
-      featureLayer.setRenderer(renderer);
-      featureLayer.refresh();
-
-    } 
   });
+
 
 &lt;/script&gt;
 &lt;/body&gt;
@@ -197,27 +206,26 @@
 
 
 <script>
-
   require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
     var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
       new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-      new Color([220,220,220]), 0.5),
-      new Color([210,105,30,0.55]));
+      new Color([198,12,70,1]), 1),
+      new Color([248,187,37,0.9]));
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
 
     //create esri map
     var map = new Map("map", {
-      center: [-77, 38.9],
-      zoom: 11,
+      center: [-99, 38.9],
+      zoom: 4,
       basemap: "topo",
       smartNavigation: false
     });
@@ -226,66 +234,55 @@
       map.disableScrollWheelZoom();
     });
 
+    map.on('extent-change', function() {
+      onExtentChanged();
+    });
+
+
+    window.map = map;
+
     featureLayer.setRenderer(rend);
     map.addLayer(featureLayer);
     
-    //create a cedar chart
-    var chart = new Cedar({"specification":"../data/templates/bar.json"});
-
-    chart.override = {
-      "height": 400,
-      "marks": [{"properties": {
-        "hover": {"fill": {"r": {"value": 210}, "g": {"value": 105}, "b":{"value": 30}}},
-        "update": {"fill": {"value": "#c15000"}}}}]};
-
-
-    //create the dataset w/ mappings
     var dataset = {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {},
       "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "group": {"field":"state","label":"State"},
+        "count": {"field":"injuries","label":"Injuries"}
       }
     };
 
-    //assign to the chart
-    chart.dataset = dataset;
+    var chart = new Cedar({"specification":"../../../cedar//data/templates/bar.json", "dataset": dataset});
 
-    //show the chart
+    chart.override = {
+      "height": 300,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#f8bb25"}},
+          "update": {"fill": {"value": "#c60c46"}}
+        }
+      }]
+    };
+
+    //create and render a chart
     chart.show({
-      elementId: "#chart"
+      'elementId': '#chart'
     });
-    
+    window.chart = chart;
 
-    //CHART EVENTS
-    chart.on('mouseover', onChartHover);
+    function onExtentChanged(){
+      var extent = map.geographicExtent.toJson();
+      //WESN order
+      chart.dataset.query.bbox = extent.xmin + ',' + extent.xmax + ',' + extent.ymin + ',' + extent.ymax;
+      chart.update();
+    }
 
-    function onChartHover(d) {
-      
-      //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
-      
-      //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
-
-      //add symbol selected value
-      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
-
-      featureLayer.setRenderer(renderer);
-      featureLayer.refresh();
-
-    } 
-
-    //MAP EVENTS
-    featureLayer.on('mouse-over', function(d) {
-      var val = d.graphic.attributes["ZIP_CODE"];
-    })
 
   });
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/bar-map-integration.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/filter-chart-by-bbox.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

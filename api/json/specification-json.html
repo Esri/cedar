@@ -82,7 +82,8 @@
     { 
       "<span class="attribute">name</span>": <span class="value"><span class="string">"&lt;string&gt;"</span></span>, 
       "<span class="attribute">type</span>": <span class="value">[<span class="string">"&lt;string&gt;"</span>]</span>, 
-      "<span class="attribute">required</span>": <span class="value">&lt;boolean&gt;
+      "<span class="attribute">required</span>": <span class="value">&lt;boolean&gt;</span>,
+      "<span class="attribute">default</span>": <span class="value">&lt;value&gt;
     </span>} 
   ]</span>,
   "<span class="attribute">template</span>": <span class="value">{
@@ -101,12 +102,13 @@
   </span>}
 </span>}</code></pre>
 <h2 id="inputs">Inputs</h2>
-<p>The inputs array specifies the parameters required by the template, in order to generate a complete vega specification. The <code>dataset.mappings</code> hash must contain entries for all the <code>required:true</code> inputs.</p>
+<p>The inputs array specifies the parameters required by the template, in order to generate a complete vega specification. The <code>dataset.mappings</code> hash must contain entries for all the <code>required:true</code> inputs. Inputs with <code>required:false</code> can provide a default value.</p>
 <h3 id="inputs-example">Inputs Example</h3>
 <pre><code>{
   &quot;inputs&quot;: [
     {&quot;name&quot;: &quot;count&quot;, &quot;type&quot;: [&quot;numeric&quot;,&quot;string&quot;], &quot;required&quot;: true},
-    {&quot;name&quot;: &quot;group&quot;, &quot;type&quot;: [&quot;string&quot;], &quot;required&quot;: false}
+    {&quot;name&quot;: &quot;group&quot;, &quot;type&quot;: [&quot;string&quot;], &quot;required&quot;: false},
+    {&quot;name&quot;: &quot;color&quot;, &quot;type&quot;:[&quot;string&quot;], &quot;required&quot;:false, &quot;default&quot;:&quot;steelblue&quot;}
   ]
 }</code></pre>
 <h2 id="template">Template</h2>
