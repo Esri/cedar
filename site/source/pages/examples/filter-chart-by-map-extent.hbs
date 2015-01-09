@@ -33,20 +33,20 @@ layout: example.hbs
 
     var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
       new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
-      new Color([220,220,220]), 0.5),
-      new Color([210,105,30,0.55]));
+      new Color([198,12,70,1]), 1),
+      new Color([248,187,37,0.9]));
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
 
     //create esri map
     var map = new Map("map", {
-      center: [-77, 38.9],
-      zoom: 11,
+      center: [-99, 38.9],
+      zoom: 4,
       basemap: "topo",
       smartNavigation: false
     });
@@ -55,51 +55,52 @@ layout: example.hbs
       map.disableScrollWheelZoom();
     });
 
+    map.on('zoom-end', function() {
+      onMapZoomed();
+    });
+
+    window.map = map;
+
     featureLayer.setRenderer(rend);
-
     map.addLayer(featureLayer);
-    //create a cedar chart
-    var chart = new Cedar({"specification":"../data/templates/bar.json"});
-
+    
     var dataset = {
-        "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-        "mappings":{
-          "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-          "count": {"field":"CAPACITY","label":"Student Capacity"}
-        }
-      };
+      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {},
+      "mappings":{
+        "group": {"field":"state","label":"State"},
+        "count": {"field":"injuries","label":"Injuries"}
+      }
+    };
 
     var chart = new Cedar({"specification":"../data/templates/bar.json", "dataset": dataset});
+
+    chart.override = {
+      "height": 300,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#f8bb25"}},
+          "update": {"fill": {"value": "#c60c46"}}
+        }
+      }]
+    };
 
     //create and render a chart
     chart.show({
       'elementId': '#chart'
     });
-    //some user action that sets the zip code... and thus updates the where clause on the query
-    chart.dataset.query.where = "ZIP_CODE = 20007";
+    window.chart = chart;
 
-    //update the chart
-    chart.update();
 
-    //CHART EVENTS
-    chart.on('mouseover', onChartHover);
+    //filter by map extent when user zooms
+    function onMapZoomed() {
+      var extent = map.extent;
+      extent = JSON.stringify(extent);
+      chart.dataset.query.geometry = extent;
+      chart.update();
+    }
 
-    function onChartHover(d) {
-      
-      //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
-      
-      //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
-
-      //add symbol selected value
-      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
-
-      featureLayer.setRenderer(renderer);
-      featureLayer.refresh();
-
-    } 
   });
+
 {{>example-code-footer}}
 ```
 {{/markdown}}
@@ -175,6 +176,7 @@ layout: example.hbs
     function onMapZoomed() {
       var extent = map.extent;
       extent = JSON.stringify(extent);
+      console.log('extent', extent);
       chart.dataset.query.geometry = extent;
       chart.update();
     }
