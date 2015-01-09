@@ -169,22 +169,15 @@ layout: example.hbs
     });
     window.chart = chart;
 
-    //some user action that sets the zip code... and thus updates the where clause on the query
     console.log('chart', chart);
-    chart.update();
-    /*
-    var geom = '{"xmin":-14569155.778448395,"ymin":2872868.857424088,"xmax":-5567931.3275884325,"ymax":6786444.705624072,"spatialReference":{"wkid":102100}}'
-    var insr = 102100;
-    chart.dataset.query.geometry = geom;
-    chart.dataset.query.inSR = insr;
 
+    //filter by map extent when user zooms
     function onMapZoomed() {
       var extent = map.extent;
-      console.log('extent', extent);
+      extent = JSON.stringify(extent);
       chart.dataset.query.geometry = extent;
       chart.update();
     }
-    */
 
   });
 
