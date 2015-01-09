@@ -15,19 +15,27 @@ layout: example.hbs
 <link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
 <script src="http://js.arcgis.com/3.12/"></script>
 
+{{#markdown}}
 
-<h1>Filter Chart by Geometry</h1>
-<p>This example shows how to filter the charted data based on a geometry passed into to the `dataset.query`. For simplicity, the example simply uses the map extent, but it could be any arbitrary geometry.</p>
+# Filter Chart by BBOX
+
+This example shows how to filter the charted data based on a bounding box (bbox). Setting `dataset.query.bbox` is simply a convenience method as compared to setting the `dataset.query.geometry`.
+
+**Note:** BBOX expects comma delimited string of geographic (lat/long) coordinates as follows: West,East,South,North
+
+**Note:** Setting both a `bbox` and a `geometry` on the `dataset.query` object will cause an exception to be thrown.
+{{/markdown}}
+
 <div id="map"></div>
 <div id="chart"></div>
 
 
-
 {{#markdown}}
+
 ```html
 {{>example-code-header}}
   
-  require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
@@ -74,7 +82,7 @@ layout: example.hbs
       }
     };
 
-    var chart = new Cedar({"specification":"{{assets}}/data/templates/bar.json", "dataset": dataset});
+    var chart = new Cedar({"specification":"../data/templates/bar.json", "dataset": dataset});
 
     chart.override = {
       "height": 300,
@@ -92,9 +100,9 @@ layout: example.hbs
     window.chart = chart;
 
     function onExtentChanged(){
-      var extent = map.extent;
-      extent = JSON.stringify(extent);
-      chart.dataset.query.geometry = extent;
+      var extent = map.geographicExtent.toJson();
+      //WESN order
+      chart.dataset.query.bbox = extent.xmin + ',' + extent.xmax + ',' + extent.ymin + ',' + extent.ymax;
       chart.update();
     }
 
@@ -172,9 +180,9 @@ layout: example.hbs
     window.chart = chart;
 
     function onExtentChanged(){
-      var extent = map.extent;
-      extent = JSON.stringify(extent);
-      chart.dataset.query.geometry = extent;
+      var extent = map.geographicExtent.toJson();
+      //WESN order
+      chart.dataset.query.bbox = extent.xmin + ',' + extent.xmax + ',' + extent.ymin + ',' + extent.ymax;
       chart.update();
     }
 

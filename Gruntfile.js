@@ -283,7 +283,7 @@ module.exports = function(grunt) {
       options: {
 
         base: 'site/build'
-        //,repo: 'git@github.com:esridc/cedar.git'
+        ,repo: 'git@github.com:esridc/cedar.git'
 
       },
       src: ['**']

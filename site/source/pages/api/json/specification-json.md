@@ -15,7 +15,8 @@ Charts are defined by JSON documents (`specification`) which are then linked to 
     { 
       "name": "<string>", 
       "type": ["<string>"], 
-      "required": <boolean>
+      "required": <boolean>,
+      "default": <value>
     } 
   ],
   "template": {
@@ -37,14 +38,15 @@ Charts are defined by JSON documents (`specification`) which are then linked to 
 
 
 ## Inputs
-The inputs array specifies the parameters required by the template, in order to generate a complete vega specification. The `dataset.mappings` hash must contain entries for all the `required:true` inputs.
+The inputs array specifies the parameters required by the template, in order to generate a complete vega specification. The `dataset.mappings` hash must contain entries for all the `required:true` inputs. Inputs with `required:false` can provide a default value.
 
 ### Inputs Example
 ```
 {
   "inputs": [
     {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false}
+    {"name": "group", "type": ["string"], "required": false},
+    {"name": "color", "type":["string"], "required":false, "default":"steelblue"}
   ]
 }
 ```
