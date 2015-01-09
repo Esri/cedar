@@ -230,7 +230,7 @@ if(this._pendingXhr){
     }
     try{
       //extend the mappings w the data
-      var compiledMappings = Cedar._compileMappings(this._definition.dataset);
+      var compiledMappings = Cedar._compileMappings(this._definition.dataset, this._definition.specification.inputs);
 
       //compile the template + dataset --> vega spec
       var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
@@ -413,12 +413,15 @@ Cedar.getJson = function( url, callback ){
 /**
  * Compile the data url into the mappings
  */
-Cedar._compileMappings = function(dataset){
+Cedar._compileMappings = function(dataset, inputs){
 
   //clone the query so we don't modifiy it
   var mergedQuery; 
   var defaultQuery = Cedar._defaultQuery();
   
+  //make sure that the mappings have all the required fields and/or have defaults applied
+  dataset.mappings = Cedar._applyDefaultsToMappings(dataset.mappings, inputs);
+
   //ensure that we have a query
   if(dataset.query){
     mergedQuery = _.clone(dataset.query);
@@ -432,12 +435,21 @@ Cedar._compileMappings = function(dataset){
 
   //Handle bbox
   if(mergedQuery.bbox){
+    //make sure a geometry was not also passed in
+    if(mergedQuery.geometry){
+      throw new Error('Dataset.query can not have both a geometry and a bbox specified');
+    }
     //get the bbox
-    //var bbox = mergedQuery.bbox;
-    //remove it
+    var bboxArr = mergedQuery.bbox.split(',');
+
+    //remove it so it's not serialized as-is
     delete mergedQuery.bbox;
-    //cook it into the json required by the AGS rest api
-    //var 
+    
+    //cook it into the json string 
+    mergedQuery.geometry = JSON.stringify({"xmin": bboxArr[0], "ymin": bboxArr[2],"xmax": bboxArr[1], "ymax": bboxArr[3] });
+    //set the spatial ref as geographic
+    mergedQuery.inSR = '4326';
+
   }
 
   // add any aggregations
@@ -463,6 +475,32 @@ Cedar._compileMappings = function(dataset){
   return cloneMappings;
 };
 
+
+Cedar._applyDefaultsToMappings = function(mappings, inputs){
+  var errs = [];
+  //loop over the inputs
+  for(var i =0; i < inputs.length; i++){
+    //get the input
+    var input = inputs[i];
+
+    //if it's required and not in the mappings, add an exception
+    if(input.required && !mappings[input.name] ){
+      errs.push(input.name);
+    }
+    
+    //if it's not required, has a default and not in the mappings
+    if(!input.required && !mappings[input.name] && input.default){
+      //add the default
+      mappings[input.name] = input.default;
+    }
+  }
+
+  if(errs.length > 0){
+    throw new Error('Required Mappings Missing: ' + errs.join(','));
+  }else{
+    return mappings;
+  }
+};
 
 
 /**
