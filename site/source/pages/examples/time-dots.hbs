@@ -14,12 +14,12 @@ layout: example.hbs
   var chart = new Cedar({"specification":"{{assets}}data/templates/time-dots.json"});
 
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/SR_30days_Open/MapServer/8",
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/CDW_Feeds/MapServer/8",
     "mappings":{
-      "time":   {"field":"SERVICEORDERDATE"},
-      "aspect": {"field":"STATUS_CODE"},
+      "time":   {"field":"REPORTDATETIME"},
+      "aspect": {"field":"OFFENSE"},
       "facet":  {"field":"WARD"},
-      "color":  {"field":"PRIORITY"}
+      "color":  {"field":"SHIFT"}
     }
   };
   chart.dataset = dataset;
