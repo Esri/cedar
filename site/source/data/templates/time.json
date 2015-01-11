@@ -1,0 +1,53 @@
+{
+  "inputs":[
+    {"name":"time","type":["time"], "required":true},
+    {"name":"value","type":["numeric"], "required":true}
+  ],
+  "template":{
+    "width": 500,
+    "height": 200,
+    "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
+    "data": [
+      {
+        "name": "table",
+        "url":"{data}&orderByFields={time.field}",
+        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "time",
+        "range": "width",
+        "nice": "month",
+        "zero": false,
+        "domain": {"data": "table", "field": "data.attributes.{time.field}"}
+      },
+      {
+        "name": "y",
+        "type": "linear",
+        "range": "height",
+        "nice": true,
+        "domain": {"data": "table", "field": "data.attributes.{value.field}"}
+      }
+    ],
+    "axes": [
+      {"type": "x", "scale": "x"},
+      {"type": "y", "scale": "y"}
+    ],
+    "marks": [
+      {
+        "type": "line",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "data.attributes.{time.field}"},
+            "y": {"scale": "y", "field": "data.attributes.{value.field}"},
+            "y2": {"scale": "y", "value": 0},
+            "stroke": {"value": "steelblue"}
+          }
+        }
+      }
+    ]
+  }
+}

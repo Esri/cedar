@@ -1,0 +1,29 @@
+---
+title: Time Example
+layout: example.hbs
+---
+
+
+<h1>Time Example</h1>
+
+<div id="chart"></div>
+
+
+<script>
+  
+  var chart = new Cedar({"specification":"{{assets}}data/templates/time.json"});
+
+  var dataset = {
+    "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "mappings":{
+      "time": {"field":"Date"},
+      "value": {"field":"Injuries"}
+    }
+  };
+  chart.dataset = dataset;
+
+  chart.show({
+    elementId: "#chart",
+  });  
+
+</script>

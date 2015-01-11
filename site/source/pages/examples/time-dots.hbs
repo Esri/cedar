@@ -1,0 +1,31 @@
+---
+title: Time Dots Example
+layout: example.hbs
+---
+
+
+<h1>Time Dots Example</h1>
+
+<div id="chart"></div>
+
+
+<script>
+  
+  var chart = new Cedar({"specification":"{{assets}}data/templates/time-dots.json"});
+
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_APPS/SR_30days_Open/MapServer/8",
+    "mappings":{
+      "time":   {"field":"SERVICEORDERDATE"},
+      "aspect": {"field":"STATUS_CODE"},
+      "facet":  {"field":"WARD"},
+      "color":  {"field":"PRIORITY"}
+    }
+  };
+  chart.dataset = dataset;
+
+  chart.show({
+    "elementId": "#chart",
+  });  
+
+</script>

@@ -23,45 +23,24 @@
       {
         "name": "table",
         "url": "{data}",
-        "format": {
-          "property": "features"
-        }
+        "format": {"property": "features"}
       }
     ],    
     "marks": [
       {
-        "from": {
-          "data": "table"
-        },
+        "from": {"data": "table"},
         "properties": {
           "enter": {
-            "width": {
-              "band": true,
-              "offset": -1,
-              "scale": "x"
-            },
-            "x": {
-              "field": "data.attributes.{group.field}",
-              "scale": "x"
-            },
-            "y": {
-              "field": "data.attributes.{count.field}_SUM",
-              "scale": "y"
-            },
-            "y2": {
-              "scale": "y",
-              "value": 0
-            }
+            "width": {"band": true, "offset": -1, "scale": "x"},
+            "x": {"field": "data.attributes.{group.field}", "scale": "x"},
+            "y": {"field": "data.attributes.{count.field}_SUM", "scale": "y"},
+            "y2": {"scale": "y", "value": 0 }
           },
           "hover": {
-            "fill": {
-              "value": "green"
-            }
+            "fill": {"value": "green"}
           },
           "update": {
-            "fill": {
-              "value": "#ccc"
-            }
+            "fill": {"value": "#ccc"}
           }
         },
         "type": "rect"
