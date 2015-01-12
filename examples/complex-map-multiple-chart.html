@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../css/style.css">
+
+  <!-- Cedar -->
+
+  <!-- esri Cedar -->
+  <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+  <script type="text/javascript" src="../js/cedar-core.js"></script>
+
+
+  <!-- Google Analytics -->
+  <script>
+    // (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    // (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    // m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    // })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    // ga('create', 'UA-44963317-3', 'auto');
+    // ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../api/">API Documentation</a></li>
+        <li><a href="../examples/">Examples</a></li>
+        <li><a href="https://github.com/esridc/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
+  <style>
+  body,html {
+    height:100%;
+  }
+  #chart-container {
+    position: absolute;
+    bottom: 10px;
+    top: 52px;
+    right: 0px;
+    width: 500px;
+    height: 100%;
+    background: rgba(0,0,0,0.88);
+    background: rgba(241, 241, 241, 0.88);
+  }
+  #chart {
+    overflow:hidden;
+  }
+  #chart-scatter {
+    overflow:hidden;
+  }
+  #chart canvas, #chart-scatter canvas {
+    margin: auto;
+    display: block;
+    color:#FFF;
+  }
+  #ex-container {
+    height:100%;
+    overflow:hidden;
+    margin-top:-20px;
+  }
+  #map {
+    height:100%;
+  }
+</style>
+
+<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="http://js.arcgis.com/3.12/"></script>
+
+<div id="ex-container">
+  <div id="map"></div>
+  <div id="chart-container">
+    <h5 style="padding-left:10px;">USA Tornado Analysis</h5>
+    <div id="chart"></div>
+    <div id="chart-scatter"></div>
+</div>
+
+<script>
+  require(["esri/map", "esri/basemaps", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, esriBasemaps, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([28,107,160,1]), 0.5),
+      new Color([0,255,255,0.5]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer("http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",{
+      mode: FeatureLayer.MODE_ONDEMAND,
+      outFields: ["*"]
+    });
+
+    //create esri map
+    var map = new Map("map", {
+      center: [-80, 38.9],
+      zoom: 5,
+      basemap: "gray",
+      smartNavigation: false
+    });
+
+    map.on('load', function() {
+      map.disableScrollWheelZoom();
+    });
+
+    map.on('extent-change', function() {
+      onExtentChanged();
+    });
+
+    window.map = map;
+
+    featureLayer.setRenderer(rend);
+    map.addLayer(featureLayer);
+    
+    console.log('featureLayer', featureLayer);
+
+    var dataset = {
+      "url":"http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
+      "query": {},
+      "mappings":{
+        "group": {"field":"STATE","label":"State"},
+        "count": {"field":"INJURIES","label":"Injuries"}
+      }
+    };
+
+    var chart = new Cedar({"specification":"../data/templates/bar-complex.json", "dataset": dataset});
+
+    chart.override = {
+      "height": 280,
+      "width": 445,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#3ba3d0"}},
+          "update": {"fill": {"value": "#7de6ff"}}
+        }
+      }]
+    };
+
+    //create and render a chart
+    chart.show({
+      'elementId': '#chart'
+    });
+
+    window.chart = chart;
+
+    chart.on('mouseover', onChartHover);
+
+
+
+
+    //chart two!
+    var scatterset = {
+      "url":"http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
+      "query": {},
+      "mappings":{
+        "x": {"field":"MONTH","label":"Month"},
+        "y": {"field":"INJURIES","label":"Injuries"},
+        "color":{"field":"FSCALE","label":"F-Scale"}
+      }
+    };
+    
+    var scatter = new Cedar({"specification":"../data/templates/scatter-complex.json", "dataset": scatterset});
+
+    scatter.override = {
+      "height": 280,
+      "width": 390
+    };
+
+    //create and render a chart
+    scatter.show({
+      'elementId': '#chart-scatter'
+    });
+    window.scatter = scatter;
+
+
+    //filter by map extent when user zooms
+    function onExtentChanged() {
+      var extent = map.extent;
+      extent = JSON.stringify(extent);
+      chart.dataset.query.geometry = extent;
+      chart.update();
+
+      scatter.dataset.query.geometry = extent;
+      scatter.update();
+    }
+
+    function onChartHover(d) {
+      
+      //get selected value for attribute in chart marker
+      var selected = d[dataset.mappings.group.field];
+      
+      //create renderer
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+
+      //add symbol selected value
+      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([59,163,208, 0.7])).setSize(8));
+
+      featureLayer.setRenderer(renderer);
+      //map.centerAt(map.extent.getCenter());
+      featureLayer.refresh();
+
+    } 
+
+  });
+
+</script>
+  </div>
+  <!-- <script src="../js/script.js"></script>-->
+  </body>
+</html>

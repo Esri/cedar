@@ -1,0 +1,137 @@
+{
+  "inputs":[
+    {"name":"time","type":["time"], "required":true},
+    {"name":"aspect","type":["string"], "required":true},
+    {"name":"facet","type":["string"], "required":true},
+    {"name":"color","type":["string"], "required":true}
+  ],
+  "template": {
+    "width": 700,
+    "height": 700,
+    "data": [
+      {
+        "name": "crimes",
+        "url": "{data}",
+        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+      },
+      {
+        "name": "variety",
+        "source": "crimes",
+        "transform": [
+          {"type": "facet", "keys": ["data.attributes.{aspect.field}"]}
+        ]
+      },
+      {
+        "name": "{facet.field}",
+        "source": "crimes",
+        "transform": [
+          {"type": "sort", "by": "data.attributes.{facet.field}"},
+          {"type": "facet", "keys": ["data.attributes.{facet.field}"]}
+        ]
+      }    
+    ],
+    "scales": [
+      {
+        "name": "g",
+        "type": "ordinal",
+        "range": "height",
+        "padding": 0.15,
+        "domain": {"data": "{facet.field}", "field": "key"}
+      },    
+      {
+        "name": "x",
+        "type": "time",
+        "round": true,
+        "range": "width",
+        "domain": {"data": "crimes", "field": "data.attributes.{time.field}"}
+      },  
+      {
+        "name": "c",
+        "type": "ordinal",
+        "range": "category10"
+      }
+    ],
+    "axes": [
+      {"type": "x", "scale": "x"}
+    ],
+    "legends": [
+      {
+        "fill": "c",
+        "title": "{color.field}",
+        "offset": 0,
+        "properties": {
+          "symbols": {
+            "fillOpacity": {
+              "value": 0.5
+            },
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    ],  
+    "marks": [
+      {
+        "type": "text",
+        "from": {"data": "crimes"},
+        "properties": {
+          "enter": {
+            "x": {"group": "width", "mult": 0.5},
+            "y": {"scale": "g", "field": "data.attributes.{facet.field}", "offset": -2},
+            "fontWeight": {"value": "bold"},
+            "text": {"field": "data.attributes.{facet.field}"},
+            "align": {"value": "center"},
+            "baseline": {"value": "bottom"},
+            "fill": {"value": "#000"}
+          }
+        }
+      },
+      {
+        "type": "group",
+        "from": {"data": "{facet.field}"},
+        "scales": [
+          {
+            "name": "y",
+            "type": "ordinal",
+            "range": "height",
+            "points": true,
+            "padding": 1.2,
+            "domain": {"data": "variety", "field": "key"}
+          }
+        ],
+        "axes": [
+          {
+            "type": "y",
+            "scale": "y",
+            "tickSize": 0,
+            "properties": {"axis": {"stroke": {"value": "transparent"}}}
+          }
+        ],
+        "properties": {
+          "enter": {
+            "x": {"value": 0.5},
+            "y": {"scale": "g", "field": "key"},
+            "height": {"scale": "g", "band": true},
+            "width": {"group": "width"},
+            "stroke": {"value": "#ccc"}
+          }
+        },
+        "marks": [
+          {
+            "type": "symbol",
+            "properties": {
+              "enter": {
+                "x": {"scale": "x", "field": "data.attributes.{time.field}"},
+                "y": {"scale": "y", "field": "data.attributes.{aspect.field}"},
+                "size": {"value": 50},
+                "stroke": {"scale": "c", "field": "data.attributes.{color.field}"},
+                "strokeWidth": {"value": 2}
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

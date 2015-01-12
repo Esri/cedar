@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Time Example | Esri Cedar</title>
   
 
   
@@ -79,85 +79,31 @@
   
 
 
-<h1>Multiple Charts</h1>
+<h1>Time Example</h1>
 
-<div id="chart1"></div>
-<div id="chart2"></div>
-
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-
-  var dataset = {
-    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-    &quot;mappings&quot;:{
-      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
-      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
-    }
-  };
-
-  var chart1 = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
-
-  chart1.show({
-    elementId: &quot;#chart1&quot;,
-  });  
-
-  var chart2 = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/pie.json&quot;, &quot;dataset&quot;: dataset});
-
-  chart2.show({
-    elementId: &quot;#chart2&quot;,
-  });    
-
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
-
+<div id="chart"></div>
 
 
 <script>
+  
+  var chart = new Cedar({"specification":"../../../cedar/data/templates/time.json"});
 
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
     "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+      "time": {"field":"Date"},
+      "value": {"field":"Injuries"}
     }
   };
+  chart.dataset = dataset;
 
-  var chart1 = new Cedar({"specification":"../../../cedar/data/templates/bar.json", "dataset": dataset});
-
-  chart1.show({
-    elementId: "#chart1",
+  chart.show({
+    elementId: "#chart",
   });  
-
-  var chart2 = new Cedar({"specification":"../../../cedar/data/templates/pie.json", "dataset": dataset});
-
-  chart2.show({
-    elementId: "#chart2",
-  });    
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/multiple.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/time.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
