@@ -259,6 +259,19 @@ if(this._pendingXhr){
   }
 };
 
+
+
+/**
+ * highlight marker based on attribute value
+ */
+Cedar.prototype.highlight = function(value) {
+  var view = this._view;
+  console.log('view', view);
+  console.log('value', value);
+};
+
+
+
 /**
  * Attach the generic proxy handlers to the chart view
  */
