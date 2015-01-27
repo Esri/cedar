@@ -17,11 +17,11 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
   
-  require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
-       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
+    require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "esri/graphic", "dojo/domReady!"], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color, Graphic) { 
 
-    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 11,
       new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
       new Color([220,220,220]), 0.5),
       new Color([14,105,175,0.55]));
@@ -74,7 +74,8 @@ layout: example.hbs
 
     //show the chart
     chart.show({
-      elementId: "#chart"
+      elementId: "#chart",
+      renderer: "svg"
     });
     
 
@@ -99,16 +100,38 @@ layout: example.hbs
 
     window.chart = chart;
 
-    //MAP EVENTS
-    featureLayer.on('mouse-over', function(d) {
-      var val = d.graphic.attributes["ZIP_CODE"];
-      chart.select("ZIP_CODE", val);
+
+    map.on("load", function() {
+      map.graphics.enableMouseEvents();
+      map.graphics.on("mouse-out", onMouseout);
     });
 
-    featureLayer.on('mouse-out', function(d) {
+    function onMouseout(d) {
+      
+      map.graphics.clear();
+
+      chart.update();
+
+    }
+
+    //MAP EVENTS
+    featureLayer.on('mouse-over', function(d) {
+
+      var highlightSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 11,
+        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+        new Color([255,255,255]), 1.5),
+        new Color([14,105,175,0.8]));
+
+      var highlightGraphic = new Graphic(d.graphic.geometry,highlightSymbol);
+      highlightGraphic.attributes = d.graphic.attributes;
+      map.graphics.add(highlightGraphic);
+
+
       var val = d.graphic.attributes["ZIP_CODE"];
-      chart.clearSelect("ZIP_CODE", val);
+      chart.select({key: "ZIP_CODE", value: val});
+
     });
+
 
   });
 {{>example-code-footer}}
@@ -211,8 +234,7 @@ layout: example.hbs
       
       map.graphics.clear();
 
-      var val = d.graphic.attributes["ZIP_CODE"];
-      chart.clearSelect("ZIP_CODE", val);
+      chart.update();
 
     }
 
@@ -230,7 +252,7 @@ layout: example.hbs
 
 
       var val = d.graphic.attributes["ZIP_CODE"];
-      chart.select("ZIP_CODE", val);
+      chart.select({key: "ZIP_CODE", value: val});
 
     });
 

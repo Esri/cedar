@@ -268,13 +268,13 @@ if(this._pendingXhr){
 /**
  * highlight marker based on attribute value
  */
-Cedar.prototype.select = function(key, value) {
+Cedar.prototype.select = function( opt ) {
   var self = this;
   var view = this._view;
   var items = view.model().scene().items[0].items[0].items;
 
   items.forEach(function(item) {
-    if ( item.datum.data.attributes[key] === value ) {
+    if ( item.datum.data.attributes[opt.key] === opt.value ) {
       if ( item.hasPropertySet("hover") ) {
         self._view.update({props:"hover", items:item});
       }
@@ -282,22 +282,6 @@ Cedar.prototype.select = function(key, value) {
   });
 
 };
-
-Cedar.prototype.clearSelect = function(key, value) {
-  var self = this;
-  var view = this._view;
-  var items = view.model().scene().items[0].items[0].items;
-
-  items.forEach(function(item) {
-    if ( item.datum.data.attributes[key] === value ) {
-      if ( item.hasPropertySet("hover") ) {
-        self._view.update();
-      }
-    }
-  });
-
-};
-
 
 
 /**
