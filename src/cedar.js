@@ -187,6 +187,7 @@ Cedar.prototype.show = function(options){
   
     //hold onto the id
     this._elementId = options.elementId;
+    this._renderer = options.renderer || "canvas"; //default to canvas
 
     //hold onto the token
     if(options.token){
@@ -243,7 +244,10 @@ if(this._pendingXhr){
       vg.parse.spec(spec, function(chartCtor) { 
 
         //create the view
-        self._view = chartCtor({el: self._elementId});
+        self._view = chartCtor({
+          el: self._elementId,
+          renderer: self._renderer
+        });
         
         //render into the element
         self._view.update(); 
@@ -264,10 +268,34 @@ if(this._pendingXhr){
 /**
  * highlight marker based on attribute value
  */
-Cedar.prototype.highlight = function(value) {
+Cedar.prototype.select = function(key, value) {
+  var self = this;
   var view = this._view;
-  console.log('view', view);
-  console.log('value', value);
+  var items = view.model().scene().items[0].items[0].items;
+
+  items.forEach(function(item) {
+    if ( item.datum.data.attributes[key] === value ) {
+      if ( item.hasPropertySet("hover") ) {
+        self._view.update({props:"hover", items:item});
+      }
+    }
+  });
+
+};
+
+Cedar.prototype.clearSelect = function(key, value) {
+  var self = this;
+  var view = this._view;
+  var items = view.model().scene().items[0].items[0].items;
+
+  items.forEach(function(item) {
+    if ( item.datum.data.attributes[key] === value ) {
+      if ( item.hasPropertySet("hover") ) {
+        self._view.update();
+      }
+    }
+  });
+
 };
 
 
