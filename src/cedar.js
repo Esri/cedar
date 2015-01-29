@@ -248,6 +248,7 @@ if(this._pendingXhr){
           el: self._elementId,
           renderer: self._renderer
         });
+
         
         //render into the element
         self._view.update(); 
