@@ -18,7 +18,6 @@
     "data": [
       {
         "name": "table",
-        "url": "{data}",
         "format": {
           "property": "features"
         },

@@ -1,0 +1,135 @@
+{
+  "displayFieldName": "",
+  "fieldAliases": {
+    "ZIP_CODE": "ZIP_CODE",
+    "TOTAL_STUD_SUM": "TOTAL_STUD_SUM"
+  },
+  "fields": [
+    {
+      "name": "ZIP_CODE",
+      "type": "esriFieldTypeDouble",
+      "alias": "ZIP_CODE"
+    },
+    {
+      "name": "TOTAL_STUD_SUM",
+      "type": "esriFieldTypeDouble",
+      "alias": "TOTAL_STUD_SUM"
+    }
+  ],
+  "features": [
+    {
+      "attributes": {
+        "ZIP_CODE": 20005,
+        "TOTAL_STUD_SUM": 327
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20024,
+        "TOTAL_STUD_SUM": 517
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20017,
+        "TOTAL_STUD_SUM": 597
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20015,
+        "TOTAL_STUD_SUM": 707
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20037,
+        "TOTAL_STUD_SUM": 760
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20018,
+        "TOTAL_STUD_SUM": 1052
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20012,
+        "TOTAL_STUD_SUM": 1184
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20007,
+        "TOTAL_STUD_SUM": 1584
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20008,
+        "TOTAL_STUD_SUM": 1625
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20003,
+        "TOTAL_STUD_SUM": 1869
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20009,
+        "TOTAL_STUD_SUM": 1945
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20001,
+        "TOTAL_STUD_SUM": 2164
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20010,
+        "TOTAL_STUD_SUM": 2282
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20019,
+        "TOTAL_STUD_SUM": 3278
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20011,
+        "TOTAL_STUD_SUM": 3817
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20020,
+        "TOTAL_STUD_SUM": 3901
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20032,
+        "TOTAL_STUD_SUM": 4360
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20016,
+        "TOTAL_STUD_SUM": 4681
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20002,
+        "TOTAL_STUD_SUM": 5590
+      }
+    }
+  ]
+}

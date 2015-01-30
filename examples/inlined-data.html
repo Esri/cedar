@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Esri Cedar</title>
+    <title>Pass in Data | Esri Cedar</title>
   
 
   
@@ -80,7 +80,7 @@
   
 
 
-<h1>Simple Pie Chart</h1>
+<h1>Pass Data Directly to Chart</h1>
 
 <div id="chart"></div>
 
@@ -89,7 +89,7 @@
 <pre><code class="language-html">&lt;html&gt;
 &lt;head&gt;
   &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;&lt;/title&gt;
+  &lt;title&gt;Pass in Data&lt;/title&gt;
   &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
 
   &lt;!-- Load D3 --&gt;
@@ -108,46 +108,86 @@
 
 &lt;script&gt;
 
-  var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/pie.json&quot;});
-  //create the dataset w/ mappings
-  var dataset = {
-    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-    &quot;mappings&quot;:{
-      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
-      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
+  var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar.json&quot;});
+  //fetch data from a json file
+  var data = Cedar.getJson(&#39;../../../cedar/data/feature-collection-data.json&#39;, function(err, data){
+    if(!err){
+
+      var dataset = {
+        &quot;data&quot;: data,
+        &quot;mappings&quot;:{
+          &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+          &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+        }
+      };
+      //assign to the chart
+      chart.dataset = dataset;
+
+      //show the chart
+      chart.show({
+        elementId: &quot;#chart&quot;
+      });
+
+    }else{
+      console.error(&#39;Error loading data from file&#39;);
     }
-  };
-  chart.dataset = dataset;
-  chart.show({
-    elementId: &quot;#chart&quot;,
-  }); 
 
 &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
-
+<h3 id="expected-format">Expected Format</h3>
+<pre><code>{
+  ...other properties...
+  features:[
+    {
+      &quot;attributes&quot;: {
+        &quot;ZIP_CODE&quot;: 20005,
+        &quot;TOTAL_STUD_SUM&quot;: 327
+      }
+    },
+    {
+      &quot;attributes&quot;: {
+        &quot;ZIP_CODE&quot;: 20024,
+        &quot;TOTAL_STUD_SUM&quot;: 517
+      }
+    },
+  ]
+  ...other properties...
+}</code></pre>
 
 
 <script>
-  
-  var chart = new Cedar({"specification":"../../../cedar/data/templates/pie.json"});
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"../../../cedar/data/templates/bar.json"});
 
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+  var data = Cedar.getJson('../../../cedar/data/feature-collection-data.json', function(err, data){
+    if(!err){
+
+      var dataset = {
+        "data": data,
+        "mappings":{
+          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        }
+      };
+      //assign to the chart
+      chart.dataset = dataset;
+
+      //show the chart
+      chart.show({
+        elementId: "#chart"
+      });
+
+    }else{
+      console.error('Error loading data from file');
     }
-  };
-  chart.dataset = dataset;
+  });
 
-  chart.show({
-    elementId: "#chart",
-  });  
+
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/simple-pie.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/inlined-data.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 
