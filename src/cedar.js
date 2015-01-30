@@ -409,7 +409,6 @@ Cedar._getMappingFieldName = function(mappingName, fieldName){
 Cedar._defaultDefinition = function(){
   var defn = {
     "dataset": {
-      "url":"",
       "query": this._defaultQuery()
     },
     "template":{}
@@ -509,75 +508,6 @@ Cedar.getJson = function( url, callback ){
 };
 
 
-
-
-/**
- * Compile the data url into the mappings
- */
-Cedar._compileMappings = function(dataset, inputs){
-
-  
-  //make sure that the mappings have all the required fields and/or have defaults applied
-  return  Cedar._applyDefaultsToMappings(dataset.mappings, inputs);
-
-  // //ensure that we have a query
-  // if(dataset.query){
-  //   mergedQuery = _.clone(dataset.query);
-  //   //ensure we have all needed properties on the query
-  //   //TODO: use a microlib instead of underscore
-  //   _.defaults(mergedQuery, defaultQuery);
-  // }else{
-  //   mergedQuery = defaultQuery;
-    
-  // }
-
-  // //Handle bbox
-  // if(mergedQuery.bbox){
-  //   //make sure a geometry was not also passed in
-  //   if(mergedQuery.geometry){
-  //     throw new Error('Dataset.query can not have both a geometry and a bbox specified');
-  //   }
-  //   //get the bbox
-  //   var bboxArr = mergedQuery.bbox.split(',');
-
-  //   //remove it so it's not serialized as-is
-  //   delete mergedQuery.bbox;
-    
-  //   //cook it into the json string 
-  //   mergedQuery.geometry = JSON.stringify({"xmin": bboxArr[0], "ymin": bboxArr[2],"xmax": bboxArr[1], "ymax": bboxArr[3] });
-  //   //set the spatial ref as geographic
-  //   mergedQuery.inSR = '4326';
-
-  // }
-
-  // // add any aggregations
-  // if(dataset.mappings.group) {
-  //   mergedQuery.groupByFieldsForStatistics = dataset.mappings.group.field;
-  // }
-  
-  // if(dataset.mappings.count) {
-  //   mergedQuery.orderByFields = dataset.mappings.count.field + "_SUM";
-  //   mergedQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
-  // }
-
-  // var source;
-  // if(dataset.data){
-  //   //TODO: ensure dataset.data is an array
-  //   //copy the array of data
-  //   source = dataset.data;
-  // }else{
-  //   //compile the url
-  //   source = dataset.url + "/query?" + this._serializeQueryParams(mergedQuery);
-  // }
-  // //clone the mappings and extend it
-  // //TODO: add cloning microlib
-  // var cloneMappings = _.clone(dataset.mappings);
-
-  // //attach the data node and return
-  // cloneMappings.data = source;
-
-  //return cloneMappings;
-};
 
 
 /**
