@@ -84,7 +84,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           'src/**/*.js',
-          'spec/**/*.js'
+          'spec/**/*.spec.js'
         ],
         tasks: ['jshint', 'copy:scripts'],
         options: {

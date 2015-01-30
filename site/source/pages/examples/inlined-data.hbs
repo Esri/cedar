@@ -1,0 +1,93 @@
+---
+title: Pass in Data
+layout: example.hbs
+---
+
+
+<h1>Pass Data Directly to Chart</h1>
+
+<div id="chart"></div>
+
+
+
+{{#markdown}}
+```html
+{{>example-code-header}}
+  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  //fetch data from a json file
+  var data = Cedar.getJson('{{assets}}data/feature-collection-data.json', function(err, data){
+    if(!err){
+
+      var dataset = {
+        "data": data,
+        "mappings":{
+          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        }
+      };
+      //assign to the chart
+      chart.dataset = dataset;
+
+      //show the chart
+      chart.show({
+        elementId: "#chart"
+      });
+
+    }else{
+      console.error('Error loading data from file');
+    }
+{{>example-code-footer}}
+```
+### Expected Format
+```
+{
+  ...other properties...
+  features:[
+    {
+      "attributes": {
+        "ZIP_CODE": 20005,
+        "TOTAL_STUD_SUM": 327
+      }
+    },
+    {
+      "attributes": {
+        "ZIP_CODE": 20024,
+        "TOTAL_STUD_SUM": 517
+      }
+    },
+  ]
+  ...other properties...
+}
+```
+{{/markdown}}
+
+<script>
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+
+  var data = Cedar.getJson('{{assets}}data/feature-collection-data.json', function(err, data){
+    if(!err){
+
+      var dataset = {
+        "data": data,
+        "mappings":{
+          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        }
+      };
+      //assign to the chart
+      chart.dataset = dataset;
+
+      //show the chart
+      chart.show({
+        elementId: "#chart"
+      });
+
+    }else{
+      console.error('Error loading data from file');
+    }
+  });
+
+
+
+</script>

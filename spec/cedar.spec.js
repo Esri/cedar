@@ -17,7 +17,7 @@ describe('Cedar', function () {
   });
 
   describe('constructor', function () {
-    var fakeDefinition;
+    var fakeDefinition, fakeSpec;
     beforeEach(function() {
       fakeDefinition = {
         "dataset":{
@@ -30,6 +30,9 @@ describe('Cedar', function () {
           "template":{}
         }
       };
+      fakeSpec = {
+
+      }
     });
 
     
@@ -63,11 +66,18 @@ describe('Cedar', function () {
     });
 
     it("should accept options.specification as url", function() {
-      
+      var fct = function(){
+        var x = new Cedar({specification:'/foo/bar.json'});
+      }
+      expect(fct).not.to.throw();
+      expect(requests[0].url).to.equal('/foo/bar.json');
+      expect(requests[0].method).to.equal('get');
     });
 
     it("should accept options.specification as an object ", function() {
-      
+      chart = new Cedar({"specification":fakeSpec});
+      expect(chart.specification).to.equal(fakeSpec);
+
     });
 
     it("should not throw if options.template === string and ! contains http", function() {
@@ -82,7 +92,96 @@ describe('Cedar', function () {
   });
 
 
-  describe('properties', function () {
+  describe('validate data', function () {
+    var data, mappings;
+    beforeEach(function() {
+      data = {
+        "features":[
+        {
+          "attributes":{
+            "ZIP_CODE":"80563",
+            "TOTAL_STUD_SUM":1231
+          }
+        },
+        {
+          "attributes":{
+            "ZIP_CODE":"80564",
+            "TOTAL_STUD_SUM":132
+          }
+        }
+        ]
+      };
+      mappings = {
+          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    });
+
+    it("should throw if data.features is not an array", function() {
+      var fct = function(){
+        var x = Cedar._validateData({}, mappings);
+      }
+      expect(fct).to.throw();
+    });
+
+    it("should return empty array if no errors", function() {
+      var out = Cedar._validateData(data, mappings);
+      expect(out).to.be.an('array');
+      expect(out).to.be.empty;
+    });  
+
+  });
+
+
+  describe('feature service query', function () {
+    var dataset;
+    beforeEach(function() {
+      dataset = {
+        "url":"http://not-real.com/arcgis/rest/foobar/featureserver/4",
+        "mappings":{}
+      };
+
+    });
+
+    it("should add 1=1 query", function() {
+      var u = Cedar._createFeatureServiceRequest(dataset);
+      expect(u).to.equal('http://not-real.com/arcgis/rest/foobar/featureserver/4/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json');
+    });
+
+    it("should serialize where", function() {
+      dataset.query = {
+        "where":"ZIP = 80524"
+      };
+      var u = Cedar._createFeatureServiceRequest(dataset);
+      expect(u).to.equal('http://not-real.com/arcgis/rest/foobar/featureserver/4/query?where=ZIP%20%3D%2080524&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json');
+    });
+    it("should serialize the token", function() {
+      dataset.token = "ABC123";
+      var u = Cedar._createFeatureServiceRequest(dataset);
+      expect(u).to.equal('http://not-real.com/arcgis/rest/foobar/featureserver/4/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json&token=ABC123');
+    });
+    it("should serialize bbox", function() {
+      dataset.query = {
+        "bbox":"-103,30,-102,40"
+      };
+      var u = Cedar._createFeatureServiceRequest(dataset);
+      expect(u).to.equal('http://not-real.com/arcgis/rest/foobar/featureserver/4/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json&geometry=%7B%22xmin%22%3A%22-103%22%2C%22ymin%22%3A%22-102%22%2C%22xmax%22%3A%2230%22%2C%22ymax%22%3A%2240%22%7D&inSR=4326');
+    });
+  });
+
+
+  describe('mapping names', function () {
+    it("should append _SUM for count", function() {
+      var out = Cedar._getMappingFieldName('count', 'SOME_FIELD');
+      expect(out).to.equal('SOME_FIELD_SUM');
+    });
+    it("should pass thru non-matching mappings", function() {
+      var out = Cedar._getMappingFieldName('notcount', 'SOME_FIELD');
+      expect(out).to.equal('SOME_FIELD');
+    });
+  });
+
+  xdescribe('properties', function () {
   
     describe('dataset', function () {
       it("should get/set dataset object", function() {
@@ -107,7 +206,7 @@ describe('Cedar', function () {
 
   });
 
-  describe('drawing a chart', function () {
+  xdescribe('drawing a chart', function () {
   
     describe('returns error when', function () {
       
