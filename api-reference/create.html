@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Cedar.show Method | Esri Cedar</title>
+    <title>compile | Esri Cedar</title>
   
 
   
@@ -27,8 +27,7 @@
 
   <!-- esri Cedar -->
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
-  <!-- <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script> -->
-  <script type="text/javascript" src="../js/vega.js"></script>
+  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
   <script type="text/javascript" src="../js/cedar-core.js"></script>
 
@@ -53,15 +52,17 @@
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="../">cedar.js</a>
     </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../api/">API Documentation</a></li>
         <li><a href="../examples/">Examples</a></li>
+        <li><a href="../api-reference/">Api Documentation</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -74,10 +75,11 @@
 <div class="container white">
   
 
-<div class="col-lg-10">
-  <h2 id="-show-opt-">.show( opt )</h2>
-<p>Renders a cedar chart object into the specified element in the DOM.</p>
-<p><code>chart.show({elementId:&quot;#chartDiv&quot;})</code></p>
+<div class="col-lg-8">
+  <h2 id="cedar-create-template-mappings-">Cedar.create( template, mappings )</h2>
+<p>Compile a chart template with a set of field mappings and data (url | object ) to generate a cedar chart that can be used with the <code>.show()</code> method. This will be used in tools that allow a user to associate a chart template with data + styling.</p>
+<p><em>NOTE</em>: If the data is passed in as an array, it will be embedded into the chart json that is emitted. (not implemented yet)</p>
+<p><code>Cedar.create(options)</code></p>
 <h4 id="arguments">Arguments</h4>
 <table>
 <thead>
@@ -90,64 +92,42 @@
 </thead>
 <tbody>
 <tr>
-<td><code>elementId</code></td>
-<td><code>string</code></td>
+<td><code>options.template</code></td>
+<td>&lt;<code>object</code>&gt;</td>
 <td>yes</td>
-<td>Id of the DOM node to render the chart into.</td>
+<td>Cedar template json.</td>
+</tr>
+<tr>
+<td><code>options.mappings</code></td>
+<td>&lt;<code>object</code>&gt;</td>
+<td>yes</td>
+<td>Hash of field mappings.</td>
+</tr>
+<tr>
+<td><code>options.data</code></td>
+<td>&lt;`url</td>
+<td>array`&gt;</td>
+<td>yes</td>
+<td>data</td>
 </tr>
 </tbody>
 </table>
-<h4 id="example-code">Example Code</h4>
-<pre><code>&lt;div id=&#39;chartDiv&#39;&gt;&lt;/div&gt;
+<h3 id="examples">Examples</h3>
 
-&lt;script&gt;
-var dataset = {
-    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-    &quot;mappings&quot;:{
-      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
-      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
-    }
-  };
-
-  var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;, &quot;dataset&quot;: dataset});
-
-//create and render a chart
-chart.show({
-  &#39;elementId&#39;: &#39;#chartDiv&#39;
-});
-
-&lt;/script&gt;</code></pre>
-
-  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/show.hbs">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api-reference/create.hbs">Edit this page on GitHub</a></p>
 </div>
 
-<div class="col-lg-2">
+<div class="col-lg-4">
   <aside class="sidebar">
-  <h5><a href="../api/index.html">Cedar Javascript API</a></h5>
+  <h5><a href="../api-reference/index.html">Cedar Api</a></h5>
   <ul>
-    <li><a href="../api/create.html">new Cedar( opt )</a></li>
+    <li><a href="../api-reference/render.html">Cedar.show()</a></li>
+    <li><a href="../api-reference/compile.html">Cedar.create()</a></li>
   </ul>
-  <h5>Properties</h5>
+  <h5>Helpers</h5>
   <ul>
-    <li><a href="../api/dataset.html">.dataset</a></li>
-    <li><a href="../api/specification.html">.specification</a></li>
+    <li>Cedar.getJson()</li>
   </ul>
-  <h5>Methods</h5>
-  <ul>
-    <li><a href="../api/show.html">.show( opt )</a></li>
-    <li><a href="../api/update.html">.update( )</a></li>
-    <li><a href="../api/on.html">.on( evt, fn )</a></li>
-    <li><a href="../api/off.html">.off( evt )</a></li>
-    <li><a href="../api/select.html">.select( opt )</a></li>
-  </ul>
-
-  <h5>Json Objects</h5>
-  <ul>
-    <li><a href="../api/json/specification-json.html">Specification</a></li>
-    <li><a href="../api/json/dataset-json.html">Dataset </a></li>
-    <li><a href="../api/json/definition-json.html">Definition</a></li>
-  </ul>
-
 </aside>
 </div>
   <div style='clear:both;'></div>

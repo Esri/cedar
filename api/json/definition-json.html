@@ -21,15 +21,16 @@
   <![endif]-->
 
   <!-- stylesheet -->
-  <link rel="stylesheet" href="../../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../css/style.css">
 
   <!-- Cedar -->
 
   <!-- esri Cedar -->
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
-  <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script>
+  <!-- <script type="text/javascript" src="http://trifacta.github.io/vega/vega.js"></script> -->
+  <script type="text/javascript" src="../../js/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../../../cedar/js/cedar-core.js"></script>
+  <script type="text/javascript" src="../../js/cedar-core.js"></script>
 
 
   <!-- Google Analytics -->
@@ -53,14 +54,14 @@
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../../../../cedar/">cedar.js</a>
+      <a class="navbar-brand" href="../../">cedar.js</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         
-        <li><a href="../../../../cedar/api/">API Documentation</a></li>
-        <li><a href="../../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../api/">API Documentation</a></li>
+        <li><a href="../../examples/">Examples</a></li>
         <li><a href="https://github.com/esridc/cedar">Github</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
@@ -75,7 +76,7 @@
 
 <div class="col-lg-10">
   <h1 id="definition-json">Definition Json</h1>
-<p>A definition object is the combintion of a <a href="../../../../cedar/api/json/dataset-json.html">dataset</a> and a <a href="../../../../cedar/api/json/specification-json.html">specification</a> into a single object. This streamlines the process of hydrating a chart, as the complete definition can be stored in a file, database, or other location, and the url passed into the cedar constructor. </p>
+<p>A definition object is the combintion of a <a href="../../api/json/dataset-json.html">dataset</a> and a <a href="../../api/json/specification-json.html">specification</a> into a single object. This streamlines the process of hydrating a chart, as the complete definition can be stored in a file, database, or other location, and the url passed into the cedar constructor. </p>
 <p>This is also the internal structure used by Cedar.</p>
 <h2 id="specification-format">Specification Format</h2>
 <pre><code class="language-json">{
@@ -88,28 +89,29 @@
 
 <div class="col-lg-2">
   <aside class="sidebar">
-  <h5><a href="../../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <h5><a href="../../api/index.html">Cedar Javascript API</a></h5>
   <ul>
-    <li><a href="../../../../cedar/api/create.html">new Cedar( opt )</a></li>
+    <li><a href="../../api/create.html">new Cedar( opt )</a></li>
   </ul>
   <h5>Properties</h5>
   <ul>
-    <li><a href="../../../../cedar/api/dataset.html">.dataset</a></li>
-    <li><a href="../../../../cedar/api/specification.html">.specification</a></li>
+    <li><a href="../../api/dataset.html">.dataset</a></li>
+    <li><a href="../../api/specification.html">.specification</a></li>
   </ul>
   <h5>Methods</h5>
   <ul>
-    <li><a href="../../../../cedar/api/show.html">.show( opt )</a></li>
-    <li><a href="../../../../cedar/api/update.html">.update( )</a></li>
-    <li><a href="../../../../cedar/api/on.html">.on( evt, fn )</a></li>
-    <li><a href="../../../../cedar/api/off.html">.off( evt )</a></li>
+    <li><a href="../../api/show.html">.show( opt )</a></li>
+    <li><a href="../../api/update.html">.update( )</a></li>
+    <li><a href="../../api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../api/off.html">.off( evt )</a></li>
+    <li><a href="../../api/select.html">.select( opt )</a></li>
   </ul>
 
   <h5>Json Objects</h5>
   <ul>
-    <li><a href="../../../../cedar/api/json/specification-json.html">Specification</a></li>
-    <li><a href="../../../../cedar/api/json/dataset-json.html">Dataset </a></li>
-    <li><a href="../../../../cedar/api/json/definition-json.html">Definition</a></li>
+    <li><a href="../../api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../api/json/definition-json.html">Definition</a></li>
   </ul>
 
 </aside>
@@ -121,6 +123,6 @@
 </div>
 
   </div>
-  <!-- <script src="../../../../cedar/js/script.js"></script>-->
+  <!-- <script src="../../js/script.js"></script>-->
   </body>
 </html>

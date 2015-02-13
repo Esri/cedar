@@ -11,7 +11,7 @@
     "data": [
       {
         "name": "crimes",
-        "url": "{data}",
+
         "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
       },
       {

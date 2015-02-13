@@ -8,7 +8,7 @@
   <meta charset="utf-8">
 
   
-    <title>Time Dots Example | Esri Cedar</title>
+    <title>Pass in Data | Esri Cedar</title>
   
 
   
@@ -80,33 +80,114 @@
   
 
 
-<h1>Time Dots Example</h1>
+<h1>Pass Data Directly to Chart</h1>
 
 <div id="chart"></div>
 
 
-<script>
-  
-  var chart = new Cedar({"specification":"../data/templates/time-dots.json"});
 
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/CDW_Feeds/MapServer/8",
-    "mappings":{
-      "time":   {"field":"REPORTDATETIME"},
-      "aspect": {"field":"OFFENSE"},
-      "facet":  {"field":"WARD"},
-      "color":  {"field":"SHIFT"}
+<pre><code class="language-html">&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset=utf-8 /&gt;
+  &lt;title&gt;Pass in Data&lt;/title&gt;
+  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
+
+  &lt;!-- Load D3 --&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
+
+  &lt;!-- Load Cedar --&gt;
+  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;row&quot;&gt;
+  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+
+  var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/bar.json&quot;});
+  //fetch data from a json file
+  var data = Cedar.getJson(&#39;../data/feature-collection-data.json&#39;, function(err, data){
+    if(!err){
+
+      var dataset = {
+        &quot;data&quot;: data,
+        &quot;mappings&quot;:{
+          &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
+          &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+        }
+      };
+      //assign to the chart
+      chart.dataset = dataset;
+
+      //show the chart
+      chart.show({
+        elementId: &quot;#chart&quot;
+      });
+
+    }else{
+      console.error(&#39;Error loading data from file&#39;);
     }
-  };
-  chart.dataset = dataset;
 
-  chart.show({
-    "elementId": "#chart",
-  });  
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+<h3 id="expected-format">Expected Format</h3>
+<pre><code>{
+  ...other properties...
+  features:[
+    {
+      &quot;attributes&quot;: {
+        &quot;ZIP_CODE&quot;: 20005,
+        &quot;TOTAL_STUD_SUM&quot;: 327
+      }
+    },
+    {
+      &quot;attributes&quot;: {
+        &quot;ZIP_CODE&quot;: 20024,
+        &quot;TOTAL_STUD_SUM&quot;: 517
+      }
+    },
+  ]
+  ...other properties...
+}</code></pre>
+
+
+<script>
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"../data/templates/bar.json"});
+
+  var data = Cedar.getJson('../data/feature-collection-data.json', function(err, data){
+    if(!err){
+
+      var dataset = {
+        "data": data,
+        "mappings":{
+          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        }
+      };
+      //assign to the chart
+      chart.dataset = dataset;
+
+      //show the chart
+      chart.show({
+        elementId: "#chart"
+      });
+
+    }else{
+      console.error('Error loading data from file');
+    }
+  });
+
+
 
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/time-dots.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/inlined-data.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

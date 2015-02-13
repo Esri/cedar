@@ -68,7 +68,7 @@
     "legends": [
       {
         "fill": "c",
-        "title": "{color} ",
+        "title": "{color.field} ",
         "offset": 0,
         "properties": {
           "symbols": {
