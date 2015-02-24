@@ -1,4 +1,3 @@
-'use strict';
 /**
  * Cedar
  *
@@ -6,8 +5,8 @@
  * that leverages vega + d3 internally.
  */
 
-
-
+(function(window){
+  'use strict';
 
 /**
  * Constructor
@@ -23,6 +22,7 @@ var Cedar = function Cedar(options){
   /**
    * Internals for holding state
    */
+  
 
   // Array to hold event handlers
   this._events = [];
@@ -665,3 +665,7 @@ Cedar._serializeQueryParams = function(params) {
   var queryString = str.join("&");
   return queryString;
 };
+
+window.Cedar = Cedar;
+
+})(window);

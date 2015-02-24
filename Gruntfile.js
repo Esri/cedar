@@ -26,15 +26,22 @@ module.exports = function(grunt) {
   var umdFooter = '\n\n  return EsriLeaflet;\n' +
                   '}));';
 
-  var complete = [
+  var cedar_vega_d3 = [
     'bower_components/d3/d3.js',
     'bower_components/vega/vega.js',
-    'src/Cedar.js'
+    'bower_components/underscore/underscore.js',
+    'src/cedar.js'
+  ];
+
+  var cedar_vega = [
+    'bower_components/vega/vega.js',
+    'bower_components/underscore/underscore.js',
+    'src/cedar.js'
   ];
 
   //core is just cedar
   var core = [
-    'src/Cedar.js',
+    'src/cedar.js',
   ];
 
   
@@ -135,13 +142,17 @@ module.exports = function(grunt) {
         //banner: copyright + umdHeader,
         //footer: umdFooter,
       },
-      complete: {
-        src: complete,
-        dest: 'dist/cedar-src.js'
+      cedar_vega_d3: {
+        src: cedar_vega_d3,
+        dest: 'dist/builds/cedar-vega-d3.js'
+      },
+      cedar_vega: {
+        src: cedar_vega,
+        dest: 'dist/builds/cedar-vega.js'
       },
       core: {
         src: core,
-        dest: 'dist/builds/core/cedar-core-src.js'
+        dest: 'dist/builds/cedar.js'
       }
     },
 
@@ -150,9 +161,10 @@ module.exports = function(grunt) {
         sourceMap: true,
         sourceMapIncludeSources: true,
         wrap: false,
-        mangle: {
-          except: ['L']
-        },
+        mangle:true,
+        // mangle: {
+        //    except: ['d3', 'vg', 'cedar']
+        // },
         preserveComments: 'some',
         report: 'gzip',
         //banner: copyright + umdHeader,
@@ -160,8 +172,9 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/cedar.js': complete,
-          'dist/builds/core/cedar-core.js': core
+          'dist/builds/cedar-vega-d3.min.js': cedar_vega_d3,
+          'dist/builds/cedar-vega.min.js': cedar_vega,
+          'dist/builds/cedar.min.js': core
         }
       }
     },
@@ -255,6 +268,7 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           { src: 'src/cedar.js', dest: 'site/build/js/cedar-core.js'},
+          { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
           { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
       }
@@ -341,7 +355,7 @@ module.exports = function(grunt) {
   grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs:build', ['assemble:build', 'copy', 'imagemin','sass', 'gh-pages']);
+  grunt.registerTask('docs:deploy', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
