@@ -220,7 +220,7 @@ module.exports = function(grunt) {
       },
       docs: {
         options: {
-          port: 8001,
+          port: 8081,
           hostname: '0.0.0.0',
           base: './site/build/'
         }

@@ -17,11 +17,13 @@ layout: example.hbs
     "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
     "mappings":{
       "time": {"field":"Date"},
-      "value": {"field":"Injuries"}
+      "value": {"field":"Injuries"},
+      "sort":"Date"
+
     }
   };
   chart.dataset = dataset;
-
+  //chart.dataset.mappings.sort = "DATE";
   chart.show({
     elementId: "#chart",
   });  
