@@ -8937,7 +8937,7 @@ Cedar.prototype.update = function(){
       
           //todo add error handlers for xhr and ags errors
           spec.data[0].values = data;
-
+          console.dir(spec);
           //send to vega
           self._renderSpec(spec);
         };
@@ -9222,6 +9222,33 @@ Cedar._createFeatureServiceRequest = function( dataset ){
   if(dataset.mappings.count) {
     mergedQuery.orderByFields = dataset.mappings.count.field + "_SUM";
     mergedQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
+  }
+
+
+
+  //iterate the mappings keys to check for sort
+  //-----------------------------------------------------------------
+  //This approach would seem 'clean' but if there are multiple fields
+  //to sort by, the order would be determined by how javascript decides to
+  //iterate the mappings property hash.
+  //Thus, using mappings.sort gives the developer explicit control
+  //-----------------------------------------------------------------
+  // var sort = [];
+  // for (var property in dataset.mappings) {
+  //   if (dataset.mappings.hasOwnProperty(property)) {
+  //     if(dataset.mappings[property].sort){
+  //       //ok - build up the sort
+  //       sort.push(dataset.mappings[property].field + ' ' + dataset.mappings[property].sort);
+  //     }
+  //   }
+  // }
+  // if(sort.length > 0){
+  //   mergedQuery.orderByFields = sort.join(',');
+  // }
+  //-----------------------------------------------------------------
+  //check for a sort passed directly in
+  if(dataset.mappings.sort){
+    mergedQuery.orderByFields = dataset.mappings.sort;
   }
 
   var url = dataset.url + "/query?" + this._serializeQueryParams(mergedQuery);

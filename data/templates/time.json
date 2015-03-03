@@ -1,6 +1,6 @@
 {
   "inputs":[
-    {"name":"time","type":["time"], "required":true},
+    {"name":"time","type":["time"], "required":true, "sort":"ASC"},
     {"name":"value","type":["numeric"], "required":true}
   ],
   "template":{
