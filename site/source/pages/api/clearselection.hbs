@@ -1,0 +1,151 @@
+---
+title: Cedar.select Method
+layout: documentation.hbs
+---
+
+## .clearSelection( opt )
+Clears specified chart marker selection or all selections if no options passed.
+
+Clear single selection: 
+`chart.clearSelection({key:"Attribute Name", value: "value"});`
+
+Clear all selections: 
+`chart.clearSelection({});`
+
+#### Arguments
+
+| Name | Type | Required | Description |
+| --- | --- | --- | --- |
+| `key` | `string` | no | Attribute name of markers rendered in chart. |
+| `value` | `string` | no | Value of attribute for marker to unselect. |
+
+<br />
+#### <a href="{{assets}}examples/map-to-chart-interaction.html">Live Example</a>
+
+<br />
+#### Example Code
+```
+<div id='chartDiv'></div>
+
+<script>
+  
+    require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "esri/graphic", "dojo/domReady!"], function(Map, FeatureLayer, 
+       SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color, Graphic) { 
+
+    var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 11,
+      new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+      new Color([220,220,220]), 0.5),
+      new Color([14,105,175,0.55]));
+
+    var rend = new SimpleRenderer(defaultSymbol);
+
+    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+      mode: FeatureLayer.SNAPSHOT,
+      outFields: ["*"]
+    });
+
+    //create esri map
+    var map = new Map("map", {
+      center: [-77, 38.9],
+      zoom: 11,
+      basemap: "topo",
+      smartNavigation: false
+    });
+
+    map.on('load', function() {
+      map.disableScrollWheelZoom();
+    });
+
+    featureLayer.setRenderer(rend);
+    map.addLayer(featureLayer);
+    
+    //create a cedar chart
+    var chart = new Cedar({
+      "specification":"../data/templates/bar.json"
+    });
+
+    chart.override = {
+      "height": 400,
+      "marks": [{"properties": {
+        "hover": {"fill": {"value": "#1f4c70"}},
+        "update": {"fill": {"value": "#0e69af"}}}}]};
+
+
+    //create the dataset w/ mappings
+    var dataset = {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "mappings":{
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    };
+
+    //assign to the chart
+    chart.dataset = dataset;
+
+    //show the chart
+    chart.show({
+      elementId: "#chart",
+      renderer: "svg"
+    });
+    
+
+    //CHART EVENTS
+    chart.on('mouseover', onChartHover);
+
+    function onChartHover(d) {
+      
+      //get selected value for attribute in chart marker
+      var selected = d[dataset.mappings.group.field];
+      
+      //create renderer
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+
+      //add symbol selected value
+      renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([14,105,175, 0.5])));
+
+      featureLayer.setRenderer(renderer);
+      featureLayer.refresh();
+
+    } 
+
+    window.chart = chart;
+
+
+    map.on("load", function() {
+      map.graphics.enableMouseEvents();
+      map.graphics.on("mouse-out", onMouseout);
+    });
+
+    function onMouseout(d) {
+      
+      map.graphics.clear();
+
+      chart.clearSelection({});
+
+    }
+
+    //MAP EVENTS
+    featureLayer.on('mouse-over', function(d) {
+
+      var highlightSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 11,
+        new SimpleLineSymbol(SimpleLineSymbol.STYLE_SOLID,
+        new Color([255,255,255]), 1.5),
+        new Color([14,105,175,0.8]));
+
+      var highlightGraphic = new Graphic(d.graphic.geometry,highlightSymbol);
+      highlightGraphic.attributes = d.graphic.attributes;
+      map.graphics.add(highlightGraphic);
+
+
+      var val = d.graphic.attributes["ZIP_CODE"];
+      chart.select({key: "ZIP_CODE", value: val});
+
+    });
+
+
+  });
+
+</script>
+```

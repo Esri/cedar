@@ -109,8 +109,7 @@ layout: example.hbs
     function onMouseout(d) {
       
       map.graphics.clear();
-
-      chart.update();
+      chart.clearSelection({});
 
     }
 
@@ -234,7 +233,8 @@ layout: example.hbs
       
       map.graphics.clear();
 
-      chart.update();
+      var val = d.graphic.attributes["ZIP_CODE"];
+      chart.clearSelection({});
 
     }
 
