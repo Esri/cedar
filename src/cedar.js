@@ -279,7 +279,6 @@ Cedar.prototype.update = function(){
   }
 };
 
-
 /**
  * Render a fully cooked spec
  */

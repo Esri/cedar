@@ -1,0 +1,137 @@
+---
+title: Bar Chart
+layout: example.hbs
+---
+
+
+<h1>Responsive Bar Chart</h1>
+
+<div id="chart"></div>
+
+
+
+{{#markdown}}
+```html
+{{>example-code-header}}
+  function drawChart() {
+    //create a cedar chart - passing a url to the spec
+    var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+
+    //create the dataset w/ mappings
+    var dataset = {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "mappings":{
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    };
+
+    //assign to the chart
+    chart.dataset = dataset;
+
+    var el = document.getElementById("chart");
+    var width = el.offsetWidth;
+    var height = el.offsetHeight;
+
+    chart.override = {
+      "height": height,
+      "width": width,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#3ba3d0"}},
+          "update": {"fill": {"value": "#7de6ff"}}
+        }
+      }]
+    };
+
+    //show the chart
+    chart.show({
+      elementId: "#chart"
+    });
+
+    window.chart = chart;
+  };
+
+
+  drawChart();
+
+  window.onresize = updateChart;
+
+  function updateChart() {
+    var el = document.getElementById("chart");
+    var width = el.offsetWidth;
+    
+    chart.override = {
+      "width": width,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#3ba3d0"}},
+          "update": {"fill": {"value": "#7de6ff"}}
+        }
+      }]
+    }
+
+    chart.update();
+  }
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+<script>
+  function drawChart() {
+    //create a cedar chart - passing a url to the spec
+    var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+
+    //create the dataset w/ mappings
+    var dataset = {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "mappings":{
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    };
+
+    //assign to the chart
+    chart.dataset = dataset;
+
+    var el = document.getElementById("chart");
+    var width = el.offsetWidth;
+    var height = el.offsetHeight;
+
+    chart.override = {
+      "height": height,
+      "width": width,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#3ba3d0"}},
+          "update": {"fill": {"value": "#7de6ff"}}
+        }
+      }]
+    };
+
+    //show the chart
+    chart.show({
+      elementId: "#chart"
+    });
+
+    window.chart = chart;
+  };
+
+
+  drawChart();
+
+  window.onresize = updateChart;
+
+  function updateChart() {
+    var el = document.getElementById("chart");
+    var width = el.offsetWidth;
+    
+    chart.override = {
+      "width": width,
+      "marks": [{"properties": {
+          "hover": {"fill": {"value": "#3ba3d0"}},
+          "update": {"fill": {"value": "#7de6ff"}}
+        }
+      }]
+    }
+
+    chart.update();
+  }
+</script>
