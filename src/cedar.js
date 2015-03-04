@@ -329,6 +329,28 @@ Cedar.prototype.select = function( opt ) {
 
 
 /**
+ * highlight marker based on attribute value
+ */
+Cedar.prototype.clearSelection = function( opt ) {
+  var self = this;
+  var view = this._view;
+  var items = view.model().scene().items[0].items[0].items;
+
+  if ( opt && opt.key ) {
+    items.forEach(function(item) {
+      if ( item.datum.data.attributes[opt.key] === opt.value ) {
+        self._view.update({props:"update", items:item});
+      }
+    });
+  } else {
+    //clear all 
+    self._view.update();
+  }
+
+};
+
+
+/**
  * Attach the generic proxy handlers to the chart view
  */
 Cedar.prototype._attach = function(view){
