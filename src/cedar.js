@@ -220,6 +220,10 @@ Cedar.prototype.show = function(options){
 Cedar.prototype.update = function(){
   var self = this;
   
+  if ( this._view ) { 
+    this.emit('update-start');
+  }
+
   if(this._pendingXhr){
     
     this._addToMethodQueue('update');
@@ -267,6 +271,7 @@ Cedar.prototype.update = function(){
           console.dir(spec);
           //send to vega
           self._renderSpec(spec);
+
         };
 
         //fetch the data from the service
@@ -301,6 +306,10 @@ Cedar.prototype._renderSpec = function(spec){
 
       //attach event proxies
       self._attach(self._view);
+
+      if ( self._view ) { 
+        self.emit('update-end');
+      }
 
     });
   }
@@ -350,14 +359,23 @@ Cedar.prototype.clearSelection = function( opt ) {
 };
 
 
+// trigger callback 
+Cedar.prototype.emit = function(eventName) {
+  if (this._view._handler._handlers[ eventName ]){
+    this._view._handler._handlers[ eventName ][0].handler();
+  }
+};
+
 /**
  * Attach the generic proxy handlers to the chart view
  */
 Cedar.prototype._attach = function(view){
-
+  
   view.on('mouseover', this._handler('mouseover'));
   view.on('mouseout', this._handler('mouseout'));
   view.on('click', this._handler("click"));
+  view.on('update-start', this._handler('update-start'));
+  view.on('update-end', this._handler('update-end'));
   
 };
 
@@ -369,6 +387,8 @@ Cedar.prototype._remove = function(view){
   view.off('mouseover');
   view.off('mouseout');
   view.off('click');
+  view.off('update-start');
+  view.off('update-end');
   
 };
 
@@ -463,12 +483,17 @@ Cedar._defaultQuery = function(){
  */
 Cedar.prototype._handler = function(evtName) {
   var self = this;
+  
   //return a handler function w/ the events hash closed over
   var handler = function(evt, item){
     self._events.forEach( function(registeredHandler){
       if(registeredHandler.type === evtName){
         //invoke the callback with the data
-        registeredHandler.callback(item.datum.data.attributes);
+        if ( item ) {
+          registeredHandler.callback(item.datum.data.attributes);
+        } else {
+          registeredHandler.callback();
+        }
       }
     });
   };
@@ -642,7 +667,6 @@ Cedar._applyDefaultsToMappings = function(mappings, inputs){
  * @return {string}          string with values replaced
  */
 Cedar._supplant = function( tmpl, params ){
-  console.log('Mappings: ', params);
   return tmpl.replace(/{([^{}]*)}/g,
     function (a, b) {
       var r = Cedar._getTokenValue(params, b);
