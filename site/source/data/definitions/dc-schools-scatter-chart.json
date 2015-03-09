@@ -72,7 +72,8 @@
           "scale": "y",
           "offset": 5,
           "ticks": 5,
-          "title": "{y.label}"
+          "title": "{y.label}",
+          "titleOffset": 60
         }
       ],
       "legends": [

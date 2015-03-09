@@ -4,19 +4,21 @@
     {"name": "group", "type": ["string"], "required": false}
   ],
   "template":{
-    "height": 300,
-    "width": 850,    
-    "padding": {
-      "bottom": 20,
-      "left": 10,
-      "right": 10,
-      "top": 10
-    },
+    "height": 325,
+    "width": 850,
     "axes": [
       {
         "type": "x",
         "scale": "x",
-        "title": "X-Axis"
+        "titleOffset": 45,
+        "title": "{group.label}",
+        "properties": {
+          "labels": {
+            "angle": {"value": 50},
+            "align": {"value": "left"},
+            "baseline": {"value": "middle"}
+          }
+        }
       }
     ],
     "data": [
@@ -36,10 +38,10 @@
             "y2": {"scale": "y", "value": 0 }
           },
           "hover": {
-            "fill": {"value": "green"}
+            "fill": {"value": "#1c5d87"}
           },
           "update": {
-            "fill": {"value": "#ccc"}
+            "fill": {"value": "#256e9d"}
           }
         },
         "type": "rect"

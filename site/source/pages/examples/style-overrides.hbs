@@ -1,0 +1,95 @@
+---
+layout: example.hbs
+---
+
+<div class="row">
+  <div class="col-lg-8" >
+    <h3>Bar Chart Overrides</h3>
+    <span>Common bar chart style overrides.</span>
+    
+    <h5>Override default width (850px) and height (325px)</h5>
+    {{#markdown}}
+      chart.override = {
+        "height": 200,
+        "width": 850
+      };
+    {{/markdown}}
+    
+    <br />
+    <h5>Override default x-label title placement (i.e. to account for long labels). Default 40px.</h5>
+    {{#markdown}}
+      chart.override = {
+        "axes": [
+          {
+            "titleOffset": 100
+          }
+        ]
+      };
+    {{/markdown}}
+
+    <br />
+    <h5>Override default default chart color (#256e9d).</h5>
+    <span>The following sets the main color (update) to light green, and the hover style to dark green.</span>
+    {{#markdown}}
+      chart.override = {
+        "marks": [
+          {"properties": 
+            {
+              "hover": {"fill": {"value": "#17a086"}},
+              "update": {"fill": {"value": "#7fcdbb"}}
+            }
+          }
+        ]
+      };
+    {{/markdown}}
+
+    <br />
+    <h5>For for further chart defaults, inspect the template. Modify these defaults in chart.override.</h5>
+    {{#markdown}}
+      var tmpl = chart.specification.template;
+    {{/markdown}}
+
+    <div id="chart-bar"></div>
+  </div>
+</div>
+
+<script>
+
+  //create a cedar chart, passing a url to a spec
+  var barChart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://services.arcgis.com/pmcEyn9tLWCoX7Dm/arcgis/rest/services/CA_Hospitals/FeatureServer/0",
+    "mappings":{
+      "group": { "field": "Hospital_Ownership", "label": "Hospital Owndership" },
+      "count": { "field": "Number_of_Patients" }
+    }
+  };
+
+  //assign to the chart
+  barChart.dataset = dataset;
+
+  //show the chart
+  barChart.show({
+    elementId: "#chart-bar"
+  });
+
+  barChart.override = {
+    "height": 200,
+    "width": 850,
+    "marks": [
+      {"properties": 
+        {
+          "hover": {"fill": {"value": "#17a086"}},
+          "update": {"fill": {"value": "#7fcdbb"}}
+        }
+      }
+    ],
+    "axes": [
+      {
+        "titleOffset": 100
+      }
+    ]
+  };
+
+</script>
