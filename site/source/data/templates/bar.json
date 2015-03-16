@@ -1,7 +1,7 @@
 {
   "inputs": [
-    { "name": "count", "type": [ "numeric", "string" ], "required": true },
-    { "name": "group", "type": [ "string" ], "required": false }
+    { "name": "count", "type": [ "numeric", "string" ], "required": false },
+    { "name": "group", "type": [ "string" ], "required": true }
   ],
   "query": {
     "groupByFieldsForStatistics": "{group.field}",
