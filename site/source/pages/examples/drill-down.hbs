@@ -31,12 +31,20 @@ layout: example.hbs
   function facetChart(data){
     var selected = data[dataset.mappings.group.field];
 
-    var where = dataset.mappings.group.field + "=" + selected;
+    if(chart.dataset.mappings.group.field == "ZIP_CODE") {
+      var where = dataset.mappings.group.field + " = " + selected;
+
+      chart.dataset.query = {"where": where }
+
+      chart.dataset.mappings.group.field = "FACUSE";
+    } else { 
+      var where = dataset.mappings.group.field + " = '" + selected + "'";
+
+      chart.dataset.query = {"where": where }
+
+      chart.dataset.mappings.group.field = "ZIP_CODE";    
+    }
     document.getElementById('filter').innerHTML = where;
-
-    chart.dataset.query = {"where": where }
-
-    chart.dataset.mappings.group.field = "FACUSE";
     chart.update()
   }
 
