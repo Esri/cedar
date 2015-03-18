@@ -4,8 +4,8 @@
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "query": {"orderByFields": "TOTAL_STUD_SUM"}, 
     "mappings":{
+      "sort": "TOTAL_STUD_SUM DESC",
       "group": {"field":"ZIP_CODE","label":"ZIP Code"},
       "count": {"field":"TOTAL_STUD","label":"Total Students"}
     }
