@@ -88,13 +88,7 @@ var Cedar = function Cedar(options){
 
   //allow a dataset to be passed in...
   if(opts.dataset && typeof opts.dataset === 'object'){
-    var defaultQuery = Cedar._defaultQuery();
-
-    if(!opts.dataset.query){
-      opts.dataset.query = defaultQuery;
-    }else{
-      opts.dataset.query = _.defaults(opts.dataset.query, defaultQuery);
-    }
+    opts.dataset.query = Cedar._mixin({}, Cedar._defaultQuery(), opts.dataset.query);
     //assign it
     this._definition.dataset = opts.dataset;
   }
@@ -239,6 +233,12 @@ Cedar.prototype.update = function(){
       //ensure we have required inputs or defaults 
       var compiledMappings = Cedar._applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs); //Cedar._compileMappings(this._definition.dataset, this._definition.specification.inputs);
 
+      var queryFromSpec = Cedar._mixin({}, this._definition.specification.query, this._definition.dataset.query);
+      queryFromSpec = JSON.parse(Cedar._supplant(JSON.stringify(queryFromSpec), compiledMappings));
+
+      //allow binding to query properties
+      compiledMappings.query = queryFromSpec;
+
       //compile the template + mappings --> vega spec
       var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
 
@@ -261,7 +261,7 @@ Cedar.prototype.update = function(){
       }else{
       
         //we need to fetch the data so
-        var url = Cedar._createFeatureServiceRequest(this._definition.dataset);
+        var url = Cedar._createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
       
         //create a callback closure to carry the spec
         var cb = function(err,data){
@@ -438,9 +438,9 @@ Cedar._validateData = function(data, mappings){
  */
 Cedar._getMappingFieldName = function(mappingName, fieldName){
   var name = fieldName;
-  if(mappingName.toLowerCase() === 'count'){
-    name = fieldName + '_SUM';
-  }
+  //if(mappingName.toLowerCase() === 'count'){
+  //  name = fieldName + '_SUM';
+  //}
   return name;
 };
 
@@ -554,24 +554,22 @@ Cedar.getJson = function( url, callback ){
 };
 
 
-
+Cedar._mixin = function(source) {
+    for (var i = 1; i < arguments.length; i++) {
+        d3.entries(arguments[i]).forEach(function(p) {
+            source[p.key] = p.value;
+        });
+    }
+    return source;
+};
 
 /**
  * Given a dataset hash, create the feature service
  * query string
  */
+Cedar._createFeatureServiceRequest = function( dataset, queryFromSpec ) {
+  var mergedQuery = Cedar._mixin({}, Cedar._defaultQuery(), queryFromSpec);
 
-Cedar._createFeatureServiceRequest = function( dataset ){
-  var mergedQuery;
-  //ensure that we have a query
-  if(dataset.query){
-    mergedQuery = _.clone(dataset.query);
-    //ensure we have all needed properties on the query
-    //TODO: use a microlib instead of underscore
-    _.defaults(mergedQuery, Cedar._defaultQuery());
-  }else{
-    mergedQuery = Cedar._defaultQuery();
-  }
   //Handle bbox
   if(mergedQuery.bbox){
     //make sure a geometry was not also passed in
@@ -589,10 +587,10 @@ Cedar._createFeatureServiceRequest = function( dataset ){
     //set the spatial ref as geographic
     mergedQuery.inSR = '4326';
   }
-  if(dataset.mappings.group) {
+  if(!mergedQuery.groupByFieldsForStatistics && dataset.mappings.group) {
       mergedQuery.groupByFieldsForStatistics = dataset.mappings.group.field;
   }
-  if(dataset.mappings.count) {
+  if(!mergedQuery.outStatistics && dataset.mappings.count) {
     mergedQuery.orderByFields = dataset.mappings.count.field + "_SUM";
     mergedQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
   }
@@ -731,7 +729,11 @@ Cedar._serializeQueryParams = function(params) {
   var str = [];
   for(var p in params){
     if (params.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(params[p]));
+      var val = params[p];
+      if (typeof val !== "string") {
+          val = JSON.stringify(val);
+      }
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(val));
     }
   }
   var queryString = str.join("&");
