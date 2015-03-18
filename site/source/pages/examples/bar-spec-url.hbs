@@ -3,55 +3,27 @@ title: Bar Chart
 layout: example.hbs
 ---
 
+<h1>Bar Chart</h1>
 
-<h1>Bar Chart: Specification loaded from Url</h1>
-
-<div id="chart"></div>
-
-
+<h3>Specification and Data from URL</h3>
+<div id="bar-url"></div>
 
 {{#markdown}}
-```html
-{{>example-code-header}}
-  //create a cedar chart, passing a url to a spec
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
-  //create the dataset w/ mappings
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
-    }
-  };
-
-  //assign to the chart
-  chart.dataset = dataset;
-
-  //show the chart
-  chart.show({
-    elementId: "#chart"
-  });
-{{>example-code-footer}}
+```javascript
+{{>example-bar-url}}
 ```
 {{/markdown}}
 
-<script>
-  //create a cedar chart - passing a url to the spec
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
-  //create the dataset w/ mappings
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
-    }
-  };
+{{>example-bar-url}}
 
-  //assign to the chart
-  chart.dataset = dataset;
+<h3>Inline Data</h3>
 
-  //show the chart
-  chart.show({
-    elementId: "#chart"
-  });
-</script>
+<div id="bar-data"></div>
+
+{{#markdown}}
+```javascript
+{{>example-bar-data}}
+```
+{{/markdown}}
+
+{{>example-bar-data}}

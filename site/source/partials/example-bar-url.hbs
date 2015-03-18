@@ -1,0 +1,21 @@
+<script>
+  //create a cedar chart - passing a url to the spec
+  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {"orderByFields": "TOTAL_STUD_SUM"}, 
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#bar-url"
+  });
+</script>
