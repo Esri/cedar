@@ -1,0 +1,113 @@
+{
+  "inputs": [
+    {"name":"x","type":["numeric"], "required":true},
+    {"name":"y","type":["numeric"], "required":true},
+    {"name":"size","type":["numeric"], "required":true}
+  ],
+  "template":{
+    "width": 650,
+    "height": 500,
+    "data": [
+      {
+        "name": "table",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "nice": true,
+        "range": "width",
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{x.field}"
+        }
+      },
+      {
+        "name": "y",
+        "nice": true,
+        "range": "height",
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{y.field}"
+        }
+      },
+      {
+        "name": "size",
+        "type": "sqrt",
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{size.field}"
+        },
+        "range": [0,2000]
+      }
+    ],
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "offset": 5,
+        "ticks": 5,
+        "title": "{x.label}"
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "offset": 5,
+        "ticks": 5,
+        "title": "{y.label}",
+        "titleOffset": 50
+      }
+    ],
+    "legends": [
+      {
+        "title": "{size.label}",
+        "offset": 0,
+        "size": "size",
+        "properties": {
+          "symbols": {
+            "strokeWidth": {"value": 1},
+            "fill": { "value": "#256e9d" },
+            "fillOpacity": {"value": 0.2 }
+          }
+        }
+      }
+    ],
+    "marks": [
+      {
+        "type": "symbol",
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "x": {
+              "scale": "x",
+              "field": "data.attributes.{x.field}"
+            },
+            "y": {
+              "scale": "y",
+              "field": "data.attributes.{y.field}"
+            },
+            "strokeWidth": {"value": 1},
+            "fillOpacity": {"value": 0.2 },
+            "size": { 
+              "scale": "size",
+              "field": "data.attributes.{size.field}"
+            }
+          },
+          "update": {
+            "fill": { "value": "#256e9d" },
+            "stroke": {"value": "#256e9d"}
+          },
+          "hover": {
+            "fill": {"value": "#888"},
+            "stroke": {"value": "#1c5d87"}
+          }
+        }
+      }
+    ]
+  }
+}
