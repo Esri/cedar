@@ -4,6 +4,7 @@
     { "name": "group", "type": [ "string" ], "required": true }
   ],
   "query": {
+    "orderByFields": "{count.field}_SUM",
     "groupByFieldsForStatistics": "{group.field}",
     "outStatistics": [{
         "statisticType": "sum",
