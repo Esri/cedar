@@ -1,0 +1,66 @@
+---
+title: Bar Chart
+layout: example.hbs
+---
+
+
+<h1>Drill Down Example</h1>
+
+<a href="#" onclick="resetChart(); return false">Reset Chart</a>&nbsp;<span id="filter"></span>
+
+<div id="chart"></div>
+
+<script>
+
+  var chart = new Cedar({
+    "specification":"{{assets}}data/templates/bar.json"
+  });
+
+
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"},
+      "sort": "TOTAL_STUD_SUM DESC"
+    }
+  };
+
+  chart.dataset = dataset;
+
+  function facetChart(data){
+    var selected = data[dataset.mappings.group.field];
+
+    if(chart.dataset.mappings.group.field == "ZIP_CODE") {
+      var where = dataset.mappings.group.field + " = " + selected;
+
+      chart.dataset.query = {"where": where }
+
+      chart.dataset.mappings.group.field = "FACUSE";
+    } else { 
+      var where = dataset.mappings.group.field + " = '" + selected + "'";
+
+      chart.dataset.query = {"where": where }
+
+      chart.dataset.mappings.group.field = "ZIP_CODE";    
+    }
+    document.getElementById('filter').innerHTML = where;
+    chart.update()
+  }
+
+  function resetChart(){
+    document.getElementById('filter').innerHTML = "no filter";
+
+    chart.dataset.mappings.group.field = "ZIP_CODE";
+    chart.dataset.query = {"where": "1=1" }
+    chart.update()
+  }  
+
+
+  chart.show({
+    elementId: "#chart"
+  });
+
+  chart.on('click', facetChart);
+
+</script>
