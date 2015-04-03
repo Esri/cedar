@@ -267,6 +267,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: [
+          { src: 'bower_components/vega/vega.js', dest: 'site/build/js/vega.js'},
           { src: 'src/cedar.js', dest: 'site/build/js/cedar-core.js'},
           { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
           { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
