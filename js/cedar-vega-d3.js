@@ -18232,13 +18232,7 @@ var Cedar = function Cedar(options){
 
   //allow a dataset to be passed in...
   if(opts.dataset && typeof opts.dataset === 'object'){
-    var defaultQuery = Cedar._defaultQuery();
-
-    if(!opts.dataset.query){
-      opts.dataset.query = defaultQuery;
-    }else{
-      opts.dataset.query = _.defaults(opts.dataset.query, defaultQuery);
-    }
+    opts.dataset.query = Cedar._mixin({}, Cedar._defaultQuery(), opts.dataset.query);
     //assign it
     this._definition.dataset = opts.dataset;
   }
@@ -18364,6 +18358,10 @@ Cedar.prototype.show = function(options){
 Cedar.prototype.update = function(){
   var self = this;
   
+  if ( this._view ) { 
+    this.emit('update-start');
+  }
+
   if(this._pendingXhr){
     
     this._addToMethodQueue('update');
@@ -18378,6 +18376,12 @@ Cedar.prototype.update = function(){
     try{
       //ensure we have required inputs or defaults 
       var compiledMappings = Cedar._applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs); //Cedar._compileMappings(this._definition.dataset, this._definition.specification.inputs);
+
+      var queryFromSpec = Cedar._mixin({}, this._definition.specification.query, this._definition.dataset.query);
+      queryFromSpec = JSON.parse(Cedar._supplant(JSON.stringify(queryFromSpec), compiledMappings));
+
+      //allow binding to query properties
+      compiledMappings.query = queryFromSpec;
 
       //compile the template + mappings --> vega spec
       var spec = JSON.parse(Cedar._supplant(JSON.stringify(this._definition.specification.template), compiledMappings)); 
@@ -18401,7 +18405,7 @@ Cedar.prototype.update = function(){
       }else{
       
         //we need to fetch the data so
-        var url = Cedar._createFeatureServiceRequest(this._definition.dataset);
+        var url = Cedar._createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
       
         //create a callback closure to carry the spec
         var cb = function(err,data){
@@ -18411,6 +18415,7 @@ Cedar.prototype.update = function(){
           console.dir(spec);
           //send to vega
           self._renderSpec(spec);
+
         };
 
         //fetch the data from the service
@@ -18422,7 +18427,6 @@ Cedar.prototype.update = function(){
     }
   }
 };
-
 
 /**
  * Render a fully cooked spec
@@ -18446,6 +18450,10 @@ Cedar.prototype._renderSpec = function(spec){
 
       //attach event proxies
       self._attach(self._view);
+
+      if ( self._view ) { 
+        self.emit('update-end');
+      }
 
     });
   }
@@ -18474,13 +18482,44 @@ Cedar.prototype.select = function( opt ) {
 
 
 /**
+ * highlight marker based on attribute value
+ */
+Cedar.prototype.clearSelection = function( opt ) {
+  var self = this;
+  var view = this._view;
+  var items = view.model().scene().items[0].items[0].items;
+
+  if ( opt && opt.key ) {
+    items.forEach(function(item) {
+      if ( item.datum.data.attributes[opt.key] === opt.value ) {
+        self._view.update({props:"update", items:item});
+      }
+    });
+  } else {
+    //clear all 
+    self._view.update();
+  }
+
+};
+
+
+// trigger callback 
+Cedar.prototype.emit = function(eventName) {
+  if (this._view._handler._handlers[ eventName ]){
+    this._view._handler._handlers[ eventName ][0].handler();
+  }
+};
+
+/**
  * Attach the generic proxy handlers to the chart view
  */
 Cedar.prototype._attach = function(view){
-
+  
   view.on('mouseover', this._handler('mouseover'));
   view.on('mouseout', this._handler('mouseout'));
   view.on('click', this._handler("click"));
+  view.on('update-start', this._handler('update-start'));
+  view.on('update-end', this._handler('update-end'));
   
 };
 
@@ -18492,6 +18531,8 @@ Cedar.prototype._remove = function(view){
   view.off('mouseover');
   view.off('mouseout');
   view.off('click');
+  view.off('update-start');
+  view.off('update-end');
   
 };
 
@@ -18541,9 +18582,9 @@ Cedar._validateData = function(data, mappings){
  */
 Cedar._getMappingFieldName = function(mappingName, fieldName){
   var name = fieldName;
-  if(mappingName.toLowerCase() === 'count'){
-    name = fieldName + '_SUM';
-  }
+  //if(mappingName.toLowerCase() === 'count'){
+  //  name = fieldName + '_SUM';
+  //}
   return name;
 };
 
@@ -18586,12 +18627,17 @@ Cedar._defaultQuery = function(){
  */
 Cedar.prototype._handler = function(evtName) {
   var self = this;
+  
   //return a handler function w/ the events hash closed over
   var handler = function(evt, item){
     self._events.forEach( function(registeredHandler){
       if(registeredHandler.type === evtName){
         //invoke the callback with the data
-        registeredHandler.callback(item.datum.data.attributes);
+        if ( item ) {
+          registeredHandler.callback(item.datum.data.attributes);
+        } else {
+          registeredHandler.callback();
+        }
       }
     });
   };
@@ -18652,24 +18698,22 @@ Cedar.getJson = function( url, callback ){
 };
 
 
-
+Cedar._mixin = function(source) {
+    for (var i = 1; i < arguments.length; i++) {
+        d3.entries(arguments[i]).forEach(function(p) {
+            source[p.key] = p.value;
+        });
+    }
+    return source;
+};
 
 /**
  * Given a dataset hash, create the feature service
  * query string
  */
+Cedar._createFeatureServiceRequest = function( dataset, queryFromSpec ) {
+  var mergedQuery = Cedar._mixin({}, Cedar._defaultQuery(), queryFromSpec);
 
-Cedar._createFeatureServiceRequest = function( dataset ){
-  var mergedQuery;
-  //ensure that we have a query
-  if(dataset.query){
-    mergedQuery = _.clone(dataset.query);
-    //ensure we have all needed properties on the query
-    //TODO: use a microlib instead of underscore
-    _.defaults(mergedQuery, Cedar._defaultQuery());
-  }else{
-    mergedQuery = Cedar._defaultQuery();
-  }
   //Handle bbox
   if(mergedQuery.bbox){
     //make sure a geometry was not also passed in
@@ -18687,10 +18731,10 @@ Cedar._createFeatureServiceRequest = function( dataset ){
     //set the spatial ref as geographic
     mergedQuery.inSR = '4326';
   }
-  if(dataset.mappings.group) {
+  if(!mergedQuery.groupByFieldsForStatistics && dataset.mappings.group) {
       mergedQuery.groupByFieldsForStatistics = dataset.mappings.group.field;
   }
-  if(dataset.mappings.count) {
+  if(!mergedQuery.outStatistics && dataset.mappings.count) {
     mergedQuery.orderByFields = dataset.mappings.count.field + "_SUM";
     mergedQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
   }
@@ -18765,7 +18809,6 @@ Cedar._applyDefaultsToMappings = function(mappings, inputs){
  * @return {string}          string with values replaced
  */
 Cedar._supplant = function( tmpl, params ){
-  console.log('Mappings: ', params);
   return tmpl.replace(/{([^{}]*)}/g,
     function (a, b) {
       var r = Cedar._getTokenValue(params, b);
@@ -18830,7 +18873,11 @@ Cedar._serializeQueryParams = function(params) {
   var str = [];
   for(var p in params){
     if (params.hasOwnProperty(p)) {
-      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(params[p]));
+      var val = params[p];
+      if (typeof val !== "string") {
+          val = JSON.stringify(val);
+      }
+      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(val));
     }
   }
   var queryString = str.join("&");

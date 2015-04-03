@@ -75,9 +75,12 @@
   
 
 <div class="col-lg-10">
-  <h2 id="-select-opt-">.select( opt )</h2>
-<p>Selects chart markers based on &quot;hover&quot; style definition.</p>
-<p><code>chart.select({key:&quot;Attribute Name&quot;, value: &quot;value&quot;});</code></p>
+  <h2 id="-clearselection-opt-">.clearSelection( opt )</h2>
+<p>Clears specified chart marker selection or all selections if no options passed.</p>
+<p>Clear single selection: 
+<code>chart.clearSelection({key:&quot;Attribute Name&quot;, value: &quot;value&quot;});</code></p>
+<p>Clear all selections: 
+<code>chart.clearSelection({});</code></p>
 <h4 id="arguments">Arguments</h4>
 <table>
 <thead>
@@ -92,14 +95,14 @@
 <tr>
 <td><code>key</code></td>
 <td><code>string</code></td>
-<td>yes</td>
+<td>no</td>
 <td>Attribute name of markers rendered in chart.</td>
 </tr>
 <tr>
 <td><code>value</code></td>
 <td><code>string</code></td>
-<td>yes</td>
-<td>Value of attribute for marker to select.</td>
+<td>no</td>
+<td>Value of attribute for marker to unselect.</td>
 </tr>
 </tbody>
 </table>
@@ -204,7 +207,7 @@
 
       map.graphics.clear();
 
-      chart.update();
+      chart.clearSelection({});
 
     }
 
@@ -231,7 +234,7 @@
 
 &lt;/script&gt;</code></pre>
 
-  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/select.hbs">Edit this page on GitHub</a></p>
+  <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/api/clearselection.hbs">Edit this page on GitHub</a></p>
 </div>
 
 <div class="col-lg-2">

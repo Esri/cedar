@@ -26,12 +26,11 @@
   <!-- Cedar -->
 
   <!-- esri Cedar -->
-  <!--  
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="../../../cedar/js/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>-->
-   <script type="text/javascript" src="../../../cedar/js/cedar-vega-d3.min.js"></script>
+  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
+   <!--<script type="text/javascript" src="../../../cedar/js/cedar-vega-d3.min.js"></script>-->
 
 
   <!-- Google Analytics -->
@@ -83,11 +82,15 @@
 <div class="row">
 <div class="col-lg-8" >
   <h3>School size by Students</h3>
+  <small>Click on chart</small>
   <div id="chart"></div>
 </div>
 <div class="col-lg-4" >
-  <h3>School Details <small>Click on chart</small></h3>
-  <div id="details"></div>
+  <h3>School Details</h3>
+  <div id="details" style="height: 100px"></div>
+
+  <h3>History</h3>
+  <div id="history"></div>
 </div>
 </div>
 
@@ -115,17 +118,49 @@
 
 &lt;script&gt;
 
-  //define a handler for chart events 
-  function showItem(data){
+  var selectedItems = {};
+
+  function compileTemplate(data) {
     var tmpl = document.getElementById(&quot;school-detail-template&quot;).innerHTML;
     //this uses underscore&#39;s templating library, but it could use anything
-    compiled = _.template(tmpl);
-    document.getElementById(&#39;details&#39;).innerHTML = compiled(data);
+    return _.template(tmpl)(data); 
   }
 
-  //setup a chart using a json file that is the complete definition
+  function showItem(data){
+    document.getElementById(&#39;details&#39;).innerHTML = compileTemplate(data);
+  }
+
+  function hideItem(data){
+    document.getElementById(&#39;details&#39;).innerHTML = &quot;&quot;;
+  }
+
+  function toggleItem(data){
+    if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
+      selectedItems[data.NAME] = data;
+    } else {
+      selectedItems[data.NAME] = null;
+    }
+
+    document.getElementById(&#39;history&#39;).innerHTML = &quot;&quot;;
+    for(var propertyName in selectedItems) { 
+      if(selectedItems[propertyName] !== null) {
+        chart.select({key: &quot;NAME&quot;, value: propertyName});
+        document.getElementById(&#39;history&#39;).innerHTML += compileTemplate(selectedItems[propertyName]);
+      }
+    }
+  }
+
   var chart = new Cedar({
-    &quot;definition&quot;:&quot;../../../cedar/data/definitions/scatter-events.json&quot;
+    &quot;specification&quot;:&quot;../../../cedar/data/templates/scatter.json&quot;,
+    &quot;dataset&quot;:{
+      &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
+      &quot;query&quot;:{},
+      &quot;mappings&quot;:{
+        &quot;x&quot;: {&quot;field&quot;:&quot;POPULATION_ENROLLED_2008&quot;,&quot;label&quot;:&quot;Enrolment 2008&quot;},
+        &quot;y&quot;: {&quot;field&quot;:&quot;SQUARE_FOOTAGE&quot;,&quot;label&quot;:&quot;Square Footage&quot;},
+        &quot;color&quot;:{&quot;field&quot;:&quot;FACUSE&quot;,&quot;label&quot;:&quot;Facility Type&quot;}
+      }
+    }
   });
 
   //render the chart
@@ -134,8 +169,9 @@
   });
 
   //attach handler (can also be done before .show())
-  chart.on(&#39;click&#39;, showItem);
-
+  chart.on(&#39;mouseover&#39;, showItem);
+  chart.on(&#39;mouseout&#39;, hideItem);
+  chart.on(&#39;click&#39;, toggleItem);
 
 &lt;/script&gt;
 &lt;/body&gt;
@@ -154,18 +190,55 @@
 </script>
 
 <script>
-  //define a handler for chart events 
-  function showItem(data){
+  var selectedItems = {};
+
+  function compileTemplate(data) {
     var tmpl = document.getElementById("school-detail-template").innerHTML;
     //this uses underscore's templating library, but it could use anything
-    compiled = _.template(tmpl);
-    document.getElementById('details').innerHTML = compiled(data);
+    return _.template(tmpl)(data); 
   }
 
-  //setup a chart using a json file that is the complete definition
+  function showItem(data){
+    document.getElementById('details').innerHTML = compileTemplate(data);
+  }
+
+  function hideItem(data){
+    document.getElementById('details').innerHTML = "";
+  }
+  
+  function toggleItem(data){
+    if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
+      selectedItems[data.NAME] = data;
+    } else {
+      selectedItems[data.NAME] = null;
+    }
+
+    document.getElementById('history').innerHTML = "";
+    for(var propertyName in selectedItems) { 
+      if(selectedItems[propertyName] !== null) {
+        chart.select({key: "NAME", value: propertyName});
+        document.getElementById('history').innerHTML += compileTemplate(selectedItems[propertyName]);
+      }
+    }
+  }
+
   var chart = new Cedar({
-    "definition":"../../../cedar/data/definitions/scatter-events.json"
+    "specification":"../../../cedar/data/templates/scatter.json",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "color":{"field":"FACUSE","label":"Facility Type"}
+      }
+    }
   });
+
+  chart.override = {
+    "width": 400,
+    "legends": [{"properties":{"labels": {"fontSize": {"value": 8} }}}]
+  }
 
   //render the chart
   chart.show({
@@ -173,7 +246,9 @@
   });
 
   //attach handler (can also be done before .show())
-  chart.on('click', showItem);
+  chart.on('mouseover', showItem);
+  chart.on('mouseout', hideItem);
+  chart.on('click', toggleItem);
 
 
 </script>
@@ -190,7 +265,9 @@
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/bar-spec-url.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
       <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
       <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
       <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
       <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
@@ -203,8 +280,8 @@
     <ul>
       <li><a href="../../../cedar/examples/bar-spec-url.html">Specification URL</a></li>
       <li><a href="../../../cedar/examples/bar-spec-inlined.html">Inline Specification</a></li>
-      <li><a href="../../../cedar/examples/bar-spec-override.html">Style Overrides</a></li>
       <li><a href="../../../cedar/examples/bar-spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
     </ul>
   </nav>
 
@@ -219,7 +296,8 @@
   <h5>Events</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Infowindows</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
@@ -233,11 +311,12 @@
     </ul>
   </nav>
 
-  <h5>Complex Examples</h5>
+  <h5>Additional Examples</h5>
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
       <li><a href="../../../cedar/examples/inlined-data.html">Pass Data</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
     </ul>
   </nav>
 

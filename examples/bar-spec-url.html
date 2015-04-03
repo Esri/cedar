@@ -26,12 +26,11 @@
   <!-- Cedar -->
 
   <!-- esri Cedar -->
-  <!--  
   <script type="text/javascript" src="http://square.github.io/crossfilter/d3.v3.min.js"></script>
   <script type="text/javascript" src="../../../cedar/js/vega.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
-  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>-->
-   <script type="text/javascript" src="../../../cedar/js/cedar-vega-d3.min.js"></script>
+  <script type="text/javascript" src="../../../cedar/js/cedar-core.js"></script>
+   <!--<script type="text/javascript" src="../../../cedar/js/cedar-vega-d3.min.js"></script>-->
 
 
   <!-- Google Analytics -->
@@ -80,57 +79,32 @@
 <div class="col-lg-10">
   
 
+<h1>Bar Chart</h1>
 
-<h1>Bar Chart: Specification loaded from Url</h1>
+<h3>Specification and Data from URL</h3>
+<div id="bar-url"></div>
 
-<div id="chart"></div>
-
-
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;Bar Chart&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-
-  //create a cedar chart, passing a url to a spec
-  var chart = new Cedar({&quot;specification&quot;:&quot;../../../cedar/data/templates/bar.json&quot;});
-  //create the dataset w/ mappings
-  var dataset = {
-    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-    &quot;mappings&quot;:{
-      &quot;group&quot;: {&quot;field&quot;:&quot;ZIP_CODE&quot;,&quot;label&quot;:&quot;ZIP Code&quot;},
-      &quot;count&quot;: {&quot;field&quot;:&quot;TOTAL_STUD&quot;,&quot;label&quot;:&quot;Total Students&quot;}
+<pre><code class="language-javascript">&lt;script&gt;
+  <span class="comment">//create a cedar chart - passing a url to the spec</span>
+  <span class="keyword">var</span> chart = <span class="keyword">new</span> Cedar({<span class="string">"specification"</span>:<span class="string">"../../../cedar/data/templates/bar.json"</span>});
+  <span class="comment">//create the dataset w/ mappings</span>
+  <span class="keyword">var</span> dataset = {
+    <span class="string">"url"</span>:<span class="string">"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"</span>,
+    <span class="string">"mappings"</span>:{
+      <span class="string">"sort"</span>: <span class="string">"TOTAL_STUD_SUM DESC"</span>,
+      <span class="string">"group"</span>: {<span class="string">"field"</span>:<span class="string">"ZIP_CODE"</span>,<span class="string">"label"</span>:<span class="string">"ZIP Code"</span>},
+      <span class="string">"count"</span>: {<span class="string">"field"</span>:<span class="string">"TOTAL_STUD"</span>,<span class="string">"label"</span>:<span class="string">"Total Students"</span>}
     }
   };
 
-  //assign to the chart
+  <span class="comment">//assign to the chart</span>
   chart.dataset = dataset;
 
-  //show the chart
+  <span class="comment">//show the chart</span>
   chart.show({
-    elementId: &quot;#chart&quot;
+    elementId: <span class="string">"#bar-url"</span>
   });
-
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></code></pre>
 
 
 <script>
@@ -139,6 +113,56 @@
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "sort": "TOTAL_STUD_SUM DESC",
+      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#bar-url"
+  });
+</script>
+
+<h3>Inline Data</h3>
+
+<div id="bar-data"></div>
+
+<pre><code class="language-javascript">&lt;script&gt;
+  <span class="keyword">var</span> features = {<span class="string">"features"</span>:[{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20005</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">327</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20024</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">517</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20017</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">597</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20015</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">707</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20037</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">760</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20018</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">1052</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20012</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">1184</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20007</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">1584</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20008</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">1625</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20003</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">1869</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20009</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">1945</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20001</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">2164</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20010</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">2282</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20019</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">3278</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20011</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">3817</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20020</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">3901</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20032</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">4360</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20016</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">4681</span>}},{<span class="string">"attributes"</span>:{<span class="string">"ZIP_CODE"</span>:<span class="number">20002</span>,<span class="string">"TOTAL_STUD_SUM"</span>:<span class="number">5590</span>}}]};
+
+  <span class="keyword">var</span> chart = <span class="keyword">new</span> Cedar({<span class="string">"specification"</span>:<span class="string">"../../../cedar/data/templates/bar.json"</span>});
+
+  <span class="keyword">var</span> dataset = {
+    <span class="string">"data"</span>: features,
+    <span class="string">"mappings"</span>:{
+      <span class="string">"group"</span>: {<span class="string">"field"</span>:<span class="string">"ZIP_CODE"</span>,<span class="string">"label"</span>:<span class="string">"ZIP Code"</span>},
+      <span class="string">"count"</span>: {<span class="string">"field"</span>:<span class="string">"TOTAL_STUD"</span>,<span class="string">"label"</span>:<span class="string">"Total Students"</span>}
+    }
+  };
+
+  <span class="comment">//assign to the chart</span>
+  chart.dataset = dataset;
+
+  <span class="comment">//show the chart</span>
+  chart.show({
+    elementId: <span class="string">"#bar-data"</span>
+  });
+<span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></span></code></pre>
+
+
+<script>
+  var features = {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}},{"attributes":{"ZIP_CODE":20024,"TOTAL_STUD_SUM":517}},{"attributes":{"ZIP_CODE":20017,"TOTAL_STUD_SUM":597}},{"attributes":{"ZIP_CODE":20015,"TOTAL_STUD_SUM":707}},{"attributes":{"ZIP_CODE":20037,"TOTAL_STUD_SUM":760}},{"attributes":{"ZIP_CODE":20018,"TOTAL_STUD_SUM":1052}},{"attributes":{"ZIP_CODE":20012,"TOTAL_STUD_SUM":1184}},{"attributes":{"ZIP_CODE":20007,"TOTAL_STUD_SUM":1584}},{"attributes":{"ZIP_CODE":20008,"TOTAL_STUD_SUM":1625}},{"attributes":{"ZIP_CODE":20003,"TOTAL_STUD_SUM":1869}},{"attributes":{"ZIP_CODE":20009,"TOTAL_STUD_SUM":1945}},{"attributes":{"ZIP_CODE":20001,"TOTAL_STUD_SUM":2164}},{"attributes":{"ZIP_CODE":20010,"TOTAL_STUD_SUM":2282}},{"attributes":{"ZIP_CODE":20019,"TOTAL_STUD_SUM":3278}},{"attributes":{"ZIP_CODE":20011,"TOTAL_STUD_SUM":3817}},{"attributes":{"ZIP_CODE":20020,"TOTAL_STUD_SUM":3901}},{"attributes":{"ZIP_CODE":20032,"TOTAL_STUD_SUM":4360}},{"attributes":{"ZIP_CODE":20016,"TOTAL_STUD_SUM":4681}},{"attributes":{"ZIP_CODE":20002,"TOTAL_STUD_SUM":5590}}]};
+
+  var chart = new Cedar({"specification":"../../../cedar/data/templates/bar.json"});
+  
+  var dataset = {
+    "data": features,
     "mappings":{
       "group": {"field":"ZIP_CODE","label":"ZIP Code"},
       "count": {"field":"TOTAL_STUD","label":"Total Students"}
@@ -150,7 +174,7 @@
 
   //show the chart
   chart.show({
-    elementId: "#chart"
+    elementId: "#bar-data"
   });
 </script>
   <div class="wrap">
@@ -166,7 +190,9 @@
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/bar-spec-url.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
       <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
       <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
       <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
       <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
@@ -179,8 +205,8 @@
     <ul>
       <li><a href="../../../cedar/examples/bar-spec-url.html">Specification URL</a></li>
       <li><a href="../../../cedar/examples/bar-spec-inlined.html">Inline Specification</a></li>
-      <li><a href="../../../cedar/examples/bar-spec-override.html">Style Overrides</a></li>
       <li><a href="../../../cedar/examples/bar-spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
     </ul>
   </nav>
 
@@ -195,7 +221,8 @@
   <h5>Events</h5>
   <nav>
     <ul>
-      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Infowindows</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
     </ul>
   </nav>
   <h5>Map Integration</h5>
@@ -209,11 +236,12 @@
     </ul>
   </nav>
 
-  <h5>Complex Examples</h5>
+  <h5>Additional Examples</h5>
   <nav>
     <ul>
       <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
       <li><a href="../../../cedar/examples/inlined-data.html">Pass Data</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
     </ul>
   </nav>
 

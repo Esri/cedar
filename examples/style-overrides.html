@@ -79,102 +79,95 @@
 <div class="col-lg-10">
   
 
+<div class="row">
+  <div class="col-lg-8" >
+    <h3>Bar Chart Overrides</h3>
+    <span>Common bar chart style overrides.</span>
+    
+    <h5>Override default width (850px) and height (325px)</h5>
+    <pre><code>  chart.override = {
+    &quot;height&quot;: 200,
+    &quot;width&quot;: 850
+  };</code></pre>
 
-<h1>Pie Chart: Override styles in the Specification</h1>
-
-<p>Demonstrate how to override the specification such as changing colors or adding legend or marks.</p>
-
-<div id="chart"></div>
-<cite>DC Schools that are Capital Gains?</cite>
-
-
-
-<pre><code class="language-html">&lt;html&gt;
-&lt;head&gt;
-  &lt;meta charset=utf-8 /&gt;
-  &lt;title&gt;&lt;/title&gt;
-  &lt;meta name=&#39;viewport&#39; content=&#39;initial-scale=1,maximum-scale=1,user-scalable=no&#39; /&gt;
-
-  &lt;!-- Load D3 --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://square.github.io/crossfilter/d3.v3.min.js&quot;&gt;&lt;/script&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;http://trifacta.github.io/vega/vega.js&quot;&gt;&lt;/script&gt;
-
-  &lt;!-- Load Cedar --&gt;
-  &lt;script type=&quot;text/javascript&quot; src=&quot;cedar.js&quot;&gt;&lt;/script&gt;
-
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;div class=&quot;row&quot;&gt;
-  &lt;div class=&quot;col-lg-12&quot; id=&quot;chart&quot;&gt;&lt;/div&gt;
-&lt;/div&gt;
-
-&lt;script&gt;
-
-  //create a cedar chart, passing a url to a spec
-  var chart = new Cedar({&quot;specification&quot;:&quot;../data/templates/pie.json&quot;});
-  //create the dataset w/ mappings
-  var dataset = {
-    &quot;url&quot;:&quot;http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5&quot;,
-    &quot;mappings&quot;:{
-      &quot;group&quot;: {&quot;field&quot;:&quot;CAPITALGAINS&quot;,&quot;label&quot;:&quot;Capital Gains&quot;},
-      &quot;count&quot;: {&quot;field&quot;:&quot;CAPACITY&quot;,&quot;label&quot;:&quot;Student Capacity&quot;}
-    }
-  };
-
-  chart.override = {
-    &quot;marks&quot;: [{&quot;properties&quot;: {
-      &quot;hover&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;orange&quot;}},
-      &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#c15000&quot;}}}}]};
+    
+    <br />
+    <h5>Override default x-label title placement (i.e. to account for long labels). Default 40px.</h5>
+    <pre><code>  chart.override = {
+    &quot;axes&quot;: [
+      {
+        &quot;titleOffset&quot;: 100
+      }
+    ]
+  };</code></pre>
 
 
-  //assign to the chart
-  chart.dataset = dataset;
+    <br />
+    <h5>Override default default chart color (#256e9d).</h5>
+    <span>The following sets the main color (update) to light green, and the hover style to dark green.</span>
+    <pre><code>  chart.override = {
+    &quot;marks&quot;: [
+      {&quot;properties&quot;: 
+        {
+          &quot;hover&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#17a086&quot;}},
+          &quot;update&quot;: {&quot;fill&quot;: {&quot;value&quot;: &quot;#7fcdbb&quot;}}
+        }
+      }
+    ]
+  };</code></pre>
 
-  //show the chart
-  chart.show({
-    elementId: &quot;#chart&quot;
-  });
 
-&lt;/script&gt;
-&lt;/body&gt;
-&lt;/html&gt;</code></pre>
+    <br />
+    <h5>For for further chart defaults, inspect the template. Modify these defaults in chart.override.</h5>
+    <pre><code>  var tmpl = chart.specification.template;</code></pre>
 
 
+    <div id="chart-bar"></div>
+  </div>
+</div>
 
 <script>
-  //create a cedar chart - passing a url to the spec
-  var chart = new Cedar({"specification":"../../../cedar/data/templates/pie.json"});
+
+  //create a cedar chart, passing a url to a spec
+  var barChart = new Cedar({"specification":"../../../cedar/data/templates/bar.json"});
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"http://services.arcgis.com/pmcEyn9tLWCoX7Dm/arcgis/rest/services/CA_Hospitals/FeatureServer/0",
     "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+      "group": { "field": "Hospital_Ownership", "label": "Hospital Owndership" },
+      "count": { "field": "Number_of_Patients" }
     }
   };
 
-
-  chart.override = {
-    "marks": [
-      {"properties": {
-        "hover": {"fill": {"value": "orange"}},
-        "update": {"fill": {"value": "#c15000"}}}},
-      {"properties": {
-        "enter": {"fill": {"value": "white"}}}}
-    ]};
-
-
   //assign to the chart
-  chart.dataset = dataset;
+  barChart.dataset = dataset;
 
   //show the chart
-  chart.show({
-    elementId: "#chart"
+  barChart.show({
+    elementId: "#chart-bar"
   });
+
+  barChart.override = {
+    "height": 200,
+    "width": 850,
+    "marks": [
+      {"properties": 
+        {
+          "hover": {"fill": {"value": "#17a086"}},
+          "update": {"fill": {"value": "#7fcdbb"}}
+        }
+      }
+    ],
+    "axes": [
+      {
+        "titleOffset": 100
+      }
+    ]
+  };
+
 </script>
   <div class="wrap">
-    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/pie-spec-override.hbs">Edit this sample on GitHub</a></p>
+    <p><a href="http://github.com/esridc/cedar/edit/master/site/source/pages/examples/style-overrides.hbs">Edit this sample on GitHub</a></p>
   </div>
 </div>
 

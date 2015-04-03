@@ -4,7 +4,7 @@
     { "name": "group", "type": [ "string" ], "required": true }
   ],
   "query": {
-    "orderByFields": "{count.field}_SUM",
+    "orderByFields": "{count.field}_SUM DESC",
     "groupByFieldsForStatistics": "{group.field}",
     "outStatistics": [{
         "statisticType": "sum",
@@ -20,15 +20,26 @@
         "type": "x",
         "scale": "x",
         "titleOffset": 45,
-        "title": "{group.label}",
+        "title": "{count.label}",
         "properties": {
           "labels": {
-            "angle": {"value": 50},
-            "align": {"value": "left"},
+            "angle": {"value": 0},
             "baseline": {"value": "middle"}
           }
         }
-      }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "titleOffset": 25,
+        "title": "{group.label}",
+        "properties": {
+          "labels": {
+            "angle": {"value": 0},
+            "baseline": {"value": "middle"}
+          }
+        }
+      }      
     ],
     "data": [
       {
@@ -41,10 +52,10 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "width": {"band": true, "offset": -1, "scale": "x"},
-            "x": {"field": "data.attributes.{group.field}", "scale": "x"},
-            "y": {"field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}", "scale": "y"},
-            "y2": {"scale": "y", "value": 0 }
+            "height": {"band": true, "offset": -1, "scale": "y"},
+            "y": {"scale": "y", "field": "data.attributes.{group.field}"},
+            "x2": {"scale": "x", "field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}"},
+            "x": {"scale": "x", "value": 0 }
           },
           "hover": {
             "fill": {"value": "#1c5d87"}
@@ -62,8 +73,8 @@
           "data": "table",
           "field": "data.attributes.{group.field}"
         },
-        "name": "x",
-        "range": "width",
+        "name": "y",
+        "range": "height",
         "type": "ordinal"
       },
       {
@@ -71,9 +82,9 @@
           "data": "table",
           "field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}"
         },
-        "name": "y",
+        "name": "x",
         "nice": true,
-        "range": "height"
+        "range": "width"
       }
     ]
   }
