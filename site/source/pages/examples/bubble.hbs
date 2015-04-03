@@ -1,0 +1,57 @@
+---
+layout: example.hbs
+---
+
+
+<h1>Bubble Chart</h1>
+  
+<div id="chart"></div>
+
+
+{{#markdown}}
+```html
+{{>example-code-header}}
+  var chart = new Cedar({
+    "specification":"{{assets}}data/templates/bubble.json",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrollment 2008"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "size":{"field":"TOTAL_STUD","label":"Number Students"}
+      }
+    }
+  });
+
+  chart.show({
+    elementId: "#chart",
+  });
+
+ 
+{{>example-code-footer}}
+```
+{{/markdown}}
+
+
+
+<script>
+  var chart = new Cedar({
+    "specification":"{{assets}}data/templates/bubble.json",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "y": {"field":"CAPACITY","label":"Capacity"},
+        "size":{"field":"TOTAL_STUD","label":"Number of Students"}
+      }
+    }
+  });
+
+  chart.show({
+    elementId: "#chart",
+  });
+
+
+</script>
