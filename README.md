@@ -59,7 +59,7 @@ and it is simple to add more charts re-using the same `dataset` definition:
 
 ## Demos
 
-Here is a [simple user interface](http://dbouwman.github.com/cypress) and [a few demos](http://esridc.github.io/cedar/) showing the basic concepts of Cedar.
+Here is a [simple user interface](http://dbouwman.github.com/cypress) and [a few demos](http://esri.github.io/cedar/) showing the basic concepts of Cedar.
 
 ### Development Instructions
 
@@ -70,7 +70,7 @@ Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 1. Install additional dependencies with `bower install` (if you encounter an error connecting to github take a look at [this thread](https://github.com/angular/angular-phonecat/issues/141) for a possible fix).
 1. Run `grunt docs` from the command line. This will start the web server locally at [http://localhost:8081](http://localhost:8081) and start watching the source files and running linting and testing commands.
 1. Push your changes using `grunt docs:deploy` which pushes to your `origin/gh-pages`
-1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esridc/cedar/master`
+1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esri/cedar/master`
 
 ### Dependencies
 

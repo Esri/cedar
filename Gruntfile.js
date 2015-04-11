@@ -44,7 +44,7 @@ module.exports = function(grunt) {
     'src/cedar.js',
   ];
 
-  
+
 
   var customLaunchers = {
     sl_chrome: {
@@ -298,7 +298,7 @@ module.exports = function(grunt) {
       options: {
 
         base: 'site/build'
-        //,repo: 'git@github.com:esridc/cedar.git'
+        //,repo: 'git@github.com:esri/cedar.git'
 
       },
       src: ['**']
