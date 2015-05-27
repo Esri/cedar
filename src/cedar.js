@@ -5,7 +5,22 @@
  * that leverages vega + d3 internally.
  */
 
-(function(window){
+(function (factory) {
+  'use strict';
+  //define an AMD module that relies on 'vega'
+  if (typeof define === 'function' && define.amd) {
+    define(['vega', 'd3'], function (vg, d3) {
+      return factory(vg, d3);
+    });
+  //define a common js module that relies on 'vega'
+  } else if (typeof module === 'object' && typeof module.exports === 'object') {
+    module.exports = factory(require('vega'), require('d3'));
+  }
+
+  if (typeof window !== 'undefined' && window.vg && window.d3) {
+    window.Cedar = factory(window.vg, window.d3);
+  }
+} (function (vg, d3) {
   'use strict';
 
 /**
@@ -740,6 +755,5 @@ Cedar._serializeQueryParams = function(params) {
   return queryString;
 };
 
-window.Cedar = Cedar;
-
-})(window);
+  return Cedar;
+}));
