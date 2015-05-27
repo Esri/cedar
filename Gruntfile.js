@@ -8,34 +8,14 @@ module.exports = function(grunt) {
                   '*   Apache License' +
                   '*/\n';
 
-  var umdHeader = '(function (factory) {\n' +
-                  '  //define an AMD module that relies on \'leaflet\'\n' +
-                  '  if (typeof define === \'function\' && define.amd) {\n' +
-                  '    define([\'leaflet\'], function (L) {\n' +
-                  '      return factory(L);\n' +
-                  '    });\n' +
-                  '  //define a common js module that relies on \'leaflet\'\n' +
-                  '  } else if (typeof module === \'object\' && typeof module.exports === \'object\') {\n' +
-                  '    module.exports = factory(require(\'leaflet\'));\n' +
-                  '  }\n\n' +
-                  '  if(typeof window !== \'undefined\' && window.L){\n' +
-                  '    factory(window.L);\n' +
-                  '  }\n' +
-                  '}(function (L) {\n';
-
-  var umdFooter = '\n\n  return EsriLeaflet;\n' +
-                  '}));';
-
   var cedar_vega_d3 = [
     'bower_components/d3/d3.js',
     'bower_components/vega/vega.js',
-    'bower_components/underscore/underscore.js',
     'src/cedar.js'
   ];
 
   var cedar_vega = [
     'bower_components/vega/vega.js',
-    'bower_components/underscore/underscore.js',
     'src/cedar.js'
   ];
 
@@ -138,9 +118,7 @@ module.exports = function(grunt) {
     concat: {
       options: {
         sourceMap: true,
-        separator: '\n\n',
-        //banner: copyright + umdHeader,
-        //footer: umdFooter,
+        separator: '\n\n'
       },
       cedar_vega_d3: {
         src: cedar_vega_d3,
@@ -166,9 +144,7 @@ module.exports = function(grunt) {
         //    except: ['d3', 'vg', 'cedar']
         // },
         preserveComments: 'some',
-        report: 'gzip',
-        //banner: copyright + umdHeader,
-        //footer: umdFooter,
+        report: 'gzip'
       },
       dist: {
         files: {
