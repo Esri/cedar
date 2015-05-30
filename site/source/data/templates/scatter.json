@@ -9,7 +9,7 @@
     "height": 500,
     "data": [
       {
-        "name": "iris",
+        "name": "table",
         "format": {
           "property": "features"
         }
@@ -21,7 +21,7 @@
         "nice": true,
         "range": "width",
         "domain": {
-          "data": "iris",
+          "data": "table",
           "field": "data.attributes.{x.field}"
         }
       },
@@ -30,7 +30,7 @@
         "nice": true,
         "range": "height",
         "domain": {
-          "data": "iris",
+          "data": "table",
           "field": "data.attributes.{y.field}"
         }
       },
@@ -38,7 +38,7 @@
         "name": "c",
         "type": "ordinal",
         "domain": {
-          "data": "iris",
+          "data": "table",
           "field": "data.attributes.{color.field}"
         },
         "range": [
@@ -54,7 +54,24 @@
         "scale": "x",
         "offset": 5,
         "ticks": 5,
-        "title": "{x.label}"
+        "title": "{x.label}",
+        "properties": {
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 0},
+            "fontSize": {"value": 14},
+            "align": {"value": "left"},
+            "baseline": {"value": "middle"},
+            "dx": {"value": 3}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }        
       },
       {
         "type": "y",
@@ -62,7 +79,22 @@
         "offset": 5,
         "ticks": 5,
         "title": "{y.label}",
-        "titleOffset": 50
+        "titleOffset": 50,
+        "properties": {
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 0},
+            "fontSize": {"value": 14},
+            "align": {"value": "right"}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }
       }
     ],
     "legends": [
@@ -86,7 +118,7 @@
       {
         "type": "symbol",
         "from": {
-          "data": "iris"
+          "data": "table"
         },
         "properties": {
           "enter": {

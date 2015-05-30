@@ -20,9 +20,17 @@
         "type": "x",
         "scale": "x",
         "titleOffset": 45,
-        "title": "{group.label}",
+        "title": "{group.label}",          
         "properties": {
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
           "labels": {
+            "fill": {"value": "#999"},
             "angle": {"value": 50},
             "align": {"value": "left"},
             "baseline": {"value": "middle"}
@@ -47,10 +55,10 @@
             "y2": {"scale": "y", "value": 0 }
           },
           "hover": {
-            "fill": {"value": "#1c5d87"}
+            "fill": {"value": "#29b6ea"}
           },
           "update": {
-            "fill": {"value": "#256e9d"}
+            "fill": {"value": "#0079c1"}
           }
         },
         "type": "rect"

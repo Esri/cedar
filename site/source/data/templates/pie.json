@@ -54,10 +54,10 @@
             "stroke": {"value": "#fff"}
           },
           "update": {
-            "fill": {"value": "#ccc"}
+            "fill": {"value": "#0079c1"}
           },
           "hover": {
-            "fill": {"value": "green"}
+            "fill": {"value": "#29b6ea"}
           }
         }
       },
@@ -68,7 +68,7 @@
           "enter": {
             "y": {"field": "y"},
             "x": {"field": "x"},
-            "fill": {"value": "#000"},
+            "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
             "text": {"field": "data.attributes.{group.field}"}

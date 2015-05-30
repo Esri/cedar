@@ -22,9 +22,14 @@ layout: example.hbs
 ```html
 
 {{>example-code-header}}
+<<<<<<< HEAD
   var selectedItems = {};
 
   function compileTemplate(data) {
+=======
+  //define a handler for chart events 
+  function showItem(event,data){
+>>>>>>> Changed Event handlers to include event object for tooltip placement
     var tmpl = document.getElementById("school-detail-template").innerHTML;
     //this uses underscore's templating library, but it could use anything
     return _.template(tmpl)(data); 
@@ -92,9 +97,14 @@ layout: example.hbs
 </script>
 
 <script>
+<<<<<<< HEAD
   var selectedItems = {};
 
   function compileTemplate(data) {
+=======
+  //define a handler for chart events 
+  function showItem(event,data){
+>>>>>>> Changed Event handlers to include event object for tooltip placement
     var tmpl = document.getElementById("school-detail-template").innerHTML;
     //this uses underscore's templating library, but it could use anything
     return _.template(tmpl)(data); 

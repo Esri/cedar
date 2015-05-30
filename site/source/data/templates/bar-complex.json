@@ -18,10 +18,10 @@
         "scale":"x",
         "properties": {
           "ticks": {
-             "stroke": {"value": "#444"}
+             "stroke": {"value": "#dbdad9"}
           },
           "labels": {
-            "fill": {"value": "#444"},
+            "fill": {"value": "#999"},
             "angle": {"value": 50},
             "fontSize": {"value": 7},
             "align": {"value": "left"},
@@ -29,7 +29,7 @@
             "dx": {"value": 3}
           },
           "axis": {
-             "stroke": {"value": "#444"},
+             "stroke": {"value": "#dbdad9"},
              "strokeWidth": {"value": 1.5}
           }
         }
@@ -86,12 +86,12 @@
           },
           "hover": {
             "fill": {
-              "value": "green"
+              "value": "#29b6ea"
             }
           },
           "update": {
             "fill": {
-              "value": "#ccc"
+              "value": "#0079c1"
             }
           }
         },

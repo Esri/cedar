@@ -14,7 +14,7 @@ Bind event handler functions to the chart.
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `event` | `string` | yes | Name of the interaction event to bind the function. (`mouseover`) |
-| `fn` | `function` | yes | Function that is called when the event occurs.  |
+| `fn` | `function` | yes | Function(event, data) that is called when the event occurs.  |
 
 
 ### Available Events
@@ -41,7 +41,9 @@ When a handler is fired, the data associated with the chart element is passed al
 <script>
 
    //define a handler for chart events 
-  function showItem(data){
+  function showItem(event,data){
+    //dump event to console such as mouse location...
+    console.dir(event);
     //dump data to console...
     console.dir(data);
   }

@@ -78,7 +78,7 @@ layout: example.hbs
     //CHART EVENTS
     chart.on('mouseover', onChartHover);
 
-    function onChartHover(d) {
+    function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.group.field];
@@ -163,7 +163,7 @@ layout: example.hbs
     //CHART EVENTS
     chart.on('mouseover', onChartHover);
 
-    function onChartHover(d) {
+    function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.group.field];
