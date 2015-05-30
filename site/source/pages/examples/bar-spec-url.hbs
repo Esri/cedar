@@ -6,7 +6,28 @@ layout: example.hbs
 <h1>Bar Chart</h1>
 
 <h3>Specification and Data from URL</h3>
-<div id="bar-url"></div>
+
+<style type="text/css">
+  .cedar-tooltip {
+    background-color: #f36f22;
+    padding: 3px 10px;
+    color: #fff;
+    position: absolute;
+    z-index: 2000;
+    font-size: 10px;    
+  }
+  .cedar-tooltip .title {
+    font-size: 15pt;
+    font-weight: bold;
+  }
+  .cedar-tooltip .content {
+    font-size: 10pt;
+  }
+</style>
+
+
+<div id="tooltip-url" class="cedar-tooltip" style="display: none"></div>
+<div id="chart-url"></div>
 
 {{#markdown}}
 ```javascript
@@ -18,7 +39,8 @@ layout: example.hbs
 
 <h3>Inline Data</h3>
 
-<div id="bar-data"></div>
+<div id="tooltip-data" class="cedar-tooltip" style="display: none"></div>
+<div id="chart-data"></div>
 
 {{#markdown}}
 ```javascript
@@ -27,3 +49,4 @@ layout: example.hbs
 {{/markdown}}
 
 {{>example-bar-data}}
+

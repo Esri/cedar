@@ -11,11 +11,35 @@
     }
   };
 
+  var tooltipurl = {
+    "id": "tooltip-url",
+    "title": "{ZIP_CODE}",
+    "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
+  }
+
   //assign to the chart
   chart.dataset = dataset;
 
   //show the chart
   chart.show({
-    elementId: "#bar-url"
+    elementId: "#chart-url"
   });
+
+  chart.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.display = "none";
+    })
+  chart.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      console.log(event)
+      cedartip.style.top = event.offsetY+100 + "px";
+      cedartip.style.left = event.offsetX+20 + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
+      content += "<p class='content'>" + tooltipurl.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });
 </script>
