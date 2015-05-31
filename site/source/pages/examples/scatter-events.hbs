@@ -18,18 +18,8 @@ layout: example.hbs
 </div>
 
 
-<script type="tmpl" id="school-detail-template">
-
-  <ul>
-    <li>Name: <%=NAME%></li>
-    <li>Type: <%=FACUSE%></li>
-    <li>Address: <%=ADDRESS%></li>
-    <li>Phone: <%=PHONE%></li>
-  </ul>
-
-</script>
-
 <script>
+  var selectedItems = {};
 
   function compileTemplate(data) {
     var tmpl = document.getElementById("school-detail-template").innerHTML;
