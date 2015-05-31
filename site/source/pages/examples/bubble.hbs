@@ -63,9 +63,8 @@ layout: example.hbs
     })
   chart.on('mouseover', function(event,data){
       var cedartip = document.getElementById(tooltipurl.id);
-      console.log(event)
-      cedartip.style.top = event.pageY + "px";
-      cedartip.style.left = event.pageX+10 + "px";
+      cedartip.style.top = event.offsetY+40 + "px";
+      cedartip.style.left = event.offsetX+30 + "px";
       cedartip.style.display = "block";
       var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
       content += "<p class='content'>" + tooltipurl.content + "</p>";
