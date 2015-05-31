@@ -12,7 +12,6 @@ layout: example.hbs
 
 {{#markdown}}
 ```html
-{{>example-code-header}}
   function drawChart() {
     //create a cedar chart - passing a url to the spec
     var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
@@ -71,7 +70,6 @@ layout: example.hbs
 
     chart.update();
   }
-{{>example-code-footer}}
 ```
 {{/markdown}}
 

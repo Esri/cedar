@@ -4,15 +4,13 @@ layout: example.hbs
 ---
 
 
-<h1>Pass Data Directly to Chart</h1>
+<h1>Load data from another API</h1>
 
 <div id="chart"></div>
 
 
-
 {{#markdown}}
 ```html
-{{>example-code-header}}
   var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
   //fetch data from a json file
   var data = Cedar.getJson('{{assets}}data/feature-collection-data.json', function(err, data){
@@ -36,7 +34,7 @@ layout: example.hbs
     }else{
       console.error('Error loading data from file');
     }
-{{>example-code-footer}}
+
 ```
 ### Expected Format
 ```
