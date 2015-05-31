@@ -56,6 +56,11 @@
         "ticks": 5,
         "title": "{x.label}",
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
           "ticks": {
              "stroke": {"value": "#dbdad9"}
           },
@@ -81,6 +86,11 @@
         "title": "{y.label}",
         "titleOffset": 50,
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
           "ticks": {
              "stroke": {"value": "#dbdad9"}
           },

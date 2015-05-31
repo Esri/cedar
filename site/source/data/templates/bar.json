@@ -22,6 +22,11 @@
         "titleOffset": 45,
         "title": "{group.label}",          
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },          
           "axis": {
              "stroke": {"value": "#dbdad9"},
              "strokeWidth": {"value": 1.5}
@@ -36,7 +41,30 @@
             "baseline": {"value": "middle"}
           }
         }
-      }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "titleOffset": 45,
+        "title": "{count.label}",          
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },          
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"}
+          }
+        }
+      }      
     ],
     "data": [
       {

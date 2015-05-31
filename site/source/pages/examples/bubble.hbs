@@ -5,6 +5,26 @@ layout: example.hbs
 
 <h1>Bubble Chart</h1>
   
+  <style type="text/css">
+  .cedar-tooltip {
+    background-color: #f36f22;
+    padding: 3px 10px;
+    color: #fff;
+    position: fixed;
+    z-index: 2000;
+    font-size: 10px;    
+  }
+  .cedar-tooltip .title {
+    font-size: 15pt;
+    font-weight: bold;
+  }
+  .cedar-tooltip .content {
+    font-size: 10pt;
+  }
+</style>
+
+
+<div id="tooltip" class="cedar-tooltip" style="display: none"></div>
 <div id="chart"></div>
 
 
@@ -49,9 +69,33 @@ layout: example.hbs
     }
   });
 
+  var tooltipurl = {
+    "id": "tooltip",
+    "title": "{NAME}",
+    "content": "{TOTAL_STUD} out of {CAPACITY} Students in {SQUARE_FOOTAGE} sq. ft."
+  }  
+
   chart.show({
     elementId: "#chart",
   });
+
+  chart.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.display = "none";
+    })
+  chart.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      console.log(event)
+      cedartip.style.top = event.pageY + "px";
+      cedartip.style.left = event.pageX+10 + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
+      content += "<p class='content'>" + tooltipurl.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });  
 
 
 </script>
