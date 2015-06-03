@@ -7,14 +7,7 @@
   ],
   "template":{
     "name": "arc",
-    "width": 400,
-    "height": 400,
-    "padding": {
-      "bottom": 10,
-      "left": 10,
-      "right": 10,
-      "top": 10
-    },    
+    "padding": "strict",
     "data": [
       {
         "name": "table",

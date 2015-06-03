@@ -39,7 +39,8 @@ var Cedar = function Cedar(options){
    */
 
   // Cedar configuration such as size
-  this._config = {};
+  this.width = undefined;
+  this.height = undefined;
 
   // Array to hold event handlers
   this._events = [];
@@ -201,8 +202,8 @@ Cedar.prototype.show = function(options){
     //hold onto the id
     this._elementId = options.elementId;
     this._renderer = options.renderer || "canvas"; //default to canvas
-    this._config.width = options.width || null; // if not set in API, always base on current div size
-    this._config.height = options.height || null;
+    this.width = options.width || undefined; // if not set in API, always base on current div size
+    this.height = options.height || undefined;
 
     //hold onto the token
     if(options.token){
@@ -320,8 +321,8 @@ Cedar.prototype._renderSpec = function(spec){
       });
 
       
-      var width = self._config.width || parseInt(d3.select(self._elementId).style('width')) || 500;
-      var height = self._config.height || parseInt(d3.select(self._elementId).style('height')) || 500;
+      var width = self.width || parseInt(d3.select(self._elementId).style('width')) || 500;
+      var height = self.height || parseInt(d3.select(self._elementId).style('height')) || 500;
 
       //render into the element
       self._view.width(width).height(height).update(); 
@@ -383,7 +384,7 @@ Cedar.prototype.clearSelection = function( opt ) {
 
 // trigger callback 
 Cedar.prototype.emit = function(eventName) {
-  if (this._view._handler._handlers[ eventName ]){
+  if (this._view._handler._handlers[ eventName ] && this._view._handler._handlers[ eventName ][0] !== undefined){
     this._view._handler._handlers[ eventName ][0].handler();
   }
 };

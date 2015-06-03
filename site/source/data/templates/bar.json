@@ -5,8 +5,7 @@
   ],
   "query": {},
   "template":{
-    "height": 325,
-    "width": 850,
+    "padding": "strict",
     "axes": [
       {
         "type": "x",

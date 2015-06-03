@@ -5,8 +5,7 @@
     {"name":"size","type":["numeric"], "required":true}
   ],
   "template":{
-    "width": 650,
-    "height": 500,
+    "padding": "strict",
     "data": [
       {
         "name": "table",

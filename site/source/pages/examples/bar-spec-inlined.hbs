@@ -5,7 +5,7 @@ layout: example.hbs
 
 <h1>Bar Chart: Inlined Specification </h1>
 
-<div id="chart"></div>
+<div id="chart" style="height: 400px; width: 800px; border: 1px solid red"></div>
 
 
 
@@ -76,12 +76,6 @@ layout: example.hbs
           "type": "rect"
         }
       ],
-      "padding": {
-        "bottom": 20,
-        "left": 80,
-        "right": 10,
-        "top": 10
-      },
       "scales": [
         {
           "domain": {
@@ -137,6 +131,7 @@ layout: example.hbs
     {"name": "group", "type": ["string"], "required": false}
   ],
   "template":{
+    "padding": "strict",
     "axes": [
       {
         "type": "x",
@@ -153,7 +148,6 @@ layout: example.hbs
         }
       }
     ],
-    "height": 300,
     "marks": [
       {
         "from": {
@@ -193,12 +187,6 @@ layout: example.hbs
         "type": "rect"
       }
     ],
-    "padding": {
-      "bottom": 20,
-      "left": 80,
-      "right": 10,
-      "top": 10
-    },
     "scales": [
       {
         "domain": {
@@ -218,8 +206,7 @@ layout: example.hbs
         "nice": true,
         "range": "height"
       }
-    ],
-    "width": 850
+    ]
   }
 }
 
@@ -237,7 +224,10 @@ layout: example.hbs
 
   //assign to the chart
   chart.dataset = dataset;
-
+  chart.override = {
+    "width": parseInt(d3.select("#chart").style('width')),
+    "height": parseInt(d3.select("#chart").style('height'))
+  }
   //show the chart
   chart.show({
     elementId: "#chart"

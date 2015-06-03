@@ -1,0 +1,79 @@
+---
+title: Chart Sizes
+layout: example.hbs
+---
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+    #examples { height: 1500px; }
+    #resizable { width: 550px; height: 150px; padding: 0.5em; }
+    #resizable h3 { text-align: center; margin: 0; }
+  </style>
+
+<div id="examples">
+  <h1>Chart Sizes</h1>
+
+  <h3>Small</h3>
+  <div id="chart-small" style="width: 300px; height: 300px; border: 1px solid #444"></div>
+
+  <h3>Medium</h3>
+  <div id="chart-medium" style="width: 500px; height: 300px; border: 1px solid #444"></div>
+
+  <h3>Just Right (resizable)</h3>
+  <div id="resizable" class="ui-widget-content">
+    <div id="chart-large" style="height: 100%"></div>
+  </div>
+
+  <h3>Code</h3>
+
+{{#markdown}}
+```javascript
+  var spec = {
+    "specification":"{{assets}}data/templates/bar.json", 
+    "dataset": {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "mappings":{
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    }
+  }
+  var chartS = new Cedar(spec); chartS.show({elementId: "#chart-small"});
+  var chartM = new Cedar(spec); chartM.show({elementId: "#chart-medium"});
+  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large"});
+
+
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chartL.update(); }
+    });
+  });
+```
+{{/markdown}}  
+</div>
+<script>
+
+  var spec = {
+    "specification":"{{assets}}data/templates/bar.json", 
+    "dataset": {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "mappings":{
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      }
+    }
+  }
+  var chartS = new Cedar(spec); chartS.show({elementId: "#chart-small"});
+  var chartM = new Cedar(spec); chartM.show({elementId: "#chart-medium"});
+  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large"});
+
+
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chartL.update(); }
+    });
+  });
+
+</script>
