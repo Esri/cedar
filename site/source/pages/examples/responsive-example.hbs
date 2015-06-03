@@ -32,27 +32,6 @@ layout: example.hbs
     //assign to the chart
     chart.dataset = dataset;
 
-<<<<<<< HEAD
-=======
-    var el = document.getElementById("chart");
-    var width = el.offsetWidth;
-    var height = el.offsetHeight;
-
-    chart.override = {
-      "height": height,
-      "width": width,
-      "axes": [{
-        "properties": {
-          "labels": {
-            "angle": {"value": 0},
-            "align": {"value": "center"},
-            "baseline": {"value": "middle"}
-          }
-        }
-      }]
-    };
-
->>>>>>> Changed Bar API to just x,y
     //show the chart
     chart.show({
       elementId: "#chart"
@@ -73,8 +52,6 @@ layout: example.hbs
     if(width <= 200) {
       labels = {
         "fontSize": {"value": 0},
-<<<<<<< HEAD
-=======
       }
     } else if (200 < width && width <= 600) {
       labels = {
@@ -87,18 +64,9 @@ layout: example.hbs
         "angle": {"value": 0},
         "align": {"value": "center"},
         "baseline": {"value": "middle"}
-      }
-    }
-
-    chart.override = {
-      "width": width,
-      "axes": [{"properties": {
-        "labels": labels
-      }}]
-    }
-
     chart.update();
   }
+{{>example-code-footer}}
 ```
 {{/markdown}}
 
@@ -113,24 +81,55 @@ layout: example.hbs
       "mappings":{
         "group": {"field":"ZIP_CODE","label":"ZIP Code"},
         "count": {"field":"TOTAL_STUD","label":"Total Students"}
->>>>>>> Changed Bar API to just x,y
+>>>>>>> Resolved issue with chart not fitting in frame
       }
-    } else if (200 < width && width <= 600) {
-      labels = {
-        "angle": {"value": 50},
-        "align": {"value": "left"},
-        "baseline": {"value": "middle"}
-      }
-    } else {
-      labels = {
-        "angle": {"value": 0},
-        "align": {"value": "center"},
-        "baseline": {"value": "middle"}
-      }
-    }
+    };
 
-<<<<<<< HEAD
-=======
+    //assign to the chart
+    chart.dataset = dataset;
+
+    //show the chart
+    chart.show({
+      elementId: "#chart"
+    });
+
+    window.chart = chart;
+  };
+
+
+  drawChart();
+
+  window.onresize = updateChart;
+
+  function updateChart() {
+    chart.update();
+  }
+```
+{{/markdown}}
+
+<script>
+  function drawChart() {
+    //create a cedar chart - passing a url to the spec
+    var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+
+    //create the dataset w/ mappings
+    var dataset = {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query": {
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "TOTAL_STUD", 
+          "outStatisticFieldName": "TOTAL_STUD_SUM"
+        }]
+      },
+      "mappings":{
+        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      }
+    } 
+
+
   function updateChart() {
     var el = document.getElementById("chart");
     var width = el.offsetWidth;
@@ -153,17 +152,11 @@ layout: example.hbs
       }
     }
 
->>>>>>> Changed Bar API to just x,y
     chart.override = {
-      "width": width,
       "axes": [{"properties": {
         "labels": labels
       }}]
     }
-<<<<<<< HEAD
-=======
-
->>>>>>> Changed Bar API to just x,y
     chart.update();
   }
 </script>

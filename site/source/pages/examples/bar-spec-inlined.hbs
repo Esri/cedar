@@ -5,7 +5,7 @@ layout: example.hbs
 
 <h1>Bar Chart: Inlined Specification </h1>
 
-<div id="chart"></div>
+<div id="chart" style="height: 400px; width: 800px; border: 1px solid red"></div>
 
 
 
@@ -135,6 +135,13 @@ layout: example.hbs
   ],
   "template":{
     "padding": "strict",
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "X-Axis"
+      }
+    ],
     "data": [
       {
         "name": "table",
@@ -178,7 +185,23 @@ layout: example.hbs
           "hover": {
             "fill": {"value": "green"}
           }
+<<<<<<< HEAD
         }
+=======
+        },
+        "type": "rect"
+      }
+    ],
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{group.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
+>>>>>>> Resolved issue with chart not fitting in frame
       },
       {
         "type": "text",
