@@ -52,10 +52,13 @@ layout: example.hbs
     elementId: "#chart1",
   });  
 
+  dataset.mappings.radius = 180;
   var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
 
   chart2.show({
     elementId: "#chart2",
+    width: 400,
+    height: 400
   });    
 
 </script>
