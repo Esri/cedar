@@ -50,7 +50,29 @@
         "scale": "x",
         "offset": 5,
         "ticks": 5,
-        "title": "{x.label}"
+        "title": "{x.label}",
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 0},
+            "fontSize": {"value": 14},
+            "align": {"value": "left"},
+            "baseline": {"value": "middle"},
+            "dx": {"value": 3}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }        
       },
       {
         "type": "y",
@@ -58,7 +80,27 @@
         "offset": 5,
         "ticks": 5,
         "title": "{y.label}",
-        "titleOffset": 50
+        "titleOffset": 50,
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 0},
+            "fontSize": {"value": 14},
+            "align": {"value": "right"}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }
       }
     ],
     "legends": [
@@ -67,10 +109,16 @@
         "offset": 0,
         "size": "size",
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
           "symbols": {
-            "strokeWidth": {"value": 1},
-            "fill": { "value": "#256e9d" },
-            "fillOpacity": {"value": 0.2 }
+            "strokeWidth": {"value": 2},
+            "stroke": {"value": "#0079c1"},
+            "fill": { "value": "#fff" },
+            "fillOpacity": {"value": 0.4 }
           }
         }
       }
@@ -91,20 +139,21 @@
               "scale": "y",
               "field": "data.attributes.{y.field}"
             },
-            "strokeWidth": {"value": 1},
-            "fillOpacity": {"value": 0.2 },
+            "strokeWidth": {"value": 2},
+            "fillOpacity": {"value": 0.4 },
             "size": { 
               "scale": "size",
               "field": "data.attributes.{size.field}"
             }
           },
           "update": {
-            "fill": { "value": "#256e9d" },
-            "stroke": {"value": "#256e9d"}
+            "fill": { "value": "#fff" },
+            "stroke": {"value": "#0079c1"}
           },
           "hover": {
-            "fill": {"value": "#888"},
-            "stroke": {"value": "#1c5d87"}
+            "fill": {"value": "#0079c1"},
+            "fillOpacity": {"value": 0.6 },
+            "stroke": {"value": "#0079c1"}
           }
         }
       }

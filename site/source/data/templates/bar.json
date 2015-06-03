@@ -1,17 +1,9 @@
 {
   "inputs": [
-    { "name": "count", "type": [ "numeric", "string" ], "required": false },
-    { "name": "group", "type": [ "string" ], "required": true }
+    { "name": "x", "type": [ "numeric", "string" ], "required": false },
+    { "name": "y", "type": [ "string" ], "required": true }
   ],
-  "query": {
-    "orderByFields": "{count.field}_SUM",
-    "groupByFieldsForStatistics": "{group.field}",
-    "outStatistics": [{
-        "statisticType": "sum",
-        "onStatisticField": "{count.field}",
-        "outStatisticFieldName": "{count.field}_SUM"
-    }]
-  },
+  "query": {},
   "template":{
     "height": 325,
     "width": 850,
@@ -20,15 +12,51 @@
         "type": "x",
         "scale": "x",
         "titleOffset": 45,
-        "title": "{group.label}",
+        "title": "{x.label}",          
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },          
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
           "labels": {
+            "fill": {"value": "#999"},
             "angle": {"value": 50},
             "align": {"value": "left"},
             "baseline": {"value": "middle"}
           }
         }
-      }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "titleOffset": 45,
+        "title": "{y.label}",          
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },          
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"}
+          }
+        }
+      }      
     ],
     "data": [
       {
@@ -42,15 +70,15 @@
         "properties": {
           "enter": {
             "width": {"band": true, "offset": -1, "scale": "x"},
-            "x": {"field": "data.attributes.{group.field}", "scale": "x"},
-            "y": {"field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}", "scale": "y"},
+            "x": {"field": "data.attributes.{x.field}", "scale": "x"},
+            "y": {"field": "data.attributes.{y.field}", "scale": "y"},
             "y2": {"scale": "y", "value": 0 }
           },
           "hover": {
-            "fill": {"value": "#1c5d87"}
+            "fill": {"value": "#29b6ea"}
           },
           "update": {
-            "fill": {"value": "#256e9d"}
+            "fill": {"value": "#0079c1"}
           }
         },
         "type": "rect"
@@ -60,7 +88,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{group.field}"
+          "field": "data.attributes.{x.field}"
         },
         "name": "x",
         "range": "width",
@@ -69,7 +97,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}"
+          "field": "data.attributes.{y.field}"
         },
         "name": "y",
         "nice": true,

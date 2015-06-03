@@ -22,7 +22,20 @@
         "titleOffset": 45,
         "title": "{count.label}",
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
           "labels": {
+            "fill": {"value": "#999"},
             "angle": {"value": 0},
             "baseline": {"value": "middle"}
           }
@@ -34,7 +47,20 @@
         "titleOffset": 25,
         "title": "{group.label}",
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
           "labels": {
+            "fill": {"value": "#999"},
             "angle": {"value": 0},
             "baseline": {"value": "middle"}
           }
@@ -58,10 +84,10 @@
             "x": {"scale": "x", "value": 0 }
           },
           "hover": {
-            "fill": {"value": "#1c5d87"}
+            "fill": {"value": "#29b6ea"}
           },
           "update": {
-            "fill": {"value": "#256e9d"}
+            "fill": {"value": "#0079c1"}
           }
         },
         "type": "rect"

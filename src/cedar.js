@@ -505,9 +505,9 @@ Cedar.prototype._handler = function(evtName) {
       if(registeredHandler.type === evtName){
         //invoke the callback with the data
         if ( item ) {
-          registeredHandler.callback(item.datum.data.attributes);
+          registeredHandler.callback(evt, item.datum.data.attributes);
         } else {
-          registeredHandler.callback();
+          registeredHandler.callback(evt,null);
         }
       }
     });

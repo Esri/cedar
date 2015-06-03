@@ -21,7 +21,6 @@ layout: example.hbs
 {{#markdown}}
 ```html
 
-{{>example-code-header}}
   var selectedItems = {};
 
   function compileTemplate(data) {
@@ -30,15 +29,15 @@ layout: example.hbs
     return _.template(tmpl)(data); 
   }
 
-  function showItem(data){
+  function showItem(event,data){
     document.getElementById('details').innerHTML = compileTemplate(data);
   }
 
-  function hideItem(data){
+  function hideItem(event,data){
     document.getElementById('details').innerHTML = "";
   }
   
-  function toggleItem(data){
+  function toggleItem(event,data){
     if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
       selectedItems[data.NAME] = data;
     } else {
@@ -76,7 +75,6 @@ layout: example.hbs
   chart.on('mouseover', showItem);
   chart.on('mouseout', hideItem);
   chart.on('click', toggleItem);
-{{>example-code-footer}}
 ```
 {{/markdown}}
 
@@ -100,15 +98,15 @@ layout: example.hbs
     return _.template(tmpl)(data); 
   }
 
-  function showItem(data){
+  function showItem(event,data){
     document.getElementById('details').innerHTML = compileTemplate(data);
   }
 
-  function hideItem(data){
+  function hideItem(event,data){
     document.getElementById('details').innerHTML = "";
   }
   
-  function toggleItem(data){
+  function toggleItem(event,data){
     if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
       selectedItems[data.NAME] = data;
     } else {

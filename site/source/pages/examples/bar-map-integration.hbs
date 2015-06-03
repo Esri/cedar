@@ -15,7 +15,6 @@ layout: example.hbs
 
 {{#markdown}}
 ```html
-{{>example-code-header}}
   
   require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
@@ -78,7 +77,7 @@ layout: example.hbs
     //CHART EVENTS
     chart.on('mouseover', onChartHover);
 
-    function onChartHover(d) {
+    function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.group.field];
@@ -94,7 +93,6 @@ layout: example.hbs
 
     } 
   });
-{{>example-code-footer}}
 ```
 {{/markdown}}
 
@@ -163,7 +161,7 @@ layout: example.hbs
     //CHART EVENTS
     chart.on('mouseover', onChartHover);
 
-    function onChartHover(d) {
+    function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.group.field];

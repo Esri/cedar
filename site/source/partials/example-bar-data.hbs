@@ -6,16 +6,39 @@
   var dataset = {
     "data": features,
     "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
   };
+
+  var tooltipdata = {
+    "id": "tooltip-data",
+    "title": "{ZIP_CODE}",
+    "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
+  }
 
   //assign to the chart
   chart.dataset = dataset;
 
   //show the chart
   chart.show({
-    elementId: "#bar-data"
+    elementId: "#chart-data"
   });
+
+  chart.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipdata.id);
+      cedartip.style.display = "none";
+    })
+  chart.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipdata.id);
+      cedartip.style.top = event.pageY+100 + "px";
+      cedartip.style.left = event.pageX+20 + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltipdata.title + "</span><br />";
+      content += "<p class='content'>" + tooltipdata.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });
 </script>

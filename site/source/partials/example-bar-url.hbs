@@ -4,18 +4,53 @@
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "ZIP_CODE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },
     "mappings":{
       "sort": "TOTAL_STUD_SUM DESC",
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
   };
+
+  var tooltipurl = {
+    "id": "tooltip-url",
+    "title": "{ZIP_CODE}",
+    "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
+  }
 
   //assign to the chart
   chart.dataset = dataset;
 
   //show the chart
   chart.show({
-    elementId: "#bar-url"
+    elementId: "#chart-url",
+    renderer: "svg"
+  });
+
+  chart.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.display = "none";
+    })
+  chart.on('mouseover', function(event,data){
+    if(data === undefined || data === null) {
+      return;
+    }
+    var cedartip = document.getElementById(tooltipurl.id);
+    cedartip.style.top = event.offsetY + 80 + "px";
+    cedartip.style.left = event.offsetX+30 + "px";
+    cedartip.style.display = "block";
+    var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
+    content += "<p class='content'>" + tooltipurl.content + "</p>";
+    content = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+      return data[$1];
+    } );
+    document.getElementById(tooltipurl.id).innerHTML = content;
   });
 </script>
