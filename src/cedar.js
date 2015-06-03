@@ -37,7 +37,9 @@ var Cedar = function Cedar(options){
   /**
    * Internals for holding state
    */
-  
+
+  // Cedar configuration such as size
+  this._config = {};
 
   // Array to hold event handlers
   this._events = [];
@@ -199,6 +201,8 @@ Cedar.prototype.show = function(options){
     //hold onto the id
     this._elementId = options.elementId;
     this._renderer = options.renderer || "canvas"; //default to canvas
+    this._config.width = options.width || null; // if not set in API, always base on current div size
+    this._config.height = options.height || null;
 
     //hold onto the token
     if(options.token){
@@ -316,8 +320,11 @@ Cedar.prototype._renderSpec = function(spec){
       });
 
       
+      var width = self._config.width || parseInt(d3.select(self._elementId).style('width')) || 500;
+      var height = self._config.height || parseInt(d3.select(self._elementId).style('height')) || 500;
+
       //render into the element
-      self._view.update(); 
+      self._view.width(width).height(height).update(); 
 
       //attach event proxies
       self._attach(self._view);
