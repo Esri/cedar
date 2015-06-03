@@ -12,7 +12,7 @@ layout: example.hbs
 {{#markdown}}
 ```html
 {{>example-code-header}}
-  var dataset = {
+ var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "mappings":{
       "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
@@ -26,10 +26,13 @@ layout: example.hbs
     elementId: "#chart1",
   });  
 
+  dataset.mappings.radius = 180;
   var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
 
   chart2.show({
     elementId: "#chart2",
+    width: 400,
+    height: 400
   });    
 {{>example-code-footer}}
 ```
