@@ -1,3 +1,6 @@
+---
+amd: true
+---
 <style>
   body,html {
     height:100%;
@@ -45,8 +48,8 @@
 </div>
 
 <script>
-  require(["esri/map", "esri/basemaps", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, esriBasemaps, FeatureLayer, 
+  require(["cedar", "esri/map", "esri/basemaps", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Cedar, Map, esriBasemaps, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
     var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,

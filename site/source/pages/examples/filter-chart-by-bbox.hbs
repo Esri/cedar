@@ -1,5 +1,6 @@
 ---
 layout: example.hbs
+amd: true
 ---
 
 <style>
@@ -33,10 +34,10 @@ This example shows how to filter the charted data based on a bounding box (bbox)
 {{#markdown}}
 
 ```html
-{{>example-code-header}}
+{{>example-code-header-amd}}
   
-    require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
+    require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Cedar, Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
     var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
@@ -115,8 +116,8 @@ This example shows how to filter the charted data based on a bounding box (bbox)
 
 
 <script>
-  require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
+  require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+    "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Cedar, Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
     var defaultSymbol = new SimpleMarkerSymbol(SimpleMarkerSymbol.STYLE_CIRCLE, 9,
