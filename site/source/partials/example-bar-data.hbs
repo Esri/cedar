@@ -3,7 +3,7 @@
 
   var chart2 = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
   
-  var dataset = {
+  var dataset2 = {
     "data": features,
     "mappings":{
       "x": {"field":"ZIP_CODE","label":"ZIP Code"},
@@ -11,31 +11,31 @@
     }
   };
 
-  var tooltipdata = {
+  var tooltipdata2 = {
     "id": "tooltip-data",
     "title": "{ZIP_CODE}",
     "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
   }
 
   //assign to the chart
-  chart2.dataset = dataset;
+  chart2.dataset = dataset2;
   
   //show the chart
-  chart.show({
+  chart2.show({
     elementId: "#chart-data"
   });
 
-  chart.on('mouseout', function(event,data){
-      var cedartip = document.getElementById(tooltipdata.id);
+  chart2.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipdata2.id);
       cedartip.style.display = "none";
     })
-  chart.on('mouseover', function(event,data){
-      var cedartip = document.getElementById(tooltipdata.id);
+  chart2.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipdata2.id);
       cedartip.style.top = event.pageY+100 + "px";
       cedartip.style.left = event.pageX+20 + "px";
       cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltipdata.title + "</span><br />";
-      content += "<p class='content'>" + tooltipdata.content + "</p>";
+      var content = "<span class='title'>" + tooltipdata2.title + "</span><br />";
+      content += "<p class='content'>" + tooltipdata2.content + "</p>";
 
       cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
         return data[$1];
