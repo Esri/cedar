@@ -15,7 +15,41 @@ layout: example.hbs
 <span id="chart2" class="chart"></span>
 
 {{#markdown}}
-```html
+```js
+
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "CAPITALGAINS",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "CAPACITY", 
+        "outStatisticFieldName": "CAPACITY_SUM"
+      }]
+    },
+    "mappings":{
+      "x": {"field":"CAPITALGAINS","label":"Capital Gains"},
+      "y": {"field":"CAPACITY_SUM","label":"Student Capacity"},
+      "label": {"field":"CAPITALGAINS","label":"Capital Gains"}
+    }
+  };
+
+  var chart1 = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
+
+  chart1.show({
+    elementId: "#chart1",
+  });  
+
+  dataset.mappings.radius = 180;
+
+  var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
+
+  chart2.show({
+    elementId: "#chart2",
+    width: 400,
+    height: 400
+  });    
+
 
 ```
 {{/markdown}}
