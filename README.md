@@ -42,7 +42,7 @@ var chart = new Cedar({
 });
 
 chart.show({
-  elementId: "#chart"
+  "elementId": "#chart"
 });
 </script>
 ```
