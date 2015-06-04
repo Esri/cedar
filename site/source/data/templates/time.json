@@ -4,9 +4,7 @@
     {"name":"value","type":["numeric"], "required":true}
   ],
   "template":{
-    "width": 500,
-    "height": 200,
-    "padding": {"top": 10, "left": 30, "bottom": 30, "right": 10},
+    "padding": "strict",
     "data": [
       {
         "name": "table",
@@ -32,10 +30,66 @@
       }
     ],
     "axes": [
-      {"type": "x", "scale": "x"},
-      {"type": "y", "scale": "y"}
+      {
+        "type": "x", 
+        "scale": "x",
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1}
+          }
+        }
+      },
+      {
+        "type": "y", 
+        "scale": "y",
+        "properties": {
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"}
+          }
+        }
+      }
     ],
     "marks": [
+      {
+        "type": "symbol",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "data.attributes.{time.field}"},
+            "y": {"scale": "y", "field": "data.attributes.{value.field}"},
+            "stroke": {"value": "#0079c1"},
+            "fillOpacity": {
+              "value": 0.8
+            },
+            "hover": {
+              "fill": {"value": "#0079c1"}
+            },
+            "update": {
+              "fill": {"value": "#fff"}
+            }
+          }
+        }
+      },
       {
         "type": "line",
         "from": {"data": "table"},
@@ -44,7 +98,7 @@
             "x": {"scale": "x", "field": "data.attributes.{time.field}"},
             "y": {"scale": "y", "field": "data.attributes.{value.field}"},
             "y2": {"scale": "y", "value": 0},
-            "stroke": {"value": "steelblue"}
+            "stroke": {"value": "#0079c1"}
           }
         }
       }

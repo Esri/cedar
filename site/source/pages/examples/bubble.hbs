@@ -4,13 +4,13 @@ layout: example.hbs
 
 
 <h1>Bubble Chart</h1>
-  
+
+<div id="tooltip" class="cedar-tooltip" style="display: none"></div>
 <div id="chart"></div>
 
 
 {{#markdown}}
-```html
-{{>example-code-header}}
+```javascript
   var chart = new Cedar({
     "specification":"{{assets}}data/templates/bubble.json",
     "dataset":{
@@ -28,9 +28,7 @@ layout: example.hbs
     elementId: "#chart",
   });
 
- 
-{{>example-code-footer}}
-```
+ ```
 {{/markdown}}
 
 
@@ -49,9 +47,32 @@ layout: example.hbs
     }
   });
 
+  var tooltipurl = {
+    "id": "tooltip",
+    "title": "{NAME}",
+    "content": "{TOTAL_STUD} out of {CAPACITY} Students in {SQUARE_FOOTAGE} sq. ft."
+  }  
+
   chart.show({
     elementId: "#chart",
   });
+
+  chart.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.display = "none";
+    })
+  chart.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.top = event.offsetY+40 + "px";
+      cedartip.style.left = event.offsetX+30 + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
+      content += "<p class='content'>" + tooltipurl.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });  
 
 
 </script>

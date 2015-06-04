@@ -7,21 +7,12 @@ layout: example.hbs
     <h3>Bar Chart Overrides</h3>
     <span>Common bar chart style overrides.</span>
     
-    <h5>Override default width (850px) and height (325px)</h5>
-    {{#markdown}}
-      chart.override = {
-        "height": 200,
-        "width": 850
-      };
-    {{/markdown}}
-    
-    <br />
     <h5>Override default x-label title placement (i.e. to account for long labels). Default 40px.</h5>
     {{#markdown}}
       chart.override = {
         "axes": [
           {
-            "titleOffset": 100
+            "titleOffset": 200
           }
         ]
       };
@@ -60,9 +51,17 @@ layout: example.hbs
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://services.arcgis.com/pmcEyn9tLWCoX7Dm/arcgis/rest/services/CA_Hospitals/FeatureServer/0",
+    "query": {
+      "groupByFieldsForStatistics": "Hospital_Ownership",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "Number_of_Patients", 
+        "outStatisticFieldName": "Number_of_Patients_SUM"
+      }]
+    },        
     "mappings":{
-      "group": { "field": "Hospital_Ownership", "label": "Hospital Owndership" },
-      "count": { "field": "Number_of_Patients" }
+      "x": { "field": "Hospital_Ownership", "label": "Hospital Owndership" },
+      "y": { "field": "Number_of_Patients_SUM", "label": "Number of Patients" }
     }
   };
 
@@ -75,7 +74,7 @@ layout: example.hbs
   });
 
   barChart.override = {
-    "height": 200,
+    "height": 625,
     "width": 850,
     "marks": [
       {"properties": 
@@ -87,7 +86,7 @@ layout: example.hbs
     ],
     "axes": [
       {
-        "titleOffset": 100
+        "titleOffset": 200
       }
     ]
   };

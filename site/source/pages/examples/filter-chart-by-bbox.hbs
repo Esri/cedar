@@ -77,8 +77,8 @@ This example shows how to filter the charted data based on a bounding box (bbox)
       "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
       "query": {},
       "mappings":{
-        "group": {"field":"state","label":"State"},
-        "count": {"field":"injuries","label":"Injuries"}
+        "x": {"field":"state","label":"State"},
+        "y": {"field":"injuries","label":"Injuries"}
       }
     };
 
@@ -154,10 +154,17 @@ This example shows how to filter the charted data based on a bounding box (bbox)
     
     var dataset = {
       "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
-      "query": {},
+      "query": {
+        "groupByFieldsForStatistics": "state",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "injuries", 
+          "outStatisticFieldName": "injuries_SUM"
+        }]
+      },  
       "mappings":{
-        "group": {"field":"state","label":"State"},
-        "count": {"field":"injuries","label":"Injuries"}
+        "x": {"field":"state","label":"State"},
+        "y": {"field":"injuries_SUM","label":"Injuries"}
       }
     };
 

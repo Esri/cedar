@@ -1,21 +1,44 @@
 <script>
   var features = {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}},{"attributes":{"ZIP_CODE":20024,"TOTAL_STUD_SUM":517}},{"attributes":{"ZIP_CODE":20017,"TOTAL_STUD_SUM":597}},{"attributes":{"ZIP_CODE":20015,"TOTAL_STUD_SUM":707}},{"attributes":{"ZIP_CODE":20037,"TOTAL_STUD_SUM":760}},{"attributes":{"ZIP_CODE":20018,"TOTAL_STUD_SUM":1052}},{"attributes":{"ZIP_CODE":20012,"TOTAL_STUD_SUM":1184}},{"attributes":{"ZIP_CODE":20007,"TOTAL_STUD_SUM":1584}},{"attributes":{"ZIP_CODE":20008,"TOTAL_STUD_SUM":1625}},{"attributes":{"ZIP_CODE":20003,"TOTAL_STUD_SUM":1869}},{"attributes":{"ZIP_CODE":20009,"TOTAL_STUD_SUM":1945}},{"attributes":{"ZIP_CODE":20001,"TOTAL_STUD_SUM":2164}},{"attributes":{"ZIP_CODE":20010,"TOTAL_STUD_SUM":2282}},{"attributes":{"ZIP_CODE":20019,"TOTAL_STUD_SUM":3278}},{"attributes":{"ZIP_CODE":20011,"TOTAL_STUD_SUM":3817}},{"attributes":{"ZIP_CODE":20020,"TOTAL_STUD_SUM":3901}},{"attributes":{"ZIP_CODE":20032,"TOTAL_STUD_SUM":4360}},{"attributes":{"ZIP_CODE":20016,"TOTAL_STUD_SUM":4681}},{"attributes":{"ZIP_CODE":20002,"TOTAL_STUD_SUM":5590}}]};
 
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  var chart2 = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
   
-  var dataset = {
+  var dataset2 = {
     "data": features,
     "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
   };
 
-  //assign to the chart
-  chart.dataset = dataset;
+  var tooltipdata2 = {
+    "id": "tooltip-data",
+    "title": "{ZIP_CODE}",
+    "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
+  }
 
+  //assign to the chart
+  chart2.dataset = dataset2;
+  
   //show the chart
-  chart.show({
-    elementId: "#bar-data"
+  chart2.show({
+    elementId: "#chart-data"
   });
+
+  chart2.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipdata2.id);
+      cedartip.style.display = "none";
+    })
+  chart2.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipdata2.id);
+      cedartip.style.top = event.pageY+100 + "px";
+      cedartip.style.left = event.pageX+20 + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltipdata2.title + "</span><br />";
+      content += "<p class='content'>" + tooltipdata2.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });
 </script>

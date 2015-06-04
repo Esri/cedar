@@ -13,6 +13,9 @@ Renders a cedar chart object into the specified element in the DOM.
 | Name | Type | Required | Description |
 | --- | --- | --- | --- |
 | `elementId` | `string` | yes | Id of the DOM node to render the chart into. |
+| `renderer`  | `string` | no | `svg` or `canvas` (default) for drawing the chart. |
+| `width`     | `number` | no | Explicit pixel width of chart. If not specified, will use width of `elementId`. |
+| `height` 	  | `number` | no | Explicit pixel height of chart. If not specified, will use height of `elementId`. |
 
 #### Example Code
 ```
@@ -31,7 +34,8 @@ var dataset = {
 
 //create and render a chart
 chart.show({
-  'elementId': '#chartDiv'
+  'elementId': '#chartDiv',
+  'renderer': 'canvas'
 });
 
 </script>

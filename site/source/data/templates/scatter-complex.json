@@ -5,11 +5,10 @@
     {"name":"color","type":["string"], "required":true}
   ],
   "template":{
-    "width": 650,
-    "height": 500,
+    "padding": "strict",
     "data": [
       {
-        "name": "iris",
+        "name": "table",
         "format": {
           "property": "features"
         }
@@ -21,7 +20,7 @@
         "nice": true,
         "range": "width",
         "domain": {
-          "data": "iris",
+          "data": "table",
           "field": "data.attributes.{x.field}"
         }
       },
@@ -30,7 +29,7 @@
         "nice": true,
         "range": "height",
         "domain": {
-          "data": "iris",
+          "data": "table",
           "field": "data.attributes.{y.field}"
         }
       },
@@ -38,7 +37,7 @@
         "name": "c",
         "type": "ordinal",
         "domain": {
-          "data": "iris",
+          "data": "table",
           "field": "data.attributes.{color.field}"
         },
         "range": [
@@ -109,7 +108,7 @@
       {
         "type": "symbol",
         "from": {
-          "data": "iris"
+          "data": "table"
         },
         "properties": {
           "enter": {

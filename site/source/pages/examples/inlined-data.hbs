@@ -4,15 +4,13 @@ layout: example.hbs
 ---
 
 
-<h1>Pass Data Directly to Chart</h1>
+<h1>Load data from another API</h1>
 
 <div id="chart"></div>
 
 
-
 {{#markdown}}
 ```html
-{{>example-code-header}}
   var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
   //fetch data from a json file
   var data = Cedar.getJson('{{assets}}data/feature-collection-data.json', function(err, data){
@@ -22,7 +20,7 @@ layout: example.hbs
         "data": data,
         "mappings":{
           "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+          "count": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
         }
       };
       //assign to the chart
@@ -36,7 +34,7 @@ layout: example.hbs
     }else{
       console.error('Error loading data from file');
     }
-{{>example-code-footer}}
+
 ```
 ### Expected Format
 ```
@@ -71,8 +69,8 @@ layout: example.hbs
       var dataset = {
         "data": data,
         "mappings":{
-          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+          "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
         }
       };
       //assign to the chart

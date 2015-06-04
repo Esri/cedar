@@ -6,8 +6,7 @@
     {"name":"color","type":["string"], "required":true}
   ],
   "template": {
-    "width": 700,
-    "height": 700,
+    "padding": "strict",
     "data": [
       {
         "name": "crimes",
@@ -52,7 +51,28 @@
       }
     ],
     "axes": [
-      {"type": "x", "scale": "x"}
+      {
+        "type": "x", 
+        "scale": "x",
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1}
+          }
+        }
+      }
     ],
     "legends": [
       {

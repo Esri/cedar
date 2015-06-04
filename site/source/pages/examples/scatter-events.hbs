@@ -18,68 +18,6 @@ layout: example.hbs
 </div>
 
 
-{{#markdown}}
-```html
-
-{{>example-code-header}}
-  var selectedItems = {};
-
-  function compileTemplate(data) {
-    var tmpl = document.getElementById("school-detail-template").innerHTML;
-    //this uses underscore's templating library, but it could use anything
-    return _.template(tmpl)(data); 
-  }
-
-  function showItem(data){
-    document.getElementById('details').innerHTML = compileTemplate(data);
-  }
-
-  function hideItem(data){
-    document.getElementById('details').innerHTML = "";
-  }
-  
-  function toggleItem(data){
-    if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
-      selectedItems[data.NAME] = data;
-    } else {
-      selectedItems[data.NAME] = null;
-    }
-
-    document.getElementById('history').innerHTML = "";
-    for(var propertyName in selectedItems) { 
-      if(selectedItems[propertyName] !== null) {
-        chart.select({key: "NAME", value: propertyName});
-        document.getElementById('history').innerHTML += compileTemplate(selectedItems[propertyName]);
-      }
-    }
-  }
-
-  var chart = new Cedar({
-    "specification":"{{assets}}data/templates/scatter.json",
-    "dataset":{
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-      "query":{},
-      "mappings":{
-        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
-        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "color":{"field":"FACUSE","label":"Facility Type"}
-      }
-    }
-  });
-
-  //render the chart
-  chart.show({
-    elementId: "#chart"
-  });
-
-  //attach handler (can also be done before .show())
-  chart.on('mouseover', showItem);
-  chart.on('mouseout', hideItem);
-  chart.on('click', toggleItem);
-{{>example-code-footer}}
-```
-{{/markdown}}
-
 <script type="tmpl" id="school-detail-template">
 
   <ul>
@@ -90,7 +28,6 @@ layout: example.hbs
   </ul>
 
 </script>
-
 <script>
   var selectedItems = {};
 
@@ -100,15 +37,15 @@ layout: example.hbs
     return _.template(tmpl)(data); 
   }
 
-  function showItem(data){
+  function showItem(event,data){
     document.getElementById('details').innerHTML = compileTemplate(data);
   }
 
-  function hideItem(data){
+  function hideItem(event,data){
     document.getElementById('details').innerHTML = "";
   }
   
-  function toggleItem(data){
+  function toggleItem(event,data){
     if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
       selectedItems[data.NAME] = data;
     } else {
