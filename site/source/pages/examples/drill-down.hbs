@@ -10,64 +10,6 @@ layout: example.hbs
 
 <div id="chart"></div>
 
-{{#markdown}}
-```html
- 
-var chart = new Cedar({
-  "specification":"{{assets}}data/templates/bar.json"
-});
-
-
-var dataset = {
-  "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-  "mappings":{
-    "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-    "count": {"field":"TOTAL_STUD","label":"Total Students"},
-    "sort": "TOTAL_STUD_SUM DESC"
-  }
-};
-
-chart.dataset = dataset;
-
-function facetChart(data){
-  var selected = data[dataset.mappings.group.field];
-
-  if(chart.dataset.mappings.group.field == "ZIP_CODE") {
-    var where = dataset.mappings.group.field + " = " + selected;
-
-    chart.dataset.query = {"where": where }
-
-    chart.dataset.mappings.group.field = "FACUSE";
-  } else { 
-    var where = dataset.mappings.group.field + " = '" + selected + "'";
-
-    chart.dataset.query = {"where": where }
-
-    chart.dataset.mappings.group.field = "ZIP_CODE";    
-  }
-  document.getElementById('filter').innerHTML = where;
-  chart.update()
-}
-
-function resetChart(){
-  document.getElementById('filter').innerHTML = "no filter";
-
-  chart.dataset.mappings.group.field = "ZIP_CODE";
-  chart.dataset.query = {"where": "1=1" }
-  chart.update()
-}  
-
-
-chart.show({
-  elementId: "#chart"
-});
-
-chart.on('click', facetChart);
- 
-```
-{{/markdown}}
-
-
 <script>
 
   var chart = new Cedar({
@@ -75,33 +17,40 @@ chart.on('click', facetChart);
   });
 
 
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"},
-      "sort": "TOTAL_STUD_SUM DESC"
-    }
-  };
+  function buildDataset(group, count) {
+    return {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query": {
+        "groupByFieldsForStatistics": group,
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": count, 
+          "outStatisticFieldName": count + "_SUM"
+        }]
+      }, 
+      "mappings":{
+        "x": {"field":group, "label": group},
+        "y": {"field":count + "_SUM", "label": count},
+        "sort": count + "_SUM DESC"
+      }
+    };
 
-  chart.dataset = dataset;
+  }
+  chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
 
-  function facetChart(data){
-    var selected = data[dataset.mappings.group.field];
+  function facetChart(event,data){
+    var selected = data[chart.dataset.mappings.x.field];
 
-    if(chart.dataset.mappings.group.field == "ZIP_CODE") {
-      var where = dataset.mappings.group.field + " = " + selected;
+    if(chart.dataset.mappings.x.field == "ZIP_CODE") {
+      var where = chart.dataset.mappings.x.field + " = " + selected;
 
-      chart.dataset.query = {"where": where }
-
-      chart.dataset.mappings.group.field = "FACUSE";
+      chart.dataset = buildDataset('FACUSE', 'TOTAL_STUD');
     } else { 
-      var where = dataset.mappings.group.field + " = '" + selected + "'";
+      var where = chart.dataset.mappings.x.field + " = '" + selected + "'";
 
-      chart.dataset.query = {"where": where }
-
-      chart.dataset.mappings.group.field = "ZIP_CODE";    
+      chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
     }
+    chart.dataset.query.where = where
     document.getElementById('filter').innerHTML = where;
     chart.update()
   }
@@ -109,8 +58,8 @@ chart.on('click', facetChart);
   function resetChart(){
     document.getElementById('filter').innerHTML = "no filter";
 
-    chart.dataset.mappings.group.field = "ZIP_CODE";
-    chart.dataset.query = {"where": "1=1" }
+    chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
+    chart.dataset.query.where = "1=1"
     chart.update()
   }  
 
