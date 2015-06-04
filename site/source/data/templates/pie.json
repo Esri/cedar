@@ -1,20 +1,11 @@
 {
   "inputs": [
-    {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false},
-    {"name": "aggregate", "type": ["option"], "options": ["sum","avg"], "required": false},
-    {"name": "label", "type": ["string"], "required": false}
+    {"name": "y", "type": ["numeric","string"], "required": true},
+    {"name": "label", "type": ["string"], "required": false},
+    {"name": "radius", "type": ["numeric"], "required": true}
   ],
   "template":{
-    "name": "arc",
-    "width": 400,
-    "height": 400,
-    "padding": {
-      "bottom": 10,
-      "left": 10,
-      "right": 10,
-      "top": 10
-    },    
+    "padding": "strict",
     "data": [
       {
         "name": "table",
@@ -22,11 +13,11 @@
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{count.field}_SUM"},
-          {"type": "formula", "field": "hyp", "expr": "60"},
+          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "200"},
-          {"type": "formula", "field": "y_mid", "expr": "200"},
+          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
           {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
           {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
         ]
@@ -36,7 +27,7 @@
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{count.field}_SUM"}
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
       }
     ],
     "marks": [
@@ -45,12 +36,11 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "x": {"group": "width", "mult": 0.5},
-            "y": {"group": "height", "mult": 0.5},
+            "x": {"group": "width"},
+            "y": {"group": "height"},
             "startAngle": {"field": "startAngle"},
             "endAngle": {"field": "endAngle"},
-            "innerRadius": {"value": 40},
-            "outerRadius": {"value": 80},
+            "outerRadius": {"value": "{radius}"},
             "stroke": {"value": "#fff"}
           },
           "update": {
@@ -66,12 +56,13 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "y": {"field": "y"},
-            "x": {"field": "x"},
+            "fill": {"value": "#fff"},
+            "y": {"field": "y", "mult": 0.6},
+            "x": {"field": "x", "mult": 0.6},
             "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{group.field}"}
+            "text": {"field": "data.attributes.{label.field}"}
           }
         }
       }

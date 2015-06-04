@@ -8,110 +8,101 @@ layout: example.hbs
 <div id="chart"></div>
 
 
-
 {{#markdown}}
 ```html
-//create a cedar chart
+  //create a cedar chart
   var chart = new Cedar();
 
-  var spec = {
-    "inputs": [
-      {"name": "count", "type": ["numeric","string"], "required": true},
-      {"name": "group", "type": ["string"], "required": false}
+  //create the specification
+  var spec ={
+  "inputs": [
+    {"name": "y", "type": ["numeric","string"], "required": true},
+    {"name": "label", "type": ["string"], "required": false},
+    {"name": "radius", "type": ["numeric"], "required": true}
+  ],
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "format": {
+          "property": "features"
+        },
+        "transform": [
+          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "formula", "field": "hyp", "expr": "{radius}"},
+          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
+          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
+          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
+        ]
+      }
     ],
-    "template":{
-      "axes": [
-        {
-          "type": "x",
-          "scale": "x",
-          "title": "X-Axis"
-        }
-      ],
-      "data": [
-        {
-          "name": "table",
-          "url": "{data}",
-          "format": {
-            "property": "features"
+    "scales": [
+      {
+        "name": "r",
+        "type": "sqrt",
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+      }
+    ],
+    "marks": [
+      {
+        "type": "arc",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"group": "width"},
+            "y": {"group": "height"},
+            "startAngle": {"field": "startAngle"},
+            "endAngle": {"field": "endAngle"},
+            "outerRadius": {"value": "{radius}"},
+            "stroke": {"value": "#fff"}
+          },
+          "update": {
+            "fill": {"value": "#0079c1"}
+          },
+          "hover": {
+            "fill": {"value": "#29b6ea"}
           }
         }
-      ],
-      "height": 300,
-      "marks": [
-        {
-          "from": {
-            "data": "table"
-          },
-          "properties": {
-            "enter": {
-              "width": {
-                "band": true,
-                "offset": -1,
-                "scale": "x"
-              },
-              "x": {
-                "field": "data.attributes.{group.field}",
-                "scale": "x"
-              },
-              "y": {
-                "field": "data.attributes.{count.field}_SUM",
-                "scale": "y"
-              },
-              "y2": {
-                "scale": "y",
-                "value": 0
-              }
-            },
-            "hover": {
-              "fill": {
-                "value": "red"
-              }
-            },
-            "update": {
-              "fill": {
-                "value": "steelblue"
-              }
-            }
-          },
-          "type": "rect"
-        }
-      ],
-      "padding": {
-        "bottom": 20,
-        "left": 80,
-        "right": 10,
-        "top": 10
       },
-      "scales": [
-        {
-          "domain": {
-            "data": "table",
-            "field": "data.attributes.{group.field}"
-          },
-          "name": "x",
-          "range": "width",
-          "type": "ordinal"
-        },
-        {
-          "domain": {
-            "data": "table",
-            "field": "data.attributes.{count.field}_SUM"
-          },
-          "name": "y",
-          "nice": true,
-          "range": "height"
+      {
+        "type": "text",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "y": {"field": "y", "mult": 0.6},
+            "x": {"field": "x", "mult": 0.6},
+            "fill": {"value": "#fff"},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"},
+            "text": {"field": "data.attributes.{label.field}"}
+          }
         }
-      ],
-      "width": 850
-    }
+      }
+    ]
   }
+  
+}
+  //assign to chart
   chart.specification = spec;
+
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "FACUSE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },    
     "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
+      "label": {"field":"FACUSE","label":"Facility Use"},
+      "radius": 360
     }
   };
 
@@ -120,7 +111,9 @@ layout: example.hbs
 
   //show the chart
   chart.show({
-    elementId: "#chart"
+    elementId: "#chart",
+    width: 800,
+    height: 800
   });
 ```
 {{/markdown}}
@@ -131,107 +124,95 @@ layout: example.hbs
   var chart = new Cedar();
 
   //create the specification
-  var spec = {
+  var spec ={
   "inputs": [
-    {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false}
+    {"name": "y", "type": ["numeric","string"], "required": true},
+    {"name": "label", "type": ["string"], "required": false},
+    {"name": "radius", "type": ["numeric"], "required": true}
   ],
   "template":{
-    "axes": [
-      {
-        "type": "x",
-        "scale": "x",
-        "title": "X-Axis"
-      }
-    ],
+    "padding": "strict",
     "data": [
       {
         "name": "table",
-        "url": "{data}",
         "format": {
           "property": "features"
-        }
+        },
+        "transform": [
+          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "formula", "field": "hyp", "expr": "{radius}"},
+          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
+          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
+          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
+        ]
       }
     ],
-    "height": 300,
-    "marks": [
-      {
-        "from": {
-          "data": "table"
-        },
-        "properties": {
-          "enter": {
-            "width": {
-              "band": true,
-              "offset": -1,
-              "scale": "x"
-            },
-            "x": {
-              "field": "data.attributes.{group.field}",
-              "scale": "x"
-            },
-            "y": {
-              "field": "data.attributes.{count.field}_SUM",
-              "scale": "y"
-            },
-            "y2": {
-              "scale": "y",
-              "value": 0
-            }
-          },
-          "hover": {
-            "fill": {
-              "value": "red"
-            }
-          },
-          "update": {
-            "fill": {
-              "value": "steelblue"
-            }
-          }
-        },
-        "type": "rect"
-      }
-    ],
-    "padding": {
-      "bottom": 20,
-      "left": 80,
-      "right": 10,
-      "top": 10
-    },
     "scales": [
       {
-        "domain": {
-          "data": "table",
-          "field": "data.attributes.{group.field}"
-        },
-        "name": "x",
-        "range": "width",
-        "type": "ordinal"
-      },
-      {
-        "domain": {
-          "data": "table",
-          "field": "data.attributes.{count.field}_SUM"
-        },
-        "name": "y",
-        "nice": true,
-        "range": "height"
+        "name": "r",
+        "type": "sqrt",
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
       }
     ],
-    "width": 850
+    "marks": [
+      {
+        "type": "arc",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"group": "width"},
+            "y": {"group": "height"},
+            "startAngle": {"field": "startAngle"},
+            "endAngle": {"field": "endAngle"},
+            "outerRadius": {"value": "{radius}"},
+            "stroke": {"value": "#fff"}
+          },
+          "update": {
+            "fill": {"value": "#0079c1"}
+          },
+          "hover": {
+            "fill": {"value": "#29b6ea"}
+          }
+        }
+      },
+      {
+        "type": "text",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "y": {"field": "y", "mult": 0.6},
+            "x": {"field": "x", "mult": 0.6},
+            "fill": {"value": "#fff"},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"},
+            "text": {"field": "data.attributes.{label.field}"}
+          }
+        }
+      }
+    ]
   }
+  
 }
-
   //assign to chart
   chart.specification = spec;
 
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "FACUSE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },    
     "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
+      "label": {"field":"FACUSE","label":"Facility Use"},
+      "radius": 360
     }
   };
 
@@ -240,6 +221,8 @@ layout: example.hbs
 
   //show the chart
   chart.show({
-    elementId: "#chart"
+    elementId: "#chart",
+    width: 800,
+    height: 800
   });
 </script>

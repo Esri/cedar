@@ -20,7 +20,7 @@ layout: example.hbs
         "data": data,
         "mappings":{
           "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+          "count": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
         }
       };
       //assign to the chart
@@ -69,8 +69,8 @@ layout: example.hbs
       var dataset = {
         "data": data,
         "mappings":{
-          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+          "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
         }
       };
       //assign to the chart

@@ -8,7 +8,6 @@ layout: example.hbs
 
 <div id="chart"></div>
 
-
 <script>
   function drawChart() {
     //create a cedar chart - passing a url to the spec
@@ -18,7 +17,8 @@ layout: example.hbs
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
       "query": {
-        "groupByFieldsForStatistics": [{
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
           "statisticType": "sum", 
           "onStatisticField": "TOTAL_STUD", 
           "outStatisticFieldName": "TOTAL_STUD_SUM"
@@ -32,24 +32,6 @@ layout: example.hbs
 
     //assign to the chart
     chart.dataset = dataset;
-
-    var el = document.getElementById("chart");
-    var width = el.offsetWidth;
-    var height = el.offsetHeight;
-
-    chart.override = {
-      "height": height,
-      "width": width,
-      "axes": [{
-        "properties": {
-          "labels": {
-            "angle": {"value": 0},
-            "align": {"value": "center"},
-            "baseline": {"value": "middle"}
-          }
-        }
-      }]
-    };
 
     //show the chart
     chart.show({
@@ -67,6 +49,7 @@ layout: example.hbs
   function updateChart() {
     var el = document.getElementById("chart");
     var width = el.offsetWidth;
+
     var labels;
     if(width <= 200) {
       labels = {
@@ -87,7 +70,6 @@ layout: example.hbs
     }
 
     chart.override = {
-      "width": width,
       "axes": [{"properties": {
         "labels": labels
       }}]

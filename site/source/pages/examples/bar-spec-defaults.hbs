@@ -57,6 +57,7 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
     {"name": "hoverColor", "type":["string"], "required":false, "default":"#FF00FF"},
   ],
   "template":{
+    "padding": "strict",
     "axes": [
       {
         "type": "x",
@@ -73,7 +74,6 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
         }
       }
     ],
-    "height": 300,
     "marks": [
       {
         "from": {
@@ -113,12 +113,6 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
         "type": "rect"
       }
     ],
-    "padding": {
-      "bottom": 20,
-      "left": 80,
-      "right": 10,
-      "top": 10
-    },
     "scales": [
       {
         "domain": {
@@ -138,10 +132,9 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
         "nice": true,
         "range": "height"
       }
-    ],
-    "width": 850
+    ]
   }
-}
+};
 
   //assign to chart
   chart.specification = spec;

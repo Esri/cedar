@@ -120,10 +120,17 @@
     //chart two!
     var scatterset = {
       "url":"http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
-      "query": {},
+      "query": {
+        "groupByFieldsForStatistics": "MONTH",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "INJURIES", 
+          "outStatisticFieldName": "INJURIES_SUM"
+        }]
+      },  
       "mappings":{
         "x": {"field":"MONTH","label":"Month"},
-        "y": {"field":"INJURIES","label":"Injuries"},
+        "y": {"field":"INJURIES_SUM","label":"Injuries"},
         "color":{"field":"FSCALE","label":"F-Scale"}
       }
     };

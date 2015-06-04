@@ -2,11 +2,10 @@
   "inputs":[
     {"name":"x","type":["numeric"], "required":true},
     {"name":"y","type":["numeric"], "required":true},
-    {"name":"color","type":["string"], "required":true}
+    {"name":"color","type":["string"], "required":false}
   ],
   "template":{
-    "width": 650,
-    "height": 500,
+    "padding": "strict",
     "data": [
       {
         "name": "table",

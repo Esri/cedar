@@ -5,8 +5,7 @@
     {"name":"color","type":["string"], "required":true}
   ],
   "template":{
-    "width": 650,
-    "height": 500,
+    "padding": "strict",
     "data": [
       {
         "name": "table",

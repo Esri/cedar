@@ -61,5 +61,7 @@ When a handler is fired, the data associated with the chart element is passed al
   //attach handler (can also be done before .show())
   chart.on('click', showItem);
  
+  window.onresize = function() { chart.update() }
+  
 </script>
 ```

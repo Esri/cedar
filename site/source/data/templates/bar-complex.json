@@ -4,14 +4,7 @@
     {"name": "group", "type": ["string"], "required": false}
   ],
   "template":{
-    "height": 300,
-    "width": 850,    
-    "padding": {
-      "bottom": 30,
-      "left": 45,
-      "right": 40,
-      "top": 10
-    },
+    "padding": "strict",
     "axes": [
       {
         "type":"x",
