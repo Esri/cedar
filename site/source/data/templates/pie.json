@@ -1,8 +1,6 @@
 {
   "inputs": [
-    {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false},
-    {"name": "aggregate", "type": ["option"], "options": ["sum","avg"], "required": false},
+    {"name": "y", "type": ["numeric","string"], "required": true},
     {"name": "label", "type": ["string"], "required": false},
     {"name": "radius", "type": ["numeric"], "required": true}
   ],
@@ -15,7 +13,7 @@
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{count.field}_SUM"},
+          {"type": "pie", "value": "data.attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
           {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
@@ -29,7 +27,7 @@
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{count.field}_SUM"}
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
       }
     ],
     "marks": [
@@ -64,7 +62,7 @@
             "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{group.field}"}
+            "text": {"field": "data.attributes.{label.field}"}
           }
         }
       }
