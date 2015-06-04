@@ -6,6 +6,53 @@ At the highest level, Cedar provides a simple chart API. Beyond that it is possi
 
 **Currently Esri Cedar is in development and should be thought of as a beta or preview.**
 
+## Types of Charts
+
+While Cedar provides a set of commonly used chart types including `Bar`, `Line`, `Scatterplot`, and `Pie` through use of the Vega grammar it is possible for developers to create unique and custom charts that can be used by other developers with new data sources.
+
+When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
+
+## Getting Started
+
+```json
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3/vega.min.js"></script>
+<script type="text/javascript" src="https://rawgit.com/Esri/cedar/master/src/cedar.js"></script>
+
+<div id="chart"></div>
+<script>
+var chart = new Cedar({
+  "specification":"http://esri.github.io/cedar/data/templates/bar.json",
+  "dataset": {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "ZIP_CODE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },
+    "mappings":{
+      "sort": "TOTAL_STUD_SUM DESC",
+      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+    }
+  }
+});
+
+chart.show({
+  elementId: "#chart"
+});
+</script>
+```
+
+
+## Demos
+
+Here is are [an extensive set of demos](http://esri.github.io/cedar/examples) showing the concepts of Cedar.
+
+
 ## Components of a Cedar Chart
 
 Cedar charts are defined by the following ingredients:
@@ -19,47 +66,6 @@ Cedar charts are defined by the following ingredients:
  - `mappings` bind the Feature Layer attributes to the `Specification inputs`
 - and `overrides` are specific modifications to the `Specification template`
 
-## Types of Charts
-
-While Cedar provides a set of commonly used chart types including `Bar`, `Line`, `Scatterplot`, and `Pyramid` through use of the Vega grammar it is possible for developers to create unique and custom charts that can be used by other developers with new data sources.
-
-When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
-
-## Example
-
-```json
-  var barChart = new Cedar({"specification": "bar.json"});
-
-  var schools = {
-    "url": "http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": { "field": "ZIP_CODE" },
-      "count": { "field": "TOTAL_STUD" }
-    }
-  };
-
-  barChart.dataset = schools;
-
-  barChart.show({
-    "elementId": "#bar"
-  });
-```
-
-and it is simple to add more charts re-using the same `dataset` definition:
-
-
-```json
-  var pieChart = new Cedar({"specification": "pie.json", "dataset": schools});
-
-  pieChart.show({
-    "elementId": "#pie"
-  });
-```
-
-
-## Demos
-
-Here is a [simple user interface](http://dbouwman.github.com/cypress) and [a few demos](http://esri.github.io/cedar/) showing the basic concepts of Cedar.
 
 ### Development Instructions
 
