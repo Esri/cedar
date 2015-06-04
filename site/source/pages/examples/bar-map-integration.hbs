@@ -16,6 +16,7 @@ layout: example.hbs
 {{#markdown}}
 ```html
   
+
   require(["esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
@@ -45,24 +46,32 @@ layout: example.hbs
     });
 
     featureLayer.setRenderer(rend);
-
     map.addLayer(featureLayer);
+    
     //create a cedar chart
     var chart = new Cedar({"specification":"../data/templates/bar.json"});
 
-    //set custom colors
     chart.override = {
       "height": 400,
       "marks": [{"properties": {
         "hover": {"fill": {"r": {"value": 210}, "g": {"value": 105}, "b":{"value": 30}}},
         "update": {"fill": {"value": "#c15000"}}}}]};
 
+
     //create the dataset w/ mappings
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query": {
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "TOTAL_STUD", 
+          "outStatisticFieldName": "TOTAL_STUD_SUM"
+        }]
+      },       
       "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
       }
     };
 
@@ -73,6 +82,7 @@ layout: example.hbs
     chart.show({
       elementId: "#chart"
     });
+    
 
     //CHART EVENTS
     chart.on('mouseover', onChartHover);
@@ -80,10 +90,10 @@ layout: example.hbs
     function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
+      var selected = d[dataset.mappings.x.field];
       
       //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.x.field);
 
       //add symbol selected value
       renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));
@@ -92,7 +102,14 @@ layout: example.hbs
       featureLayer.refresh();
 
     } 
+
+    //MAP EVENTS
+    featureLayer.on('mouse-over', function(d) {
+      var val = d.graphic.attributes["ZIP_CODE"];
+    })
+
   });
+
 ```
 {{/markdown}}
 
@@ -143,9 +160,17 @@ layout: example.hbs
     //create the dataset w/ mappings
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query": {
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "TOTAL_STUD", 
+          "outStatisticFieldName": "TOTAL_STUD_SUM"
+        }]
+      },       
       "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
       }
     };
 
@@ -164,10 +189,10 @@ layout: example.hbs
     function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
+      var selected = d[dataset.mappings.x.field];
       
       //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.x.field);
 
       //add symbol selected value
       renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([210,105,30, 0.5])));

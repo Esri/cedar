@@ -67,10 +67,17 @@ layout: example.hbs
     
     var dataset = {
       "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
-      "query": {},
+      "query": {
+        "groupByFieldsForStatistics": "state",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "injuries", 
+          "outStatisticFieldName": "injuries_SUM"
+        }]
+      },  
       "mappings":{
-        "group": {"field":"state","label":"State"},
-        "count": {"field":"injuries","label":"Injuries"}
+        "x": {"field":"state","label":"State"},
+        "y": {"field":"injuries_SUM","label":"Injuries"}
       }
     };
 
@@ -147,13 +154,19 @@ layout: example.hbs
     
     var dataset = {
       "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
-      "query": {},
+      "query": {
+        "groupByFieldsForStatistics": "state",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "injuries", 
+          "outStatisticFieldName": "injuries_SUM"
+        }]
+      },  
       "mappings":{
-        "group": {"field":"state","label":"State"},
-        "count": {"field":"injuries","label":"Injuries"}
+        "x": {"field":"state","label":"State"},
+        "y": {"field":"injuries_SUM","label":"Injuries"}
       }
     };
-
     var chart = new Cedar({"specification":"{{assets}}/data/templates/bar.json", "dataset": dataset});
 
     chart.override = {

@@ -62,6 +62,15 @@ layout: example.hbs
     //create the dataset w/ mappings
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+
+    "query": {
+      "groupByFieldsForStatistics": "ZIP_CODE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+      },
       "mappings":{
         "group": {"field":"ZIP_CODE","label":"ZIP Code"},
         "count": {"field":"TOTAL_STUD","label":"Total Students"}
@@ -84,10 +93,10 @@ layout: example.hbs
     function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
+      var selected = d[dataset.mappings.x.field];
       
       //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.x.field);
 
       //add symbol selected value
       renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([14,105,175, 0.5])));
@@ -184,9 +193,18 @@ layout: example.hbs
     //create the dataset w/ mappings
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+
+      "query": {
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "TOTAL_STUD", 
+          "outStatisticFieldName": "TOTAL_STUD_SUM"
+        }]      
+      },
       "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
       }
     };
 
@@ -206,10 +224,10 @@ layout: example.hbs
     function onChartHover(e,d) {
       
       //get selected value for attribute in chart marker
-      var selected = d[dataset.mappings.group.field];
+      var selected = d[dataset.mappings.x.field];
       
       //create renderer
-      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.group.field);
+      var renderer = new UniqueValueRenderer(defaultSymbol, dataset.mappings.x.field);
 
       //add symbol selected value
       renderer.addValue(selected, new SimpleMarkerSymbol().setColor(new Color([14,105,175, 0.5])));
