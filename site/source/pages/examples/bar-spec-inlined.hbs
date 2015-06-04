@@ -5,135 +5,18 @@ layout: example.hbs
 
 <h1>Bar Chart: Inlined Specification </h1>
 
-<<<<<<< HEAD
-<div id="chart" style="height: 400px; width: 800px; border: 1px solid red"></div>
-=======
 <div id="chart"></div>
->>>>>>> Fixed pie chart by adding a {radius} parameter
-
 
 
 {{#markdown}}
 ```html
-//create a cedar chart
-  var chart = new Cedar();
-
-  var spec = {
-    "inputs": [
-      {"name": "count", "type": ["numeric","string"], "required": true},
-      {"name": "group", "type": ["string"], "required": false}
-    ],
-    "template":{
-      "axes": [
-        {
-          "type": "x",
-          "scale": "x",
-          "title": "X-Axis"
-        }
-      ],
-      "data": [
-        {
-          "name": "table",
-          "url": "{data}",
-          "format": {
-            "property": "features"
-          }
-        }
-      ],
-      "height": 300,
-      "marks": [
-        {
-          "from": {
-            "data": "table"
-          },
-          "properties": {
-            "enter": {
-              "width": {
-                "band": true,
-                "offset": -1,
-                "scale": "x"
-              },
-              "x": {
-                "field": "data.attributes.{group.field}",
-                "scale": "x"
-              },
-              "y": {
-                "field": "data.attributes.{count.field}_SUM",
-                "scale": "y"
-              },
-              "y2": {
-                "scale": "y",
-                "value": 0
-              }
-            },
-            "hover": {
-              "fill": {
-                "value": "red"
-              }
-            },
-            "update": {
-              "fill": {
-                "value": "steelblue"
-              }
-            }
-          },
-          "type": "rect"
-        }
-      ],
-      "scales": [
-        {
-          "domain": {
-            "data": "table",
-            "field": "data.attributes.{group.field}"
-          },
-          "name": "x",
-          "range": "width",
-          "type": "ordinal"
-        },
-        {
-          "domain": {
-            "data": "table",
-            "field": "data.attributes.{count.field}_SUM"
-          },
-          "name": "y",
-          "nice": true,
-          "range": "height"
-        }
-      ],
-      "width": 850
-    }
-  }
-  chart.specification = spec;
-  //create the dataset w/ mappings
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "mappings":{
-      "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"}
-    }
-  };
-
-  //assign to the chart
-  chart.dataset = dataset;
-
-  //show the chart
-  chart.show({
-    elementId: "#chart"
-  });
-```
-{{/markdown}}
-
-
-<script>
   //create a cedar chart
   var chart = new Cedar();
 
   //create the specification
   var spec ={
   "inputs": [
-    {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false},
-    {"name": "aggregate", "type": ["option"], "options": ["sum","avg"], "required": false},
+    {"name": "y", "type": ["numeric","string"], "required": true},
     {"name": "label", "type": ["string"], "required": false},
     {"name": "radius", "type": ["numeric"], "required": true}
   ],
@@ -146,7 +29,7 @@ layout: example.hbs
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{count.field}_SUM"},
+          {"type": "pie", "value": "data.attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
           {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
@@ -160,7 +43,7 @@ layout: example.hbs
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{count.field}_SUM"}
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
       }
     ],
     "marks": [
@@ -177,28 +60,12 @@ layout: example.hbs
             "stroke": {"value": "#fff"}
           },
           "update": {
-            "fill": {"value": "#ccc"}
+            "fill": {"value": "#0079c1"}
           },
           "hover": {
-            "fill": {"value": "green"}
+            "fill": {"value": "#29b6ea"}
           }
-<<<<<<< HEAD
-<<<<<<< HEAD
         }
-=======
-        },
-        "type": "rect"
-      }
-    ],
-    "scales": [
-      {
-        "domain": {
-          "data": "table",
-          "field": "data.attributes.{group.field}"
-        },
-        "name": "x",
-        "range": "width",
-        "type": "ordinal"
       },
       {
         "type": "text",
@@ -207,10 +74,10 @@ layout: example.hbs
           "enter": {
             "y": {"field": "y", "mult": 0.6},
             "x": {"field": "x", "mult": 0.6},
-            "fill": {"value": "#000"},
+            "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{group.field}"}
+            "text": {"field": "data.attributes.{label.field}"}
           }
         }
       }
@@ -218,26 +85,140 @@ layout: example.hbs
   }
   
 }
-
   //assign to chart
   chart.specification = spec;
 
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "FACUSE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },    
     "mappings":{
-      "group": {"field":"FACUSE","label":"ZIP Code"},
-      "count": {"field":"TOTAL_STUD","label":"Total Students"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
+      "label": {"field":"FACUSE","label":"Facility Use"},
       "radius": 360
     }
   };
 
   //assign to the chart
   chart.dataset = dataset;
-  chart.override = {
-    "width": parseInt(d3.select("#chart").style('width')),
-    "height": parseInt(d3.select("#chart").style('height'))
+
+  //show the chart
+  chart.show({
+    elementId: "#chart",
+    width: 800,
+    height: 800
+  });
+```
+{{/markdown}}
+
+
+<script>
+  //create a cedar chart
+  var chart = new Cedar();
+
+  //create the specification
+  var spec ={
+  "inputs": [
+    {"name": "y", "type": ["numeric","string"], "required": true},
+    {"name": "label", "type": ["string"], "required": false},
+    {"name": "radius", "type": ["numeric"], "required": true}
+  ],
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "format": {
+          "property": "features"
+        },
+        "transform": [
+          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "formula", "field": "hyp", "expr": "{radius}"},
+          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
+          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
+          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "r",
+        "type": "sqrt",
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+      }
+    ],
+    "marks": [
+      {
+        "type": "arc",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"group": "width"},
+            "y": {"group": "height"},
+            "startAngle": {"field": "startAngle"},
+            "endAngle": {"field": "endAngle"},
+            "outerRadius": {"value": "{radius}"},
+            "stroke": {"value": "#fff"}
+          },
+          "update": {
+            "fill": {"value": "#0079c1"}
+          },
+          "hover": {
+            "fill": {"value": "#29b6ea"}
+          }
+        }
+      },
+      {
+        "type": "text",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "y": {"field": "y", "mult": 0.6},
+            "x": {"field": "x", "mult": 0.6},
+            "fill": {"value": "#fff"},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"},
+            "text": {"field": "data.attributes.{label.field}"}
+          }
+        }
+      }
+    ]
   }
+  
+}
+  //assign to chart
+  chart.specification = spec;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "FACUSE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },    
+    "mappings":{
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
+      "label": {"field":"FACUSE","label":"Facility Use"},
+      "radius": 360
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
   //show the chart
   chart.show({
     elementId: "#chart",
