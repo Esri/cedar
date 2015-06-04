@@ -85,14 +85,11 @@
         "title": "{y.label}",
         "titleOffset": 50,
         "properties": {
-<<<<<<< HEAD
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "bold"}
           },
-=======
->>>>>>> Changed Event handlers to include event object for tooltip placement
           "ticks": {
              "stroke": {"value": "#dbdad9"}
           },
