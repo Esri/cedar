@@ -10,10 +10,58 @@ layout: example.hbs
 
 <div id="chart"></div>
 
+{{#markdown}}
+```js
 
+  var chart = new Cedar({"type":"time"});
+
+  var dataset = {
+    "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "mappings":{
+      "time": {"field":"Date"},
+      "value": {"field":"Injuries"},
+      "sort":"Date"
+
+    }
+  };
+  var tooltip = {
+    "title": "{Year}",
+    "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
+  };
+
+  chart.dataset = dataset;
+  //chart.dataset.mappings.sort = "DATE";
+  chart.show({
+    elementId: "#chart",
+  }); 
+
+  chart.on('mouseover', function(event,data){
+    console.log("event", event);
+    console.log("data", data);
+
+      var cedartip = document.getElementById('cedar-tooltip');
+      cedartip.style.top = event.pageY + "px";
+      cedartip.style.left = event.pageX + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltip.title + "</span><br />";
+      content += "<p class='content'>" + tooltip.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });
+  chart.on('mouseout', function(event,data){
+      var tooltip = document.getElementById('cedar-tooltip');
+      tooltip.style.top = event.pageY+10 + "px";
+      tooltip.style.left = event.pageX+10 + "px";
+      tooltip.style.display = "none";
+    })
+
+```
+{{/markdown}}
 <script>
   
-  var chart = new Cedar({"specification":"{{assets}}data/templates/time.json"});
+  var chart = new Cedar({"type":"time"});
 
   var dataset = {
     "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",

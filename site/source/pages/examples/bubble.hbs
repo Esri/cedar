@@ -12,21 +12,44 @@ layout: example.hbs
 {{#markdown}}
 ```javascript
   var chart = new Cedar({
-    "specification":"{{assets}}data/templates/bubble.json",
+    "type":"bubble",
     "dataset":{
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
       "query":{},
       "mappings":{
-        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrollment 2008"},
-        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "size":{"field":"TOTAL_STUD","label":"Number Students"}
+        "x": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "y": {"field":"CAPACITY","label":"Capacity"},
+        "size":{"field":"TOTAL_STUD","label":"Number of Students"}
       }
     }
   });
 
+  var tooltipurl = {
+    "id": "tooltip",
+    "title": "{NAME}",
+    "content": "{TOTAL_STUD} out of {CAPACITY} Students in {SQUARE_FOOTAGE} sq. ft."
+  }  
+
   chart.show({
     elementId: "#chart",
   });
+
+  chart.on('mouseout', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.display = "none";
+    })
+  chart.on('mouseover', function(event,data){
+      var cedartip = document.getElementById(tooltipurl.id);
+      cedartip.style.top = event.offsetY+40 + "px";
+      cedartip.style.left = event.offsetX+30 + "px";
+      cedartip.style.display = "block";
+      var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
+      content += "<p class='content'>" + tooltipurl.content + "</p>";
+
+      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+        return data[$1];
+      } );
+    });  
 
  ```
 {{/markdown}}
@@ -35,7 +58,7 @@ layout: example.hbs
 
 <script>
   var chart = new Cedar({
-    "specification":"{{assets}}data/templates/bubble.json",
+    "type":"bubble",
     "dataset":{
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
       "query":{},

@@ -34,7 +34,7 @@ layout: example.hbs
     }
   };
 
-  var chart1 = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
+  var chart1 = new Cedar({"type":"bar", "dataset": dataset});
 
   chart1.show({
     elementId: "#chart1",
@@ -42,7 +42,7 @@ layout: example.hbs
 
   dataset.mappings.radius = 180;
 
-  var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
+  var chart2 = new Cedar({"type":"pie", "dataset": dataset});
 
   chart2.show({
     elementId: "#chart2",
@@ -74,7 +74,7 @@ layout: example.hbs
     }
   };
 
-  var chart1 = new Cedar({"specification":"{{assets}}data/templates/bar.json", "dataset": dataset});
+  var chart1 = new Cedar({"type":"bar", "dataset": dataset});
 
   chart1.show({
     elementId: "#chart1",
@@ -82,7 +82,7 @@ layout: example.hbs
 
   dataset.mappings.radius = 180;
 
-  var chart2 = new Cedar({"specification":"{{assets}}data/templates/pie.json", "dataset": dataset});
+  var chart2 = new Cedar({"type":"pie", "dataset": dataset});
 
   chart2.show({
     elementId: "#chart2",

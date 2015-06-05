@@ -10,17 +10,17 @@ layout: example.hbs
 
 
 {{#markdown}}
-```html
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
-  //fetch data from a json file
+```js
+  var chart = new Cedar({"type":"bar"});
+
   var data = Cedar.getJson('{{assets}}data/feature-collection-data.json', function(err, data){
     if(!err){
 
       var dataset = {
         "data": data,
         "mappings":{
-          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-          "count": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+          "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+          "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
         }
       };
       //assign to the chart
@@ -34,7 +34,7 @@ layout: example.hbs
     }else{
       console.error('Error loading data from file');
     }
-
+  });
 ```
 ### Expected Format
 ```
@@ -60,8 +60,7 @@ layout: example.hbs
 {{/markdown}}
 
 <script>
-  //create a cedar chart - passing a url to the spec
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  var chart = new Cedar({"type":"bar"});
 
   var data = Cedar.getJson('{{assets}}data/feature-collection-data.json', function(err, data){
     if(!err){
@@ -85,7 +84,4 @@ layout: example.hbs
       console.error('Error loading data from file');
     }
   });
-
-
-
 </script>

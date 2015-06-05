@@ -14,16 +14,68 @@ When starting with Cedar, we suggest that you begin by exploring the simple char
 
 ## Getting Started
 
-```json
+### Loading Cedar
+
+You can load Cedar and its dependencies by including script tags. This will make the `Cedar` global availabe to your application.
+
+```html
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3/vega.min.js"></script>
 <script type="text/javascript" src="https://rawgit.com/Esri/cedar/master/src/cedar.js"></script>
-
-<div id="chart"></div>
 <script>
-var chart = new Cedar({
-  "specification":"http://esri.github.io/cedar/data/templates/bar.json",
-  "dataset": {
+  var chart = new Cedar({"type": "bar"});
+  ...
+</script>
+```
+
+Altenatively, you can use Dojo loader that is bundled with the [ArcGIS API for JavaScript](developers.arcgis.com/javascript/), to load Cedar and its dependencies by declaring them as packages:
+
+```html
+<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+<script>
+  window.dojoConfig = {
+    async: true,
+    packages: [
+      {
+        name: 'd3',
+        location: 'http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5',
+        main: 'd3.min'
+      }, {
+        name: 'topojson',
+        location: 'http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19',
+        main: 'topojson.min'
+      }, {
+        name: 'vega',
+        location: 'http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3',
+        main: 'vega.min'
+      }, {
+        name: 'cedar',
+        location: window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/../js',
+        main: 'cedar'
+      }
+    ]
+  };
+</script>
+<script src="http://js.arcgis.com/3.13/"></script>
+<script>
+  require('cedar', function(Cedar) {
+    var chart = new Cedar({"type": "bar"});
+    ...
+  });
+</script>
+```
+
+### Using Cedar
+
+Once Cedar is loaded you can create and show the chart at a designated element as follows:
+
+```js
+  //create a cedar chart using the known 'bar' type
+  // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
+  var chart = new Cedar({"type": "bar"});
+
+  //create the dataset w/ mappings
+  var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "query": {
       "groupByFieldsForStatistics": "ZIP_CODE",
@@ -38,20 +90,22 @@ var chart = new Cedar({
       "x": {"field":"ZIP_CODE","label":"ZIP Code"},
       "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
-  }
-});
+  };
 
-chart.show({
-  "elementId": "#chart"
-});
-</script>
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
 ```
 
+See the [API documentation](http://esri.github.io/cedar/api) and [examples](http://esri.github.io/cedar/examples) for further details.
 
 ## Demos
 
 Here is are [an extensive set of demos](http://esri.github.io/cedar/examples) showing the concepts of Cedar.
-
 
 ## Components of a Cedar Chart
 
@@ -66,6 +120,7 @@ Cedar charts are defined by the following ingredients:
  - `mappings` bind the Feature Layer attributes to the `Specification inputs`
 - and `overrides` are specific modifications to the `Specification template`
 
+See the [API documentation](http://esri.github.io/cedar/api) for further details.
 
 ### Development Instructions
 

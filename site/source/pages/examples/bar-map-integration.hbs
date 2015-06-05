@@ -15,7 +15,7 @@ amd: true
 
 
 {{#markdown}}
-```html
+```js
   
   require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Cedar, Map, FeatureLayer, 
@@ -49,7 +49,7 @@ amd: true
     map.addLayer(featureLayer);
     
     //create a cedar chart
-    var chart = new Cedar({"specification":"../data/templates/bar.json"});
+    var chart = new Cedar({"type":"bar"});
 
     chart.override = {
       "height": 400,
@@ -148,7 +148,7 @@ amd: true
     map.addLayer(featureLayer);
     
     //create a cedar chart
-    var chart = new Cedar({"specification":"../data/templates/bar.json"});
+    var chart = new Cedar({"type":"bar"});
 
     chart.override = {
       "height": 400,

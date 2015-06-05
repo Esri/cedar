@@ -23,6 +23,27 @@
 } (function (vg, d3) {
   'use strict';
 
+  // get cedar root URL for loading chart specs
+  var baseUrl = (function() {
+    var cdnProtocol = 'http:';
+    var cdnUrl = '//esri.github.io/cedar/js';
+    var src;
+    if (window && window.document) {
+      src = (window.document.currentScript && window.document.currentScript.src);
+      if (src) {
+        // real browser, get base url from current script
+        return src.substr(0, src.lastIndexOf('/'));
+      } else {
+        // ie, set base url to CDN
+        // NOTE: could fallback to CDN only if can't find any scripts named cedar 
+        return (window.document.location ? window.document.location.protocol : cdnProtocol) + cdnUrl;
+      }
+    } else {
+      // node, set base url to CDN
+      return cdnProtocol + cdnUrl;
+    }
+  })();
+
 /**
  * Constructor
  * @param {object} options Cedar options
@@ -33,6 +54,8 @@ var Cedar = function Cedar(options){
 
   //ensure an opts object
   var opts = options || {};
+
+  var spec;
 
   /**
    * Internals for holding state
@@ -54,6 +77,11 @@ var Cedar = function Cedar(options){
   //queue to hold methods called while
   //xhrs are in progress
   this._methodQueue=[];
+
+  // override base URL 
+  if (opts.baseUrl) {
+    this.baseUrl = opts.baseUrl;
+  }
 
   /**
    * Flag used to determine if the library is
@@ -84,23 +112,32 @@ var Cedar = function Cedar(options){
     this._definition.override = opts.override;
   }
 
-  //template
-  if(opts.specification){
-    //is it an object or string(assumed to be url)
-    if(typeof opts.specification === 'object'){
-      //hold onto the template
-      this._definition.specification = opts.specification;
+  // specification
 
-    }else if(typeof opts.specification === 'string' ){ 
+  // first, check for pre-defined chart type passed as "type"
+  spec = this._getSpecificationUrl(opts.type);
+
+  // if url or object passed used that
+  if(opts.specification){
+    spec = opts.specification;
+  }
+
+  if (spec) {
+    //is it an object or string(assumed to be url)
+    if(typeof spec === 'object'){
+      //hold onto the template
+      this._definition.specification = spec;
+
+    }else if(typeof spec === 'string' ){ 
       //assume it's a url (relative or abs) and fetch the template object
       this._pendingXhr = true;
-      Cedar.getJson(opts.specification, function(err,data){
+      Cedar.getJson(spec, function(err,data){
         self._pendingXhr = false;
         self._definition.specification = data; 
         self._purgeMethodQueue();
       });
     }else{
-      throw new Error('parameter template must be an object or string (url)');
+      throw new Error('parameter specification must be an object or string (url)');
     }
   }
 
@@ -154,6 +191,11 @@ var Cedar = function Cedar(options){
 
 };
 
+// base URL of this library
+Cedar.prototype.baseUrl = baseUrl;
+
+// default pre-defined chart types
+Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'time'];
 
 /**
  * Inspect the current state of the object
@@ -499,7 +541,15 @@ Cedar._defaultQuery = function(){
   return defaultQuery;
 };
 
-
+/**
+ * Get pre-defined spec url
+ */
+Cedar.prototype._getSpecificationUrl = function(spec){
+  if (this.chartTypes.indexOf(spec) !== -1) {
+    spec = this.baseUrl + '/charts/' + this.chartTypes[this.chartTypes.indexOf(spec)] + '.json';
+  }
+  return spec;
+};
 
 /**
  * Generic event handler proxy
@@ -578,6 +628,8 @@ Cedar.getJson = function( url, callback ){
 
 
 Cedar._mixin = function(source) {
+    /*jshint loopfunc: true*/
+    // TODO: prob should replace w/ forEach()
     for (var i = 1; i < arguments.length; i++) {
         d3.entries(arguments[i]).forEach(function(p) {
             source[p.key] = p.value;

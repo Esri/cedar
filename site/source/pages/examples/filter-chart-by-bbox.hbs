@@ -32,10 +32,8 @@ This example shows how to filter the charted data based on a bounding box (bbox)
 
 
 {{#markdown}}
-
-```html
-  
-    require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+```js
+  require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Cedar, Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
 
@@ -75,14 +73,21 @@ This example shows how to filter the charted data based on a bounding box (bbox)
     
     var dataset = {
       "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
-      "query": {},
+      "query": {
+        "groupByFieldsForStatistics": "state",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "injuries", 
+          "outStatisticFieldName": "injuries_SUM"
+        }]
+      },  
       "mappings":{
         "x": {"field":"state","label":"State"},
-        "y": {"field":"injuries","label":"Injuries"}
+        "y": {"field":"injuries_SUM","label":"Injuries"}
       }
     };
 
-    var chart = new Cedar({"specification":"../data/templates/bar.json", "dataset": dataset});
+    var chart = new Cedar({"type": "bar", "dataset": dataset});
 
     chart.override = {
       "height": 300,
@@ -168,7 +173,7 @@ This example shows how to filter the charted data based on a bounding box (bbox)
       }
     };
 
-    var chart = new Cedar({"specification":"{{assets}}/data/templates/bar.json", "dataset": dataset});
+    var chart = new Cedar({"type": "bar", "dataset": dataset});
 
     chart.override = {
       "height": 300,

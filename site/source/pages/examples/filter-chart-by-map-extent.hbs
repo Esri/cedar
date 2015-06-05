@@ -25,8 +25,7 @@ amd: true
 
 
 {{#markdown}}
-```html
-  
+```js
   require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "dojo/domReady!"], function(Cedar, Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color) { 
@@ -80,8 +79,7 @@ amd: true
         "y": {"field":"injuries_SUM","label":"Injuries"}
       }
     };
-
-    var chart = new Cedar({"specification":"{{assets}}/data/templates/bar.json", "dataset": dataset});
+    var chart = new Cedar({"type": "bar", "dataset": dataset});
 
     chart.override = {
       "height": 300,
@@ -166,7 +164,7 @@ amd: true
         "y": {"field":"injuries_SUM","label":"Injuries"}
       }
     };
-    var chart = new Cedar({"specification":"{{assets}}/data/templates/bar.json", "dataset": dataset});
+    var chart = new Cedar({"type": "bar", "dataset": dataset});
 
     chart.override = {
       "height": 300,

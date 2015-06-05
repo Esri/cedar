@@ -18,29 +18,39 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
 | `definition` | <`string or object`> | no | URL to a complete chart <a href="{{assets}}api/json/definition-json.html">definition</a> (dataset + specification) or an inline <a href="{{assets}}api/json/definition-json.html">definition</a> object. |
 | `specification` | <`string or object`> | no | URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a> or an inline <a href="{{assets}}api/json/specification-json.html">specification</a> object. |
 | `dataset` | <`object`> | no | <a href="{{assets}}api/json/dataset-json.html">dataset</a> object. |
-
+| `type` | <`string`> | no | Shorthand for specifying a URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a>. Can be one of the pre-defined types ('bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'time') or a URL to a secificatin JSON file. |
 
 
 ### Examples
 
-```json
-var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+```js
+  //create a cedar chart using the known 'bar' type
+  // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
+  var chart = new Cedar({"type": "bar"});
 
-//create the dataset w/ mappings
-var dataset = {
-  "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-  "mappings":{
-    "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-    "count": {"field":"TOTAL_STUD","label":"Total Students"}
-  }
-};
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query": {
+      "groupByFieldsForStatistics": "ZIP_CODE",
+      "outStatistics": [{
+        "statisticType": "sum", 
+        "onStatisticField": "TOTAL_STUD", 
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
+      }]
+    },
+    "mappings":{
+      "sort": "TOTAL_STUD_SUM DESC",
+      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+    }
+  };
 
-//assign to the chart
-chart.dataset = dataset;
+  //assign to the chart
+  chart.dataset = dataset;
 
-
-// make the chart visible by attaching it to a DOM node
-chart.show({
-  elementId: "#chart"
-});
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
 ```

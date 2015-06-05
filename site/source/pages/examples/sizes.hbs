@@ -7,7 +7,7 @@ layout: example.hbs
   <script src="//code.jquery.com/jquery-1.10.2.js"></script>
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <style>
-    #examples { height: 1500px; }
+    #examples { height: 1800px; }
     #resizable { width: 550px; height: 150px; padding: 0.5em; }
     #resizable h3 { text-align: center; margin: 0; }
   </style>
@@ -31,32 +31,7 @@ layout: example.hbs
 {{#markdown}}
 ```javascript
   var spec = {
-    "specification":"{{assets}}data/templates/bar.json", 
-    "dataset": {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-      "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
-      }
-    }
-  }
-  var chartS = new Cedar(spec); chartS.show({elementId: "#chart-small"});
-  var chartM = new Cedar(spec); chartM.show({elementId: "#chart-medium"});
-  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large"});
-
-
-  $(function() {
-    $( "#resizable" ).resizable({
-      resize: function() { chartL.update(); }
-    });
-  });
-```
-{{/markdown}}  
-</div>
-<script>
-
-  var spec = {
-    "specification":"{{assets}}data/templates/bar.json", 
+    "type": "bar", 
     "dataset": {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
       "query": {
@@ -83,5 +58,36 @@ layout: example.hbs
       resize: function() { chartL.update(); }
     });
   });
+```
+{{/markdown}}  
+</div>
+<script>
+  var spec = {
+    "type": "bar", 
+    "dataset": {
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query": {
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "TOTAL_STUD", 
+          "outStatisticFieldName": "TOTAL_STUD_SUM"
+        }]
+      },
+      "mappings":{
+        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      }
+    }
+  }
+  var chartS = new Cedar(spec); chartS.show({elementId: "#chart-small"});
+  var chartM = new Cedar(spec); chartM.show({elementId: "#chart-medium"});
+  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large"});
 
+
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chartL.update(); }
+    });
+  });
 </script>
