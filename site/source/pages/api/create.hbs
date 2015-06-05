@@ -19,7 +19,7 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
 | `specification` | <`string or object`> | no | URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a> or an inline <a href="{{assets}}api/json/specification-json.html">specification</a> object. |
 | `dataset` | <`object`> | no | <a href="{{assets}}api/json/dataset-json.html">dataset</a> object. |
 | `type` | <`string`> | no | Shorthand for specifying a URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a>. Can be one of the pre-defined types ('bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'time') or a URL to a secificatin JSON file. |
-
+| `baseUrl` | <`string`> | no | The URL of the folder which contains the Cedar script file (cedar.js or cedar.min.js).* |
 
 ### Examples
 
@@ -54,3 +54,5 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
     elementId: "#chart"
   });
 ```
+
+*&nbsp;You should not need to set the `baseUrl` unless you are using Internet Explorer, which is not able to determine this location automatically, and defaults to using http://esri.github.io/cedar/js as the `baseUrl` when loading chart pre-defined chart specification JSON files. To prevent this behavior in Internet Explorer, set this to the same URL of the folder where you loaded the Cedar script (cedar.js or cedar.min.js). Example: `baseUrl: `./js`
