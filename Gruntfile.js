@@ -74,7 +74,16 @@ module.exports = function(grunt) {
           'src/**/*.js',
           'spec/**/*.spec.js'
         ],
-        tasks: ['jshint', 'copy:scripts'],
+        tasks: ['jshint', 'concat', 'uglify', 'copy:scripts'],
+        options: {
+          spawn: false
+        }
+      },
+      specs: {
+        files: [
+          'src/charts/*.json'
+        ],
+        tasks: ['copy:specs'],
         options: {
           spawn: false
         }
@@ -88,7 +97,7 @@ module.exports = function(grunt) {
       },
       'docs-js': {
         files: ['site/source/**/*.js'],
-        tasks: ['concat', 'uglify', 'copy:assemble'],
+        tasks: ['copy:assemble'],
         options: {
           nospawn: true
         }
@@ -244,12 +253,15 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: [
-          { src: 'src/cedar.js', dest: 'site/build/js/core.js'},
           { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
-          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts/'},
-          { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
+        ]
+      },
+      specs: {
+        files: [
+          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'}
         ]
       }
+
     },
 
     imagemin: {

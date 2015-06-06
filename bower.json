@@ -6,20 +6,27 @@
     "Dave Bouwman <dave@davebouwman.com>"
   ],
   "description": "Charting for the ArcGIS platform",
-  "main": "index.js",
+  "main": [
+    "src/cedar.js",
+    "src/charts/bar-horizontal.json",
+    "src/charts/bar.json",
+    "src/charts/bubble.json",
+    "src/charts/pie.json",
+    "src/charts/scatter.json",
+    "src/charts/time.json"
+  ],
   "license": "Apache 2",
   "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "test",
-    "tests"
+    "spec"
   ],
   "dependencies": {
     "bootstrap-sass-official": "~3.3.1",
     "d3": "~3.5.2",
-    "vega": "~1.4.2",
+    "vega": "~1.4.3",
     "q": "~2.0.2"
   },
   "resolutions": {
