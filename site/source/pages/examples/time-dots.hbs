@@ -8,24 +8,13 @@ layout: example.hbs
 
 <div id="chart"></div>
 
+{{#markdown}}
+```js
+{{>example-time-dots}}
+
+```
+{{/markdown}}
 
 <script>
-  
-  var chart = new Cedar({"specification":"{{assets}}data/templates/time-dots.json"});
-
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/FEEDS/CDW_Feeds/MapServer/8",
-    "mappings":{
-      "time":   {"field":"REPORTDATETIME"},
-      "aspect": {"field":"OFFENSE"},
-      "facet":  {"field":"WARD"},
-      "color":  {"field":"SHIFT"}
-    }
-  };
-  chart.dataset = dataset;
-
-  chart.show({
-    "elementId": "#chart",
-  });  
-
+{{>example-time-dots}}
 </script>

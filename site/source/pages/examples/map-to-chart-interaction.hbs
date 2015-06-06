@@ -15,9 +15,8 @@ amd: true
 
 
 {{#markdown}}
-```html
-  
-    require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
+```js
+  require(["cedar", "esri/map", "esri/layers/FeatureLayer", "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/renderers/SimpleRenderer",  "esri/renderers/UniqueValueRenderer", "esri/Color", "esri/graphic", "dojo/domReady!"], function(Cedar, Map, FeatureLayer, 
        SimpleMarkerSymbol, SimpleLineSymbol, SimpleRenderer, UniqueValueRenderer, Color, Graphic) { 
 
@@ -50,7 +49,7 @@ amd: true
     
     //create a cedar chart
     var chart = new Cedar({
-      "specification":"../data/templates/bar.json"
+      "type": "bar"
     });
 
     chart.override = {
@@ -64,17 +63,17 @@ amd: true
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
 
-    "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
-      "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
-      }]
+      "query": {
+        "groupByFieldsForStatistics": "ZIP_CODE",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "TOTAL_STUD", 
+          "outStatisticFieldName": "TOTAL_STUD_SUM"
+        }]      
       },
       "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
       }
     };
 
@@ -118,6 +117,8 @@ amd: true
     function onMouseout(d) {
       
       map.graphics.clear();
+
+      var val = d.graphic.attributes["ZIP_CODE"];
       chart.clearSelection({});
 
     }
@@ -142,6 +143,7 @@ amd: true
 
 
   });
+
 ```
 {{/markdown}}
 
@@ -181,7 +183,7 @@ amd: true
     
     //create a cedar chart
     var chart = new Cedar({
-      "specification":"../data/templates/bar.json"
+      "type": "bar"
     });
 
     chart.override = {

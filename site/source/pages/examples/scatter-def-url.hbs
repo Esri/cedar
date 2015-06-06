@@ -9,33 +9,9 @@ layout: example.hbs
 
 
 {{#markdown}}
-```html
+```js
   var chart = new Cedar({
-    "specification":"{{assets}}data/templates/scatter.json",
-    "dataset":{
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-      "query":{},
-      "mappings":{
-        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
-        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "color":{"field":"FACUSE","label":"Facility Type"}
-      }
-    }
-  });
-
-  chart.show({
-    elementId: "#chart",
-  });
-
- 
-```
-{{/markdown}}
-
-
-
-<script>
-  var chart = new Cedar({
-    "specification":"{{assets}}data/templates/scatter.json",
+    "type":"scatter",
     "dataset":{
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
       "query":{},
@@ -52,6 +28,28 @@ layout: example.hbs
     width: 800,
     height: 400
   });
+```
+{{/markdown}}
 
 
+
+<script>
+  var chart = new Cedar({
+    "type":"scatter",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "color":{"field":"FACUSE","label":"Facility Type"}
+      }
+    }
+  });
+
+  chart.show({
+    elementId: "#chart",
+    width: 800,
+    height: 400
+  });
 </script>

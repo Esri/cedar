@@ -21,10 +21,10 @@ layout: example.hbs
 
 
 {{#markdown}}
-```html
+```js
   
-   //create a cedar chart
-  var chart = new Cedar({"specification":"../data/templates/bar.json"});
+  //create a cedar chart
+  var chart = new Cedar({"type": "bar"});
   var style = {
       "height": 400,
       "width": 850,
@@ -50,6 +50,7 @@ layout: example.hbs
       "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
   };
+
   //assign to the chart
   chart.dataset = dataset;
 
@@ -106,15 +107,15 @@ layout: example.hbs
     });
 
   } 
+
 ```
 {{/markdown}}
 
 
 <script>
   
-
   //create a cedar chart
-  var chart = new Cedar({"specification":"../data/templates/bar.json"});
+  var chart = new Cedar({"type": "bar"});
   var style = {
       "height": 400,
       "width": 850,

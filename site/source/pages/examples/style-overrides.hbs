@@ -47,7 +47,7 @@ layout: example.hbs
 <script>
 
   //create a cedar chart, passing a url to a spec
-  var barChart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  var barChart = new Cedar({"type": "bar"});
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://services.arcgis.com/pmcEyn9tLWCoX7Dm/arcgis/rest/services/CA_Hospitals/FeatureServer/0",

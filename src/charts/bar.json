@@ -1,89 +1,107 @@
 {
   "inputs": [
-    {"name": "count", "type": ["numeric","string"], "required": true},
-    {"name": "group", "type": ["string"], "required": false}
+    { "name": "x", "type": [ "numeric", "string" ], "required": false },
+    { "name": "y", "type": [ "string" ], "required": true }
   ],
-  "axes": [
-    {
-      "type": "x",
-      "scale": "x",
-      "title": "X-Axis"
-    }
-  ],
-  "data": [
-    {
-      "name": "table",
-      "url": "{data}",
-      "format": {
-        "property": "features"
-      }
-    }
-  ],
-  "height": 600,
-  "marks": [
-    {
-      "from": {
-        "data": "table"
-      },
-      "properties": {
-        "enter": {
-          "width": {
-            "band": true,
-            "offset": -1,
-            "scale": "x"
+  "query": {},
+  "template":{
+    "padding": "strict",
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "titleOffset": 45,
+        "title": "{x.label}",          
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },          
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
           },
-          "x": {
-            "field": "data.attributes.{group}",
-            "scale": "x"
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
           },
-          "y": {
-            "field": "data.attributes.{count}_SUM",
-            "scale": "y"
-          },
-          "y2": {
-            "scale": "y",
-            "value": 0
-          }
-        },
-        "hover": {
-          "fill": {
-            "value": "red"
-          }
-        },
-        "update": {
-          "fill": {
-            "value": "steelblue"
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 50},
+            "align": {"value": "left"},
+            "baseline": {"value": "middle"}
           }
         }
       },
-      "type": "rect"
-    }
-  ],
-  "padding": {
-    "bottom": 20,
-    "left": 80,
-    "right": 10,
-    "top": 10
-  },
-  "scales": [
-    {
-      "domain": {
-        "data": "table",
-        "field": "data.attributes.{group}"
+      {
+        "type": "y",
+        "scale": "y",
+        "titleOffset": 45,
+        "title": "{y.label}",          
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "bold"}
+          },          
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"}
+          }
+        }
+      }      
+    ],
+    "data": [
+      {
+        "name": "table",
+        "format": {"property": "features"}
+      }
+    ],    
+    "marks": [
+      {
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "width": {"band": true, "offset": -1, "scale": "x"},
+            "x": {"field": "data.attributes.{x.field}", "scale": "x"},
+            "y": {"field": "data.attributes.{y.field}", "scale": "y"},
+            "y2": {"scale": "y", "value": 0 }
+          },
+          "hover": {
+            "fill": {"value": "#29b6ea"}
+          },
+          "update": {
+            "fill": {"value": "#0079c1"}
+          }
+        },
+        "type": "rect"
+      }
+    ],    
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{x.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
       },
-      "name": "x",
-      "range": "width",
-      "type": "ordinal"
-    },
-    {
-      "domain": {
-        "data": "table",
-        "field": "data.attributes.{count}_SUM"
-      },
-      "name": "y",
-      "nice": true,
-      "range": "height"
-    }
-  ],
-  "width": 600
+      {
+        "domain": {
+          "data": "table",
+          "field": "data.attributes.{y.field}"
+        },
+        "name": "y",
+        "nice": true,
+        "range": "height"
+      }
+    ]
+  }
 }

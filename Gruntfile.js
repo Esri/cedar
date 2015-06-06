@@ -1,12 +1,13 @@
-var fs = require('fs');
+// var fs = require('fs');
 
+/* jshint strict: false, camelcase: false */
 module.exports = function(grunt) {
   var browsers = grunt.option('browser') ? grunt.option('browser').split(',') : ['PhantomJS'];
 
-  var copyright = '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\'yyyy-mm-dd\') %>\n' +
-                  '*   Copyright (c) <%= grunt.template.today(\'yyyy\') %> Environmental Systems Research Institute, Inc.\n' +
-                  '*   Apache License' +
-                  '*/\n';
+  // var copyright = '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\'yyyy-mm-dd\') %>\n' +
+  //                 '*   Copyright (c) <%= grunt.template.today(\'yyyy\') %> Environmental Systems Research Institute, Inc.\n' +
+  //                 '*   Apache License' +
+  //                 '*/\n';
 
   var cedar_vega_d3 = [
     'bower_components/d3/d3.js',
@@ -243,9 +244,9 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: [
-          { src: 'bower_components/vega/vega.js', dest: 'site/build/js/vega.js'},
-          { src: 'src/cedar.js', dest: 'site/build/js/cedar-core.js'},
+          { src: 'src/cedar.js', dest: 'site/build/js/core.js'},
           { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
+          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts/'},
           { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
       }

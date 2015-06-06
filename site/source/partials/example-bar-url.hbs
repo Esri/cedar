@@ -1,6 +1,7 @@
 <script>
-  //create a cedar chart - passing a url to the spec
-  var chart = new Cedar({"specification":"{{assets}}data/templates/bar.json"});
+  //create a cedar chart using the known 'bar' type
+  // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
+  var chart = new Cedar({"type": "bar"});
   //create the dataset w/ mappings
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",

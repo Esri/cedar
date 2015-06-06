@@ -9,10 +9,9 @@ layout: example.hbs
 
 
 {{#markdown}}
-```html
-{{>example-code-header}}
+```js
   //create a cedar chart
-  var chart = new Cedar({"specification":"{{assets}}data/templates/horizontal.json"});
+  var chart = new Cedar({"type": "bar-horizontal"});
 
   //create the dataset w/ mappings
   var dataset = {
@@ -43,16 +42,13 @@ layout: example.hbs
   chart.show({
     elementId: "#chart"
   });
-
- 
-{{>example-code-footer}}
 ```
 {{/markdown}}
 
 
 <script>
   //create a cedar chart
-  var chart = new Cedar({"specification":"{{assets}}data/templates/horizontal.json"});
+  var chart = new Cedar({"type": "bar-horizontal"});
 
   //create the dataset w/ mappings
   var dataset = {
