@@ -55,7 +55,7 @@ layout: example.hbs
 
   $(function() {
     $( "#resizable" ).resizable({
-      resize: function() { chartL.update(); }
+      resize: function() { chartL.redraw(); }
     });
   });
 ```
@@ -87,7 +87,7 @@ layout: example.hbs
 
   $(function() {
     $( "#resizable" ).resizable({
-      resize: function() { chartL.update(); }
+      resize: function() { chartL.redraw(); }
     });
   });
 </script>
