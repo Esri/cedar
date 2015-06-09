@@ -57,6 +57,11 @@ var Cedar = function Cedar(options){
 
   var spec;
 
+  /** 
+   * Retain the feature data
+   */
+  var _data;
+
   /**
    * Internals for holding state
    */
@@ -64,6 +69,7 @@ var Cedar = function Cedar(options){
   // Cedar configuration such as size
   this.width = undefined;
   this.height = undefined;
+  this.autolabels = false;
 
   // Array to hold event handlers
   this._events = [];
@@ -246,6 +252,7 @@ Cedar.prototype.show = function(options){
     this._renderer = options.renderer || "canvas"; //default to canvas
     this.width = options.width || undefined; // if not set in API, always base on current div size
     this.height = options.height || undefined;
+    this.autolabels = options.autolabels || false;
 
     //hold onto the token
     if(options.token){
@@ -352,6 +359,9 @@ Cedar.prototype.update = function(){
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
   try{
+    if(self.autolabels == true) {
+        spec = self._placeLabels(spec);
+    }
     //use vega to parse the spec 
     //it will handle the spec as an object or url
     vg.parse.spec(spec, function(chartCtor) { 
@@ -383,6 +393,41 @@ Cedar.prototype._renderSpec = function(spec){
   }
 };
 
+Cedar.prototype._placeLabels = function(spec) {
+  var self = this;
+  try{  
+    var fields = { 
+        x: self._definition.dataset.mappings.x.field,
+        y: self._definition.dataset.mappings.y.field
+    };
+    var lengths = {x: 0, y: 0};
+    var length = 0;
+    spec.data[0].values.features.forEach(function(feature) {
+      ['x','y'].forEach(function(axis) {
+        length = (feature.attributes[fields[axis]] || "").toString().length;
+        if( length > lengths[axis]) {
+          lengths[axis] = length;  
+        }      
+      })
+    });
+
+    ['x','y'].forEach(function(axis, index) {
+      var angle = 0;
+      if (spec.axes[index].properties.labels.angle !== undefined) {
+        angle = spec.axes[index].properties.labels.angle.value;
+      }
+      if(spec.axes[index].type == 'y' ) {
+        angle = 100 - angle;
+      }      
+      spec.axes[index]["titleOffset"] = lengths[axis] * angle/100 * 8 + 30;
+      //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
+    });
+    return spec;
+
+  } catch(ex) {
+    throw(ex);
+  }
+}
 /**
  * highlight marker based on attribute value
  */

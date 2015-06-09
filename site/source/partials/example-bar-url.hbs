@@ -6,7 +6,7 @@
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "groupByFieldsForStatistics": "FACUSE",
       "outStatistics": [{
         "statisticType": "sum", 
         "onStatisticField": "TOTAL_STUD", 
@@ -15,15 +15,15 @@
     },
     "mappings":{
       "sort": "TOTAL_STUD_SUM DESC",
-      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "x": {"field":"FACUSE","label":"Facility Use"},
       "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
   };
 
   var tooltipurl = {
     "id": "tooltip-url",
-    "title": "{ZIP_CODE}",
-    "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
+    "title": "{FACUSE}",
+    "content": "{TOTAL_STUD_SUM} Students in {FACUSE}"
   }
 
   //assign to the chart
@@ -31,7 +31,8 @@
 
   //show the chart
   chart.show({
-    elementId: "#chart-url"
+    elementId: "#chart-url",
+    autolabels: true
   });
 
   chart.on('mouseout', function(event,data){
