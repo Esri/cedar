@@ -4,8 +4,8 @@
  * Generic charting / visualization library for the ArcGIS Platform
  * that leverages vega + d3 internally.
  */
-
 (function (factory) {
+  /* global module */
   'use strict';
   //define an AMD module that relies on 'vega'
   if (typeof define === 'function' && define.amd) {
@@ -363,8 +363,8 @@ Cedar.prototype._renderSpec = function(spec){
       });
 
       
-      var width = self.width || parseInt(d3.select(self._elementId).style('width')) || 500;
-      var height = self.height || parseInt(d3.select(self._elementId).style('height')) || 500;
+      var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
+      var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
 
       //render into the element
       self._view.width(width).height(height).update(); 
@@ -489,9 +489,11 @@ Cedar._validateData = function(data, mappings){
   }
   var firstRow = data.features[0].attributes;
   for(var key in mappings){
-    var fld = Cedar._getMappingFieldName(key, mappings[key].field);
-    if(!firstRow.hasOwnProperty(fld)){
-      missingInputs.push(fld);
+    if (mappings.hasOwnProperty(key)) {
+      var fld = Cedar._getMappingFieldName(key, mappings[key].field);
+      if(!firstRow.hasOwnProperty(fld)){
+        missingInputs.push(fld);
+      }
     }
   }
   return missingInputs;
@@ -719,9 +721,9 @@ Cedar._applyDefaultsToMappings = function(mappings, inputs){
     }
     
     //if it's not required, has a default and not in the mappings
-    if(!input.required && !mappings[input.name] && input.default){
+    if(!input.required && !mappings[input.name] && input['default']){
       //add the default
-      mappings[input.name] = input.default;
+      mappings[input.name] = input['default'];
     }
   }
 
@@ -753,20 +755,22 @@ Cedar._supplant = function( tmpl, params ){
 */
 Cedar._mergeRecursive = function(obj1, obj2) {
   for (var p in obj2) {
-    try {
-      // Property in destination object set; update its value.
-      if ( obj2[p].constructor===Object || obj2[p].constructor===Array) {
-        obj1[p] = Cedar._mergeRecursive(obj1[p], obj2[p]);
+    if (obj2.hasOwnProperty(p)) {
+      try {
+        // Property in destination object set; update its value.
+        if ( obj2[p].constructor===Object || obj2[p].constructor===Array) {
+          obj1[p] = Cedar._mergeRecursive(obj1[p], obj2[p]);
 
-      } else {
+        } else {
+          obj1[p] = obj2[p];
+
+        }
+
+      } catch(e) {
+        // Property in destination object not set; create it and set its value.
         obj1[p] = obj2[p];
 
       }
-
-    } catch(e) {
-      // Property in destination object not set; create it and set its value.
-      obj1[p] = obj2[p];
-
     }
   }
 
