@@ -18,18 +18,22 @@
   "license": "Apache 2",
   "private": true,
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "spec"
+    "site",
+    "spec",
+    ".gitignore",
+    ".jshintrc",
+    "Gruntfile.js",
+    "karma.conf.js",
+    "package.json"
   ],
   "dependencies": {
-    "bootstrap-sass-official": "~3.3.1",
     "d3": "~3.5.2",
-    "vega": "~1.4.3",
-    "q": "~2.0.2"
+    "vega": "~1.4.3"
   },
   "resolutions": {
     "d3": "~3.5.2"
+  },
+  "devDependencies": {
+    "bootstrap-sass-official": "~3.3.4"
   }
 }
