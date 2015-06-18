@@ -1,15 +1,15 @@
 {
   "inputs": [
-    { "name": "count", "type": [ "numeric", "string" ], "required": false },
-    { "name": "group", "type": [ "string" ], "required": true }
+    { "name": "x", "type": [ "numeric", "string" ], "required": true },
+    { "name": "y", "type": [ "string" ], "required": true }
   ],
   "query": {
-    "orderByFields": "{count.field}_SUM DESC",
-    "groupByFieldsForStatistics": "{group.field}",
+    "orderByFields": "{x.field} DESC",
+    "groupByFieldsForStatistics": "{y.field}",
     "outStatistics": [{
         "statisticType": "sum",
-        "onStatisticField": "{count.field}",
-        "outStatisticFieldName": "{count.field}_SUM"
+        "onStatisticField": "{x.field}",
+        "outStatisticFieldName": "{x.field}"
     }]
   },
   "template":{
@@ -19,7 +19,7 @@
         "type": "x",
         "scale": "x",
         "titleOffset": 45,
-        "title": "{count.label}",
+        "title": "{x.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
@@ -44,7 +44,7 @@
         "type": "y",
         "scale": "y",
         "titleOffset": 25,
-        "title": "{group.label}",
+        "title": "{y.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
@@ -78,8 +78,8 @@
         "properties": {
           "enter": {
             "height": {"band": true, "offset": -1, "scale": "y"},
-            "y": {"scale": "y", "field": "data.attributes.{group.field}"},
-            "x2": {"scale": "x", "field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}"},
+            "y": {"scale": "y", "field": "data.attributes.{y.field}"},
+            "x2": {"scale": "x", "field": "data.attributes.{x.field}"},
             "x": {"scale": "x", "value": 0 }
           },
           "hover": {
@@ -96,7 +96,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{group.field}"
+          "field": "data.attributes.{y.field}"
         },
         "name": "y",
         "range": "height",
@@ -105,7 +105,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{query.outStatistics.0.outStatisticFieldName}"
+          "field": "data.attributes.{x.field}"
         },
         "name": "x",
         "nice": true,
