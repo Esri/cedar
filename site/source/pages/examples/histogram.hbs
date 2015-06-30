@@ -1,0 +1,33 @@
+---
+layout: example.hbs
+---
+
+
+<h1>Histogram</h1>
+
+<div id="chart"></div>
+
+
+<script>
+  var chart = new Cedar({"type": "histogram"});
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "mappings":{
+      "x": {"field":"TOTAL_STUD","label":"Total Students"},
+      "y": {"field":"LEVEL_","label":"Count"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart",
+    width: 800,
+    height: 400,
+    autolabels: true
+  });
+</script>
