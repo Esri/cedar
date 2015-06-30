@@ -280,9 +280,9 @@ Cedar.prototype.baseUrl = baseUrl;
 /** 
  * Default pre-defined chart types
  * 
- * ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time'];
+ * ['bar', 'bar-horizontal', 'bubble', 'grouped', 'histogram', 'pie', 'scatter', 'sparkline', 'time'];
  */
-Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time'];
+Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'grouped', 'histogram', 'pie', 'scatter', 'sparkline', 'time'];
 
 /**
  * Inspect the current state of the object
