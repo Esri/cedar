@@ -57,10 +57,6 @@ var Cedar = function Cedar(options){
 
   var spec;
 
-  /** 
-   * Retain the feature data
-   */
-  var _data;
 
   /**
    * Internals for holding state
@@ -359,7 +355,7 @@ Cedar.prototype.update = function(){
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
   try{
-    if(self.autolabels == true) {
+    if(self.autolabels === true) {
         spec = self._placeLabels(spec);
     }
     //use vega to parse the spec 
@@ -408,7 +404,7 @@ Cedar.prototype._placeLabels = function(spec) {
         if( length > lengths[axis]) {
           lengths[axis] = length;  
         }      
-      })
+      });
     });
 
     ['x','y'].forEach(function(axis, index) {
@@ -419,7 +415,7 @@ Cedar.prototype._placeLabels = function(spec) {
       if(spec.axes[index].type == 'y' ) {
         angle = 100 - angle;
       }      
-      spec.axes[index]["titleOffset"] = lengths[axis] * angle/100 * 8 + 30;
+      spec.axes[index].titleOffset = lengths[axis] * angle/100 * 8 + 30;
       //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
     });
     return spec;
@@ -427,7 +423,7 @@ Cedar.prototype._placeLabels = function(spec) {
   } catch(ex) {
     throw(ex);
   }
-}
+};
 /**
  * highlight marker based on attribute value
  */
