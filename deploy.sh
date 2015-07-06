@@ -6,6 +6,7 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
 	rm -rf site/build || exit 0;
 	mkdir -p site/build;
 
+	npm install -g grunt-cli
 	# run our compile script, discussed above
 	grunt docs:build
 
