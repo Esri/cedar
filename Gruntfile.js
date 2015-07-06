@@ -344,7 +344,10 @@ module.exports = function(grunt) {
   // Documentation Site Tasks
   grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
 
-  // Documentation Site Tasks
+  // Local built to site/build
+  grunt.registerTask('docs:build', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin']);
+
+  // Push to GH Pages
   grunt.registerTask('docs:deploy', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin', 'gh-pages']);
 
   // Require all grunt modules

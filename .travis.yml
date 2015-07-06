@@ -1,3 +1,8 @@
 language: node_js
 node_js:
 - "0.10"
+script: bash ./deploy.sh
+env:
+  global:
+    - GH_REF: github.com/Esri/cedar.git
+    - secure: "QU9A0CWiNCqtli84ytRb7OowR9zhZUcD3Ni/2oZr29gM3OMOn4cw5iHxuF+VJPrih0sZgsr68RMHnOs3hC8rC+EkytWnm6tzA7oHOTn7bD2Bs2xdeIuljSdokdb4/TFmmqRxeMlXRymCGbtg3JaZ/aiqbFZ3BATkdprinvvfLLo="
