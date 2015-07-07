@@ -7,6 +7,7 @@ if [ "$TRAVIS_BRANCH" == "master" ]; then
 	mkdir -p site/build;
 
 	npm install -g grunt-cli
+	bower install
 	# run our compile script, discussed above
 	grunt docs:build
 
