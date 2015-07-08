@@ -13,6 +13,7 @@
     "src/charts/bubble.json",
     "src/charts/pie.json",
     "src/charts/scatter.json",
+    "src/charts/sparkline.json",
     "src/charts/time.json"
   ],
   "license": "Apache 2",

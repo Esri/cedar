@@ -1,0 +1,41 @@
+{
+  "inputs": [
+    { "name": "x", "type": [ "datetime" ], "required": true },
+    { "name": "y", "type": [ "number" ], "required": true }
+  ],
+  "template":{
+    "data": [{
+      "name": "table",
+      "format": {"type": "json", "parse": {"attributes.{x.field}":"date"}}
+    }],
+    "padding": {"top": 0, "left": 0, "bottom": 0, "right": 0},
+    "scales": [
+      {
+        "name": "x",
+        "type": "time",
+        "range": "width",
+  	     "zero": false,
+        "domain": {"data": "table", "field": "data.attributes.{x.field}"}
+      },
+      {
+        "name": "y",
+        "type": "linear",
+        "range": "height",
+  	     "zero": false,
+        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+      }
+    ],
+    "marks": [{
+  		"type": "line",
+  		"from": {"data": "table"},
+  			"properties": {
+  			"enter": {
+  			  "x": {"scale": "x", "field": "data.attributes.{x.field}"},
+  			  "y": {"scale": "y", "field": "data.attributes.{y.field}"},
+  			  "stroke": {"value": "#f00"},
+  			  "strokeWidth": {"value": 1}
+  			}
+  		}
+    }]
+  }
+}
