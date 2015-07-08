@@ -1,0 +1,70 @@
+---
+layout: example.hbs
+---
+
+
+<h1>Sparkline</h1>
+
+<style type="text/css">
+	.cedar-spark .vega { display: inline; padding: 0; margin: 0;}
+	#pop-dc .type-line path { stroke: rgb(0,200,0) !important ;}
+</style>
+
+<p>The population of DC <span id="pop-dc" class="cedar-spark"></span> has increased over the years, while San Francisco <span id="pop-sf" class="cedar-spark"></span> has been more erratic.</p>
+
+<pre>
+&lt;p&gt;The population of DC &lt;span id=&quot;pop-dc&quot; class=&quot;cedar-spark&quot;&gt;&lt;/span&gt; has increased over the years, while San Francisco &lt;span id=&quot;pop-sf&quot; class=&quot;cedar-spark&quot;&gt;&lt;/span&gt; has been more erratic.&lt;/p&gt;
+
+&lt;style&gt;
+#pop-dc .type-line path { stroke: rgb(0,200,0) !important ;}
+&lt;/style&gt;
+
+&lt;script type="text/javascript"&gt;
+  var def = {
+  	"type": "sparkline",
+    "dataset":{
+      "data":data,
+      "mappings":{
+        "x": {"field":"date","label":"Date"},
+        "y": {"field":"dc","label":"dc"}
+      }
+    }
+  }
+  var chartdc = new Cedar(def);
+  chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
+
+  def.dataset.mappings.y.field = "sf";
+  var chartsf = new Cedar(def);
+  chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });	
+&lt;/script&gt;
+</pre>
+
+<script>
+
+  var data = [
+		{"attributes": {"date": "2000", "dc": 600, "sf": 8000}},
+		{"attributes": {"date": "2001", "dc": 630, "sf": 7800}},
+		{"attributes": {"date": "2002", "dc": 580, "sf": 6300}},
+		{"attributes": {"date": "2003", "dc": 660, "sf": 8200}},
+		{"attributes": {"date": "2004", "dc": 700, "sf": 5400}}
+	];
+
+  var def = {
+  	"type": "sparkline",
+    "dataset":{
+      "data":data,
+      "mappings":{
+        "x": {"field":"date","label":"Date"},
+        "y": {"field":"dc","label":"dc"}
+      }
+    }
+  }
+  var chartdc = new Cedar(def);
+  chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
+
+  def.dataset.mappings.y.field = "sf";
+  var chartsf = new Cedar(def);
+  chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });
+
+
+</script>

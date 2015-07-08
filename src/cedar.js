@@ -65,7 +65,7 @@ var Cedar = function Cedar(options){
   // Cedar configuration such as size
   this.width = undefined;
   this.height = undefined;
-  this.autolabels = false;
+  this.autolabels = true;
 
   // Array to hold event handlers
   this._events = [];
@@ -197,7 +197,7 @@ var Cedar = function Cedar(options){
 Cedar.prototype.baseUrl = baseUrl;
 
 // default pre-defined chart types
-Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'time'];
+Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'sparkline', 'time'];
 
 /**
  * Inspect the current state of the object
@@ -248,8 +248,9 @@ Cedar.prototype.show = function(options){
     this._renderer = options.renderer || "canvas"; //default to canvas
     this.width = options.width || undefined; // if not set in API, always base on current div size
     this.height = options.height || undefined;
-    this.autolabels = options.autolabels || false;
-
+    if(options.autolabels !== undefined && options.autolabels !== null){
+      this.autolabels = options.autolabels;
+    }
     //hold onto the token
     if(options.token){
       this._token = options.token;
