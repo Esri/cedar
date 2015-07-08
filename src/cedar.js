@@ -65,7 +65,7 @@ var Cedar = function Cedar(options){
   // Cedar configuration such as size
   this.width = undefined;
   this.height = undefined;
-  this.autolabels = false;
+  this.autolabels = true;
 
   // Array to hold event handlers
   this._events = [];
@@ -251,6 +251,7 @@ Cedar.prototype.show = function(options){
     if(options.autolabels !== undefined && options.autolabels !== null){
       this.autolabels = options.autolabels;
     }
+
     //hold onto the token
     if(options.token){
       this._token = options.token;
