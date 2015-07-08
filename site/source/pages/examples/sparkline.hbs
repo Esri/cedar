@@ -30,12 +30,30 @@ layout: example.hbs
       }
     }
   }
-  var chartdc = new Cedar(def);
+  var chartdc = new Cedar({
+  	"type": "sparkline",
+    "dataset":{
+      "data":data,
+      "mappings":{
+        "x": {"field":"date","label":"Date"},
+        "y": {"field":"dc","label":"dc"}
+      }
+    }
+  });
   chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
-  def.dataset.mappings.y.field = "sf";
-  var chartsf = new Cedar(def);
-  chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });	
+  var chartsf = new Cedar({
+  	"type": "sparkline",
+    "dataset":{
+      "data":data,
+      "mappings":{
+        "x": {"field":"date","label":"Date"},
+        "y": {"field":"sf","label":"population"}
+      }
+    }
+  });
+  chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });
+
 &lt;/script&gt;
 </pre>
 
@@ -49,7 +67,7 @@ layout: example.hbs
 		{"attributes": {"date": "2004", "dc": 700, "sf": 5400}}
 	];
 
-  var def = {
+  var chartdc = new Cedar({
   	"type": "sparkline",
     "dataset":{
       "data":data,
@@ -58,12 +76,19 @@ layout: example.hbs
         "y": {"field":"dc","label":"dc"}
       }
     }
-  }
-  var chartdc = new Cedar(def);
+  });
   chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
-  def.dataset.mappings.y.field = "sf";
-  var chartsf = new Cedar(def);
+  var chartsf = new Cedar({
+  	"type": "sparkline",
+    "dataset":{
+      "data":data,
+      "mappings":{
+        "x": {"field":"date","label":"Date"},
+        "y": {"field":"sf","label":"population"}
+      }
+    }
+  });
   chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
 
