@@ -581,6 +581,7 @@ Cedar.prototype._attach = function(view){
   
   view.on('mouseover', this._handler('mouseover'));
   view.on('mouseout', this._handler('mouseout'));
+  view.on('mousemove', this._handler('mousemove'));
   view.on('click', this._handler("click"));
   view.on('update-start', this._handler('update-start'));
   view.on('update-end', this._handler('update-end'));
@@ -595,6 +596,7 @@ Cedar.prototype._remove = function(view){
 
   view.off('mouseover');
   view.off('mouseout');
+  view.off('mousemove');
   view.off('click');
   view.off('update-start');
   view.off('update-end');

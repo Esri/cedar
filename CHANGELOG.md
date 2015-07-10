@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Upgraded to Vega2
-- Changed Vega and D3 to load from npm
+- Tooltip demo improvements
 - Homepage improvements
 
 ## v0.1

@@ -28,11 +28,10 @@
     "package.json"
   ],
   "dependencies": {
-    "d3": "~3.5.2",
-    "vega": "~2.0.0"
+    "d3": "~3.5.6"
   },
   "resolutions": {
-    "d3": "~3.5.2"
+    "d3": "~3.5.6"
   },
   "devDependencies": {
     "bootstrap-sass-official": "~3.3.4"

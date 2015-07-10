@@ -59,7 +59,6 @@
   },
   "dependencies": {
     "d3": "~3.5.6",
-    "underscore": "~1.7.0",
-    "vega": "^2.0.0"
+    "underscore": "~1.7.0"
   }
 }
