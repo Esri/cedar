@@ -21,7 +21,7 @@
         "range": "width",
         "domain": {
           "data": "table",
-          "field": "data.attributes.{x.field}"
+          "field": "attributes.{x.field}"
         }
       },
       {
@@ -30,7 +30,7 @@
         "range": "height",
         "domain": {
           "data": "table",
-          "field": "data.attributes.{y.field}"
+          "field": "attributes.{y.field}"
         }
       },
       {
@@ -38,7 +38,7 @@
         "type": "sqrt",
         "domain": {
           "data": "table",
-          "field": "data.attributes.{size.field}"
+          "field": "attributes.{size.field}"
         },
         "range": [0,2000]
       }
@@ -132,17 +132,17 @@
           "enter": {
             "x": {
               "scale": "x",
-              "field": "data.attributes.{x.field}"
+              "field": "attributes.{x.field}"
             },
             "y": {
               "scale": "y",
-              "field": "data.attributes.{y.field}"
+              "field": "attributes.{y.field}"
             },
             "strokeWidth": {"value": 2},
             "fillOpacity": {"value": 0.4 },
             "size": { 
               "scale": "size",
-              "field": "data.attributes.{size.field}"
+              "field": "attributes.{size.field}"
             }
           },
           "update": {

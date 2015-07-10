@@ -524,7 +524,7 @@ Cedar.prototype.select = function( options ) {
   var items = view.model().scene().items[0].items[0].items;
 
   items.forEach(function(item) {
-    if ( item.datum.data.attributes[options.key] === options.value ) {
+    if ( item.datum.attributes[options.key] === options.value ) {
       if ( item.hasPropertySet("hover") ) {
         self._view.update({props:"hover", items:item});
       }
@@ -550,7 +550,7 @@ Cedar.prototype.clearSelection = function( options ) {
   if ( opt && opt.key ) {
     var items = view.model().scene().items[0].items[0].items;
     items.forEach(function(item) {
-      if ( item.datum.data.attributes[options.key] === options.value ) {
+      if ( item.datum.attributes[options.key] === options.value ) {
         self._view.update({props:"update", items:item});
       }
     });
@@ -716,7 +716,7 @@ Cedar.prototype._handler = function(evtName) {
       if(registeredHandler.type === evtName){
         //invoke the callback with the data
         if ( item ) {
-          registeredHandler.callback(evt, item.datum.data.attributes);
+          registeredHandler.callback(evt, item.datum.attributes);
         } else {
           registeredHandler.callback(evt,null);
         }

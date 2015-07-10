@@ -22,7 +22,7 @@
         "range": "width",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{x}"
+          "field": "attributes.{x}"
         }
       },
       {
@@ -31,7 +31,7 @@
         "range": "height",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{y}"
+          "field": "attributes.{y}"
         }
       },
       {
@@ -39,7 +39,7 @@
         "type": "ordinal",
         "domain": {
           "data": "iris",
-          "field": "data.attributes.{color}"
+          "field": "attributes.{color}"
         },
         "range": [
           "#800",
@@ -91,15 +91,15 @@
           "enter": {
             "x": {
               "scale": "x",
-              "field": "data.attributes.{x}"
+              "field": "attributes.{x}"
             },
             "y": {
               "scale": "y",
-              "field": "data.attributes.{y}"
+              "field": "attributes.{y}"
             },
             "fill": {
               "scale": "c",
-              "field": "data.attributes.{color}"
+              "field": "attributes.{color}"
             },
             "fillOpacity": {
               "value": 0.5

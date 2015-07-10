@@ -20,6 +20,10 @@ module.exports = function(grunt) {
     'src/cedar.js'
   ];
 
+  var vega = [
+    'src/lib/vega2.js',
+  ];
+
   //core is just cedar
   var core = [
     'src/cedar.js',
@@ -130,14 +134,6 @@ module.exports = function(grunt) {
         sourceMap: true,
         separator: '\n\n'
       },
-      cedar_vega_d3: {
-        src: cedar_vega_d3,
-        dest: 'dist/builds/cedar-vega-d3.js'
-      },
-      cedar_vega: {
-        src: cedar_vega,
-        dest: 'dist/builds/cedar-vega.js'
-      },
       core: {
         src: core,
         dest: 'dist/builds/cedar.js'
@@ -158,8 +154,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/builds/cedar-vega-d3.min.js': cedar_vega_d3,
-          'dist/builds/cedar-vega.min.js': cedar_vega,
+          'dist/builds/vega.min.js': vega,
           'dist/builds/cedar.min.js': core
         }
       }

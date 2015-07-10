@@ -69,8 +69,8 @@
         "properties": {
           "enter": {
             "width": {"band": true, "offset": -1, "scale": "x"},
-            "x": {"field": "data.attributes.{x.field}", "scale": "x"},
-            "y": {"field": "data.attributes.{y.field}", "scale": "y"},
+            "x": {"field": "attributes.{x.field}", "scale": "x"},
+            "y": {"field": "attributes.{y.field}", "scale": "y"},
             "y2": {"scale": "y", "value": 0 }
           },
           "hover": {
@@ -87,7 +87,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{x.field}"
+          "field": "attributes.{x.field}"
         },
         "name": "x",
         "range": "width",
@@ -96,7 +96,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{y.field}"
+          "field": "attributes.{y.field}"
         },
         "name": "y",
         "nice": true,

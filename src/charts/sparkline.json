@@ -15,14 +15,14 @@
         "type": "time",
         "range": "width",
   	     "zero": false,
-        "domain": {"data": "table", "field": "data.attributes.{x.field}"}
+        "domain": {"data": "table", "field": "attributes.{x.field}"}
       },
       {
         "name": "y",
         "type": "linear",
         "range": "height",
   	     "zero": false,
-        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+        "domain": {"data": "table", "field": "attributes.{y.field}"}
       }
     ],
     "marks": [{
@@ -30,8 +30,8 @@
   		"from": {"data": "table"},
   			"properties": {
   			"enter": {
-  			  "x": {"scale": "x", "field": "data.attributes.{x.field}"},
-  			  "y": {"scale": "y", "field": "data.attributes.{y.field}"},
+  			  "x": {"scale": "x", "field": "attributes.{x.field}"},
+  			  "y": {"scale": "y", "field": "attributes.{y.field}"},
   			  "stroke": {"value": "#f00"},
   			  "strokeWidth": {"value": 1}
   			}
