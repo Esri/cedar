@@ -429,7 +429,7 @@ Cedar.prototype.update = function(){
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
-  try{
+  // try{
     if(self.autolabels === true) {
         spec = self._placeLabels(spec);
     }
@@ -458,10 +458,10 @@ Cedar.prototype._renderSpec = function(spec){
       }
 
     });
-  }
-  catch(ex){
-    throw(ex);
-  }
+  // }
+  // catch(ex){
+  //   throw(ex);
+  // }
 };
 
 /**

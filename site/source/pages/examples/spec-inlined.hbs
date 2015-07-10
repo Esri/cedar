@@ -32,8 +32,8 @@ layout: example.hbs
           {"type": "pie", "value": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
+          {"type": "formula", "field": "x_mid", "expr": "{radius} / 2"},
+          {"type": "formula", "field": "y_mid", "expr": "{radius} / 2"},
           {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
           {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
         ]
@@ -130,69 +130,67 @@ layout: example.hbs
     {"name": "label", "type": ["string"], "required": false},
     {"name": "radius", "type": ["numeric"], "required": true}
   ],
-  "template":{
-    "padding": "strict",
-    "data": [
-      {
-        "name": "table",
-        "format": {
-          "property": "features"
+    "template":{
+      "padding": "strict",
+      "data": [
+        {
+          "name": "table",
+          "format": {
+            "property": "features"
+          },
+          "transform": [
+            {"type": "pie", "value": "attributes.{y.field}"},
+            {"type": "formula", "field": "hyp", "expr": "{radius}"},
+            {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
+            {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},
+            {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}   
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "r",
+          "type": "sqrt",
+          "domain": {"data": "table", "field": "attributes.{y.field}"}
+        }
+      ],
+      "marks": [
+        {
+          "type": "arc",
+          "from": {"data": "table"},
+          "properties": {
+            "enter": {
+              "x": {"group": "width"},
+              "y": {"group": "height"},
+              "startAngle": {"field": "layout_start"},
+              "endAngle": {"field": "layout_end"},
+              "outerRadius": {"value": "{radius}"},
+              "stroke": {"value": "#fff"}
+            },
+            "update": {
+              "fill": {"value": "#0079c1"}
+            },
+            "hover": {
+              "fill": {"value": "#29b6ea"}
+            }
+          }
         },
-        "transform": [
-          {"type": "pie", "value": "attributes.{y.field}"},
-          {"type": "formula", "field": "hyp", "expr": "{radius}"},
-          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
-          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
-        ]
-      }
-    ],
-    "scales": [
-      {
-        "name": "r",
-        "type": "sqrt",
-        "domain": {"data": "table", "field": "attributes.{y.field}"}
-      }
-    ],
-    "marks": [
-      {
-        "type": "arc",
-        "from": {"data": "table"},
-        "properties": {
-          "enter": {
-            "x": {"group": "width"},
-            "y": {"group": "height"},
-            "startAngle": {"field": "startAngle"},
-            "endAngle": {"field": "endAngle"},
-            "outerRadius": {"value": "{radius}"},
-            "stroke": {"value": "#fff"}
-          },
-          "update": {
-            "fill": {"value": "#0079c1"}
-          },
-          "hover": {
-            "fill": {"value": "#29b6ea"}
+        {
+          "type": "text",
+          "from": {"data": "table"},
+          "properties": {
+            "enter": {
+              "y": {"field": "y", "mult": 0.6},
+              "x": {"field": "x", "mult": 0.6},
+              "fill": {"value": "#fff"},
+              "align": {"value": "center"},
+              "baseline": {"value": "middle"},
+              "text": {"field": "attributes.{label.field}"}
+            }
           }
         }
-      },
-      {
-        "type": "text",
-        "from": {"data": "table"},
-        "properties": {
-          "enter": {
-            "y": {"field": "y", "mult": 0.6},
-            "x": {"field": "x", "mult": 0.6},
-            "fill": {"value": "#fff"},
-            "align": {"value": "center"},
-            "baseline": {"value": "middle"},
-            "text": {"field": "attributes.{label.field}"}
-          }
-        }
-      }
-    ]
-  }
+      ]
+    }
   
 }
   //assign to chart
@@ -223,6 +221,8 @@ layout: example.hbs
   chart.show({
     elementId: "#chart",
     width: 800,
-    height: 800
+    height: 800,
+    renderer: "svg",
+
   });
 </script>

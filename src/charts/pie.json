@@ -15,11 +15,9 @@
         "transform": [
           {"type": "pie", "value": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
-          {"type": "formula", "field": "theta", "expr": "d.layout_start + 0.5 *(d.layout_end - d.layout_start) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
-          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}     
+          {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
+          {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},
+          {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}     
         ]
       }
     ],
@@ -39,7 +37,7 @@
             "x": {"group": "width"},
             "y": {"group": "height"},
             "startAngle": {"field": "layout_start"},
-            "endAngle": {"field": "endAngle"},
+            "endAngle": {"field": "layout_end"},
             "outerRadius": {"value": "{radius}"},
             "stroke": {"value": "#fff"}
           },
