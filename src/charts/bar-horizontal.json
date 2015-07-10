@@ -45,6 +45,7 @@
         "scale": "y",
         "titleOffset": 25,
         "title": "{y.label}",
+        "padding": 0.25,
         "properties": {
           "title": {
             "fontSize": {"value": 15},
