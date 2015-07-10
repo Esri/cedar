@@ -447,7 +447,6 @@ Cedar.prototype._renderSpec = function(spec){
       var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
       var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
 
-      console.log("[width, height]", [width, height])
       //render into the element
       self._view.width(width).height(height).update(); 
 

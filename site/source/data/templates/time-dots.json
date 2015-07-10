@@ -16,14 +16,13 @@
         "name": "variety",
         "source": "crimes",
         "transform": [
-          {"type": "facet", "keys": ["attributes.{aspect.field}"]}
+          {"type": "facet", "groupby": ["attributes.{aspect.field}"]}
         ]
       },
       {
         "name": "{facet.field}",
         "source": "crimes",
         "transform": [
-          {"type": "sort", "by": "attributes.{facet.field}"},
           {"type": "facet", "groupby": ["attributes.{facet.field}"]}
         ]
       }    
@@ -33,7 +32,7 @@
         "name": "g",
         "type": "ordinal",
         "range": "height",
-        "padding": 0.15,
+        "padding": 0.45,
         "domain": {"data": "{facet.field}", "field": "key"}
       },    
       {
@@ -115,7 +114,6 @@
             "type": "ordinal",
             "range": "height",
             "points": true,
-            "padding": 1.2,
             "domain": {"data": "variety", "field": "key"}
           }
         ],
@@ -143,7 +141,7 @@
               "enter": {
                 "x": {"scale": "x", "field": "attributes.{time.field}"},
                 "y": {"scale": "y", "field": "attributes.{aspect.field}"},
-                "size": {"value": 50},
+                "size": {"value": 40},
                 "stroke": {"scale": "c", "field": "attributes.{color.field}"},
                 "strokeWidth": {"value": 2}
               }

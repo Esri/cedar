@@ -29,7 +29,7 @@
   ],
   "dependencies": {
     "d3": "~3.5.2",
-    "vega": "~1.4.3"
+    "vega": "~2.0.0"
   },
   "resolutions": {
     "d3": "~3.5.2"
