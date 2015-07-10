@@ -29,7 +29,7 @@ layout: example.hbs
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "pie", "value": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
           {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
@@ -43,7 +43,7 @@ layout: example.hbs
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+        "domain": {"data": "table", "field": "attributes.{y.field}"}
       }
     ],
     "marks": [
@@ -77,7 +77,7 @@ layout: example.hbs
             "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{label.field}"}
+            "text": {"field": "attributes.{label.field}"}
           }
         }
       }
@@ -139,7 +139,7 @@ layout: example.hbs
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "pie", "value": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
           {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
@@ -153,7 +153,7 @@ layout: example.hbs
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+        "domain": {"data": "table", "field": "attributes.{y.field}"}
       }
     ],
     "marks": [
@@ -187,7 +187,7 @@ layout: example.hbs
             "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{label.field}"}
+            "text": {"field": "attributes.{label.field}"}
           }
         }
       }

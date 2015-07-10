@@ -71,11 +71,11 @@ var spec =  {
               "scale": "x"
             },
             "x": {
-              "field": "data.attributes.{group.field}",
+              "field": "attributes.{group.field}",
               "scale": "x"
             },
             "y": {
-              "field": "data.attributes.{count.field}_SUM",
+              "field": "attributes.{count.field}_SUM",
               "scale": "y"
             },
             "y2": {
@@ -101,7 +101,7 @@ var spec =  {
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{group.field}"
+          "field": "attributes.{group.field}"
         },
         "name": "x",
         "range": "width",
@@ -110,7 +110,7 @@ var spec =  {
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{count.field}_SUM"
+          "field": "attributes.{count.field}_SUM"
         },
         "name": "y",
         "nice": true,
