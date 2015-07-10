@@ -429,7 +429,7 @@ Cedar.prototype.update = function(){
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
-  // try{
+  try{
     if(self.autolabels === true) {
         spec = self._placeLabels(spec);
     }
@@ -447,6 +447,7 @@ Cedar.prototype._renderSpec = function(spec){
       var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
       var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
 
+      console.log("[width, height]", [width, height])
       //render into the element
       self._view.width(width).height(height).update(); 
 
@@ -458,10 +459,10 @@ Cedar.prototype._renderSpec = function(spec){
       }
 
     });
-  // }
-  // catch(ex){
-  //   throw(ex);
-  // }
+  }
+  catch(ex){
+    throw(ex);
+  }
 };
 
 /**
