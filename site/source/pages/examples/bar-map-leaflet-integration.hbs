@@ -176,7 +176,11 @@ layout: example.hbs
   chart.on('mouseover', onChartHover);
 
   function onChartHover(e,d) {
-    
+    if(d === undefined || d === null) {
+      chart.clearSelection();
+      return;
+    }
+
     //get selected value for attribute in chart marker
     var selected = d[dataset.mappings.x.field];
 

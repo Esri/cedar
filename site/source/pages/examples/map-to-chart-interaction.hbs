@@ -217,8 +217,6 @@ amd: true
     chart.on('mouseover', onChartHover);
 
     function onChartHover(e,d) {
-      console.log("Chart Hover: ", d)
-
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.x.field];
       
