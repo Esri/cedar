@@ -46,7 +46,16 @@
   })();
 
 /**
- * Creates a new Chart object.
+ * Creates a new Chart object
+ * 
+ * A chart requires only two attributes: {"type": .., "dataset": ..}
+ * - "type" is the chart type such as "bar" or "scatterplot"
+ * - "dataset" defines the source of the data; either from a GeoService URL or from an array of data
+ * 
+ * Cedar charts can be modified at any time, updating the chart style, data, service query or interaction.
+ * The chart will only be drawn with chart.show(...) is called.
+ * 
+ * To create a new Chart object: `var chart = new Cedar( options )` where _options_ are defined as:
  * 
  * @example
  *  var chart = new Cedar({
