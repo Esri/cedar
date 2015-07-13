@@ -3,6 +3,7 @@
  *
  * Generic charting / visualization library for the ArcGIS Platform
  * that leverages vega + d3 internally.
+ * @access private
  */
 (function (factory) {
   /* global module */
@@ -45,8 +46,50 @@
   })();
 
 /**
- * Constructor
- * @param {object} options Cedar options
+ * @class
+ * Creates a new Chart object.
+ * 
+ * @example
+ *  var chart = new Cedar({
+ *    "type": "bar"
+ *    "dataset":
+ *      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+ *      "query": {
+ *        "groupByFieldsForStatistics": "FACUSE",
+ *        "outStatistics": [{
+ *          "statisticType": "sum", 
+ *          "onStatisticField": "TOTAL_STUD", 
+ *          "outStatisticFieldName": "TOTAL_STUD_SUM"
+ *        }]
+ *      },
+ *      "mappings":{
+ *        "sort": "TOTAL_STUD_SUM DESC",
+ *        "x": {"field":"FACUSE","label":"Facility Use"},
+ *        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+ *      }
+ *    }
+ *  });
+ * 
+ * @param {Object} options
+ * @param {String} options.type - Chart type as a chartType ("bar") or a URL to a Cedar specification
+ * @param {Object} options.dataset - Dataset definition including Source and Style mappings
+ * @param {String} options.dataset.url - GeoService Layer URL
+ * 
+ * "url":"http://.../rest/services/DATA/Education/MapServer/5"
+ * @param {Object} options.dataset.query - GeoServices Layer query parameters (where, bbox, outStatistics) [optional]
+ * 
+ * "query": {
+ *   "groupByFieldsForStatistics": "FACUSE",
+ *   "outStatistics": [{
+ *     "statisticType": "sum", 
+ *     "onStatisticField": "TOTAL_STUD", 
+ *     "outStatisticFieldName": "TOTAL_STUD_SUM" }] }
+ * @param {Object} options.dataset.data - Inline feature collection, alternative to data from a URL
+ *  
+ * "data": {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]}
+ * @param {Object} options.dataset.mappings - Relates data items to the chart style definition
+ * @param {Object} options.override - Changes to the "options.type" chart specification
+ * @return new Cedar chart object
  */
 var Cedar = function Cedar(options){
   //close over this for use in callbacks
@@ -58,9 +101,7 @@ var Cedar = function Cedar(options){
   var spec;
 
 
-  /**
-   * Internals for holding state
-   */
+  // Internals for holding state
 
   // Cedar configuration such as size
   this.width = undefined;
@@ -88,6 +129,7 @@ var Cedar = function Cedar(options){
   /**
    * Flag used to determine if the library is
    * waiting for an xhr to return. 
+   * @access private
    */
   this._pendingXhr = false;
 
@@ -162,8 +204,8 @@ var Cedar = function Cedar(options){
    * of least suprise. Also - cedar has a .getJSON
    * helper method the dev should use.
    * 
-   */
-      
+   * @access private
+   */ 
   Object.defineProperty(this, 'dataset', {
     get: function() {
         return this._definition.dataset;
@@ -196,7 +238,11 @@ var Cedar = function Cedar(options){
 // base URL of this library
 Cedar.prototype.baseUrl = baseUrl;
 
-// default pre-defined chart types
+/** 
+ * Default pre-defined chart types
+ * 
+ * ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'sparkline', 'time'];
+ */
 Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'sparkline', 'time'];
 
 /**
@@ -220,11 +266,32 @@ Cedar.prototype.canDraw = function(){
 };
 
 /**
- * Render a chart in the specified element
- * @param  {object} options 
+ * Draw the chart into the DOM element
  * 
- * options.elementId [required] Id of the Dom element into which the chart will be rendered
- * options.token     [optional] Token to be used if the data or spec are on a secured server
+ * @example
+ * 
+ * var chart = new Cedar({
+ *   "type": "scatter",
+ *   "dataset":{
+ *     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+ *     "query":{},
+ *     "mappings":{
+ *       "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
+ *       "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+ *       "color":{"field":"FACUSE","label":"Facility Type"}
+ *     }
+ *   }
+ * });
+ * 
+ * chart.show({
+ *   elementId: "#chart"
+ * });
+ * 
+ * @param  {object} options 
+ * @param {String} options.elementId [required] Id of the Dom element into which the chart will be rendered
+ * @param {String} options.renderer "canvas" or "svg" (default: `canvas`)
+ * @param {Boolean} options.autolabels place axis labels outside any tick labels (default: false)
+ * @param {String} options.token Token to be used if the data or spec are on a secured server
  */
 Cedar.prototype.show = function(options){
   if(this._pendingXhr){
@@ -273,9 +340,16 @@ Cedar.prototype.show = function(options){
 };
 
 /**
- * Render the chart using the internal state
- * Should be called after a user modifies the 
- * of the dataset, query, mappings or template
+ * Draw the chart based on any changes to data or specifications
+ * Should be called after a user modifies 
+ * the dataset, query, mappings, chart specification or element size
+ *
+ * @example
+ * dataset = {"url": "...", "mappings": {"x": {"field": "STATE"}, "y": {"field": "POPULATION"}}};
+ * chart = new Cedar({ "type": "bar", "dataset": dataset });
+ * chart.show({elementId: "#chart"});
+ * chart.dataset.query.where = "POPULATION>30000";
+ * chart.update();
  */
 Cedar.prototype.update = function(){
   var self = this;
@@ -351,7 +425,8 @@ Cedar.prototype.update = function(){
 };
 
 /**
- * Render a fully cooked spec
+ * Render a compiled Vega specification using Vega Runtime
+ * @access private
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
@@ -390,6 +465,14 @@ Cedar.prototype._renderSpec = function(spec){
   }
 };
 
+/**
+ * Automatically determines axis title placement
+ * 
+ * Calculates the maximum length of a tick label and adds padding
+ * @todo remove expectation that there are both x,y axes
+ * 
+ * @access private
+ */
 Cedar.prototype._placeLabels = function(spec) {
   var self = this;
   try{  
@@ -425,48 +508,66 @@ Cedar.prototype._placeLabels = function(spec) {
     throw(ex);
   }
 };
+
 /**
- * highlight marker based on attribute value
+ * Highlight marker based on attribute value
+ * 
+ * @example
+ * chart = new Cedar({...});
+ * chart.select({key: "ZIP_CODE", value: "20002"});
+ * 
+ * @param {Object} options - Object(key, value) to match. Calls hover on mark
+ * @returns {Array(Object)} items - array of chart objects that match the criteria
  */
-Cedar.prototype.select = function( opt ) {
+Cedar.prototype.select = function( options ) {
   var self = this;
   var view = this._view;
   var items = view.model().scene().items[0].items[0].items;
 
   items.forEach(function(item) {
-    if ( item.datum.data.attributes[opt.key] === opt.value ) {
+    if ( item.datum.data.attributes[options.key] === options.value ) {
       if ( item.hasPropertySet("hover") ) {
         self._view.update({props:"hover", items:item});
       }
     }
   });
 
+  return items;
+
 };
 
 
 /**
- * highlight marker based on attribute value
+ * Removes highlighted chart items
+ * 
+ * If "options" are used, only clear specific items, otherwise clears all highlights.
+ * @param {Object} options - Object(key, value) to match. Calls hover on mark
+ * @returns {Array(Object)} items - array of chart objects that match the criteria, or null if all items.
  */
-Cedar.prototype.clearSelection = function( opt ) {
+Cedar.prototype.clearSelection = function( options ) {
   var self = this;
   var view = this._view;
-  var items = view.model().scene().items[0].items[0].items;
 
   if ( opt && opt.key ) {
+    var items = view.model().scene().items[0].items[0].items;
     items.forEach(function(item) {
-      if ( item.datum.data.attributes[opt.key] === opt.value ) {
+      if ( item.datum.data.attributes[options.key] === options.value ) {
         self._view.update({props:"update", items:item});
       }
     });
+    return items;
   } else {
     //clear all 
     self._view.update();
+    return null;
   }
-
 };
 
 
-// trigger callback 
+/** 
+ * Trigger a callback 
+ * @param {Strint} eventName - ["mouseover","mouseout","click","update-start","update-end"]
+ */
 Cedar.prototype.emit = function(eventName) {
   if (this._view._handler._handlers[ eventName ] && this._view._handler._handlers[ eventName ][0] !== undefined){
     this._view._handler._handlers[ eventName ][0].handler();
@@ -475,6 +576,7 @@ Cedar.prototype.emit = function(eventName) {
 
 /**
  * Attach the generic proxy handlers to the chart view
+ * @access private
  */
 Cedar.prototype._attach = function(view){
   
@@ -488,6 +590,7 @@ Cedar.prototype._attach = function(view){
 
 /**
  * Remove all event handlers from the view
+ * @access private
  */
 Cedar.prototype._remove = function(view){
 
@@ -506,6 +609,7 @@ Cedar.prototype._remove = function(view){
  * @param  {array} inputs   Array of inputs
  * @param  {object} mappings Hash of mappings
  * @return {array}          Missing mappings
+ * @access private
  */
 Cedar._validateMappings = function(inputs, mappings){
   var missingInputs = [], input;
@@ -523,6 +627,7 @@ Cedar._validateMappings = function(inputs, mappings){
 /**
  * Validate that the incoming data has the fields expected
  * in the mappings
+ * @access private
  */
 Cedar._validateData = function(data, mappings){
   var missingInputs = [];
@@ -544,6 +649,7 @@ Cedar._validateData = function(data, mappings){
 /**
  * Centralize and abstract the computation of
  * expected field names, based on the mapping name
+ * @access private
  */
 Cedar._getMappingFieldName = function(mappingName, fieldName){
   var name = fieldName;
@@ -555,6 +661,7 @@ Cedar._getMappingFieldName = function(mappingName, fieldName){
 
 /**
  * Return a default definition object
+ * @access private
  */
 Cedar._defaultDefinition = function(){
   var defn = {
@@ -571,6 +678,7 @@ Cedar._defaultDefinition = function(){
 
 /**
  * Default Query Object
+ * @access private
  */
 Cedar._defaultQuery = function(){
   var defaultQuery = {
@@ -587,6 +695,7 @@ Cedar._defaultQuery = function(){
 
 /**
  * Get pre-defined spec url
+ * @access private
  */
 Cedar.prototype._getSpecificationUrl = function(spec){
   if (this.chartTypes.indexOf(spec) !== -1) {
@@ -597,6 +706,7 @@ Cedar.prototype._getSpecificationUrl = function(spec){
 
 /**
  * Generic event handler proxy
+ * @access private
  */
 Cedar.prototype._handler = function(evtName) {
   var self = this;
@@ -618,7 +728,30 @@ Cedar.prototype._handler = function(evtName) {
 };
 
 /**
- * Add a handler for the named event
+ * Add a handler for the named event.
+ * Events: 
+ *  - mouseover
+ *  - mouseout
+ *  - click
+ *  - update-start
+ *  - update-end
+ * 
+ * 
+ * 
+ * Callback from Cedar events
+ *  - callback Cedar~eventCallback
+ *  - param {Object} event - event response such as mouse location 
+ *  - param {Object} data - chart data object
+ * 
+ * @example
+ * var chart = new Cedar({ ... });
+ * chart.on('mouseover', function(event, data) { 
+ *   console.log("Mouse Location:", [event.offsetX, event.offsetY]);
+ *   console.log("Data value:", data[Object.keys(data)[0]]);
+ * });
+ * 
+ * @param {String} eventName name of the event that invokes callback
+ * @param {Cedar~eventCallback} callback - The callback that handles the event.
  */
 Cedar.prototype.on = function(evtName, callback){
   this._events.push({"type":evtName, "callback":callback});
@@ -635,6 +768,7 @@ Cedar.prototype.off = function(evtName /*, callback */){
 /**
  * Creates an entry in the method queue, excuted 
  * once a pending xhr is completed 
+ * @access private
  */
 Cedar.prototype._addToMethodQueue = function(name, args){
   this._methodQueue.push({ method: name, args: args });
@@ -644,6 +778,7 @@ Cedar.prototype._addToMethodQueue = function(name, args){
  * empties the method queue by calling the queued methods
  * This helps build a more syncronous api, while still
  * doing async things in the code
+ * @access private
  */
 Cedar.prototype._purgeMethodQueue = function(){
   var self = this;
@@ -657,9 +792,9 @@ Cedar.prototype._purgeMethodQueue = function(){
 };
 
 /**
- * fetch json from a url
- * @param  {string}   url      Url to json file
- * @param  {Function} callback node-style callback function (err, data)
+ * Helper function to request JSON from a URL
+ * @param  {String}   url      URL to json file
+ * @param  {Function} callback node-style callback function (error, data)
  */
 Cedar.getJson = function( url, callback ){
   d3.json(url, function(err,data) {
@@ -670,7 +805,9 @@ Cedar.getJson = function( url, callback ){
   });
 };
 
-
+/**
+* @access private
+*/
 Cedar._mixin = function(source) {
     /*jshint loopfunc: true*/
     // TODO: prob should replace w/ forEach()
@@ -685,6 +822,7 @@ Cedar._mixin = function(source) {
 /**
  * Given a dataset hash, create the feature service
  * query string
+ * @access private
  */
 Cedar._createFeatureServiceRequest = function( dataset, queryFromSpec ) {
   var mergedQuery = Cedar._mixin({}, Cedar._defaultQuery(), queryFromSpec);
@@ -750,6 +888,9 @@ Cedar._createFeatureServiceRequest = function( dataset, queryFromSpec ) {
   return url;
 };
 
+/**
+* @access private
+*/
 Cedar._applyDefaultsToMappings = function(mappings, inputs){
   var errs = [];
   //loop over the inputs
@@ -782,6 +923,7 @@ Cedar._applyDefaultsToMappings = function(mappings, inputs){
  * @param  {string} template string template
  * @param  {object} params   object hash that maps to the tokens to be replaced
  * @return {string}          string with values replaced
+ * @access private
  */
 Cedar._supplant = function( tmpl, params ){
   return tmpl.replace(/{([^{}]*)}/g,
@@ -793,8 +935,9 @@ Cedar._supplant = function( tmpl, params ){
 };
 
 /*
-* Recursively merge properties of two objects 
-*/
+ * Recursively merge properties of two objects 
+ * @access private
+ */
 Cedar._mergeRecursive = function(obj1, obj2) {
   for (var p in obj2) {
     if (obj2.hasOwnProperty(p)) {
@@ -827,6 +970,7 @@ Cedar._mergeRecursive = function(obj1, obj2) {
  * Pulled from gulp-token-replace (MIT license)
  * https://github.com/Pictela/gulp-token-replace/blob/master/index.js
  * 
+ * @access private
  */
 Cedar._getTokenValue = function(tokens, tokenName) {
   var tmpTokens = tokens;
@@ -842,9 +986,11 @@ Cedar._getTokenValue = function(tokens, tokenName) {
 };
 
 /**
+ * @access private
  * Serilize an object into a query string
  * @param  {object} params Params for the query string
  * @return {string}        query string
+ * @access private
  */
 Cedar._serializeQueryParams = function(params) {
   var str = [];
@@ -863,3 +1009,4 @@ Cedar._serializeQueryParams = function(params) {
 
   return Cedar;
 }));
+

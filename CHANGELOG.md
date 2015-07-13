@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Upcoming
 ### Added
 - Sparkline chart type
+- JSDoc documentation
 
 ### Changed
 - Homepage improvements
