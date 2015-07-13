@@ -46,7 +46,6 @@
   })();
 
 /**
- * @class
  * Creates a new Chart object.
  * 
  * @example
@@ -89,7 +88,7 @@
  * "data": {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]}
  * @param {Object} options.dataset.mappings - Relates data items to the chart style definition
  * @param {Object} options.override - Changes to the "options.type" chart specification
- * @return new Cedar chart object
+ * @return {Object} new Cedar chart object
  */
 var Cedar = function Cedar(options){
   //close over this for use in callbacks
@@ -517,7 +516,7 @@ Cedar.prototype._placeLabels = function(spec) {
  * chart.select({key: "ZIP_CODE", value: "20002"});
  * 
  * @param {Object} options - Object(key, value) to match. Calls hover on mark
- * @returns {Array(Object)} items - array of chart objects that match the criteria
+ * @returns {Array} items - array of chart objects that match the criteria
  */
 Cedar.prototype.select = function( options ) {
   var self = this;
@@ -542,7 +541,7 @@ Cedar.prototype.select = function( options ) {
  * 
  * If "options" are used, only clear specific items, otherwise clears all highlights.
  * @param {Object} options - Object(key, value) to match. Calls hover on mark
- * @returns {Array(Object)} items - array of chart objects that match the criteria, or null if all items.
+ * @returns {Array} items - array of chart objects that match the criteria, or null if all items.
  */
 Cedar.prototype.clearSelection = function( options ) {
   var self = this;
@@ -986,8 +985,8 @@ Cedar._getTokenValue = function(tokens, tokenName) {
 };
 
 /**
- * @access private
  * Serilize an object into a query string
+ *
  * @param  {object} params Params for the query string
  * @return {string}        query string
  * @access private
