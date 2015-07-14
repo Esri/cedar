@@ -2,10 +2,13 @@ language: node_js
 node_js:
 - "0.10"
 before_script:
+  - npm update -q
   - gem install sass
   - npm install -g grunt-cli
   - npm install -g bower
   - bower install
+install:
+  - sudo apt-get install libgif-dev
 script: bash ./deploy.sh
 env:
   global:

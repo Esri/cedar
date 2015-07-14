@@ -13,13 +13,11 @@
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "data.attributes.{y.field}"},
+          {"type": "pie", "field": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
-          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "y_mid", "expr": "{radius} * 2"},
-          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
-          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
+          {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
+          {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},
+          {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}     
         ]
       }
     ],
@@ -27,7 +25,7 @@
       {
         "name": "r",
         "type": "sqrt",
-        "domain": {"data": "table", "field": "data.attributes.{y.field}"}
+        "domain": {"data": "table", "field": "attributes.{y.field}"}
       }
     ],
     "marks": [
@@ -38,8 +36,8 @@
           "enter": {
             "x": {"group": "width"},
             "y": {"group": "height"},
-            "startAngle": {"field": "startAngle"},
-            "endAngle": {"field": "endAngle"},
+            "startAngle": {"field": "layout_start"},
+            "endAngle": {"field": "layout_end"},
             "outerRadius": {"value": "{radius}"},
             "stroke": {"value": "#fff"}
           },
@@ -62,7 +60,7 @@
             "fill": {"value": "#fff"},
             "align": {"value": "center"},
             "baseline": {"value": "middle"},
-            "text": {"field": "data.attributes.{label.field}"}
+            "text": {"field": "attributes.{label.field}"}
           }
         }
       }

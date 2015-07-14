@@ -91,7 +91,6 @@ amd: true
     chart.on('mouseover', onChartHover);
 
     function onChartHover(e,d) {
-      
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.x.field];
       
@@ -186,13 +185,6 @@ amd: true
       "type": "bar"
     });
 
-    chart.override = {
-      "height": 400,
-      "marks": [{"properties": {
-        "hover": {"fill": {"value": "#1f4c70"}},
-        "update": {"fill": {"value": "#0e69af"}}}}]};
-
-
     //create the dataset w/ mappings
     var dataset = {
       "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
@@ -217,7 +209,8 @@ amd: true
     //show the chart
     chart.show({
       elementId: "#chart",
-      renderer: "svg"
+      renderer: "svg",
+      autolabels: true
     });
     
 
@@ -225,7 +218,10 @@ amd: true
     chart.on('mouseover', onChartHover);
 
     function onChartHover(e,d) {
-      
+      if(d === undefined || d === null) {
+        chart.clearSelection();
+        return;
+      }
       //get selected value for attribute in chart marker
       var selected = d[dataset.mappings.x.field];
       

@@ -87,11 +87,11 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
               "scale": "x"
             },
             "x": {
-              "field": "data.attributes.{group.field}",
+              "field": "attributes.{group.field}",
               "scale": "x"
             },
             "y": {
-              "field": "data.attributes.{count.field}_SUM",
+              "field": "attributes.{count.field}_SUM",
               "scale": "y"
             },
             "y2": {
@@ -117,7 +117,7 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{group.field}"
+          "field": "attributes.{group.field}"
         },
         "name": "x",
         "range": "width",
@@ -126,7 +126,7 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{count.field}_SUM"
+          "field": "attributes.{count.field}_SUM"
         },
         "name": "y",
         "nice": true,

@@ -9,19 +9,7 @@ module.exports = function(grunt) {
   //                 '*   Apache License' +
   //                 '*/\n';
 
-  var cedar_vega_d3 = [
-    'bower_components/d3/d3.js',
-    'bower_components/vega/vega.js',
-    'src/cedar.js'
-  ];
-
-  var cedar_vega = [
-    'bower_components/vega/vega.js',
-    'src/cedar.js'
-  ];
-
-  //core is just cedar
-  var core = [
+  var cedar_core = [
     'src/cedar.js',
   ];
 
@@ -130,16 +118,8 @@ module.exports = function(grunt) {
         sourceMap: true,
         separator: '\n\n'
       },
-      cedar_vega_d3: {
-        src: cedar_vega_d3,
-        dest: 'dist/builds/cedar-vega-d3.js'
-      },
-      cedar_vega: {
-        src: cedar_vega,
-        dest: 'dist/builds/cedar-vega.js'
-      },
       core: {
-        src: core,
+        src: cedar_core,
         dest: 'dist/builds/cedar.js'
       }
     },
@@ -150,17 +130,12 @@ module.exports = function(grunt) {
         sourceMapIncludeSources: true,
         wrap: false,
         mangle:true,
-        // mangle: {
-        //    except: ['d3', 'vg', 'cedar']
-        // },
         preserveComments: 'some',
         report: 'gzip'
       },
       dist: {
         files: {
-          'dist/builds/cedar-vega-d3.min.js': cedar_vega_d3,
-          'dist/builds/cedar-vega.min.js': cedar_vega,
-          'dist/builds/cedar.min.js': core
+          'dist/builds/cedar.min.js': cedar_core
         }
       }
     },
@@ -254,6 +229,8 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
+          { expand: true, cwd: 'node_modules/d3', src: 'd3.min.js', dest: 'site/build/js/'},
+          { expand: true, cwd: 'node_modules/vega', src: 'vega.min.js', dest: 'site/build/js/'}
         ]
       },
       specs: {

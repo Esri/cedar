@@ -19,14 +19,14 @@
         "range": "width",
         "nice": "month",
         "zero": false,
-        "domain": {"data": "table", "field": "data.attributes.{time.field}"}
+        "domain": {"data": "table", "field": "attributes.{time.field}"}
       },
       {
         "name": "y",
         "type": "linear",
         "range": "height",
         "nice": true,
-        "domain": {"data": "table", "field": "data.attributes.{value.field}"}
+        "domain": {"data": "table", "field": "attributes.{value.field}"}
       }
     ],
     "axes": [
@@ -75,8 +75,8 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "x": {"scale": "x", "field": "data.attributes.{time.field}"},
-            "y": {"scale": "y", "field": "data.attributes.{value.field}"},
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
             "stroke": {"value": "#0079c1"},
             "fillOpacity": {
               "value": 0.8
@@ -95,8 +95,8 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "x": {"scale": "x", "field": "data.attributes.{time.field}"},
-            "y": {"scale": "y", "field": "data.attributes.{value.field}"},
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
             "y2": {"scale": "y", "value": 0},
             "stroke": {"value": "#0079c1"}
           }

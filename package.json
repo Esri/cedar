@@ -58,6 +58,8 @@
     "browserify": "~8.0.2"
   },
   "dependencies": {
-    "underscore": "~1.7.0"
+    "d3": "~3.5.6",
+    "underscore": "~1.7.0",
+    "vega": "~2.0.1"
   }
 }

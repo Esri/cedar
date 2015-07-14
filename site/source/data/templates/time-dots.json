@@ -10,22 +10,20 @@
     "data": [
       {
         "name": "crimes",
-
         "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
       },
       {
         "name": "variety",
         "source": "crimes",
         "transform": [
-          {"type": "facet", "keys": ["data.attributes.{aspect.field}"]}
+          {"type": "facet", "groupby": ["attributes.{aspect.field}"]}
         ]
       },
       {
         "name": "{facet.field}",
         "source": "crimes",
         "transform": [
-          {"type": "sort", "by": "data.attributes.{facet.field}"},
-          {"type": "facet", "keys": ["data.attributes.{facet.field}"]}
+          {"type": "facet", "groupby": ["attributes.{facet.field}"]}
         ]
       }    
     ],
@@ -34,7 +32,7 @@
         "name": "g",
         "type": "ordinal",
         "range": "height",
-        "padding": 0.15,
+        "padding": 0.45,
         "domain": {"data": "{facet.field}", "field": "key"}
       },    
       {
@@ -42,7 +40,7 @@
         "type": "time",
         "round": true,
         "range": "width",
-        "domain": {"data": "crimes", "field": "data.attributes.{time.field}"}
+        "domain": {"data": "crimes", "field": "attributes.{time.field}"}
       },  
       {
         "name": "c",
@@ -98,9 +96,9 @@
         "properties": {
           "enter": {
             "x": {"group": "width", "mult": 0.5},
-            "y": {"scale": "g", "field": "data.attributes.{facet.field}", "offset": -2},
+            "y": {"scale": "g", "field": "attributes.{facet.field}", "offset": -2},
             "fontWeight": {"value": "bold"},
-            "text": {"field": "data.attributes.{facet.field}"},
+            "text": {"field": "attributes.{facet.field}"},
             "align": {"value": "center"},
             "baseline": {"value": "bottom"},
             "fill": {"value": "#000"}
@@ -116,7 +114,6 @@
             "type": "ordinal",
             "range": "height",
             "points": true,
-            "padding": 1.2,
             "domain": {"data": "variety", "field": "key"}
           }
         ],
@@ -142,10 +139,10 @@
             "type": "symbol",
             "properties": {
               "enter": {
-                "x": {"scale": "x", "field": "data.attributes.{time.field}"},
-                "y": {"scale": "y", "field": "data.attributes.{aspect.field}"},
-                "size": {"value": 50},
-                "stroke": {"scale": "c", "field": "data.attributes.{color.field}"},
+                "x": {"scale": "x", "field": "attributes.{time.field}"},
+                "y": {"scale": "y", "field": "attributes.{aspect.field}"},
+                "size": {"value": 40},
+                "stroke": {"scale": "c", "field": "attributes.{color.field}"},
                 "strokeWidth": {"value": 2}
               }
             }

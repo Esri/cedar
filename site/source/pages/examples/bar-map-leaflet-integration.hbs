@@ -15,8 +15,8 @@ layout: example.hbs
 
 <h1>Bar Chart + Esri Leaflet Map Interaction</h1>
 
-<div id="map"></div>
 <div id="chart"></div>
+<div id="map"></div>
 
 
 
@@ -147,7 +147,8 @@ layout: example.hbs
 
   //show the chart
   chart.show({
-    elementId: "#chart"
+    elementId: "#chart",
+    renderer: "svg"
   });
   
 
@@ -176,7 +177,11 @@ layout: example.hbs
   chart.on('mouseover', onChartHover);
 
   function onChartHover(e,d) {
-    
+    if(d === undefined || d === null) {
+      chart.clearSelection();
+      return;
+    }
+
     //get selected value for attribute in chart marker
     var selected = d[dataset.mappings.x.field];
 

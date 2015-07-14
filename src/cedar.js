@@ -524,7 +524,7 @@ Cedar.prototype.select = function( options ) {
   var items = view.model().scene().items[0].items[0].items;
 
   items.forEach(function(item) {
-    if ( item.datum.data.attributes[options.key] === options.value ) {
+    if ( item.datum.attributes[options.key] === options.value ) {
       if ( item.hasPropertySet("hover") ) {
         self._view.update({props:"hover", items:item});
       }
@@ -547,10 +547,10 @@ Cedar.prototype.clearSelection = function( options ) {
   var self = this;
   var view = this._view;
 
-  if ( opt && opt.key ) {
+  if ( options && options.key ) {
     var items = view.model().scene().items[0].items[0].items;
     items.forEach(function(item) {
-      if ( item.datum.data.attributes[options.key] === options.value ) {
+      if ( item.datum.attributes[options.key] === options.value ) {
         self._view.update({props:"update", items:item});
       }
     });
@@ -581,6 +581,7 @@ Cedar.prototype._attach = function(view){
   
   view.on('mouseover', this._handler('mouseover'));
   view.on('mouseout', this._handler('mouseout'));
+  view.on('mousemove', this._handler('mousemove'));
   view.on('click', this._handler("click"));
   view.on('update-start', this._handler('update-start'));
   view.on('update-end', this._handler('update-end'));
@@ -595,6 +596,7 @@ Cedar.prototype._remove = function(view){
 
   view.off('mouseover');
   view.off('mouseout');
+  view.off('mousemove');
   view.off('click');
   view.off('update-start');
   view.off('update-end');
@@ -716,7 +718,7 @@ Cedar.prototype._handler = function(evtName) {
       if(registeredHandler.type === evtName){
         //invoke the callback with the data
         if ( item ) {
-          registeredHandler.callback(evt, item.datum.data.attributes);
+          registeredHandler.callback(evt, item.datum.attributes);
         } else {
           registeredHandler.callback(evt,null);
         }

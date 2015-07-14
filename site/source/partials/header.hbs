@@ -45,7 +45,7 @@
             main: 'topojson.min'
           }, {
             name: 'vega',
-            location: 'http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3',
+            location: 'http://vega.github.io/vega/',
             main: 'vega.min'
           }, {
             name: 'cedar',
@@ -56,8 +56,8 @@
       };
     </script>
   {{else}}
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3/vega.min.js"></script>
+    <script type="text/javascript" src="{{assets}}js/d3.min.js"></script>
+    <script type="text/javascript" src="{{assets}}js/vega.min.js"></script>
     <script type="text/javascript" src="{{assets}}js/cedar.js"></script>
   {{/if}}
   <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->

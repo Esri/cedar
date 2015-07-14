@@ -20,7 +20,7 @@ You can load Cedar and its dependencies by including script tags. This will make
 
 ```html
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3/vega.min.js"></script>
+<script type="text/javascript" src="http://vega.github.io/vega/vega.min.js"></script>
 <script type="text/javascript" src="https://rawgit.com/Esri/cedar/master/src/cedar.js"></script>
 <script>
   var chart = new Cedar({"type": "bar"});
@@ -46,7 +46,7 @@ Altenatively, you can use Dojo loader that is bundled with the [ArcGIS API for J
         main: 'topojson.min'
       }, {
         name: 'vega',
-        location: 'http://cdnjs.cloudflare.com/ajax/libs/vega/1.4.3',
+        location: 'http://vega.github.io/vega/',
         main: 'vega.min'
       }, {
         name: 'cedar',
@@ -136,7 +136,7 @@ Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 ### Dependencies
 
 * [D3](http://d3js.org/) version 3 or higher is required but the latest version is recommended.
-* [Vega](http://trifacta.github.io/vega/)
+* [Vega](http://vega.github.io/vega/)
 
 ### Versioning
 
