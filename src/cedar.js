@@ -547,7 +547,7 @@ Cedar.prototype.clearSelection = function( options ) {
   var self = this;
   var view = this._view;
 
-  if ( opt && opt.key ) {
+  if ( options && options.key ) {
     var items = view.model().scene().items[0].items[0].items;
     items.forEach(function(item) {
       if ( item.datum.attributes[options.key] === options.value ) {

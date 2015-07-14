@@ -13,7 +13,7 @@
           "property": "features"
         },
         "transform": [
-          {"type": "pie", "value": "attributes.{y.field}"},
+          {"type": "pie", "field": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
           {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
           {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},

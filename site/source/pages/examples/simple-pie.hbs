@@ -47,6 +47,7 @@ layout: example.hbs
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "query": {
+      "orderByFields": "TOTAL_STUD_SUM DESC",
       "groupByFieldsForStatistics": "ZIP_CODE",
       "outStatistics": [{
         "statisticType": "sum", 
@@ -61,6 +62,8 @@ layout: example.hbs
     }
   };
   chart.dataset = dataset;
+
+  chart.on('mouseover', function(e,d) { console.log("hover", d)});
 
   chart.show({
     elementId: "#chart",
