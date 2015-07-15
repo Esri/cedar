@@ -473,16 +473,6 @@ Cedar.prototype._renderSpec = function(spec){
 };
 
 /**
- * Redraw the chart
- */
-Cedar.prototype.redraw = function() {
-  if (!this._view) {
-    return;
-  }
-  this._draw();
-};
-
-/**
  * Draw the chart
  */
 Cedar.prototype._draw = function() {
