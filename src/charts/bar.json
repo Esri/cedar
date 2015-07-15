@@ -59,8 +59,7 @@
     ],
     "data": [
       {
-        "name": "table",
-        "format": {"property": "features"}
+        "name": "table"
       }
     ],    
     "marks": [

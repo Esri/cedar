@@ -87,7 +87,7 @@ layout: example.hbs
 
   $(function() {
     $( "#resizable" ).resizable({
-      resize: function() { chartL.redraw(); }
+      resize: function() { chartL.update({data:false}); }
     });
   });
 </script>
