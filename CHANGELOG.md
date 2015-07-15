@@ -3,7 +3,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Upcoming
+## v0.3
+
+### Added
+- Optional to `Cedar.update()` do not refresh data
+
+### Changed
+- Removed `{"features": []}` nesting of inbound data
+
+## v0.2
 
 ### Added
 - Sparkline chart type
