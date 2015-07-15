@@ -83,9 +83,9 @@
  *     "statisticType": "sum", 
  *     "onStatisticField": "TOTAL_STUD", 
  *     "outStatisticFieldName": "TOTAL_STUD_SUM" }] }
- * @param {Object} options.dataset.data - Inline feature collection, alternative to data from a URL
+ * @param {Object} options.dataset.data - Inline array of features, alternative to data from a URL
  *  
- * "data": {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]}
+ * "data": [{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]
  * @param {Object} options.dataset.mappings - Relates data items to the chart style definition
  * @param {Object} options.override - Changes to the "options.type" chart specification
  * @param {Object} options.tooltip - Optional on-hover tooltip. Element has class="cedar-tooltip" for styling.
