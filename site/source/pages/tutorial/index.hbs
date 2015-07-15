@@ -53,33 +53,17 @@ And that's it, we now have a chart!
 
 <h3>Full Output</h3>
 
-We could also pull all this into a single set of commands:
+We could also pull all this into a single set of commands with some additional options:
 
 {{#markdown}}
 ```javascript
 chart = new Cedar({
   "type": "bar",
   "dataset": {
-    "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0"
-    },
-    "mappings":{
-      "x": {"field":"STATE_NAME","label":"US State"},
-      "y": {"field":"TotPop","label":"Population"}
-    }
-  }
-}).show({
-  elementId: "#chart",
-});
-```
-{{/markdown}}
-
-<div id="chart"></div>
-
-<script type="text/javascript">
-var chart = new Cedar({
-  "type": "bar",
-  "dataset": {
     "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+    "query": {
+      "orderByFields": "TotPop DESC"
+    },
     "mappings":{
       "x": {"field":"STATE_NAME","label":"US State"},
       "y": {"field":"TotPop","label":"Population"}
@@ -89,5 +73,32 @@ var chart = new Cedar({
   elementId: "#chart",
   autolabels: true,
   renderer: "svg"
-});  
+});
+```
+{{/markdown}}
+
+<div id="chart" style="width: 95%"></div>
+
+<script type="text/javascript">
+var chart = new Cedar({
+  "type": "bar",
+  "dataset": {
+    "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+    "query": {
+      "orderByFields": "TotPop DESC"
+    },
+    "mappings":{
+      "x": {"field":"STATE_NAME","label":"US State"},
+      "y": {"field":"TotPop","label":"Population"}
+    }
+  }
+}).show({
+  elementId: "#chart",
+  autolabels: true,
+  renderer: "svg"
+});    
 </script> 
+
+<h3>Learn more</h3>
+
+Now explore the <a href="/examples/">Examples</a> or <a href="/api/">API documentation</a> to learn more about Cedar.
