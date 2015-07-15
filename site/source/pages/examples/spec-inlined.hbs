@@ -25,9 +25,6 @@ layout: example.hbs
     "data": [
       {
         "name": "table",
-        "format": {
-          "property": "features"
-        },
         "transform": [
           {"type": "pie", "value": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},
@@ -125,25 +122,22 @@ layout: example.hbs
 
   //create the specification
   var spec ={
-  "inputs": [
-    {"name": "y", "type": ["numeric","string"], "required": true},
-    {"name": "label", "type": ["string"], "required": false},
-    {"name": "radius", "type": ["numeric"], "required": true}
-  ],
+    "inputs": [
+      {"name": "y", "type": ["numeric","string"], "required": true},
+      {"name": "label", "type": ["string"], "required": false},
+      {"name": "radius", "type": ["numeric"], "required": true}
+    ],
     "template":{
       "padding": "strict",
       "data": [
         {
           "name": "table",
-          "format": {
-            "property": "features"
-          },
           "transform": [
-            {"type": "pie", "value": "attributes.{y.field}"},
+            {"type": "pie", "field": "attributes.{y.field}"},
             {"type": "formula", "field": "hyp", "expr": "{radius}"},
             {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
             {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},
-            {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}   
+            {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}     
           ]
         }
       ],
@@ -180,6 +174,7 @@ layout: example.hbs
           "from": {"data": "table"},
           "properties": {
             "enter": {
+              "fill": {"value": "#fff"},
               "y": {"field": "y", "mult": 0.6},
               "x": {"field": "x", "mult": 0.6},
               "fill": {"value": "#fff"},
@@ -191,8 +186,8 @@ layout: example.hbs
         }
       ]
     }
-  
-}
+    
+  }
   //assign to chart
   chart.specification = spec;
 

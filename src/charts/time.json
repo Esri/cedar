@@ -9,7 +9,7 @@
       {
         "name": "table",
         "url":"{data}&orderByFields={time.field}",
-        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+        "format": {"type": "json", "parse": {"attributes.{time.field}":"date"}}
       }
     ],
     "scales": [
