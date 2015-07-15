@@ -18,8 +18,8 @@
       "padding": "strict",
       "data": [
         {
-          "name": "iris",
-          "url": "{data}",
+          "name": "table",
+          "url": "{data}"
         }
       ],
       "scales": [
@@ -28,7 +28,7 @@
           "nice": true,
           "range": "width",
           "domain": {
-            "data": "iris",
+            "data": "table",
             "field": "attributes.{x.field}"
           }
         },
@@ -37,7 +37,7 @@
           "nice": true,
           "range": "height",
           "domain": {
-            "data": "iris",
+            "data": "table",
             "field": "attributes.{y.field}"
           }
         },
@@ -45,7 +45,7 @@
           "name": "c",
           "type": "ordinal",
           "domain": {
-            "data": "iris",
+            "data": "table",
             "field": "attributes.{color.field}"
           },
           "range": [
@@ -93,7 +93,7 @@
         {
           "type": "symbol",
           "from": {
-            "data": "iris"
+            "data": "table"
           },
           "properties": {
             "enter": {
