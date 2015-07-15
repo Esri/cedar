@@ -20,9 +20,6 @@
         {
           "name": "iris",
           "url": "{data}",
-          "format": {
-            "property": "features"
-          }
         }
       ],
       "scales": [
