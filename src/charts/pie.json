@@ -9,9 +9,6 @@
     "data": [
       {
         "name": "table",
-        "format": {
-          "property": "features"
-        },
         "transform": [
           {"type": "pie", "field": "attributes.{y.field}"},
           {"type": "formula", "field": "hyp", "expr": "{radius}"},

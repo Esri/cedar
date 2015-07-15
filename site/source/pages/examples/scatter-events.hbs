@@ -39,7 +39,9 @@ layout: example.hbs
   }
 
   function showItem(event,data){
-    document.getElementById('details').innerHTML = compileTemplate(data);
+    if(data !== undefined && data !== null) {
+      document.getElementById('details').innerHTML = compileTemplate(data);
+    }
   }
 
   function hideItem(event,data){
@@ -47,6 +49,9 @@ layout: example.hbs
   }
   
   function toggleItem(event,data){
+    if(data === undefined && data === null) {
+      return;
+    }
     if(selectedItems[data.NAME] === undefined || selectedItems[data.NAME] === null) {
       selectedItems[data.NAME] = data;
     } else {

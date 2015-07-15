@@ -389,9 +389,17 @@ Cedar.prototype.show = function(options){
  * chart.show({elementId: "#chart"});
  * chart.dataset.query.where = "POPULATION>30000";
  * chart.update();
+ * 
+ * @param {Object} options - update configurations
+ * @param {Boolean} options.data - if true, data are updated from service (default: true)
  */
-Cedar.prototype.update = function(){
+Cedar.prototype.update = function( options ){
   var self = this;
+
+  options = options || {};
+  if(options.data === undefined || options.data === undefined) {
+    options.data = true;
+  }
   
   if ( this._view ) { 
     this.emit('update-start');
@@ -413,6 +421,11 @@ Cedar.prototype.update = function(){
       // Creates the HTML Div and styling if not already created
       if(self._definition.tooltip !== undefined && self._definition.tooltip !== null) {
         self._createTooltip(self._definition.tooltip.id);
+      }
+      if(!options.data) {
+        // Used the cached data
+        // TODO: remove hard-coded data as 'table' or [0]
+        var existingData = this._view.data('table').values();
       }
 
       //ensure we have required inputs or defaults 
@@ -445,22 +458,19 @@ Cedar.prototype.update = function(){
       
       }else{
       
-        //we need to fetch the data so
-        var url = Cedar._createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
-      
-        //create a callback closure to carry the spec
-        var cb = function(err,data){
-      
-          //todo add error handlers for xhr and ags errors
-          spec.data[0].values = data;
-          console.dir(spec);
-          //send to vega
+        if(options.data) {
+          //fetch the data from the service          
+          var url = Cedar._createFeatureServiceRequest(this._definition.dataset, queryFromSpec);  
+          Cedar.getJson(url, function(err,data){
+            //todo add error handlers for xhr and ags errors
+            spec.data[0].values = data.features;
+            //send to vega
+            self._renderSpec(spec);
+          });
+        } else {
+          spec.data[0].values = existingData;
           self._renderSpec(spec);
-
-        };
-
-        //fetch the data from the service
-        Cedar.getJson(url, cb);
+        }
       }
     }
     catch(ex){
@@ -736,10 +746,10 @@ Cedar._validateMappings = function(inputs, mappings){
  */
 Cedar._validateData = function(data, mappings){
   var missingInputs = [];
-  if(!data.features || !Array.isArray(data.features)){
-    throw new Error('Data is expected to have features array!');
+  if(!data || !Array.isArray(data)){
+    throw new Error('Data is expected to be an array!');
   }
-  var firstRow = data.features[0].attributes;
+  var firstRow = data[0].attributes;
   for(var key in mappings){
     if (mappings.hasOwnProperty(key)) {
       var fld = Cedar._getMappingFieldName(key, mappings[key].field);

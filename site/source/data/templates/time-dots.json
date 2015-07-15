@@ -10,7 +10,7 @@
     "data": [
       {
         "name": "crimes",
-        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+        "format": {"type": "json", "parse": {"attributes.{time.field}":"date"}}
       },
       {
         "name": "variety",
