@@ -1,0 +1,93 @@
+---
+title: Cedar Tutorial
+description: A walkthrough of building a chart
+layout: example.hbs
+---
+
+<h2>{{page.title}}</h2>
+
+A Cedar chart needs four things: Chart Type, Data, Mappings, DOM Element. 
+
+First, we create a new Cedar object and specify we want a bar chart. In this example we simply use `type: "bar"`, but instead we could refer to the full URL to a chart specification.  
+
+{{#markdown}}
+```javascript
+  var chart = new Cedar({
+    "type":"bar"
+  });
+```
+{{/markdown}}
+
+Now we need to define the data. We can either use an array of data that we have calculated in our code, or we can refer to an ArcGIS GeoServices layer. For the GeoServices Layer, Cedar will make the HTTP API calls to request data for us. 
+
+{{#markdown}}
+```javascript
+chart.dataset = {
+  "url":"http://server.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/4"
+};
+```
+{{/markdown}}
+
+Third, we now create a Mapping between the dataset and the chart type. 
+
+{{#markdown}}
+```javascript
+chart.dataset.mappings = {
+  "x": {"field":"NAME","label":"US State"},
+  "y": {"field":"TOTPOP_CY","label":"Population"}
+}
+```
+{{/markdown}}
+
+Lastly, we now show the chart and bind it to an HTML DOM element.
+
+{{#markdown}}
+```javascript
+chart.show({
+  elementId: "#chart"
+});
+```
+{{/markdown}}
+
+And that's it, we now have a chart!
+
+<h3>Full Output</h3>
+
+We could also pull all this into a single set of commands:
+
+{{#markdown}}
+```javascript
+chart = new Cedar({
+  "type": "bar",
+  "dataset": {
+    "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0"
+    },
+    "mappings":{
+      "x": {"field":"STATE_NAME","label":"US State"},
+      "y": {"field":"TotPop","label":"Population"}
+    }
+  }
+}).show({
+  elementId: "#chart",
+});
+```
+{{/markdown}}
+
+<div id="chart"></div>
+
+<script type="text/javascript">
+var chart = new Cedar({
+  "type": "bar",
+  "dataset": {
+    "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+    "mappings":{
+      "x": {"field":"STATE_NAME","label":"US State"},
+      "y": {"field":"TotPop","label":"Population"}
+    }
+  }
+}).show({
+  elementId: "#chart",
+  autolabels: true,
+  renderer: "svg"
+});  
+</script> 
