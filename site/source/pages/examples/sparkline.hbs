@@ -20,38 +20,19 @@ layout: example.hbs
 &lt;/style&gt;
 
 &lt;script type="text/javascript"&gt;
-  var def = {
-  	"type": "sparkline",
-    "dataset":{
-      "data":data,
+  var chartdc = new Cedar({"type": "sparkline",
+    "dataset":{ "data":data,
       "mappings":{
         "x": {"field":"date","label":"Date"},
-        "y": {"field":"dc","label":"dc"}
-      }
-    }
-  }
-  var chartdc = new Cedar({
-  	"type": "sparkline",
-    "dataset":{
-      "data":data,
-      "mappings":{
-        "x": {"field":"date","label":"Date"},
-        "y": {"field":"dc","label":"dc"}
-      }
-    }
-  });
+        "y": {"field":"dc","label":"dc"}}}});
   chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
   var chartsf = new Cedar({
   	"type": "sparkline",
-    "dataset":{
-      "data":data,
+    "dataset":{ "data":data,
       "mappings":{
         "x": {"field":"date","label":"Date"},
-        "y": {"field":"sf","label":"population"}
-      }
-    }
-  });
+        "y": {"field":"sf","label":"population"}}}});
   chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
 &lt;/script&gt;
