@@ -400,10 +400,6 @@ Cedar.prototype.update = function( options ){
   if(options.data === undefined || options.data === undefined) {
     options.data = true;
   }
-  
-  if ( this._view ) { 
-    this.emit('update-start');
-  }
 
   if(this._pendingXhr){
     
@@ -486,6 +482,11 @@ Cedar.prototype.update = function( options ){
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
   try{
+    
+    if ( this._view ) { 
+      this.emit('update-start');
+    }    
+
     if(self.autolabels === true) {
         spec = self._placeLabels(spec);
         spec = self._placeaAxisTicks(spec);
