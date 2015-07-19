@@ -254,8 +254,24 @@ var Cedar = function Cedar(options){
   //allow a tooltip to be passed in...
   if(opts.tooltip && typeof opts.tooltip === 'object'){
     this.tooltip = opts.tooltip;
-  }  
-
+  } else {
+    // Build a default tooltip based on first two inputs
+    var inputs = []
+    for(var input in this._definition.dataset.mappings){
+      if (this._definition.dataset.mappings.hasOwnProperty(input)) { 
+        var field = this._definition.dataset.mappings[input].field;
+        if(field !== undefined && field !== null) {
+          inputs.push(field);
+        }          
+      };
+    }
+    if(inputs.length >= 2) {
+      this.tooltip = {
+        "title": "{" + inputs[0] + "}",
+        "content": "{" + inputs[1] + "}"
+      }
+    }     
+  }
 };
 
 // base URL of this library
@@ -536,14 +552,17 @@ Cedar.prototype._placeLabels = function(spec) {
     // Change each axis title offset based on longest value
     inputs.forEach(function(axis, index) {
       var angle = 0;
-      if (spec.axes[index].properties.labels.angle !== undefined) {
-        angle = spec.axes[index].properties.labels.angle.value;
+      if(spec.axes[index] !== undefined) {
+
+        if (spec.axes[index].properties.labels.angle !== undefined) {
+          angle = spec.axes[index].properties.labels.angle.value;
+        }
+        if(spec.axes[index].type == 'y' ) {
+          angle = 100 - angle;
+        }      
+        spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
+        //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
       }
-      if(spec.axes[index].type == 'y' ) {
-        angle = 100 - angle;
-      }      
-      spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
-      //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
     });
     return spec;
 
