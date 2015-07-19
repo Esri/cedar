@@ -229,8 +229,8 @@ module.exports = function(grunt) {
       scripts: {
         files: [
           { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
-          { expand: true, cwd: 'node_modules/d3', src: 'd3.min.js', dest: 'site/build/js/'},
-          { expand: true, cwd: 'node_modules/vega', src: 'vega.min.js', dest: 'site/build/js/'}
+          { expand: true, cwd: 'node_modules/d3', src: '*.js*', dest: 'site/build/js/'},
+          { expand: true, cwd: 'node_modules/vega', src: '*.js*', dest: 'site/build/js/'}
         ]
       },
       specs: {

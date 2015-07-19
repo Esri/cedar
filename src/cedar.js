@@ -429,9 +429,10 @@ Cedar.prototype.update = function(){
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
-  try{
+  // try{
     if(self.autolabels === true) {
         spec = self._placeLabels(spec);
+        spec = self._placeaAxisTicks(spec);
     }
     //use vega to parse the spec 
     //it will handle the spec as an object or url
@@ -458,10 +459,10 @@ Cedar.prototype._renderSpec = function(spec){
       }
 
     });
-  }
-  catch(ex){
-    throw(ex);
-  }
+  // }
+  // catch(ex){
+  //   throw(ex);
+  // }
 };
 
 /**
@@ -498,9 +499,31 @@ Cedar.prototype._placeLabels = function(spec) {
       if(spec.axes[index].type == 'y' ) {
         angle = 100 - angle;
       }      
-      spec.axes[index].titleOffset = lengths[axis] * angle/100 * 8 + 30;
+      spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
       //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
     });
+    return spec;
+
+  } catch(ex) {
+    throw(ex);
+  }
+};
+
+/**
+ * Automatically determines number of axis tick marks
+ * 
+ * Calculates the maximum length of a tick label and adds padding
+ * @todo remove expectation that there are both x,y axes
+ * 
+ * @access private
+ */
+Cedar.prototype._placeaAxisTicks = function(spec) {
+  var self = this;
+  try{  
+    
+    spec.axes[0].ticks = self._view === undefined ? 5 : self._view.width() / 100;
+    spec.axes[1].ticks = self._view === undefined ? 5 : self._view.height() / 30;
+    
     return spec;
 
   } catch(ex) {

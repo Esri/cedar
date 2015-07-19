@@ -82,7 +82,7 @@ layout: example.hbs
   }
   var chartS = new Cedar(spec); chartS.show({elementId: "#chart-small"});
   var chartM = new Cedar(spec); chartM.show({elementId: "#chart-medium"});
-  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large"});
+  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large", autolabels: true});
 
 
   $(function() {
