@@ -34,6 +34,10 @@ layout: page.hbs
 
   var chart1 = new Cedar({
   	"type": "bar",
+    "tooltip": {
+      "title": "{ZIP_CODE}",
+      "content": "{TOTAL_STUD} students"
+    },
     "dataset": {
     	"data": features,
 	    "mappings": {
@@ -43,6 +47,10 @@ layout: page.hbs
 
   var chart2 = new Cedar({
   	"type": "bar-horizontal",
+    "tooltip": {
+      "title": "{ZIP_CODE}",
+      "content": "{TOTAL_STUD} students"
+    },
     "dataset": {
     	"data": features,
 	    "mappings": {
@@ -52,6 +60,10 @@ layout: page.hbs
 
   var chart3 = new Cedar({
   	"type": "scatter",
+    "tooltip": {
+      "title": "{ZIP_CODE}",
+      "content": "{TOTAL_STUD} students"
+    },
     "dataset": {
     	"data": features,
 	    "mappings": {

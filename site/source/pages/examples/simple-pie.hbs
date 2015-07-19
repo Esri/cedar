@@ -63,8 +63,10 @@ layout: example.hbs
   };
   chart.dataset = dataset;
 
-  chart.on('mouseover', function(e,d) { console.log("hover", d)});
-
+  chart.tooltip = {
+    "title": "{ZIP_CODE} postcode",
+    "content": "{TOTAL_STUD_SUM} students"
+  }
   chart.show({
     elementId: "#chart",
     width: 600,

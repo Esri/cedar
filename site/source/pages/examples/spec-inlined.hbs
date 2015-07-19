@@ -10,7 +10,7 @@ layout: example.hbs
   <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <style>
     #examples { height: 1800px; }
-    #resizable { width: 550px; height: 150px; padding: 0.5em; }
+    #resizable { width: 750px; height: 550px; padding: 0.5em; }
     #resizable h3 { text-align: center; margin: 0; }
   </style>
 
@@ -160,8 +160,8 @@ var chart = new Cedar({"specification":spec});
 
     }
   };
-  var tooltip = {
-    "title": "",
+  chart.tooltip = {
+    "title": "{Year}",
     "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
   };
 
@@ -173,26 +173,6 @@ var chart = new Cedar({"specification":spec});
     renderer: "svg"
   }); 
 
-  chart.on('mouseover', function(event,data){
-      if(data === undefined || data === null) { 
-        return;
-      }
-      console.log("event", event)
-      var cedartip = document.getElementById('cedar-tooltip');
-      cedartip.style.top = event.pageY + "px";
-      cedartip.style.left = event.pageX + "px";
-      cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltip.title + "</span><br />";
-      content += "<p class='content'>" + tooltip.content + "</p>";
-
-      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
-        return data[$1];
-      } );
-    });
-  chart.on('mouseout', function(event,data){
-      var tooltip = document.getElementById('cedar-tooltip');
-      tooltip.style.display = "none";
-    })
 
   $(function() {
     $( "#resizable" ).resizable({

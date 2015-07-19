@@ -91,40 +91,17 @@ layout: example.hbs
     ]
   };
 
+  chart.tooltip = {
+    "id": "cedar-tooltip",
+    "title": "{ZIP_CODE}",
+    "content": "{TOTAL_STUD_SUM} students in the {ZIP_CODE} zipcode."
+  };
+  
   //show the chart
   chart.show({
     elementId: "#chart"
   });
 
-  var tooltipurl = {
-    "id": "cedar-tooltip",
-    "title": "{ZIP_CODE}",
-    "content": "{TOTAL_STUD_SUM} students in the {ZIP_CODE} zipcode."
-  };
 
-  function positionTooltip(event, data) {
-      if(data === undefined || data === null) {
-        var cedartip = document.getElementById(tooltipurl.id);
-        cedartip.style.display = "none";
-        return;
-      }
-      var cedartip = document.getElementById(tooltipurl.id);
-      cedartip.style.top = event.pageY + "px";
-      cedartip.style.left = event.pageX + "px";
-      cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
-      content += "<p class='content'>" + tooltipurl.content + "</p>";
 
-      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
-        return data[$1];
-      } );
-
-  };
-
-  chart.on('mouseout', function(event,data){
-    positionTooltip(event, data);
-  });
-  chart.on('mousemove', function(event,data){
-    positionTooltip(event, data);
-  });    
 </script>
