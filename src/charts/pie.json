@@ -26,6 +26,15 @@
         "name": "r",
         "type": "sqrt",
         "domain": {"data": "table", "field": "attributes.{y.field}"}
+      },
+      {
+        "name": "color",
+        "type": "ordinal",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{y.field}"
+        },
+        "range": "category10"
       }
     ],
     "marks": [

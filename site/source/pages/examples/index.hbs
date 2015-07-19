@@ -13,12 +13,28 @@ layout: example.hbs
 ```html
 {{>example-code-header}}
   var chart = new Cedar({
-    "definition":"{{assets}}data/definitions/dc-schools-scatter-chart.json"
+    "type":"scatter",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Student Enrollment (2008)"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "color":{"field":"FACUSE","label":"Facility Type"}
+      }
+    }
   });
+
+  chart.tooltip = {
+    "title": "{NAME}",
+    "content": "{POPULATION_ENROLLED_2008} students with a {CAPACITY} student capacity."
+  }
 
   chart.show({
     elementId: "#chart",
+    autolabels: true
   });
+
 {{>example-code-footer}}
 ```
 {{/markdown}}
@@ -26,14 +42,27 @@ layout: example.hbs
 
 
 <script>
-  //Create a cedar chart, passing in a url to a defintion
-  //a defintion allows a chart to be visualized AND manipulated
   var chart = new Cedar({
-    "definition":"{{assets}}data/definitions/dc-schools-scatter-chart.json"
+    "type":"scatter",
+    "dataset":{
+      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "query":{},
+      "mappings":{
+        "x": {"field":"POPULATION_ENROLLED_2008","label":"Student Enrollment (2008)"},
+        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+        "color":{"field":"FACUSE","label":"Facility Type"}
+      }
+    }
   });
+
+  chart.tooltip = {
+    "title": "{NAME}",
+    "content": "{POPULATION_ENROLLED_2008} students with a {CAPACITY} student capacity."
+  }
 
   chart.show({
     elementId: "#chart",
+    autolabels: true
   });
 
 </script>

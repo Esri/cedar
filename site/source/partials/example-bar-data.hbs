@@ -11,8 +11,7 @@
     }
   };
 
-  var tooltipdata2 = {
-    "id": "cedar-tooltip",
+  chart2.tooltip = {
     "title": "{ZIP_CODE}",
     "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
   }
@@ -26,20 +25,4 @@
     renderer: "svg"
   });
 
-  chart2.on('mouseout', function(event,data){
-      var cedartip = document.getElementById(tooltipdata2.id);
-      cedartip.style.display = "none";
-    })
-  chart2.on('mouseover', function(event,data){
-      var cedartip = document.getElementById(tooltipdata2.id);
-      cedartip.style.top = event.pageY+100 + "px";
-      cedartip.style.left = event.pageX+20 + "px";
-      cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltipdata2.title + "</span><br />";
-      content += "<p class='content'>" + tooltipdata2.content + "</p>";
-
-      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
-        return data[$1];
-      } );
-    });
 </script>

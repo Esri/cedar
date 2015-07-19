@@ -88,6 +88,10 @@
  * "data": {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]}
  * @param {Object} options.dataset.mappings - Relates data items to the chart style definition
  * @param {Object} options.override - Changes to the "options.type" chart specification
+ * @param {Object} options.tooltip - Optional on-hover tooltip. Element has class="cedar-tooltip" for styling.
+ * @param {String} options.tooltip.id - Optional HTML element to use for tooltip. (default: unique id created)
+ * @param {String} options.tooltip.title - Templated tooltip heading. Uses "{Variable} template format"
+ * @param {String} options.tooltip.content - Templated tooltip body text. Uses "{Variable} template format" 
  * @return {Object} new Cedar chart object
  */
 var Cedar = function Cedar(options){
@@ -115,6 +119,9 @@ var Cedar = function Cedar(options){
 
   //the vega view aka the chart
   this._view = undefined;
+
+  //the vega view aka the chart
+  this._tooltip = undefined;
 
   //queue to hold methods called while
   //xhrs are in progress
@@ -232,6 +239,23 @@ var Cedar = function Cedar(options){
     }
   });  
 
+  Object.defineProperty(this, 'tooltip', {
+    get: function() {
+        return this._definition.tooltip;
+    },
+    set: function(val) {
+      this._definition.tooltip = val;
+      if( this._definition.tooltip.id === undefined || this._definition.tooltip.id === null ) {
+        this._definition.tooltip.id = "cedar-" + Date.now();
+      }
+    }
+  });  
+
+  //allow a tooltip to be passed in...
+  if(opts.tooltip && typeof opts.tooltip === 'object'){
+    this.tooltip = opts.tooltip;
+  }  
+
 };
 
 // base URL of this library
@@ -288,7 +312,7 @@ Cedar.prototype.canDraw = function(){
  * 
  * @param  {object} options 
  * @param {String} options.elementId [required] Id of the Dom element into which the chart will be rendered
- * @param {String} options.renderer "canvas" or "svg" (default: `canvas`)
+ * @param {String} options.renderer "canvas" or "svg" (default: `svg`)
  * @param {Boolean} options.autolabels place axis labels outside any tick labels (default: false)
  * @param {String} options.token Token to be used if the data or spec are on a secured server
  */
@@ -311,7 +335,7 @@ Cedar.prototype.show = function(options){
   
     //hold onto the id
     this._elementId = options.elementId;
-    this._renderer = options.renderer || "canvas"; //default to canvas
+    this._renderer = options.renderer || "svg"; //default to svg
     this.width = options.width || undefined; // if not set in API, always base on current div size
     this.height = options.height || undefined;
     if(options.autolabels !== undefined && options.autolabels !== null){
@@ -369,6 +393,12 @@ Cedar.prototype.update = function(){
       this._remove(this._view);
     }
     try{
+
+      // Creates the HTML Div and styling if not already created
+      if(self._definition.tooltip !== undefined && self._definition.tooltip !== null) {
+        self._createTooltip(self._definition.tooltip.id);
+      }
+
       //ensure we have required inputs or defaults 
       var compiledMappings = Cedar._applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs); //Cedar._compileMappings(this._definition.dataset, this._definition.specification.inputs);
 
@@ -429,7 +459,7 @@ Cedar.prototype.update = function(){
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
-  // try{
+  try{
     if(self.autolabels === true) {
         spec = self._placeLabels(spec);
         spec = self._placeaAxisTicks(spec);
@@ -459,10 +489,10 @@ Cedar.prototype._renderSpec = function(spec){
       }
 
     });
-  // }
-  // catch(ex){
-  //   throw(ex);
-  // }
+  }
+  catch(ex){
+    throw(ex);
+  }
 };
 
 /**
@@ -476,14 +506,26 @@ Cedar.prototype._renderSpec = function(spec){
 Cedar.prototype._placeLabels = function(spec) {
   var self = this;
   try{  
-    var fields = { 
-        x: self._definition.dataset.mappings.x.field,
-        y: self._definition.dataset.mappings.y.field
-    };
-    var lengths = {x: 0, y: 0};
+    var fields = {};
+    var lengths = {};
+    var inputs = [];
+    // Get all inputs that may be axes
+    for(var input in self._definition.dataset.mappings){
+      // check also if property is not inherited from prototype
+      if (self._definition.dataset.mappings.hasOwnProperty(input)) { 
+        var field = self._definition.dataset.mappings[input].field;
+        if(field !== undefined && field !== null) {
+          inputs.push(input);
+          fields[input] = field;
+          lengths[input] = 0;
+        }
+      }
+    }
     var length = 0;
+
+    // Find the max length value for each axis
     spec.data[0].values.features.forEach(function(feature) {
-      ['x','y'].forEach(function(axis) {
+      inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
         if( length > lengths[axis]) {
           lengths[axis] = length;  
@@ -491,7 +533,8 @@ Cedar.prototype._placeLabels = function(spec) {
       });
     });
 
-    ['x','y'].forEach(function(axis, index) {
+    // Change each axis title offset based on longest value
+    inputs.forEach(function(axis, index) {
       var angle = 0;
       if (spec.axes[index].properties.labels.angle !== undefined) {
         angle = spec.axes[index].properties.labels.angle.value;
@@ -816,18 +859,64 @@ Cedar.prototype._purgeMethodQueue = function(){
 };
 
 /**
- * Helper function to request JSON from a URL
- * @param  {String}   url      URL to json file
- * @param  {Function} callback node-style callback function (error, data)
+ * Instantiates the tooltip element and styling
+ * @access private
  */
-Cedar.getJson = function( url, callback ){
-  d3.json(url, function(err,data) {
-    if(err){
-      callback('Error loading ' + url + ' ' + err.message);
-    }
-    callback(null, data);
+Cedar.prototype._createTooltip = function(elem) {
+  var self = this;
+  var tooltip_div = document.getElementById(elem);
+
+  // This tooltip has already been created
+  if(tooltip_div !== undefined && tooltip_div !== null) {
+    return tooltip_div;
+  }
+
+  // TODO: remove inline CSS
+  var style = document.createElement('style');
+  style.type = 'text/css';
+  style.innerHTML = ".cedar-tooltip {background-color: #f36f22; padding: 3px 10px; color: #fff; margin: -30px 0 0 20px; position: absolute; z-index: 2000; font-size: 10px; } .cedar-tooltip .title {font-size: 13pt; font-weight: bold; } .cedar-tooltip .content {font-size: 10pt; } .cedar-tooltip:after {content: ''; position: absolute; border-style: solid; border-width: 15px 15px 15px 0; border-color: transparent #f36f22; display: block; width: 0; z-index: 1; left: -15px; top: 14px; }";
+  document.getElementsByTagName('head')[0].appendChild(style);
+
+  tooltip_div = document.createElement('div');
+  tooltip_div.className = "cedar-tooltip";
+  tooltip_div.id = elem;
+  tooltip_div.style.cssText = "display: none";
+  // We need tooltip at the top of the page
+  document.body.insertBefore(tooltip_div, document.body.firstChild);
+
+
+  self.on('mouseout', function(event,data){
+    self._updateTooltip(event, data);
   });
+  self.on('mousemove', function(event,data){
+    self._updateTooltip(event, data);
+  }); 
+  return tooltip_div;
 };
+
+/** 
+ * Places the tooltip and fills in content
+ * 
+ * @access private
+ */
+Cedar.prototype._updateTooltip = function(event, data) {
+  var cedartip = document.getElementById(this._definition.tooltip.id);
+  if(data === undefined || data === null) {
+    cedartip.style.display = "none";
+    return;
+  }
+  cedartip.style.top = event.pageY + "px";
+  cedartip.style.left = event.pageX + "px";
+  cedartip.style.display = "block";
+  var content = "<span class='title'>" + this._definition.tooltip.title + "</span><br />";
+  content += "<p class='content'>" + this._definition.tooltip.content + "</p>";
+
+  cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+    return data[$1];
+  } );
+
+};
+
 
 /**
 * @access private
@@ -841,6 +930,20 @@ Cedar._mixin = function(source) {
         });
     }
     return source;
+};
+
+/**
+ * Helper function to request JSON from a URL
+ * @param  {String}   url      URL to json file
+ * @param  {Function} callback node-style callback function (error, data)
+ */
+Cedar.getJson = function( url, callback ){
+  d3.json(url, function(err,data) {
+    if(err){
+      callback('Error loading ' + url + ' ' + err.message);
+    }
+    callback(null, data);
+  });
 };
 
 /**

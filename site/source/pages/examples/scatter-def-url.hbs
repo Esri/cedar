@@ -54,6 +54,11 @@ layout: example.hbs
     }
   });
 
+  chart.tooltip = {
+    "title": "{NAME}",
+    "content": "{POPULATION_ENROLLED_2008} students with a {CAPACITY} student capacity."
+  }
+
   chart.show({
     elementId: "#chart",
     autolabels: true
