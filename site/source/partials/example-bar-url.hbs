@@ -1,3 +1,10 @@
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+    #resizable { width: 750px; height: 550px; padding: 0.5em; }
+  </style>
+
 <script>
   //create a cedar chart using the known 'bar' type
   // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
@@ -21,7 +28,7 @@
   };
 
   var tooltipurl = {
-    "id": "tooltip-url",
+    "id": "cedar-tooltip",
     "title": "{FACUSE}",
     "content": "{TOTAL_STUD_SUM} Students in {FACUSE}"
   }
@@ -32,7 +39,8 @@
   //show the chart
   chart.show({
     elementId: "#chart-url",
-    autolabels: true
+    autolabels: true,
+    renderer: "svg"
   });
 
   function positionTooltip(event, data) {
@@ -42,8 +50,8 @@
         return;
       }
       var cedartip = document.getElementById(tooltipurl.id);
-      cedartip.style.top = event.offsetY+80 + "px";
-      cedartip.style.left = event.offsetX+30 + "px";
+      cedartip.style.top = event.pageY + "px";
+      cedartip.style.left = event.pageX + "px";
       cedartip.style.display = "block";
       var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
       content += "<p class='content'>" + tooltipurl.content + "</p>";
@@ -61,4 +69,9 @@
     positionTooltip(event, data);
   });  
 
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chart.update(); }
+    });
+  });
 </script>

@@ -16,7 +16,7 @@
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },          
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -27,8 +27,8 @@
           },
           "labels": {
             "fill": {"value": "#999"},
-            "angle": {"value": 50},
-            "align": {"value": "left"},
+            "angle": {"value": -50},
+            "align": {"value": "right"},
             "baseline": {"value": "middle"}
           }
         }
@@ -37,12 +37,12 @@
         "type": "y",
         "scale": "y",
         "titleOffset": 45,
-        "title": "{y.label}",          
+        "title": "{y.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },          
           "axis": {
              "stroke": {"value": "#dbdad9"},

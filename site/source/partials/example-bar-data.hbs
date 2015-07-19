@@ -12,7 +12,7 @@
   };
 
   var tooltipdata2 = {
-    "id": "tooltip-data",
+    "id": "cedar-tooltip",
     "title": "{ZIP_CODE}",
     "content": "{TOTAL_STUD_SUM} Students in {ZIP_CODE}"
   }
@@ -22,7 +22,8 @@
   
   //show the chart
   chart2.show({
-    elementId: "#chart-data"
+    elementId: "#chart-data",
+    renderer: "svg"
   });
 
   chart2.on('mouseout', function(event,data){

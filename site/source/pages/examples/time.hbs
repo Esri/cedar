@@ -18,14 +18,14 @@ layout: example.hbs
   var dataset = {
     "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
     "mappings":{
-      "time": {"field":"Date"},
-      "value": {"field":"Injuries"},
+      "x": {"field":"Date", "label": "Date"},
+      "y": {"field":"Injuries", "label": "Injuries"},
       "sort":"Date"
 
     }
   };
   var tooltip = {
-    "title": "{Year}",
+    "title": "",
     "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
   };
 
@@ -33,29 +33,31 @@ layout: example.hbs
   //chart.dataset.mappings.sort = "DATE";
   chart.show({
     elementId: "#chart",
+    autolabels: true
   }); 
 
   chart.on('mouseover', function(event,data){
-    console.log("event", event);
-    console.log("data", data);
+    if(data === undefined || data === null) { 
+        return;
+    }
 
-      var cedartip = document.getElementById('cedar-tooltip');
-      cedartip.style.top = event.pageY + "px";
-      cedartip.style.left = event.pageX + "px";
-      cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltip.title + "</span><br />";
-      content += "<p class='content'>" + tooltip.content + "</p>";
+    var cedartip = document.getElementById('cedar-tooltip');
+    cedartip.style.top = event.pageY + "px";
+    cedartip.style.left = event.pageX + "px";
+    cedartip.style.display = "block";
+    var content = "<span class='title'>" + tooltip.title + "</span><br />";
+    content += "<p class='content'>" + tooltip.content + "</p>";
 
-      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
-        return data[$1];
-      } );
-    });
+    cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+      return data[$1];
+    } );
+  });
   chart.on('mouseout', function(event,data){
-      var tooltip = document.getElementById('cedar-tooltip');
-      tooltip.style.top = event.pageY+10 + "px";
-      tooltip.style.left = event.pageX+10 + "px";
-      tooltip.style.display = "none";
-    })
+    var tooltip = document.getElementById('cedar-tooltip');
+    tooltip.style.top = event.pageY+10 + "px";
+    tooltip.style.left = event.pageX+10 + "px";
+    tooltip.style.display = "none";
+  });
 
 ```
 {{/markdown}}
@@ -66,8 +68,8 @@ layout: example.hbs
   var dataset = {
     "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
     "mappings":{
-      "time": {"field":"Date"},
-      "value": {"field":"Injuries"},
+      "x": {"field":"Date", "label": "Date"},
+      "y": {"field":"Injuries", "label": "Injuries"},
       "sort":"Date"
 
     }
@@ -81,28 +83,31 @@ layout: example.hbs
   //chart.dataset.mappings.sort = "DATE";
   chart.show({
     elementId: "#chart",
+    autolabels: true
   }); 
 
   chart.on('mouseover', function(event,data){
-    console.log("event", event);
-    console.log("data", data);
+    if(data === undefined || data === null) { 
+        return;
+    }
+    console.log("Event", event)
 
-      var cedartip = document.getElementById('cedar-tooltip');
-      cedartip.style.top = event.pageY + "px";
-      cedartip.style.left = event.pageX + "px";
-      cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltip.title + "</span><br />";
-      content += "<p class='content'>" + tooltip.content + "</p>";
+    var cedartip = document.getElementById('cedar-tooltip');
+    cedartip.style.top = event.clientY + "px";
+    cedartip.style.left = event.clientX + "px";
+    cedartip.style.display = "block";
+    var content = "<span class='title'>" + tooltip.title + "</span><br />";
+    content += "<p class='content'>" + tooltip.content + "</p>";
 
-      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
-        return data[$1];
-      } );
-    });
+    cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
+      return data[$1];
+    } );
+  });
   chart.on('mouseout', function(event,data){
-      var tooltip = document.getElementById('cedar-tooltip');
-      tooltip.style.top = event.pageY+10 + "px";
-      tooltip.style.left = event.pageX+10 + "px";
-      tooltip.style.display = "none";
-    })
+    var tooltip = document.getElementById('cedar-tooltip');
+    tooltip.style.top = event.clientY + "px";
+    tooltip.style.left = event.clientX + "px";
+    tooltip.style.display = "none";
+  });
 
 </script>
