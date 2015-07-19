@@ -506,14 +506,26 @@ Cedar.prototype._renderSpec = function(spec){
 Cedar.prototype._placeLabels = function(spec) {
   var self = this;
   try{  
-    var fields = { 
-        x: self._definition.dataset.mappings.x.field,
-        y: self._definition.dataset.mappings.y.field
-    };
-    var lengths = {x: 0, y: 0};
+    var fields = {};
+    var lengths = {};
+    var inputs = [];
+    // Get all inputs that may be axes
+    for(var input in self._definition.dataset.mappings){
+      // check also if property is not inherited from prototype
+      if (self._definition.dataset.mappings.hasOwnProperty(input)) { 
+        var field = self._definition.dataset.mappings[input].field;
+        if(field !== undefined && field !== null) {
+          inputs.push(input);
+          fields[field] = field;
+          lengths[input] = 0;
+        }
+      }
+    }
     var length = 0;
+
+    // Find the max length value for each axis
     spec.data[0].values.features.forEach(function(feature) {
-      ['x','y'].forEach(function(axis) {
+      inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
         if( length > lengths[axis]) {
           lengths[axis] = length;  
@@ -521,7 +533,8 @@ Cedar.prototype._placeLabels = function(spec) {
       });
     });
 
-    ['x','y'].forEach(function(axis, index) {
+    // Change each axis title offset based on longest value
+    inputs.forEach(function(axis, index) {
       var angle = 0;
       if (spec.axes[index].properties.labels.angle !== undefined) {
         angle = spec.axes[index].properties.labels.angle.value;
