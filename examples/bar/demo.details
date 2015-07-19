@@ -1,7 +1,0 @@
----
- name: Basic Bar Chart
- description: Creates a bar chart using Cedar and Vega
- authors:
-   - ajturner
- normalize_css: no
- ...

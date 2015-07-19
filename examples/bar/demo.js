@@ -27,7 +27,7 @@ $(function () {
   chart.dataset = dataset;
 
   chart.show({
-    elementId: "#chart-url",
+    elementId: "#chart",
     autolabels: true,
     renderer: "svg"
   });
