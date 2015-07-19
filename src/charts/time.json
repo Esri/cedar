@@ -1,15 +1,15 @@
 {
   "inputs":[
-    {"name":"x","type":["time"], "required":true},
-    {"name":"y","type":["numeric"], "required":true}
+    {"name":"time","type":["time"], "required":true},
+    {"name":"value","type":["numeric"], "required":true}
   ],
   "template":{
     "padding": "strict",
     "data": [
       {
         "name": "table",
-        "url":"{data}&orderByFields={x.field}",
-        "format": {"type": "json", "property": "features", "parse": {"attributes.{x.field}":"date"}}
+        "url":"{data}&orderByFields={time.field}",
+        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
       },
       {
         "name": "exports",
@@ -26,21 +26,20 @@
         "range": "width",
         "nice": "month",
         "zero": false,
-        "domain": {"data": "table", "field": "attributes.{x.field}"}
+        "domain": {"data": "table", "field": "attributes.{time.field}"}
       },
       {
         "name": "y",
         "type": "linear",
         "range": "height",
         "nice": true,
-        "domain": {"data": "table", "field": "attributes.{y.field}"}
+        "domain": {"data": "table", "field": "attributes.{value.field}"}
       }
     ],
     "axes": [
       {
         "type": "x", 
         "scale": "x",
-        "title": "{x.label}", 
         "properties": {
           "title": {
             "fontSize": {"value": 15},
@@ -63,7 +62,6 @@
       {
         "type": "y", 
         "scale": "y",
-        "title": "{y.label}", 
         "ticks": 2,
         "properties": {
           "title": {
@@ -90,8 +88,8 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "x": {"scale": "x", "field": "attributes.{x.field}"},
-            "y": {"scale": "y", "field": "attributes.{y.field}"},
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
             "stroke": {"value": "#0079c1"},
             "fill": {"value": "#0079c1"},
             "size": {"value": 20},
@@ -113,8 +111,8 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-            "x": {"scale": "x", "field": "attributes.{x.field}"},
-            "y": {"scale": "y", "field": "attributes.{y.field}"},
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
             "y2": {"scale": "y", "value": 0},
             "stroke": {"value": "#0079c1"}
           }

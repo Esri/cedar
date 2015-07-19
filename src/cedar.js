@@ -516,7 +516,7 @@ Cedar.prototype._placeLabels = function(spec) {
         var field = self._definition.dataset.mappings[input].field;
         if(field !== undefined && field !== null) {
           inputs.push(input);
-          fields[field] = field;
+          fields[input] = field;
           lengths[input] = 0;
         }
       }
