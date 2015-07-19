@@ -12,6 +12,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - X-Axis labels rotated counter-clockwise (to use Y-Axis space)
+- Changed 'autolabels' default to true
+- Changed 'renderer' default to 'svg'
 
 ### Support
 - Added example demo links to JSFiddle
