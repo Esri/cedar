@@ -109,7 +109,7 @@ var Cedar = function Cedar(options){
   // Cedar configuration such as size
   this.width = undefined;
   this.height = undefined;
-  this.autolabels = false;
+  this.autolabels = true;
 
   // Array to hold event handlers
   this._events = [];
