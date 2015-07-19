@@ -62,7 +62,7 @@
       {
         "type": "y", 
         "scale": "y",
-        "ticks": 2,
+        "ticks": 5,
         "properties": {
           "title": {
             "fontSize": {"value": 15},

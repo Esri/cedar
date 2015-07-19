@@ -582,9 +582,11 @@ Cedar.prototype._placeLabels = function(spec) {
 Cedar.prototype._placeaAxisTicks = function(spec) {
   var self = this;
   try{  
+    var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
+    var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
     
-    spec.axes[0].ticks = self._view === undefined ? 5 : self._view.width() / 100;
-    spec.axes[1].ticks = self._view === undefined ? 5 : self._view.height() / 30;
+    spec.axes[0].ticks = width / 100;
+    spec.axes[1].ticks = height / 30;
     
     return spec;
 
