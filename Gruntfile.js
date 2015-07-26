@@ -254,10 +254,15 @@ module.exports = function(grunt) {
 
     sass: {
       site: {
-        files: {
-          'site/build/css/style.css': 'site/source/scss/style.scss'
+          files: [{
+                    'expand': true,
+                    'dest': 'site/build/css/',
+                    'cwd': 'site/source/scss/',
+                    'src': ['*'],
+                    'ext': '.css',
+                    'style': 'compressed'
+                  }]
         }
-      }
     },
 
     'gh-pages': {

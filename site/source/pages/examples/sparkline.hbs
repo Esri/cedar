@@ -1,51 +1,66 @@
 ---
+title: Sparkline
 layout: example.hbs
 ---
 
-
-<h1>Sparkline</h1>
-
 <style type="text/css">
 	.cedar-spark .vega { display: inline; padding: 0; margin: 0;}
-	#pop-dc .type-line path { stroke: rgb(0,200,0) !important ;}
+	#pop-dc .mark-line path { stroke: rgb(0,200,0) !important ;}
 </style>
 
-<p>The population of DC <span id="pop-dc" class="cedar-spark"></span> has increased over the years, while San Francisco <span id="pop-sf" class="cedar-spark"></span> has been more erratic.</p>
+<h2>Example</h2>
 
-<pre>
-&lt;p&gt;The population of DC &lt;span id=&quot;pop-dc&quot; class=&quot;cedar-spark&quot;&gt;&lt;/span&gt; has increased over the years, while San Francisco &lt;span id=&quot;pop-sf&quot; class=&quot;cedar-spark&quot;&gt;&lt;/span&gt; has been more erratic.&lt;/p&gt;
+<p style="border: 1px solid #888; padding: 30px; margin: 20px">The population of DC <span id="pop-dc" class="cedar-spark"></span> has increased over the years, while Baltimore <span id="pop-bm" class="cedar-spark"></span> has been declining.</p>
+
+<h2>Code</h2>
+<pre class="prettyprint">
+&lt;p&gt;The population of DC &lt;span id=&quot;pop-dc&quot; class=&quot;cedar-spark&quot;&gt;&lt;/span&gt; has increased over the years, while Baltimore &lt;span id=&quot;pop-bm&quot; class=&quot;cedar-spark&quot;&gt;&lt;/span&gt; has been declining.&lt;/p&gt;
 
 &lt;style&gt;
-#pop-dc .type-line path { stroke: rgb(0,200,0) !important ;}
+#pop-dc .mark-line path { stroke: rgb(0,200,0) !important ;}
 &lt;/style&gt;
 
 &lt;script type="text/javascript"&gt;
-  var chartdc = new Cedar({"type": "sparkline",
-    "dataset":{ "data":data,
+  var data = [
+    {"attributes": {"date": "2000", "dc": 572046, "baltimore": 648654}},
+    {"attributes": {"date": "2010", "dc": 601767, "baltimore": 621317}},
+    {"attributes": {"date": "2013", "dc": 649111, "baltimore": 623404}},
+    {"attributes": {"date": "2014", "dc": 658893, "baltimore": 622793}}
+  ];
+
+  var chartdc = new Cedar({
+    "type": "sparkline",
+    "dataset":{
+      "data":data,
       "mappings":{
         "x": {"field":"date","label":"Date"},
-        "y": {"field":"dc","label":"dc"}}}});
+        "y": {"field":"dc","label":"dc"}
+      }
+    }
+  });
   chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
-  var chartsf = new Cedar({
-  	"type": "sparkline",
-    "dataset":{ "data":data,
+  var chartbm = new Cedar({
+    "type": "sparkline",
+    "dataset":{
+      "data":data,
       "mappings":{
         "x": {"field":"date","label":"Date"},
-        "y": {"field":"sf","label":"population"}}}});
-  chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });
-
+        "y": {"field":"baltimore","label":"population"}
+      }
+    }
+  });
+  chartbm.show({elementId: "#pop-bm", autolabels: false, height: 10, width: 20, renderer: "svg" });
 &lt;/script&gt;
 </pre>
 
 <script>
 
   var data = [
-		{"attributes": {"date": "2000", "dc": 600, "sf": 8000}},
-		{"attributes": {"date": "2001", "dc": 630, "sf": 7800}},
-		{"attributes": {"date": "2002", "dc": 580, "sf": 6300}},
-		{"attributes": {"date": "2003", "dc": 660, "sf": 8200}},
-		{"attributes": {"date": "2004", "dc": 700, "sf": 5400}}
+    {"attributes": {"date": "2000", "dc": 572046, "baltimore": 648654}},
+    {"attributes": {"date": "2010", "dc": 601767, "baltimore": 621317}},
+    {"attributes": {"date": "2013", "dc": 649111, "baltimore": 623404}},
+    {"attributes": {"date": "2014", "dc": 658893, "baltimore": 622793}}
 	];
 
   var chartdc = new Cedar({
@@ -60,17 +75,17 @@ layout: example.hbs
   });
   chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
-  var chartsf = new Cedar({
+  var chartbm = new Cedar({
   	"type": "sparkline",
     "dataset":{
       "data":data,
       "mappings":{
         "x": {"field":"date","label":"Date"},
-        "y": {"field":"sf","label":"population"}
+        "y": {"field":"baltimore","label":"population"}
       }
     }
   });
-  chartsf.show({elementId: "#pop-sf", autolabels: false, height: 10, width: 20, renderer: "svg" });
+  chartbm.show({elementId: "#pop-bm", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
 
 </script>
