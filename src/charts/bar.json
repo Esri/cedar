@@ -68,16 +68,16 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
+          },
+          "update": {
             "width": {"band": true, "offset": -1, "scale": "x"},
             "x": {"field": "attributes.{x.field}", "scale": "x"},
             "y": {"field": "attributes.{y.field}", "scale": "y"},
-            "y2": {"scale": "y", "value": 0 }
+            "y2": {"scale": "y", "value": 0 },            
+            "fill": {"value": "#0079c1"}
           },
           "hover": {
             "fill": {"value": "#29b6ea"}
-          },
-          "update": {
-            "fill": {"value": "#0079c1"}
           }
         },
         "type": "rect"
