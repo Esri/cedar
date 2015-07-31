@@ -907,7 +907,7 @@ Cedar.prototype._createTooltip = function(elem) {
 
 
   self.on('mouseout', function(event,data){
-    self._updateTooltip(event, data);
+    self._updateTooltip(event, null);
   });
   self.on('mousemove', function(event,data){
     self._updateTooltip(event, data);
