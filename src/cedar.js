@@ -412,7 +412,7 @@ Cedar.prototype.update = function( options ){
       //TODO Remove existing handlers
       this._remove(this._view);
     }
-    try{
+    // try{
 
       // Creates the HTML Div and styling if not already created
       if(self._definition.tooltip !== undefined && self._definition.tooltip !== null) {
@@ -468,10 +468,10 @@ Cedar.prototype.update = function( options ){
           self._renderSpec(spec);
         }
       }
-    }
-    catch(ex){
-      throw(ex);
-    }
+    // }
+    // catch(ex){
+    //   throw(ex);
+    // }
   }
 };
 
@@ -481,7 +481,7 @@ Cedar.prototype.update = function( options ){
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
-  try{
+  // try{
     
     if ( this._view ) { 
       this.emit('update-start');
@@ -512,10 +512,10 @@ Cedar.prototype._renderSpec = function(spec){
       }
 
     });
-  }
-  catch(ex){
-    throw(ex);
-  }
+  // }
+  // catch(ex){
+  //   throw(ex);
+  // }
 };
 
 /**
@@ -558,7 +558,7 @@ Cedar.prototype._placeLabels = function(spec) {
     var length = 0;
 
     // Find the max length value for each axis
-    spec.data[0].values.features.forEach(function(feature) {
+    spec.data[0].values.forEach(function(feature) {
       inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
         if( length > lengths[axis]) {
@@ -603,8 +603,12 @@ Cedar.prototype._placeaAxisTicks = function(spec) {
     var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
     var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
     
-    spec.axes[0].ticks = width / 100;
-    spec.axes[1].ticks = height / 30;
+    if(spec.axes[0] !== undefined) {
+      spec.axes[0].ticks = width / 100;
+    }
+    if(spec.axes[1] !== undefined) {
+      spec.axes[1].ticks = height / 30;
+    }
     
     return spec;
 

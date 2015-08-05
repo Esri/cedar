@@ -110,7 +110,6 @@ layout: example.hbs
           }
         }
       }
-<<<<<<< HEAD
     ],
     "marks": [
       {
@@ -125,93 +124,6 @@ layout: example.hbs
             "size": {"value": 20},
             "fillOpacity": {
               "value": 0.8
-=======
-    ]
-  }
-  
-}
-  //assign to chart
-  chart.specification = spec;
-
-  //create the dataset w/ mappings
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "query": {
-      "groupByFieldsForStatistics": "FACUSE",
-      "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
-      }]
-    },    
-    "mappings":{
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
-      "label": {"field":"FACUSE","label":"Facility Use"},
-      "radius": 360
-    }
-  };
-
-  //assign to the chart
-  chart.dataset = dataset;
-
-  //show the chart
-  chart.show({
-    elementId: "#chart",
-    width: 800,
-    height: 800
-  });
-```
-{{/markdown}}
-
-
-<script>
-  //create a cedar chart
-  var chart = new Cedar();
-
-  //create the specification
-  var spec ={
-    "inputs": [
-      {"name": "y", "type": ["numeric","string"], "required": true},
-      {"name": "label", "type": ["string"], "required": false},
-      {"name": "radius", "type": ["numeric"], "required": true}
-    ],
-    "template":{
-      "padding": "strict",
-      "data": [
-        {
-          "name": "table",
-          "transform": [
-            {"type": "pie", "field": "attributes.{y.field}"},
-            {"type": "formula", "field": "hyp", "expr": "{radius}"},
-            {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
-            {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},
-            {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}     
-          ]
-        }
-      ],
-      "scales": [
-        {
-          "name": "r",
-          "type": "sqrt",
-          "domain": {"data": "table", "field": "attributes.{y.field}"}
-        }
-      ],
-      "marks": [
-        {
-          "type": "arc",
-          "from": {"data": "table"},
-          "properties": {
-            "enter": {
-              "x": {"group": "width"},
-              "y": {"group": "height"},
-              "startAngle": {"field": "layout_start"},
-              "endAngle": {"field": "layout_end"},
-              "outerRadius": {"value": "{radius}"},
-              "stroke": {"value": "#fff"}
-            },
-            "update": {
-              "fill": {"value": "#0079c1"}
->>>>>>> Added update(options) to not refresh data
             },
             "hover": {
               "fill": {"value": "#0079c1"},
@@ -221,7 +133,6 @@ layout: example.hbs
               "fill": {"value": "#f00"}
             }
           }
-<<<<<<< HEAD
         }
       },
       {
@@ -240,30 +151,6 @@ layout: example.hbs
   }
 }
 var chart = new Cedar({"specification":spec});
-=======
-        },
-        {
-          "type": "text",
-          "from": {"data": "table"},
-          "properties": {
-            "enter": {
-              "fill": {"value": "#fff"},
-              "y": {"field": "y", "mult": 0.6},
-              "x": {"field": "x", "mult": 0.6},
-              "fill": {"value": "#fff"},
-              "align": {"value": "center"},
-              "baseline": {"value": "middle"},
-              "text": {"field": "attributes.{label.field}"}
-            }
-          }
-        }
-      ]
-    }
-    
-  }
-  //assign to chart
-  chart.specification = spec;
->>>>>>> Added update(options) to not refresh data
 
   var dataset = {
     "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
@@ -294,4 +181,3 @@ var chart = new Cedar({"specification":spec});
     });
   });
 </script>
-
