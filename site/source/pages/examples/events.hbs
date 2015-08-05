@@ -1,0 +1,63 @@
+---
+title: Events
+layout: example.hbs
+---
+
+<style type="text/css">
+	#event-output {
+		height: 50px;
+		padding: 10px;
+		border: 1px dashed #888;
+	}
+</style>
+
+<a href="#" onclick="return setEvent('mouseover')">Toggle mouseover</a> (<span id="event-mouseover">false</span>)</li> 
+<a href="#" onclick="return setEvent('mouseout')">Toggle mouseout</a> (<span id="event-mouseout">false</span>)</li>	
+<a href="#" onclick="return setEvent('click')">Toggle click</a> (<span id="event-click">false</span>)</li>	
+
+<div id="event-output"></div>
+<div id="chart"></div>
+
+<script type="text/javascript">
+	var chart = new Cedar({
+		"type": "bar",
+		"dataset": {
+		    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+		    "query": {
+		      "groupByFieldsForStatistics": "FACUSE",
+		      "outStatistics": [{
+		        "statisticType": "sum", 
+		        "onStatisticField": "TOTAL_STUD", 
+		        "outStatisticFieldName": "TOTAL_STUD_SUM"
+		      }]
+		    },
+		    "mappings":{
+		      "sort": "TOTAL_STUD_SUM DESC",
+		      "x": {"field":"FACUSE","label":"Facility Use"},
+		      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+		    }
+		}
+	});
+	chart.show({elementId: "#chart"});
+
+	var eventState = {
+		"mouseover": false,
+		"mouseout": false,
+		"click": false
+	}
+	function exampleOutput() {
+		document.getElementById('event-output').innerHTML = "Event fired " + (new Date).toISOString();
+	}
+	function setEvent(eventName, state) {
+		if(eventState[eventName]) {
+			chart.off(eventName, exampleOutput);
+			eventState[eventName] = false;
+		} else {
+			chart.on(eventName, exampleOutput);
+			eventState[eventName] = true;
+		}
+		document.getElementById('event-' + eventName).innerHTML = eventState[eventName];
+		setTimeout(function() { document.getElementById('event-output').innerHTML = ""; }, 1000)
+		return false;
+	}
+</script>
