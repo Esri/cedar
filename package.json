@@ -1,6 +1,6 @@
 {
   "name": "cedar",
-  "version": "0.0.2",
+  "version": "0.3,
   "description": "Visualization framework for the ArcGIS Platform",
   "main": "index.js",
   "scripts": {
