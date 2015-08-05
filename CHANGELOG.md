@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Option for automatic tick marks based on chart size
 - Added Tooltips API
 - Added default Tooltip
+- Added Event.off
 
 ### Changed
 - X-Axis labels rotated counter-clockwise (to use Y-Axis space)

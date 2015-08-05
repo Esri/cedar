@@ -848,8 +848,12 @@ Cedar.prototype.on = function(evtName, callback){
 /**
  * Remove a handler for the named event
  */
-Cedar.prototype.off = function(evtName /*, callback */){
-  console.log('Handler for ' + evtName +' removed...');
+Cedar.prototype.off = function(evtName, callback){
+  this._events.forEach(function(registeredEvent, index, object) {
+    if(registeredEvent.type == evtName && registeredEvent.callback == callback ) {
+      object.splice(index, 1);
+    }
+  })
 };
 
 
