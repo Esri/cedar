@@ -3,7 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v0.3 (upcoming)
+## v0.4
+
+### Added
+- Added grouped bar charts
+
+## v0.3
 
 ### Added
 - Option for automatic tick marks based on chart size

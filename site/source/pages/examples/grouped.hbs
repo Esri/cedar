@@ -6,151 +6,96 @@ layout: example.hbs
 
 <div id="chart"></div>
 
+<pre class="prettyprint">
+var chart = new Cedar({
+	"type": "grouped",
+	"tooltip": {
+		"title": "{NAME}",
+		"content": "{POP2012} population in 2012"
+	},
+	"dataset":{
+	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+	  "mappings":{
+	    "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+	    "y": {"field":"TOTAL_STUD","label":"Students"},
+	    "category":{"field":"NAME","label":"Name"}
+	  }
+	}
+});
 
+chart.show({
+	elementId: "#chart",
+	height: 300
+});	
+</pre>
+
+<div id="chart2"></div>
+
+<pre class="prettyprint">
+var chart2 = new Cedar({
+	"type": "grouped",
+	"tooltip": {
+		"title": "{STATE_NAME}",
+		"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+	},
+	"dataset":{
+	  "url": "http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
+	  "mappings":{
+	    "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
+	    "y": {"field":"TOTAL_STUD","label":"Students"},
+	    "category":{"field":"STATE_NAME","label":"State"}
+	  }
+	}
+});
+
+chart2.show({
+	elementId: "#chart2",
+	height: 300
+});	
+</pre>
 <script>
-var specification = {
-  "inputs": [
-    { "name": "x", "type": [ "numeric", "string" ], "required": false },
-    { "name": "y", "type": [ "string" ], "required": true },
-    { "name": "category", "type": [ "string" ], "required": true }
-  ],
-  "query": {},
-  "template":{
-    "padding": "strict",
-    "data": [
-      {
-        "name": "table",
-        "format": {"property": "features"}
-      }
-    ],
-      "scales": [
-    {
-      "name": "cat",
-      "type": "ordinal",
-      "domain": {"data": "table", "field": "attributes.{category.field}"},
-      "range": "width",
-      "padding": 0.2
-    },
-    {
-      "name": "val",
-      "type": "linear",
-      "domain": {"data": "table", "field": "attributes.{y.field}"},
-      "range": "height",
-      "round": true,
-      "nice": true
-    },
-    {
-      "name": "color",
-      "type": "ordinal",
-      "domain": {"data": "table", "field": "attributes.{x.field}"},
-      "range": "category20"
-    }
-  ],
-  "axes": [
-    {"type": "x", "scale": "cat", "tickSize": 0, "tickPadding": 8,"properties": {
-          "title": {
-            "fontSize": {"value": 15},
-            "fill": {"value": "#999"},
-            "fontWeight": {"value": "normal"}
-          },          
-          "axis": {
-             "stroke": {"value": "#dbdad9"},
-             "strokeWidth": {"value": 1.5}
-          },
-          "ticks": {
-             "stroke": {"value": "#dbdad9"}
-          },
-          "labels": {
-            "fill": {"value": "#999"},
-            "angle": {"value": -50},
-            "align": {"value": "right"},
-            "baseline": {"value": "middle"}
-          }
-        }},
-    {"type": "y", "scale": "val","grid": true,"layer":"back", "properties": {
-          "title": {
-            "fontSize": {"value": 15},
-            "fill": {"value": "#999"},
-            "fontWeight": {"value": "normal"}
-          },          
-          "axis": {
-             "stroke": {"value": "#dbdad9"},
-             "strokeWidth": {"value": 1.5}
-          },
-          "ticks": {
-             "stroke": {"value": "#dbdad9"}
-          },
-          "labels": {
-            "fill": {"value": "#999"}
-          }
-        }}
-  ],
-  "legends": [
-    {"fill": "color", "title": "{x.label}"}
-  ],
-  "marks": [
-    {
-      "type": "group",
-      "from": {
-        "data": "table",
-        "transform": [{"type":"facet", "groupby": ["attributes.{category.field}"]}]
-      },
-      "properties": {
-        "enter": {
-          "x": {"scale": "cat", "field": "key"},
-          "height": {"scale": "cat", "band": true}
-        }
-      },
-      "scales": [
-        {
-          "name": "pos",
-          "type": "ordinal",
-          "range": "height",
-          "domain": {"field": "attributes.{x.field}"}
-        }
-      ],
-      "marks": [
-        {
-          "name": "bars",
-          "type": "rect",
-          "properties": {
-            "enter": {
-              "x": {"scale": "pos", "field": "attributes.{x.field}"},
-              "width": {"scale": "pos", "band": true},
-              "y": {"scale": "val", "field": "attributes.{y.field}"},
-              "y2": {"scale": "val", "value": 0},
-              "fill": {"scale": "color", "field": "attributes.{x.field}"}
-            }
-          }
-        }
-      ]
-    }
-  ]
-}
-}
-
 
   var chart = new Cedar({
-    "specification":specification,
+    "type": "grouped",
+    "tooltip": {
+    	"title": "{NAME}",
+    	"content": "{POP2012} population in 2012"
+    },
     "dataset":{
-      "data": {"features":[
-      	{"attributes": {"FACUSE":"Elementary", "TOTAL_STUD": 400, "CAPITALGAI": "Y"}},
-      	{"attributes": {"FACUSE":"Elementary", "TOTAL_STUD": 400, "CAPITALGAI": "N"}},
-      	{"attributes": {"FACUSE":"Middle", "TOTAL_STUD": 400, "CAPITALGAI": "Y"}},
-      	{"attributes": {"FACUSE":"Middle", "TOTAL_STUD": -400, "CAPITALGAI": "N"}},
-      	{"attributes": {"FACUSE":"High", "TOTAL_STUD": 400, "CAPITALGAI": "Y"}},
-      	{"attributes": {"FACUSE":"High", "TOTAL_STUD": -400, "CAPITALGAI": "N"}}
-      ]},
+	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
       "mappings":{
-        "x": {"field":"CAPITALGAI","label":"Capital Gains"},
+        "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+        // "x": {"field":["attributes.AGE_5_9", "attributes.AGE_10_14", "attributes.AGE_15_19", "attributes.AGE_20_24", "attributes.AGE_25_34", "attributes.AGE_35_44", "attributes.AGE_45_54", "attributes.AGE_55_64", "attributes.AGE_75_84", "attributes.AGE_85_UP"],"label":"Age"},
         "y": {"field":"TOTAL_STUD","label":"Students"},
-        "category":{"field":"FACUSE","label":"Type"}
+        "category":{"field":"NAME","label":"Name"}
       }
     }
   });
 
   chart.show({
     elementId: "#chart",
+    height: 300
+  });
+
+
+  var chart2 = new Cedar({
+    "type": "grouped",
+    "tooltip": {
+    	"title": "{STATE_NAME}",
+    	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+    },
+    "dataset":{
+	  "url": "http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
+      "mappings":{
+        "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
+        "y": {"field":"TOTAL_STUD","label":"Students"},
+        "category":{"field":"STATE_NAME","label":"State"}
+      }
+    }
+  });
+
+  chart2.show({
+    elementId: "#chart2",
     height: 300
   });
 
