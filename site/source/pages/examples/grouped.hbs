@@ -17,8 +17,7 @@ var chart = new Cedar({
 	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
 	  "mappings":{
 	    "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
-	    "y": {"field":"TOTAL_STUD","label":"Students"},
-	    "category":{"field":"NAME","label":"Name"}
+	    "group":{"field":"NAME","label":"Name"}
 	  }
 	}
 });
@@ -42,8 +41,7 @@ var chart2 = new Cedar({
 	  "url": "http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
 	  "mappings":{
 	    "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
-	    "y": {"field":"TOTAL_STUD","label":"Students"},
-	    "category":{"field":"STATE_NAME","label":"State"}
+	    "group":{"field":"STATE_NAME","label":"State"}
 	  }
 	}
 });
@@ -66,8 +64,7 @@ chart2.show({
       "mappings":{
         "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
         // "x": {"field":["attributes.AGE_5_9", "attributes.AGE_10_14", "attributes.AGE_15_19", "attributes.AGE_20_24", "attributes.AGE_25_34", "attributes.AGE_35_44", "attributes.AGE_45_54", "attributes.AGE_55_64", "attributes.AGE_75_84", "attributes.AGE_85_UP"],"label":"Age"},
-        "y": {"field":"TOTAL_STUD","label":"Students"},
-        "category":{"field":"NAME","label":"Name"}
+        "group":{"field":"NAME","label":"Name"}
       }
     }
   });
@@ -88,8 +85,7 @@ chart2.show({
 	  "url": "http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
       "mappings":{
         "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
-        "y": {"field":"TOTAL_STUD","label":"Students"},
-        "category":{"field":"STATE_NAME","label":"State"}
+        "group":{"field":"STATE_NAME","label":"State"}
       }
     }
   });
