@@ -53,15 +53,16 @@ $(function(){
 
     	design.operationalLayers.forEach(function(layer) {
     		Cedar.getJson(layer.url + "?f=json", function(err,data) {
-
     			var variable = data.fields[0].name;
     			var index = layer.layerDefinition.drawingInfo.renderer.field1;
 
     			var statsType = "count";
     			var statsName = (index + "_" + statsType);
-
-    			console.log("Chart", [index])
-
+    			var popupInfo = layer.popupInfo.description;
+    			if(popupInfo !== undefined && popupInfo !== null && popupInfo.includes('|')) {
+	    			// e.g. "|'type':'scatter','x':'{DP03_62E}'|"
+	    			var layerDef = JSON.parse(popupInfo.replace(/\|(.*)\|/g, '{$1}').replace(/'/g,'"'))
+	    		}
     			query = {
 			      "groupByFieldsForStatistics": index,
 			      "outStatistics": [{
@@ -70,10 +71,7 @@ $(function(){
 			        "outStatisticFieldName": statsName
 			      }]
 			    };
-			    console.log("Chart Query", query);
-
-				  var chart = new Cedar(
-				  	{"type": "bar",
+    			var layerChart = {"type": "bar",
 				  	"dataset": {
 					    "url":layer.url,
 					    "query": query,
@@ -87,7 +85,37 @@ $(function(){
 						"title": "{" +  index + "}: {" + statsName + "} ",
 						"content": ""
 					}
-				  });
+				  };
+// mark=point|x=Horsepower,Q|y=count_*,Q|color=Cylinders,O
+// mark=bar|x=bin_Horsepower,Q|y=sum_Acceleration,Q
+
+// {
+//   "marktype": "point",
+//   "encoding": {
+//     "x": {"name": "Horsepower","type": "Q"},
+//     "y": {"name": "Acceleration","type": "Q"},
+//     "color": {"name": "Cylinders","type": "O"}
+//   },
+//   "config": {"singleHeight": 400,"singleWidth": 400,"largeBandMaxCardinality": 20},
+//   "data": {"url": "data/cars.json"}
+// }
+
+// mark=bar|x=bin_Horsepower,Q|y=sum_Acceleration,Q|color=Cylinders,O
+// {
+//   "marktype": "bar",
+//   "encoding": {
+//     "x": {"bin": {"maxbins": 15},"name": "Horsepower","type": "Q"},
+//     "y": {"name": "Acceleration","type": "Q","aggregate": "sum"},
+//     "color": {"name": "Cylinders","type": "O"}
+//   },
+//   "config": {"singleHeight": 400,"singleWidth": 400,"largeBandMaxCardinality": 20},
+//   "data": {"url": "data/cars.json"}
+// }
+
+
+			    console.log("Chart Query", query);
+
+				  var chart = new Cedar(layerChart);
 				  charts.push(chart)
 				  addChart(layer, charts.length);
 				  chart.show({
