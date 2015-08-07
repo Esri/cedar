@@ -15,6 +15,16 @@ layout: page.hbs
 		height: 85%;
 		width: 90%;
 	}
+	.cedar-kpi {
+		padding: 20px;
+	}
+	.cedar-kpi-value {
+		font-size: 60px;
+	}
+	.cedar-kpi-title {
+		font-size: 15px;
+		color: #888;
+	}
 </style>
 <div class="gridster">
     <ul id="dashboard">    
@@ -41,9 +51,22 @@ $(function(){
     function addChart( layer, index ) {
     	var gridster = $(".gridster ul").gridster().data('gridster');
     	gridster.add_widget(
-    		'<li class="widget"><h3>' + layer.title +'</h3><div id="chart' + index + '" class="chart"></div></li>',
-    		3, 3);  	
+    		'<li class="widget cedar-chart"><h3>' + layer.title +'</h3><div id="chart' + index + '" class="chart"></div></li>',
+    		3, 3);  
+    	addKpi(layer,index,gridster);
     }
+	function addKpi(layer, index, gridster) {
+		var count = 0;
+
+		Cedar.getJson(layer.url + "/query?where=1%3D1&outFields=*&returnGeometry=false&returnCountOnly=true&f=json", function(err,data) {
+			console.log(data.count)
+			gridster.add_widget(
+	    		'<li class="widget cedar-kpi"><span class="cedar-kpi-value">' + data.count +'</span><br/><span class="cedar-kpi-title">' + layer.title + '</span></div></li>',
+	    		3, 1); 
+
+		});
+	}
+
     function buildCharts(design) {
     	if(typeof design == 'string') {
     		Cedar.getJson(webmapUrl(design), function(err, data) { buildCharts(data); })
