@@ -1,6 +1,6 @@
 ---
 title: Dashboard
-layout: page.hbs
+layout: layout.hbs
 ---
 <link rel="stylesheet" href="http://gridster.net/dist/jquery.gridster.min.css"></link>
 <link rel="stylesheet" href="http://gridster.net/assets/css/style.css"></link>
@@ -8,6 +8,7 @@ layout: page.hbs
 <script type="text/javascript" src="http://gridster.net/assets/js/libs/jquery-1.7.2.min.js"></script>
 <script src="http://gridster.net/dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 <style type="text/css">
+	.gridster { width: 100%;}
 	.widget {
 		padding: 5px;
 	}
@@ -38,6 +39,7 @@ $(function(){
     $(".gridster ul").gridster({
         widget_margins: [10, 10],
         widget_base_dimensions: [140, 140],
+        extra_rows: 20,
         resize: {
         	enabled: true,
         	resize: function() {  charts.forEach(function(chart) { chart.update() }) },
