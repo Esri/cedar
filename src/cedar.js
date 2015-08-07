@@ -280,9 +280,9 @@ Cedar.prototype.baseUrl = baseUrl;
 /** 
  * Default pre-defined chart types
  * 
- * ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'sparkline', 'time'];
+ * ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time'];
  */
-Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'sparkline', 'time'];
+Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time'];
 
 /**
  * Inspect the current state of the object
@@ -1078,10 +1078,17 @@ Cedar._applyDefaultsToMappings = function(mappings, inputs){
  * @access private
  */
 Cedar._supplant = function( tmpl, params ){
-  return tmpl.replace(/{([^{}]*)}/g,
+  var t = tmpl.replace(/{([^{}]*)}/g,
     function (a, b) {
       var r = Cedar._getTokenValue(params, b);
+
       return typeof r === 'string' || typeof r === 'number' ? r : a;
+    }
+  );
+  return t.replace(/"{([^{}]*)}"/g, 
+    function(a, b) {
+      var r = Cedar._getTokenValue(params, b);
+      return r.constructor === Array ? r = JSON.stringify(r) : a;
     }
   );
 };
