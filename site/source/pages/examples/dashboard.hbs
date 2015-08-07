@@ -9,28 +9,21 @@ layout: page.hbs
 <script src="http://gridster.net/dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
 <style type="text/css">
 	.widget {
-		border: 1px dashed #888;
+		padding: 5px;
 	}
 	.chart {
-		height: 100%;
+		height: 85%;
+		width: 90%;
 	}
 </style>
 <div class="gridster">
-    <ul id="dashboard">
-<!--         <li class="widget" data-row="1" data-col="1" data-sizex="6" data-sizey="3">
-        	<div id="chart1" class="chart" style="height: 100% width: 100%"></div>
-        </li>
-        <li class="widget" data-row="7" data-col="1" data-sizex="6" data-sizey="3">
-        	<div id="chart2" class="chart" style="height: 100% width: 100%"></div>
-        </li>
-        <li class="widget" data-row="14" data-col="1" data-sizex="6" data-sizey="3">
-        	<div id="chart3" class="chart" style="height: 100% width: 100%"></div>
-        </li>        
-    </ul> -->
+    <ul id="dashboard">    
+    </ul>
 </div> 
 
 <script type="text/javascript">
-$(function(){ //DOM Ready
+$(function(){ 
+	var charts = [];
 
     $(".gridster ul").gridster({
         widget_margins: [10, 10],
@@ -45,29 +38,11 @@ $(function(){ //DOM Ready
     function webmapUrl(webmapId) {
 		return "http://www.arcgis.com/sharing/rest/content/items/" + webmapId +"/data?f=json"
     }
-    function addChart( index ) {
+    function addChart( layer, index ) {
     	var gridster = $(".gridster ul").gridster().data('gridster');
-    	gridster.add_widget('<li class="new"><div id="chart' + index + '" class="chart" style="height: 100% width: 100%"></div></li>', 6, 3);
-  //   	var sizex = 6;
-  //   	var chartLi = document.createElement("li");
-  //   	chartLi.className = "widget";
-  //   	chartLi.dataset.row = (index-1) * sizex + 1;
-  //   	chartLi.dataset.col = "1";
-  //   	chartLi.dataset.sizex = sizex;
-  //   	chartLi.dataset.sizey = "3";
-
-		// var node = document.createElement("div");
-		// node.className = "chart";
-  //   	node.id = "chart" + index;
-  //   	node.style = "height: 100% width: 100%";
-		// chartLi.appendChild(node);
-
-		// var dashboard = document.getElementById("dashboard");
-		// dashboard.appendChild(chartLi);
-
-		// <li class="widget" data-row="7" data-col="1" data-sizex="6" data-sizey="3">
-  //       	<div id="chart2" class="chart" style="height: 100% width: 100%"></div>
-  //       </li>    	
+    	gridster.add_widget(
+    		'<li class="widget"><h3>' + layer.title +'</h3><div id="chart' + index + '" class="chart"></div></li>',
+    		3, 3);  	
     }
     function buildCharts(design) {
     	if(typeof design == 'string') {
@@ -104,16 +79,17 @@ $(function(){ //DOM Ready
 					    "query": query,
 					    "mappings":{
 					      "x": {"field": index,"label": index},
-					      "y": {"field": statsName,"label": "count"}
+					      "y": {"field": statsName,"label": "count"},
+					      "sort": statsName + " DESC"
 					    }
 					},
 					"tooltip": {
-						"title": index + ":{" +  index + "} - " + variable + ": {" +  variable + "}",
+						"title": "{" +  index + "}: {" + statsName + "} ",
 						"content": ""
 					}
 				  });
 				  charts.push(chart)
-				  addChart(charts.length);
+				  addChart(layer, charts.length);
 				  chart.show({
 				    elementId: "#chart" + charts.length
 				  });
@@ -121,304 +97,10 @@ $(function(){ //DOM Ready
     	});
     }
 
-    // buildCharts(webmap);
     // DC Dashboard
     // buildCharts('6df835c1de90493a8b813324f5de39a3');
 
     // Hawaii Dashboard
     buildCharts('a95e0bb28dc84a329a83650060922b23');
 });
-  var charts = [];
-
-	var webmap = {
-	"item": {
-		"title": "New Map",
-		"snippet": "Utah_Senate_Districts",
-		"extent": [
-			[
-				-123.19853515607015,
-				34.5671616450151
-			],
-			[
-				-92.74443359357824,
-				43.17070443836109
-			]
-		]
-	},
-	"itemData": {
-		"operationalLayers": [
-			{
-				"url": "https://services.arcgis.com/jDGuO8tYggdCCnUJ/arcgis/rest/services/CO_Shale_Viewer/FeatureServer/2",
-				"visibility": true,
-				"opacity": 0.78,
-				"layerDefinition": {
-					"drawingInfo": {
-						"renderer": {
-							"visualVariables": [
-								{
-									"type": "colorInfo",
-									"field": "ALAND",
-									"stops": [
-										{
-											"value": 85557491,
-											"color": {
-												"r": 255,
-												"g": 255,
-												"b": 204,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 1620029433.25,
-											"color": {
-												"r": 255,
-												"g": 237,
-												"b": 160,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 3154501375.5,
-											"color": {
-												"r": 254,
-												"g": 217,
-												"b": 118,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 4688973317.75,
-											"color": {
-												"r": 254,
-												"g": 178,
-												"b": 76,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 6223445260,
-											"color": {
-												"r": 253,
-												"g": 141,
-												"b": 60,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 7757917202.25,
-											"color": {
-												"r": 252,
-												"g": 78,
-												"b": 42,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 9292389144.5,
-											"color": {
-												"r": 227,
-												"g": 26,
-												"b": 28,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 10826861086.75,
-											"color": {
-												"r": 177,
-												"g": 0,
-												"b": 38,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										}
-									]
-								}
-							],
-							"type": "simple",
-							"label": "",
-							"description": "",
-							"symbol": {
-								"color": [
-									43,
-									140,
-									190,
-									200
-								],
-								"outline": {
-									"color": [
-										255,
-										255,
-										255,
-										255
-									],
-									"width": 0.5,
-									"type": "esriSLS",
-									"style": "esriSLSSolid"
-								},
-								"type": "esriSFS",
-								"style": "esriSFSSolid"
-							}
-						}
-					}
-				},
-				"mode": 1,
-				"id": "eb0c890372ae4ede8f79524a7ce09964_2"
-			},
-			{
-				"url": "https://services1.arcgis.com/99lidPhWCzftIe9K/arcgis/rest/services/Utah_Senate_Districts/FeatureServer/0",
-				"visibility": true,
-				"opacity": 0.78,
-				"layerDefinition": {
-					"drawingInfo": {
-						"renderer": {
-							"visualVariables": [
-								{
-									"type": "colorInfo",
-									"field": "DIST",
-									"stops": [
-										{
-											"value": 1,
-											"color": {
-												"r": 255,
-												"g": 255,
-												"b": 229,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 4.5,
-											"color": {
-												"r": 247,
-												"g": 252,
-												"b": 185,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 8,
-											"color": {
-												"r": 217,
-												"g": 240,
-												"b": 163,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 11.5,
-											"color": {
-												"r": 173,
-												"g": 221,
-												"b": 142,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 15,
-											"color": {
-												"r": 120,
-												"g": 198,
-												"b": 121,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 18.5,
-											"color": {
-												"r": 65,
-												"g": 171,
-												"b": 93,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 22,
-											"color": {
-												"r": 35,
-												"g": 132,
-												"b": 67,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										},
-										{
-											"value": 25.5,
-											"color": {
-												"r": 0,
-												"g": 90,
-												"b": 50,
-												"a": 0.7843137254901961
-											},
-											"label": null
-										}
-									]
-								}
-							],
-							"type": "simple",
-							"label": "",
-							"description": "",
-							"symbol": {
-								"color": [
-									43,
-									140,
-									190,
-									200
-								],
-								"outline": {
-									"color": [
-										255,
-										255,
-										255,
-										255
-									],
-									"width": 0.5,
-									"type": "esriSLS",
-									"style": "esriSLSSolid"
-								},
-								"type": "esriSFS",
-								"style": "esriSFSSolid"
-							}
-						}
-					}
-				},
-				"mode": 1,
-				"id": "81629805cb0b4fbea2ea255794cd6fe0_0"
-			}
-		],
-		"baseMap": {
-			"baseMapLayers": [
-				{
-					"opacity": 0.5,
-					"visibility": true,
-					"url": "http://services.arcgisonline.com/arcgis/rest/services/Specialty/DeLorme_World_Base_Map/MapServer"
-				},
-				{
-					"opacity": 0.8,
-					"visibility": false,
-					"url": "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Light_Gray_Base/MapServer"
-				},
-				{
-					"opacity": 1,
-					"visibility": false,
-					"url": "http://services.arcgisonline.com/arcgis/rest/services/Canvas/World_Dark_Gray_Base/MapServer"
-				}
-			],
-			"title": "basemap"
-		},
-		"version": "1.0"
-	}
-}
 </script>
