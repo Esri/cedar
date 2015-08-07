@@ -16,14 +16,17 @@ layout: page.hbs
 	}
 </style>
 <div class="gridster">
-    <ul>
-        <li class="widget" data-row="1" data-col="1" data-sizex="6" data-sizey="3">
+    <ul id="dashboard">
+<!--         <li class="widget" data-row="1" data-col="1" data-sizex="6" data-sizey="3">
         	<div id="chart1" class="chart" style="height: 100% width: 100%"></div>
         </li>
         <li class="widget" data-row="7" data-col="1" data-sizex="6" data-sizey="3">
         	<div id="chart2" class="chart" style="height: 100% width: 100%"></div>
         </li>
-    </ul>
+        <li class="widget" data-row="14" data-col="1" data-sizex="6" data-sizey="3">
+        	<div id="chart3" class="chart" style="height: 100% width: 100%"></div>
+        </li>        
+    </ul> -->
 </div> 
 
 <script type="text/javascript">
@@ -39,21 +42,69 @@ $(function(){ //DOM Ready
         }
     });
 
+    function webmapUrl(webmapId) {
+		return "http://www.arcgis.com/sharing/rest/content/items/" + webmapId +"/data?f=json"
+    }
+    function addChart( index ) {
+    	var gridster = $(".gridster ul").gridster().data('gridster');
+    	gridster.add_widget('<li class="new"><div id="chart' + index + '" class="chart" style="height: 100% width: 100%"></div></li>', 6, 3);
+  //   	var sizex = 6;
+  //   	var chartLi = document.createElement("li");
+  //   	chartLi.className = "widget";
+  //   	chartLi.dataset.row = (index-1) * sizex + 1;
+  //   	chartLi.dataset.col = "1";
+  //   	chartLi.dataset.sizex = sizex;
+  //   	chartLi.dataset.sizey = "3";
+
+		// var node = document.createElement("div");
+		// node.className = "chart";
+  //   	node.id = "chart" + index;
+  //   	node.style = "height: 100% width: 100%";
+		// chartLi.appendChild(node);
+
+		// var dashboard = document.getElementById("dashboard");
+		// dashboard.appendChild(chartLi);
+
+		// <li class="widget" data-row="7" data-col="1" data-sizex="6" data-sizey="3">
+  //       	<div id="chart2" class="chart" style="height: 100% width: 100%"></div>
+  //       </li>    	
+    }
     function buildCharts(design) {
-    	design.itemData.operationalLayers.forEach(function(layer) {
+    	if(typeof design == 'string') {
+    		Cedar.getJson(webmapUrl(design), function(err, data) { buildCharts(data); })
+    		return;
+    	}
+    	console.log("Build Charts", design)
+
+    	design.operationalLayers.forEach(function(layer) {
     		Cedar.getJson(layer.url + "?f=json", function(err,data) {
 
-    			console.log(data.fields[0].name);
-    			var index = data.fields[0].name;
-    			var variable = layer.layerDefinition.drawingInfo.renderer.visualVariables[0].field;
-    			console.log("Chart", [index, variable])
+    			var variable = data.fields[0].name;
+    			var index = layer.layerDefinition.drawingInfo.renderer.field1;
+
+    			var statsType = "count";
+    			var statsName = (index + "_" + statsType);
+
+    			console.log("Chart", [index])
+
+    			query = {
+			      "groupByFieldsForStatistics": index,
+			      "outStatistics": [{
+			        "statisticType": statsType, 
+			        "onStatisticField": index, 
+			        "outStatisticFieldName": statsName
+			      }]
+			    };
+			    console.log("Chart Query", query);
+
 				  var chart = new Cedar(
 				  	{"type": "bar",
 				  	"dataset": {
 					    "url":layer.url,
+					    "query": query,
 					    "mappings":{
-					      "x": {"field": index,"label":""},
-					      "y": {"field": variable,"label":""}
+					      "x": {"field": index,"label": index},
+					      "y": {"field": statsName,"label": "count"}
 					    }
 					},
 					"tooltip": {
@@ -61,7 +112,8 @@ $(function(){ //DOM Ready
 						"content": ""
 					}
 				  });
-				  charts.push(chart)    			
+				  charts.push(chart)
+				  addChart(charts.length);
 				  chart.show({
 				    elementId: "#chart" + charts.length
 				  });
@@ -69,7 +121,12 @@ $(function(){ //DOM Ready
     	});
     }
 
-    buildCharts(webmap);
+    // buildCharts(webmap);
+    // DC Dashboard
+    // buildCharts('6df835c1de90493a8b813324f5de39a3');
+
+    // Hawaii Dashboard
+    buildCharts('a95e0bb28dc84a329a83650060922b23');
 });
   var charts = [];
 
