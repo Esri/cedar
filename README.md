@@ -128,9 +128,9 @@ Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 
 1. `cd` into the `cedar` folder
 1. Install the dependencies with `npm install`
+1. Build Cedar with `npm run build` - output placed in `dist/builds/cedar.js` and `dist/builds/cedar.min.js`
 1. Install additional dependencies with `bower install` (if you encounter an error connecting to github take a look at [this thread](https://github.com/angular/angular-phonecat/issues/141) for a possible fix).
 1. Run `grunt docs` from the command line. This will start the web server locally at [http://localhost:8081](http://localhost:8081) and start watching the source files and running linting and testing commands.
-1. Push your changes using `grunt docs:deploy` which pushes to your `origin/gh-pages`
 1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esri/cedar/master`
 
 ### Dependencies
