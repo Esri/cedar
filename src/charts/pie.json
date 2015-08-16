@@ -2,7 +2,7 @@
   "inputs": [
     {"name": "y", "type": ["numeric","string"], "required": true},
     {"name": "label", "type": ["string"], "required": false},
-    {"name": "radius", "type": ["numeric"], "required": true}
+    {"name": "radius", "type": ["numeric"], "default": 200, "required": false}
   ],
   "template":{
     "padding": "strict",

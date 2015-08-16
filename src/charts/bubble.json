@@ -2,7 +2,7 @@
   "inputs": [
     {"name":"x","type":["numeric"], "required":true},
     {"name":"y","type":["numeric"], "required":true},
-    {"name":"size","type":["numeric"], "required":true}
+    {"name":"size","type":["numeric"], "default": 100, "required":false}
   ],
   "template":{
     "padding": "strict",

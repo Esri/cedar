@@ -2,7 +2,7 @@
     "inputs": [
         {
             "name": "x",
-            "required": false,
+            "required": true,
             "type": [
                 "numeric",
                 "string"

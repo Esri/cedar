@@ -2,7 +2,7 @@
   "inputs":[
     {"name":"x","type":["numeric"], "required":true},
     {"name":"y","type":["numeric"], "required":true},
-    {"name":"color","type":["string"], "required":false}
+    {"name":"color","type":["string"], "default": "#0079c1", "required":false}
   ],
   "template":{
     "padding": "strict",
