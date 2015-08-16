@@ -1,7 +1,7 @@
 {
   "inputs": [
     { "name": "x", "type": [ "numeric", "string" ], "required": true },
-    { "name": "y", "type": [ "string" ], "required": true }
+    { "name": "y", "type": [ "numeric" ], "required": true }
   ],
   "query": {},
   "template":{
