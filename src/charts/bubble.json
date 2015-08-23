@@ -8,10 +8,7 @@
     "padding": "strict",
     "data": [
       {
-        "name": "table",
-        "format": {
-          "property": "features"
-        }
+        "name": "table"
       }
     ],
     "scales": [

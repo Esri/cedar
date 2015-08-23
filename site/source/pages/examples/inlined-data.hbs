@@ -63,7 +63,7 @@ layout: example.hbs
     if(!err){
 
       var dataset = {
-        "data": data,
+        "data": data.features,
         "mappings":{
           "x": {"field":"ZIP_CODE","label":"ZIP Code"},
           "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}

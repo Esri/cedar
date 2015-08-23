@@ -83,9 +83,9 @@
  *     "statisticType": "sum", 
  *     "onStatisticField": "TOTAL_STUD", 
  *     "outStatisticFieldName": "TOTAL_STUD_SUM" }] }
- * @param {Object} options.dataset.data - Inline feature collection, alternative to data from a URL
+ * @param {Object} options.dataset.data - Inline array of features, alternative to data from a URL
  *  
- * "data": {"features":[{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]}
+ * "data": [{"attributes":{"ZIP_CODE":20005,"TOTAL_STUD_SUM":327}}]
  * @param {Object} options.dataset.mappings - Relates data items to the chart style definition
  * @param {Object} options.override - Changes to the "options.type" chart specification
  * @param {Object} options.tooltip - Optional on-hover tooltip. Element has class="cedar-tooltip" for styling.
@@ -389,12 +389,16 @@ Cedar.prototype.show = function(options){
  * chart.show({elementId: "#chart"});
  * chart.dataset.query.where = "POPULATION>30000";
  * chart.update();
+ * 
+ * @param {Object} options - update configurations
+ * @param {Boolean} options.data - if true, data are updated from service (default: true)
  */
-Cedar.prototype.update = function(){
+Cedar.prototype.update = function( options ){
   var self = this;
-  
-  if ( this._view ) { 
-    this.emit('update-start');
+
+  options = options || {};
+  if(options.data === undefined || options.data === undefined) {
+    options.data = true;
   }
 
   if(this._pendingXhr){
@@ -408,11 +412,16 @@ Cedar.prototype.update = function(){
       //TODO Remove existing handlers
       this._remove(this._view);
     }
-    try{
+    // try{
 
       // Creates the HTML Div and styling if not already created
       if(self._definition.tooltip !== undefined && self._definition.tooltip !== null) {
         self._createTooltip(self._definition.tooltip.id);
+      }
+      if(!options.data) {
+        // Used the cached data
+        // TODO: remove hard-coded data as 'table' or [0]
+        var existingData = this._view.data('table').values();
       }
 
       //ensure we have required inputs or defaults 
@@ -445,27 +454,24 @@ Cedar.prototype.update = function(){
       
       }else{
       
-        //we need to fetch the data so
-        var url = Cedar._createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
-      
-        //create a callback closure to carry the spec
-        var cb = function(err,data){
-      
-          //todo add error handlers for xhr and ags errors
-          spec.data[0].values = data;
-          console.dir(spec);
-          //send to vega
+        if(options.data) {
+          //fetch the data from the service          
+          var url = Cedar._createFeatureServiceRequest(this._definition.dataset, queryFromSpec);  
+          Cedar.getJson(url, function(err,data){
+            //todo add error handlers for xhr and ags errors
+            spec.data[0].values = data.features;
+            //send to vega
+            self._renderSpec(spec);
+          });
+        } else {
+          spec.data[0].values = existingData;
           self._renderSpec(spec);
-
-        };
-
-        //fetch the data from the service
-        Cedar.getJson(url, cb);
+        }
       }
-    }
-    catch(ex){
-      throw(ex);
-    }
+    // }
+    // catch(ex){
+    //   throw(ex);
+    // }
   }
 };
 
@@ -475,7 +481,12 @@ Cedar.prototype.update = function(){
  */
 Cedar.prototype._renderSpec = function(spec){
   var self = this;
-  try{
+  // try{
+    
+    if ( this._view ) { 
+      this.emit('update-start');
+    }    
+
     if(self.autolabels === true) {
         spec = self._placeLabels(spec);
         spec = self._placeaAxisTicks(spec);
@@ -490,12 +501,8 @@ Cedar.prototype._renderSpec = function(spec){
         renderer: self._renderer
       });
 
-      
-      var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
-      var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
-
-      //render into the element
-      self._view.width(width).height(height).update(); 
+      // draw the chart
+      self._draw();
 
       //attach event proxies
       self._attach(self._view);
@@ -505,10 +512,21 @@ Cedar.prototype._renderSpec = function(spec){
       }
 
     });
-  }
-  catch(ex){
-    throw(ex);
-  }
+  // }
+  // catch(ex){
+  //   throw(ex);
+  // }
+};
+
+/**
+ * Draw the chart
+ */
+Cedar.prototype._draw = function() {
+  var width = this.width || parseInt(d3.select(this._elementId).style('width')) || 500;
+  var height = this.height || parseInt(d3.select(this._elementId).style('height')) || 500;
+
+  //render into the element
+  this._view.width(width).height(height).update(); 
 };
 
 /**
@@ -540,7 +558,7 @@ Cedar.prototype._placeLabels = function(spec) {
     var length = 0;
 
     // Find the max length value for each axis
-    spec.data[0].values.features.forEach(function(feature) {
+    spec.data[0].values.forEach(function(feature) {
       inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
         if( length > lengths[axis]) {
@@ -585,8 +603,12 @@ Cedar.prototype._placeaAxisTicks = function(spec) {
     var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
     var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
     
-    spec.axes[0].ticks = width / 100;
-    spec.axes[1].ticks = height / 30;
+    if(spec.axes[0] !== undefined) {
+      spec.axes[0].ticks = width / 100;
+    }
+    if(spec.axes[1] !== undefined) {
+      spec.axes[1].ticks = height / 30;
+    }
     
     return spec;
 
@@ -719,10 +741,10 @@ Cedar._validateMappings = function(inputs, mappings){
  */
 Cedar._validateData = function(data, mappings){
   var missingInputs = [];
-  if(!data.features || !Array.isArray(data.features)){
-    throw new Error('Data is expected to have features array!');
+  if(!data || !Array.isArray(data)){
+    throw new Error('Data is expected to be an array!');
   }
-  var firstRow = data.features[0].attributes;
+  var firstRow = data[0].attributes;
   for(var key in mappings){
     if (mappings.hasOwnProperty(key)) {
       var fld = Cedar._getMappingFieldName(key, mappings[key].field);

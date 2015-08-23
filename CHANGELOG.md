@@ -15,11 +15,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added Tooltips API
 - Added default Tooltip
 - Added Event.off
+- Optional to `Cedar.update()` do not refresh data
 
 ### Changed
 - X-Axis labels rotated counter-clockwise (to use Y-Axis space)
 - Changed 'autolabels' default to true
 - Changed 'renderer' default to 'svg'
+- Removed `{"features": []}` nesting of inbound data
+- `update-start` event emits on show() and update()
 
 ### Support
 - Added example demo links to JSFiddle

@@ -36,6 +36,9 @@ layout: example.hbs
   chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
 
   function facetChart(event,data){
+    if(data === undefined || data === null) {
+      return;
+    }
     var selected = data[chart.dataset.mappings.x.field];
 
     if(chart.dataset.mappings.x.field == "ZIP_CODE") {
