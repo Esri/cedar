@@ -11,25 +11,25 @@
   var chart = new Cedar({"type": "bar"});
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "FACUSE",
+      "groupByFieldsForStatistics": "Type",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "sort": "TOTAL_STUD_SUM DESC",
-      "x": {"field":"FACUSE","label":"Facility Use"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "sort": "Number_of_SUM DESC",
+      "x": {"field":"Type","label":"Facility Use"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 
   chart.tooltip = {
-    "title": "{FACUSE}",
-    "content": "{TOTAL_STUD_SUM} Students in {FACUSE}"
+    "title": "{Type}",
+    "content": "{Number_of_SUM} Students in {Type}"
   }
 
   //assign to the chart

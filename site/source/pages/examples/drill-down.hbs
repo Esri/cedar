@@ -16,7 +16,7 @@ layout: example.hbs
 
   function buildDataset(group, count) {
     return {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query": {
         "groupByFieldsForStatistics": group,
         "outStatistics": [{
@@ -33,19 +33,19 @@ layout: example.hbs
     };
 
   }
-  chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
+  chart.dataset = buildDataset('Zip', 'Number_of');
 
   function facetChart(event,data){
     var selected = data[chart.dataset.mappings.x.field];
 
-    if(chart.dataset.mappings.x.field == "ZIP_CODE") {
+    if(chart.dataset.mappings.x.field == "Zip") {
       var where = chart.dataset.mappings.x.field + " = " + selected;
 
-      chart.dataset = buildDataset('FACUSE', 'TOTAL_STUD');
+      chart.dataset = buildDataset('Type', 'Number_of');
     } else { 
       var where = chart.dataset.mappings.x.field + " = '" + selected + "'";
 
-      chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
+      chart.dataset = buildDataset('Zip', 'Number_of');
     }
     chart.dataset.query.where = where
     document.getElementById('filter').innerHTML = where;
@@ -55,7 +55,7 @@ layout: example.hbs
   function resetChart(){
     document.getElementById('filter').innerHTML = "no filter";
 
-    chart.dataset = buildDataset('ZIP_CODE', 'TOTAL_STUD');
+    chart.dataset = buildDataset('Zip', 'Number_of');
     chart.dataset.query.where = "1=1"
     chart.update()
   }  

@@ -10,19 +10,19 @@ layout: example.hbs
   var chart = new Cedar({
     "type":"bubble",
     "dataset":{
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query":{},
       "mappings":{
-        "x": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "y": {"field":"CAPACITY","label":"Capacity"},
-        "size":{"field":"TOTAL_STUD","label":"Number of Students"}
+        "x": {"field":"F_of_teach","label":"Fraction of Teachers"},
+        "y": {"field":"Number_of","label":"Number_of"},
+        "size":{"field":"Number_of","label":"Number of Students"}
       }
     }
   });
 
   chart.tooltip = {
     "title": "{NAME}",
-    "content": "{TOTAL_STUD} out of {CAPACITY} Students in {SQUARE_FOOTAGE} sq. ft."
+    "content": "{Number_of} out of {Number_of} Students in {F_of_teach} sq. ft."
   };
 
   chart.show({
@@ -55,19 +55,19 @@ layout: example.hbs
   var chart = new Cedar({
     "type":"bubble",
     "dataset":{
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query":{},
       "mappings":{
-        "x": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "y": {"field":"CAPACITY","label":"Capacity"},
-        "size":{"field":"TOTAL_STUD","label":"Number of Students"}
+        "x": {"field":"F_of_teach","label":"Fraction of Teachers"},
+        "y": {"field":"Number_of","label":"Number_of"},
+        "size":{"field":"Number_of","label":"Number of Students"}
       }
     }
   });
 
   chart.tooltip = {
     "title": "{NAME}",
-    "content": "{TOTAL_STUD} out of {CAPACITY} Students in {SQUARE_FOOTAGE} sq. ft."
+    "content": "{Number_of} out of {Number_of} Students in {F_of_teach} sq. ft."
   };
 
   chart.show({

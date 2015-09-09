@@ -15,10 +15,10 @@ Re-renders an existing cedar chart. Typically used after changing the <a href="{
 
 <script>
 var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+      "group": {"field":"District","label":"District"},
+      "count": {"field":"Number_of","label":"Student Number_of"}
     }
   };
 
@@ -29,7 +29,7 @@ chart.show({
   'elementId': '#chartDiv'
 });
 //some user action that sets the zip code... and thus updates the where clause on the query
-chart.dataset.query.where = "ZIP_CODE = 20007";
+chart.dataset.query.where = "Zip = 20007";
 
 //update the chart
 chart.update();

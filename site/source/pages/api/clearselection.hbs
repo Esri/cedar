@@ -40,7 +40,7 @@ Clear all selections:
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
@@ -74,10 +74,10 @@ Clear all selections:
 
     //create the dataset w/ mappings
     var dataset = {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "mappings":{
-        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "group": {"field":"Zip","label":"ZIP Code"},
+        "count": {"field":"Number_of","label":"Total Students"}
       }
     };
 
@@ -139,8 +139,8 @@ Clear all selections:
       map.graphics.add(highlightGraphic);
 
 
-      var val = d.graphic.attributes["ZIP_CODE"];
-      chart.select({key: "ZIP_CODE", value: val});
+      var val = d.graphic.attributes["Zip"];
+      chart.select({key: "Zip", value: val});
 
     });
 

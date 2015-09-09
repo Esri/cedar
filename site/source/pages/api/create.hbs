@@ -30,19 +30,19 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
 
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "sort": "TOTAL_STUD_SUM DESC",
-      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "sort": "Number_of_SUM DESC",
+      "x": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 

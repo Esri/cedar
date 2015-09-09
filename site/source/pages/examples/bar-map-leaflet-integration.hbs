@@ -36,18 +36,18 @@ layout: example.hbs
 
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query": {
-        "groupByFieldsForStatistics": "ZIP_CODE",
+        "groupByFieldsForStatistics": "Zip",
         "outStatistics": [{
           "statisticType": "sum", 
-          "onStatisticField": "TOTAL_STUD", 
-          "outStatisticFieldName": "TOTAL_STUD_SUM"
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
         }]
       },  
     "mappings":{
-      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "x": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 
@@ -72,7 +72,7 @@ layout: example.hbs
   };
 
   L.esri.basemapLayer('Streets').addTo(map);
-  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
+  var featureLayer = L.esri.featureLayer('https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0', {
    pointToLayer: function (geojson, latlng) {
       return L.circleMarker(latlng, geojsonMarkerOptions);
     },
@@ -127,18 +127,18 @@ layout: example.hbs
 
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query": {
-        "groupByFieldsForStatistics": "ZIP_CODE",
+        "groupByFieldsForStatistics": "Zip",
         "outStatistics": [{
           "statisticType": "sum", 
-          "onStatisticField": "TOTAL_STUD", 
-          "outStatisticFieldName": "TOTAL_STUD_SUM"
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
         }]
       },  
     "mappings":{
-      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "x": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 
@@ -164,7 +164,7 @@ layout: example.hbs
   };
 
   L.esri.basemapLayer('Streets').addTo(map);
-  var featureLayer = L.esri.featureLayer('http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5', {
+  var featureLayer = L.esri.featureLayer('https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0', {
    pointToLayer: function (geojson, latlng) {
       return L.circleMarker(latlng, geojsonMarkerOptions);
     },

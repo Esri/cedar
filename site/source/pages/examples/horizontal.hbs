@@ -13,18 +13,18 @@ layout: example.hbs
 
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD","label":"Total Students"}
+      "x": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of","label":"Total Students"}
     }
   };
 
@@ -58,18 +58,18 @@ layout: example.hbs
 
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "y": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "x": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "y": {"field":"Zip","label":"ZIP Code"},
+      "x": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 
@@ -91,8 +91,8 @@ layout: example.hbs
 
   chart.tooltip = {
     "id": "cedar-tooltip",
-    "title": "{ZIP_CODE}",
-    "content": "{TOTAL_STUD_SUM} students in the {ZIP_CODE} zipcode."
+    "title": "{Zip}",
+    "content": "{Number_of_SUM} students in the {Zip} zipcode."
   };
   
   //show the chart
