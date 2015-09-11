@@ -1,12 +1,15 @@
 {
   "name": "cedar",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Visualization framework for the ArcGIS Platform",
   "main": "index.js",
   "scripts": {
-    "prepublish": "node -e \"require('grunt').tasks(['prepublish']);\"",
-    "start": "node -e \"require('grunt').tasks(['default']);\"",
-    "test": "node -e \"require('grunt').tasks(['test']);\""
+    "start": "npm run build && npm run server",
+    "build": "npm run compile && npm run bundle && npm run combine",
+    "compile": "babel src -d _tmp --blacklist es6.modules -e 0",
+    "bundle": "rollup _tmp/index.js -o dist/builds/cedar.js",
+    "combine": "uglifyjs dist/builds/cedar.js -o dist/builds/cedar.min.js",
+    "server": "http-server -p 8081"
   },
   "repository": {
     "type": "git",
@@ -26,6 +29,11 @@
   },
   "homepage": "https://github.com/esri/cedar",
   "devDependencies": {
+    "babel": "^5.8.21",
+    "http-server": "^0.8.0",
+    "rollup": "^0.12.1",
+    "uglify-js": "^2.4.24",
+
     "assemble": "^0.4.37",
     "grunt": "^0.4.2",
     "grunt-concurrent": "^0.5.0",

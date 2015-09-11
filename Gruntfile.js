@@ -324,7 +324,7 @@ module.exports = function(grunt) {
   grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['sass', 'copy', 'connect:docs', 'watch']);
 
   // Local built to site/build
   grunt.registerTask('docs:build', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin']);
