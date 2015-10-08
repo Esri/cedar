@@ -1,0 +1,140 @@
+---
+title: Dashboard
+layout: layout.hbs
+---
+<link rel="stylesheet" href="http://gridster.net/dist/jquery.gridster.min.css"></link>
+<link rel="stylesheet" href="http://gridster.net/assets/css/style.css"></link>
+
+<script type="text/javascript" src="http://gridster.net/assets/js/libs/jquery-1.7.2.min.js"></script>
+<script src="http://gridster.net/dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+	.gridster { width: 100%;}
+	.widget {
+		padding: 5px;
+	}
+	.chart {
+		height: 85%;
+		width: 90%;
+	}
+	.cedar-kpi {
+		padding: 20px;
+	}
+	.cedar-kpi-value {
+		font-size: 60px;
+	}
+	.cedar-kpi-title {
+		font-size: 15px;
+		color: #888;
+	}
+</style>
+<div class="gridster">
+    <ul id="dashboard">    
+    </ul>
+</div> 
+
+<script type="text/javascript">
+$(function(){ 
+	var charts = [];
+
+    $(".gridster ul").gridster({
+        widget_margins: [10, 10],
+        widget_base_dimensions: [140, 140],
+        extra_rows: 20,
+        resize: {
+        	enabled: true,
+        	resize: function() {  charts.forEach(function(chart) { chart.update() }) },
+        	stop: function() {  charts.forEach(function(chart) { chart.update() }) }
+        }
+    });
+
+    function webmapUrl(webmapId) {
+		return "http://www.arcgis.com/sharing/rest/content/items/" + webmapId +"/data?f=json"
+    }
+    function addChart( layer, index ) {
+    	var gridster = $(".gridster ul").gridster().data('gridster');
+    	gridster.add_widget(
+    		'<li class="widget cedar-chart"><h3>' + layer.title +'</h3><div id="chart' + index + '" class="chart"></div></li>',
+    		3, 3);  
+    	addKpi(layer,index,gridster);
+    }
+	function addKpi(layer, index, gridster) {
+		var count = 0;
+
+		Cedar.getJson(layer.url + "/query?where=1%3D1&outFields=*&returnGeometry=false&returnCountOnly=true&f=json", function(err,data) {
+			console.log(data.count)
+			gridster.add_widget(
+	    		'<li class="widget cedar-kpi"><span class="cedar-kpi-value">' + data.count +'</span><br/><span class="cedar-kpi-title">' + layer.title + '</span></div></li>',
+	    		3, 1); 
+
+		});
+	}
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		    results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
+    function buildCharts(design) {
+    	if(typeof design == 'string') {
+    		Cedar.getJson(webmapUrl(design), function(err, data) { buildCharts(data); })
+    		return;
+    	}
+    	console.log("Build Charts", design)
+
+    	design.operationalLayers.forEach(function(layer) {
+    		Cedar.getJson(layer.url + "?f=json", function(err,data) {
+    			var variable = data.fields[0].name;
+    			var index = layer.layerDefinition.drawingInfo.renderer.field1;
+
+    			var statsType = "count";
+    			var statsName = (index + "_" + statsType);
+    			var popupInfo = layer.popupInfo.description;
+    			if(popupInfo !== undefined && popupInfo !== null && popupInfo.includes('|')) {
+	    			// e.g. "|'type':'scatter','x':'{DP03_62E}'|"
+	    			var layerDef = JSON.parse(popupInfo.replace(/\|(.*)\|/g, '{$1}').replace(/'/g,'"'))
+	    		}
+    			query = {
+			      "groupByFieldsForStatistics": index,
+			      "outStatistics": [{
+			        "statisticType": statsType, 
+			        "onStatisticField": index, 
+			        "outStatisticFieldName": statsName
+			      }]
+			    };
+    			var layerChart = {"type": "bar",
+				  	"dataset": {
+					    "url":layer.url,
+					    "query": query,
+					    "mappings":{
+					      "x": {"field": index,"label": index},
+					      "y": {"field": statsName,"label": "count"},
+					      "sort": statsName + " DESC"
+					    }
+					},
+					"tooltip": {
+						"title": "{" +  index + "}: {" + statsName + "} ",
+						"content": ""
+					}
+				  };
+			      // console.log("Chart Query", query);
+
+				  var chart = new Cedar(layerChart);
+				  charts.push(chart)
+				  addChart(layer, charts.length);
+				  chart.show({
+				    elementId: "#chart" + charts.length
+				  });
+    		});
+    	});
+    }
+
+    // DC Dashboard
+    // buildCharts('6df835c1de90493a8b813324f5de39a3');
+
+    // Hawaii Dashboard
+    var map = 'a95e0bb28dc84a329a83650060922b23';
+    map = getParameterByName('map');
+    console.log("loading ", map)
+    buildCharts(map);
+});
+</script>
