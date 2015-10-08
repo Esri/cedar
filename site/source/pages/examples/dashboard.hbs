@@ -28,6 +28,7 @@ layout: layout.hbs
 	}
 </style>
 <div class="gridster">
+    <label for="dashboardMapId">Map ID</label><input id="dashboardMapId" placeholder="Map ID to power dashboard" />
     <ul id="dashboard">    
     </ul>
 </div> 
@@ -48,8 +49,11 @@ $(function(){
     });
 
     function webmapUrl(webmapId) {
-		return "http://www.arcgis.com/sharing/rest/content/items/" + webmapId +"/data?f=json"
+		return "http://www.arcgis.com/sharing/rest/content/items/" + webmapId +"/data?f=json";
     }
+    function gistUrl(webmapId) {
+		return "https://gist.githubusercontent.com/ajturner/" + webmapId + "/raw/webmap.json";
+    }    
     function addChart( layer, index ) {
     	var gridster = $(".gridster ul").gridster().data('gridster');
     	gridster.add_widget(
@@ -61,7 +65,6 @@ $(function(){
 		var count = 0;
 
 		Cedar.getJson(layer.url + "/query?where=1%3D1&outFields=*&returnGeometry=false&returnCountOnly=true&f=json", function(err,data) {
-			console.log(data.count)
 			gridster.add_widget(
 	    		'<li class="widget cedar-kpi"><span class="cedar-kpi-value">' + data.count +'</span><br/><span class="cedar-kpi-title">' + layer.title + '</span></div></li>',
 	    		3, 1); 
@@ -75,16 +78,18 @@ $(function(){
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
     function buildCharts(design) {
-    	if(typeof design == 'string') {
+    	if(design === undefined || design === null) { 
+    		return;
+    	} else if(typeof design == 'string') {
     		Cedar.getJson(webmapUrl(design), function(err, data) { buildCharts(data); })
     		return;
     	}
-    	console.log("Build Charts", design)
 
     	design.operationalLayers.forEach(function(layer) {
     		Cedar.getJson(layer.url + "?f=json", function(err,data) {
     			var variable = data.fields[0].name;
-    			var index = layer.layerDefinition.drawingInfo.renderer.field1;
+    			var renderer = layer.layerDefinition.drawingInfo.renderer;
+    			var index = renderer.field || renderer.field1;
 
     			var statsType = "count";
     			var statsName = (index + "_" + statsType);
@@ -132,9 +137,12 @@ $(function(){
     // buildCharts('6df835c1de90493a8b813324f5de39a3');
 
     // Hawaii Dashboard
-    var map = 'a95e0bb28dc84a329a83650060922b23';
-    map = getParameterByName('map');
-    console.log("loading ", map)
-    buildCharts(map);
+    // var map = 'a95e0bb28dc84a329a83650060922b23';
+    document.getElementById("dashboardMapId").onblur = function(evt) {
+		var mapId = document.getElementById("dashboardMapId").value;
+    	buildCharts(mapId);
+    }
+    // map = getParameterByName('map');
+    // buildCharts(map);
 });
 </script>
