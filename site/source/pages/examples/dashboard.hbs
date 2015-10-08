@@ -68,7 +68,12 @@ $(function(){
 
 		});
 	}
-
+	function getParameterByName(name) {
+		name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+		var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+		    results = regex.exec(location.search);
+		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	}
     function buildCharts(design) {
     	if(typeof design == 'string') {
     		Cedar.getJson(webmapUrl(design), function(err, data) { buildCharts(data); })
@@ -111,34 +116,7 @@ $(function(){
 						"content": ""
 					}
 				  };
-// mark=point|x=Horsepower,Q|y=count_*,Q|color=Cylinders,O
-// mark=bar|x=bin_Horsepower,Q|y=sum_Acceleration,Q
-
-// {
-//   "marktype": "point",
-//   "encoding": {
-//     "x": {"name": "Horsepower","type": "Q"},
-//     "y": {"name": "Acceleration","type": "Q"},
-//     "color": {"name": "Cylinders","type": "O"}
-//   },
-//   "config": {"singleHeight": 400,"singleWidth": 400,"largeBandMaxCardinality": 20},
-//   "data": {"url": "data/cars.json"}
-// }
-
-// mark=bar|x=bin_Horsepower,Q|y=sum_Acceleration,Q|color=Cylinders,O
-// {
-//   "marktype": "bar",
-//   "encoding": {
-//     "x": {"bin": {"maxbins": 15},"name": "Horsepower","type": "Q"},
-//     "y": {"name": "Acceleration","type": "Q","aggregate": "sum"},
-//     "color": {"name": "Cylinders","type": "O"}
-//   },
-//   "config": {"singleHeight": 400,"singleWidth": 400,"largeBandMaxCardinality": 20},
-//   "data": {"url": "data/cars.json"}
-// }
-
-
-			    console.log("Chart Query", query);
+			      // console.log("Chart Query", query);
 
 				  var chart = new Cedar(layerChart);
 				  charts.push(chart)
@@ -154,6 +132,9 @@ $(function(){
     // buildCharts('6df835c1de90493a8b813324f5de39a3');
 
     // Hawaii Dashboard
-    buildCharts('a95e0bb28dc84a329a83650060922b23');
+    var map = 'a95e0bb28dc84a329a83650060922b23';
+    map = getParameterByName('map');
+    console.log("loading ", map)
+    buildCharts(map);
 });
 </script>
