@@ -137,12 +137,12 @@ $(function(){
     // buildCharts('6df835c1de90493a8b813324f5de39a3');
 
     // Hawaii Dashboard
-    // var map = 'a95e0bb28dc84a329a83650060922b23';
+    var map = 'a95e0bb28dc84a329a83650060922b23';
     document.getElementById("dashboardMapId").onblur = function(evt) {
 		var mapId = document.getElementById("dashboardMapId").value;
     	buildCharts(mapId);
     }
-    // map = getParameterByName('map');
-    // buildCharts(map);
+    map = getParameterByName('map');
+    buildCharts(map);
 });
 </script>
