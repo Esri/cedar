@@ -552,7 +552,7 @@ Cedar.prototype._placeLabels = function(spec) {
     // Change each axis title offset based on longest value
     inputs.forEach(function(axis, index) {
       var angle = 0;
-      if(spec.axes[index] !== undefined) {
+      if(spec.axes !== undefined && spec.axes[index] !== undefined) {
 
         if (spec.axes[index].properties.labels.angle !== undefined) {
           angle = spec.axes[index].properties.labels.angle.value;
@@ -581,18 +581,19 @@ Cedar.prototype._placeLabels = function(spec) {
  */
 Cedar.prototype._placeaAxisTicks = function(spec) {
   var self = this;
-  try{  
-    var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
-    var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
-    
-    spec.axes[0].ticks = width / 100;
-    spec.axes[1].ticks = height / 30;
-    
-    return spec;
+  if(spec.axes !== undefined) {
+    try{  
+      var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
+      var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
+      
+      spec.axes[0].ticks = width / 100;
+      spec.axes[1].ticks = height / 30;
+    } catch(ex) {
+      throw(ex);
+    }
+  }  
 
-  } catch(ex) {
-    throw(ex);
-  }
+  return spec;
 };
 
 /**
