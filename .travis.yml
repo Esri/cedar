@@ -8,6 +8,7 @@ before_script:
   - npm install -g bower
   - bower install
 install:
+  - sudo apt-get update
   - sudo apt-get install libgif-dev
 env:
   global:
