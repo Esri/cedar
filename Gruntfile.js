@@ -204,6 +204,12 @@ module.exports = function(grunt) {
           dest: 'site/build',
           expand: true,
           src: ['**/*.hbs', '**/*.md']
+        },
+        {
+          cwd: 'site/source/assets',
+          dest: 'site/build',
+          expand: true,
+          src: ['**/*.js', '**/*.css']
         }]
       },
       build: {
