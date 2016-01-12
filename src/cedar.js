@@ -964,12 +964,20 @@ Cedar._mixin = function(source) {
  * @param  {Function} callback node-style callback function (error, data)
  */
 Cedar.getJson = function( url, callback ){
-  d3.json(url, function(err,data) {
+  var cb = function(err,data) {
     if(err){
       callback('Error loading ' + url + ' ' + err.message);
     }
-    callback(null, data);
-  });
+    callback(null, JSON.parse(data.responseText));
+  }
+  if(url.length > 500) {
+    var uri = url.split("?")
+    d3.xhr(uri[0])
+      .header("Content-Type", "application/x-www-form-urlencoded")
+      .post(uri[1], cb)
+  } else {
+    d3.xhr(url).get(cb)
+  }
 };
 
 /**

@@ -7,6 +7,14 @@ layout: layout.hbs
 
 <script type="text/javascript" src="http://gridster.net/assets/js/libs/jquery-1.7.2.min.js"></script>
 <script src="http://gridster.net/dist/jquery.gridster.js" type="text/javascript" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-1.0.0-b1/leaflet.js"></script>
+
+    <!-- Load Esri Leaflet locally, after cloning this repository -->
+    <script src="http://cdn.jsdelivr.net/leaflet.esri/2.0.0-beta.5/esri-leaflet.js"></script>
+
+
 <style type="text/css">
 	.gridster { width: 100%;}
 	.widget {
@@ -26,16 +34,27 @@ layout: layout.hbs
 		font-size: 15px;
 		color: #888;
 	}
+	#map {
+		width : 100%;
+		height : 400px;
+	}
 </style>
 <div class="gridster">
     <label for="dashboardMapId">Map ID</label><input id="dashboardMapId" placeholder="Map ID to power dashboard" />
-    <ul id="dashboard">    
+    <div id="filters"></div>
+    <ul id="dashboard">   
+    <li data-row="1" data-col="1" data-sizex="3" data-sizey="3" class=""><div id="map"></div></li> 
     </ul>
 </div> 
 
 <script type="text/javascript">
+var map;
+var charts = [];
 $(function(){ 
-	var charts = [];
+	map = L.map('map',{scrollWheelZoom: false}).setView([45.528, -122.680], 13);
+
+	L.esri.basemapLayer("Gray").addTo(map);
+
 
     $(".gridster ul").gridster({
         widget_margins: [10, 10],
@@ -48,8 +67,61 @@ $(function(){
         }
     });
 
-    function webmapUrl(webmapId) {
-		return "http://www.arcgis.com/sharing/rest/content/items/" + webmapId +"/data?f=json";
+    function addMapLayer(layer) {
+		var newLayer = L.esri.featureLayer({
+		url: layer.url,
+		style: function () {
+		  return { color: "#70ca49", weight: 2 };
+		}
+		})
+		newLayer.setStyle(function(feature){
+			var color = "#BBB";
+			switch( feature.properties.STATUS_2) {
+				case "Good":
+					color = "#00FF00";
+					break;
+				case "Poor":
+					color = "#FF0000";
+					break;					
+				case "Fair":
+					color = "#FF00FF";
+					break;
+				case "Other":
+					color = "#888";
+					break;
+			}
+		  return {
+		    color: color,
+		    fillOpacity: 0.1,
+
+		  };
+		})
+		newLayer.addTo(map);    	
+		newLayer.bindPopup(function(feature){
+			filterCharts(feature.feature)
+		});		
+    }
+    function filterCharts(feature) {
+    	var queryGeometry = {rings: feature.geometry.coordinates};
+    	document.getElementById("filters").innerHTML = "Filtered by " + feature.properties["NAME"];
+    	charts.forEach(function(chart) {
+    		// chart.dataset.query.where = ""
+			chart.dataset.query.geometry = queryGeometry
+    		chart.dataset.query.geometryType = "esriGeometryPolygon"
+    		chart.dataset.query.inSR="4326"
+    		chart.dataset.query.spatialRel="esriSpatialRelContains"
+    		chart.update();
+    	})
+    }
+    function itemUrl(webmapId, format) {
+    	var url = "https://www.arcgis.com/sharing/rest/content/items/" + webmapId
+    	if(format === undefined || format === null || format == true) {
+			url += "?f=json";	
+    	} 
+		return url
+    }
+	function webmapUrl(webmapId) {
+		return itemUrl(webmapId, false) + "/data?f=json";
     }
     function gistUrl(webmapId) {
 		return "https://gist.githubusercontent.com/ajturner/" + webmapId + "/raw/webmap.json";
@@ -77,20 +149,39 @@ $(function(){
 		    results = regex.exec(location.search);
 		return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 	}
-    function buildCharts(design) {
+	function getItem(itemId, cb) {
+		Cedar.getJson( itemUrl(itemId), cb )
+	}
+	function getWebmap(itemId, cb) {
+		Cedar.getJson(webmapUrl(itemId), cb)
+	}
+	function zoomMap(extent) {
+		var bounds = [[extent[0][1],extent[0][0]],[extent[1][1],extent[1][0]]];
+		console.log("bounds",bounds)
+		map.fitBounds(bounds).setMaxBounds(bounds);
+	}
+    function buildCharts(err,design) {
     	if(design === undefined || design === null) { 
     		return;
     	} else if(typeof design == 'string') {
-    		Cedar.getJson(webmapUrl(design), function(err, data) { buildCharts(data); })
+    		getItem(design, function(err,data) { 
+    			zoomMap(data.extent)
+    			getWebmap(design, buildCharts )
+    		})
+    		// Cedar.getJson(webmapUrl(design), buildCharts )
     		return;
     	}
 
     	design.operationalLayers.forEach(function(layer) {
+    		addMapLayer(layer);
+
     		Cedar.getJson(layer.url + "?f=json", function(err,data) {
     			var variable = data.fields[0].name;
     			var renderer = layer.layerDefinition.drawingInfo.renderer;
     			var index = renderer.field || renderer.field1;
-
+    			if(index === undefined) {
+    				return 
+    			}
     			var statsType = "count";
     			var statsName = (index + "_" + statsType);
     			var popupInfo = layer.popupInfo.description;
@@ -137,12 +228,12 @@ $(function(){
     // buildCharts('6df835c1de90493a8b813324f5de39a3');
 
     // Hawaii Dashboard
-    var map = 'a95e0bb28dc84a329a83650060922b23';
+    var mapId = 'a95e0bb28dc84a329a83650060922b23';
     document.getElementById("dashboardMapId").onblur = function(evt) {
-		var mapId = document.getElementById("dashboardMapId").value;
-    	buildCharts(mapId);
+		mapId = document.getElementById("dashboardMapId").value;
+    	buildCharts(null,mapId);
     }
-    map = getParameterByName('map');
-    buildCharts(map);
+    mapId = getParameterByName('map');
+    buildCharts(null,mapId);
 });
 </script>
