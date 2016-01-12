@@ -1,122 +1,23 @@
 ---
+title: Example - Inlined Chart Specification
 layout: example.hbs
 ---
 
 
-<h1>Inlined Chart Specification</h1>
+<h1></h1>
 
-<div id="chart"></div>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+    #examples { height: 1800px; }
+    #resizable { width: 750px; height: 550px; padding: 0.5em; }
+    #resizable h3 { text-align: center; margin: 0; }
+  </style>
 
-
-{{#markdown}}
-```html
-  //create a cedar chart
-  var chart = new Cedar();
-
-  //create the specification
-  var spec ={
-  "inputs": [
-    {"name": "y", "type": ["numeric","string"], "required": true},
-    {"name": "label", "type": ["string"], "required": false},
-    {"name": "radius", "type": ["numeric"], "required": true}
-  ],
-  "template":{
-    "padding": "strict",
-    "data": [
-      {
-        "name": "table",
-        "format": {
-          "property": "features"
-        },
-        "transform": [
-          {"type": "pie", "value": "attributes.{y.field}"},
-          {"type": "formula", "field": "hyp", "expr": "{radius}"},
-          {"type": "formula", "field": "theta", "expr": "d.startAngle + 0.5 *(d.endAngle - d.startAngle) - 1.57079633"},
-          {"type": "formula", "field": "x_mid", "expr": "{radius} / 2"},
-          {"type": "formula", "field": "y_mid", "expr": "{radius} / 2"},
-          {"type": "formula", "field": "x", "expr": "d.x_mid + (d.hyp * Math.cos(d.theta))"},
-          {"type": "formula", "field": "y", "expr": "d.y_mid + (d.hyp * Math.sin(d.theta))"}          
-        ]
-      }
-    ],
-    "scales": [
-      {
-        "name": "r",
-        "type": "sqrt",
-        "domain": {"data": "table", "field": "attributes.{y.field}"}
-      }
-    ],
-    "marks": [
-      {
-        "type": "arc",
-        "from": {"data": "table"},
-        "properties": {
-          "enter": {
-            "x": {"group": "width"},
-            "y": {"group": "height"},
-            "startAngle": {"field": "startAngle"},
-            "endAngle": {"field": "endAngle"},
-            "outerRadius": {"value": "{radius}"},
-            "stroke": {"value": "#fff"}
-          },
-          "update": {
-            "fill": {"value": "#0079c1"}
-          },
-          "hover": {
-            "fill": {"value": "#29b6ea"}
-          }
-        }
-      },
-      {
-        "type": "text",
-        "from": {"data": "table"},
-        "properties": {
-          "enter": {
-            "y": {"field": "y", "mult": 0.6},
-            "x": {"field": "x", "mult": 0.6},
-            "fill": {"value": "#fff"},
-            "align": {"value": "center"},
-            "baseline": {"value": "middle"},
-            "text": {"field": "attributes.{label.field}"}
-          }
-        }
-      }
-    ]
-  }
-  
-}
-  //assign to chart
-  chart.specification = spec;
-
-  //create the dataset w/ mappings
-  var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "query": {
-      "groupByFieldsForStatistics": "FACUSE",
-      "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
-      }]
-    },    
-    "mappings":{
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
-      "label": {"field":"FACUSE","label":"Facility Use"},
-      "radius": 360
-    }
-  };
-
-  //assign to the chart
-  chart.dataset = dataset;
-
-  //show the chart
-  chart.show({
-    elementId: "#chart",
-    width: 800,
-    height: 800
-  });
-```
-{{/markdown}}
+  <div id="resizable" class="ui-widget-content">
+    <div id="chart" style="height: 100%"></div>
+    </div>
 
 
 <script>
@@ -125,104 +26,159 @@ layout: example.hbs
 
   //create the specification
   var spec ={
-  "inputs": [
-    {"name": "y", "type": ["numeric","string"], "required": true},
-    {"name": "label", "type": ["string"], "required": false},
-    {"name": "radius", "type": ["numeric"], "required": true}
+  "inputs":[
+    {"name":"time","type":["time"], "required":true},
+    {"name":"value","type":["numeric"], "required":true}
   ],
-    "template":{
-      "padding": "strict",
-      "data": [
-        {
-          "name": "table",
-          "format": {
-            "property": "features"
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "url":"{data}&orderByFields={time.field}",
+        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+      },
+      {
+        "name": "exports",
+        "source": "table",
+        "transform": [
+          {"type": "formula", "field": "export", "expr": "datum"}
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "time",
+        "range": "width",
+        "nice": "month",
+        "zero": false,
+        "domain": {"data": "table", "field": "attributes.{time.field}"}
+      },
+      {
+        "name": "y",
+        "type": "linear",
+        "range": "height",
+        "nice": true,
+        "domain": {"data": "table", "field": "attributes.{value.field}"}
+      }
+    ],
+    "axes": [
+      {
+        "type": "x", 
+        "scale": "x",
+        "title": "{time.label}", 
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
           },
-          "transform": [
-            {"type": "pie", "value": "attributes.{y.field}"},
-            {"type": "formula", "field": "hyp", "expr": "{radius}"},
-            {"type": "formula", "field": "theta", "expr": "datum.layout_start + 0.5 *(datum.layout_end - datum.layout_start) - 1.57079633"},
-            {"type": "formula", "field": "x", "expr": "datum.hyp * cos(datum.theta)"},
-            {"type": "formula", "field": "y", "expr": "datum.hyp * sin(datum.theta)"}   
-          ]
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1}
+          }
         }
-      ],
-      "scales": [
-        {
-          "name": "r",
-          "type": "sqrt",
-          "domain": {"data": "table", "field": "attributes.{y.field}"}
+      },
+      {
+        "type": "y", 
+        "scale": "y",
+        "title": "{value.label}", 
+        "ticks": 2,
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },          
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"}
+          }
         }
-      ],
-      "marks": [
-        {
-          "type": "arc",
-          "from": {"data": "table"},
-          "properties": {
-            "enter": {
-              "x": {"group": "width"},
-              "y": {"group": "height"},
-              "startAngle": {"field": "layout_start"},
-              "endAngle": {"field": "layout_end"},
-              "outerRadius": {"value": "{radius}"},
-              "stroke": {"value": "#fff"}
-            },
-            "update": {
-              "fill": {"value": "#0079c1"}
+      }
+    ],
+    "marks": [
+      {
+        "type": "symbol",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
+            "stroke": {"value": "#0079c1"},
+            "fill": {"value": "#0079c1"},
+            "size": {"value": 20},
+            "fillOpacity": {
+              "value": 0.8
             },
             "hover": {
-              "fill": {"value": "#29b6ea"}
-            }
-          }
-        },
-        {
-          "type": "text",
-          "from": {"data": "table"},
-          "properties": {
-            "enter": {
-              "y": {"field": "y", "mult": 0.6},
-              "x": {"field": "x", "mult": 0.6},
-              "fill": {"value": "#fff"},
-              "align": {"value": "center"},
-              "baseline": {"value": "middle"},
-              "text": {"field": "attributes.{label.field}"}
+              "fill": {"value": "#0079c1"},
+              "size": {"value": 25}
+            },
+            "update": {
+              "fill": {"value": "#f00"}
             }
           }
         }
-      ]
-    }
-  
+      },
+      {
+        "type": "line",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
+            "y2": {"scale": "y", "value": 0},
+            "stroke": {"value": "#0079c1"}
+          }
+        }
+      }
+    ]
+  }
 }
-  //assign to chart
-  chart.specification = spec;
+var chart = new Cedar({"specification":spec});
 
-  //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
-    "query": {
-      "groupByFieldsForStatistics": "FACUSE",
-      "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
-      }]
-    },    
+    "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
     "mappings":{
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
-      "label": {"field":"FACUSE","label":"Facility Use"},
-      "radius": 360
+      "time": {"field":"Date", "label": "Time"},
+      "value": {"field":"Injuries", "label": "Injuries"},
+      "sort":"Date"
+
     }
   };
+  chart.tooltip = {
+    "title": "{Year}",
+    "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
+  };
 
-  //assign to the chart
   chart.dataset = dataset;
-
-  //show the chart
+  //chart.dataset.mappings.sort = "DATE";
   chart.show({
     elementId: "#chart",
-    width: 800,
-    height: 800,
-    renderer: "svg",
+    autolabels: true,
+    renderer: "svg"
+  }); 
 
+
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chart.update(); }
+    });
   });
 </script>
+

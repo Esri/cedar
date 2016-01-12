@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$TRAVIS_BRANCH" == "master" ]; then
+if [ "$TRAVIS_BRANCH" == "develop" ]; then
 	set -e # exit with nonzero exit code if anything fails
 
 	# clear and re-create the out directory

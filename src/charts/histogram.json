@@ -10,13 +10,13 @@
       {
         "type": "x",
         "scale": "x",
-        "titleOffset": 45,
+        "titleOffset": 0,
         "title": "{x.label}",          
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "normal"}
+            "fontWeight": {"value": "bold"}
           },          
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -26,9 +26,11 @@
              "stroke": {"value": "#dbdad9"}
           },
           "labels": {
+            "dy": {"value": -10},
+            "fontSize": {"value": 0},            
             "fill": {"value": "#999"},
-            "angle": {"value": -50},
-            "align": {"value": "right"},
+            "angle": {"value": 0},
+            "align": {"value": "left"},
             "baseline": {"value": "middle"}
           }
         }
@@ -37,12 +39,12 @@
         "type": "y",
         "scale": "y",
         "titleOffset": 45,
-        "title": "{y.label}",
+        "title": "{y.label}",          
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "normal"}
+            "fontWeight": {"value": "bold"}
           },          
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -52,6 +54,7 @@
              "stroke": {"value": "#dbdad9"}
           },
           "labels": {
+            "fontSize": {"value": 14},
             "fill": {"value": "#999"}
           }
         }
@@ -60,7 +63,15 @@
     "data": [
       {
         "name": "table",
-        "format": {"property": "features"}
+        "format": {"property": "features"},
+        "transform": [
+          {"type": "bin", "field": "data.attributes.{x.field}", "output": "bin_yield"},
+          {
+            "type": "aggregate",
+            "groupby": ["bin_yield"],
+            "fields": [{"op": "count", "field": "*"}]
+          }
+        ]
       }
     ],    
     "marks": [
@@ -68,36 +79,52 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
-          },
-          "update": {
             "width": {"band": true, "offset": -1, "scale": "x"},
-            "x": {"field": "attributes.{x.field}", "scale": "x"},
-            "y": {"field": "attributes.{y.field}", "scale": "y"},
-            "y2": {"scale": "y", "value": 0 },            
-            "fill": {"value": "#0079c1"}
+            "x": {"field": "data.bin_yield", "scale": "x"},
+            "y": {"field": "data.count", "scale": "y"},
+            "y2": {"scale": "y", "value": 0 }
           },
           "hover": {
             "fill": {"value": "#29b6ea"}
+          },
+          "update": {
+            "fill": {"value": "#0079c1"}
           }
         },
         "type": "rect"
-      }
+      },
+      {
+        "type": "text",
+        "interactive": false,
+        "from": { "data": "table" },
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "data.bin_yield"},
+            "dx": {"scale": "x", "offset": -1},
+            "y": {"value": 355},
+            "text": {"field": "data.bin_yield"},
+            "baseline": {"value": "middle"},
+            "align": {"value": "center"},
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 14}
+          }
+        }
+      }      
     ],    
     "scales": [
       {
         "domain": {
           "data": "table",
-          "field": "attributes.{x.field}"
+          "field": "data.bin_yield"
         },
         "name": "x",
         "range": "width",
-        "type": "ordinal",
-        "padding": 0.25
+        "type": "ordinal"
       },
       {
         "domain": {
           "data": "table",
-          "field": "attributes.{y.field}"
+          "field": "data.count"
         },
         "name": "y",
         "nice": true,

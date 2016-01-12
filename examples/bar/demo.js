@@ -1,15 +1,7 @@
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-  <style>
-    #resizable { width: 750px; height: 550px; padding: 0.5em; }
-  </style>
+$(function () {
 
-<script>
-  //create a cedar chart using the known 'bar' type
-  // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
   var chart = new Cedar({"type": "bar"});
-  //create the dataset w/ mappings
+
   var dataset = {
     "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "query": {
@@ -32,17 +24,12 @@
     "content": "{TOTAL_STUD_SUM} Students in {FACUSE}"
   }
 
-  //assign to the chart
   chart.dataset = dataset;
 
-  //show the chart
   chart.show({
-    elementId: "#chart-url"
+    elementId: "#chart",
+    autolabels: true,
+    renderer: "svg"
   });
 
-  $(function() {
-    $( "#resizable" ).resizable({
-      resize: function() { chart.update(); }
-    });
-  });
-</script>
+});

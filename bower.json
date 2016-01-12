@@ -11,6 +11,7 @@
     "src/charts/bar-horizontal.json",
     "src/charts/bar.json",
     "src/charts/bubble.json",
+    "src/charts/histogram.json",
     "src/charts/pie.json",
     "src/charts/scatter.json",
     "src/charts/sparkline.json",

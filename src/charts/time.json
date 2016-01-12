@@ -10,6 +10,13 @@
         "name": "table",
         "url":"{data}&orderByFields={time.field}",
         "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+      },
+      {
+        "name": "exports",
+        "source": "table",
+        "transform": [
+          {"type": "formula", "field": "export", "expr": "datum"}
+        ]
       }
     ],
     "scales": [
@@ -37,7 +44,7 @@
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },
           "ticks": {
              "stroke": {"value": "#dbdad9"}
@@ -55,7 +62,13 @@
       {
         "type": "y", 
         "scale": "y",
+        "ticks": 5,
         "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },          
           "ticks": {
              "stroke": {"value": "#dbdad9"}
           },
@@ -78,14 +91,17 @@
             "x": {"scale": "x", "field": "attributes.{time.field}"},
             "y": {"scale": "y", "field": "attributes.{value.field}"},
             "stroke": {"value": "#0079c1"},
+            "fill": {"value": "#0079c1"},
+            "size": {"value": 20},
             "fillOpacity": {
               "value": 0.8
             },
             "hover": {
-              "fill": {"value": "#0079c1"}
+              "fill": {"value": "#0079c1"},
+              "size": {"value": 25}
             },
             "update": {
-              "fill": {"value": "#fff"}
+              "fill": {"value": "#f00"}
             }
           }
         }
