@@ -902,7 +902,8 @@ Cedar.prototype._createTooltip = function(elem) {
   // TODO: remove inline CSS
   var style = document.createElement('style');
   style.type = 'text/css';
-  style.innerHTML = ".cedar-tooltip {background-color: #f36f22; padding: 3px 10px; color: #fff; margin: -30px 0 0 20px; position: absolute; z-index: 2000; font-size: 10px; } .cedar-tooltip .title {font-size: 13pt; font-weight: bold; } .cedar-tooltip .content {font-size: 10pt; } .cedar-tooltip:after {content: ''; position: absolute; border-style: solid; border-width: 15px 15px 15px 0; border-color: transparent #f36f22; display: block; width: 0; z-index: 1; left: -15px; top: 14px; }";
+  // style.innerHTML = ".cedar-tooltip {background-color: #f36f22; padding: 3px 10px; color: #fff; margin: -30px 0 0 20px; position: absolute; z-index: 2000; font-size: 10px; } .cedar-tooltip .title {font-size: 13pt; font-weight: bold; } .cedar-tooltip .content {font-size: 10pt; } .cedar-tooltip:after {content: ''; position: absolute; border-style: solid; border-width: 15px 15px 15px 0; border-color: transparent #f36f22; display: block; width: 0; z-index: 1; left: -15px; top: 14px; }";
+  style.innerHTML = ".cedar-tooltip {background-color: white; padding: 3px 10px; color: #333; margin: -30px 0 0 20px; position: absolute; z-index: 2000; font-size: 10px; border: 1px solid #BBB;} .cedar-tooltip .title {font-size: 13pt; font-weight: bold; } .cedar-tooltip .content {font-size: 10pt; } ";
   document.getElementsByTagName('head')[0].appendChild(style);
 
   tooltip_div = document.createElement('div');
