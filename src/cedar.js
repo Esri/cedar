@@ -587,7 +587,9 @@ Cedar.prototype._placeaAxisTicks = function(spec) {
       var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
       
       spec.axes[0].ticks = width / 100;
-      spec.axes[1].ticks = height / 30;
+      if(spec.axes[1] !== undefined) {
+        spec.axes[1].ticks = height / 30;
+      }
     } catch(ex) {
       throw(ex);
     }

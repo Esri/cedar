@@ -32,7 +32,7 @@
         "name": "g",
         "type": "ordinal",
         "range": "height",
-        "padding": 0.45,
+        "padding": 0.25,
         "domain": {"data": "{facet.field}", "field": "key"}
       },    
       {
