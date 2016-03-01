@@ -1,0 +1,64 @@
+<div id="chart" style="height: 100%"></div>
+
+<script>
+  //create the specification
+  var spec ={
+  	  "inputs": [],
+	  "query": {},
+	  "template":{
+		  "data": [
+	        {
+		        "name": "table",
+		        "format": {"property": "features"}
+		    },
+		    {
+		      "name": "precincts",
+		      "url": "http://opendata.dc.gov/datasets/4919ca2fa0894de18e4752a5e16ca683_22.geojson",
+		      "format": {"type": "json","property": "features"},
+		      "transform": [
+		        {
+		          "type": "geopath",
+		          "value": "data",
+		          "projection": "mercator",
+		          "scale": 100000,
+		          "center": [-77.03687, 38.90719],
+		            "translate": [0, 0]
+		        }
+		      ]
+		    }
+		  ],
+		  "marks": [
+		    {
+		      "type": "path",
+		      "from": {"data": "precincts"},
+		      "properties": {
+		        "enter": {
+		                  "fill": {"value": "#dedede"},
+		                  "stroke": {"value": "white"}
+		                },
+		                "update": {
+		                  "fill": {"value": "#dedede"},
+		                  "path": {"field": "layout_path"}
+		                },
+		                "hover": {
+		                  "fill": {"value": "red"}
+		                }
+		      }
+		    }
+		  ]
+		}  	
+  	};
+  var chart = new Cedar({"specification":spec});
+  var dataset = {
+    "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "mappings":{}
+  };
+
+  chart.dataset = dataset;
+  //chart.dataset.mappings.sort = "DATE";
+  chart.show({
+    elementId: "#chart",
+    renderer: "svg"
+  }); 
+
+</script>
