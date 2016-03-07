@@ -44,7 +44,7 @@ for (var i = 0; i < countries.length; i++) {
 };
 function updateData() {
     for (var i = 0; i < features.length; i++) {
-        sales = Math.random() * 10000
+        sales = Math.random() * 10000 - 5000
         cedar._view.data('table')
             .update(function(d) {  
                 return d.attributes.country == countries[i]; },  

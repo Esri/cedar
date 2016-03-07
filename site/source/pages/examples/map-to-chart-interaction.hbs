@@ -10,8 +10,8 @@ amd: true
 
 <h1>Map to Chart Interaction</h1>
 
+<div id="chart" style="height: 300px"></div>
 <div id="map"></div>
-<div id="chart"></div>
 
 
 
@@ -73,6 +73,7 @@ amd: true
         }]      
       },
       "mappings":{
+        "sort": "Number_of_SUM DESC",
         "x": {"field":"Zip","label":"ZIP Code"},
         "y": {"field":"Number_of_SUM","label":"Total Students"}
       }
@@ -199,6 +200,7 @@ amd: true
         }]      
       },
       "mappings":{
+        "sort": "Number_of_SUM DESC",
         "x": {"field":"Zip","label":"ZIP Code"},
         "y": {"field":"Number_of_SUM","label":"Total Students"}
       }
