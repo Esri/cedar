@@ -256,20 +256,20 @@ var Cedar = function Cedar(options){
     this.tooltip = opts.tooltip;
   } else {
     // Build a default tooltip based on first two inputs
-    var inputs = []
+    var inputs = [];
     for(var input in this._definition.dataset.mappings){
       if (this._definition.dataset.mappings.hasOwnProperty(input)) { 
         var field = this._definition.dataset.mappings[input].field;
         if(field !== undefined && field !== null) {
           inputs.push(field);
         }          
-      };
+      }
     }
     if(inputs.length >= 2) {
       this.tooltip = {
         "title": "{" + inputs[0] + "}",
         "content": "{" + inputs[1] + "}"
-      }
+      };
     }     
   }
 };
