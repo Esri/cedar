@@ -9,7 +9,7 @@ before_script:
   - bower install
 install:
   - sudo apt-get install libgif-dev
-# script: bash ./deploy.sh
+  - script: bash ./deploy.sh
 env:
   global:
     - GH_REF: github.com/Esri/cedar.git
