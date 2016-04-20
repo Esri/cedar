@@ -13,4 +13,4 @@ script: bash ./deploy.sh
 env:
   global:
     - GH_REF: github.com/Esri/cedar.git
-    - secure: "47d4dbad4593765b23655dbf1bfe5c4bec005606"
+    - secure: "QU9A0CWiNCqtli84ytRb7OowR9zhZUcD3Ni/2oZr29gM3OMOn4cw5iHxuF+VJPrih0sZgsr68RMHnOs3hC8rC+EkytWnm6tzA7oHOTn7bD2Bs2xdeIuljSdokdb4/TFmmqRxeMlXRymCGbtg3JaZ/aiqbFZ3BATkdprinvvfLLo="
