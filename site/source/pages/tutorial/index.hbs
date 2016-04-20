@@ -4,23 +4,23 @@ description: A walkthrough of building a chart
 layout: example.hbs
 ---
 
-A Cedar chart needs four things: Chart Type, Data, Mappings, DOM Element. 
+A Cedar chart needs four things: Chart Type, Data, Mappings, DOM Element.
 
-First, we create a new Cedar object and specify we want a bar chart. In this example we simply use `type: "bar"`, but instead we could refer to the full URL to a chart specification.  
+First, we create a new Cedar object and specify we want a bar chart. In this example we simply use `type: "bar"`, but instead we could refer to the full URL to a chart specification.
 
 <pre class="prettyprint">var chart = new Cedar({
   "type":"bar"
 });
 </pre>
 
-Now we need to define the data. We can either use an array of data that we have calculated in our code, or we can refer to an ArcGIS GeoServices layer. For the GeoServices Layer, Cedar will make the HTTP API calls to request data for us. 
+Now we need to define the data. We can either use an array of data that we have calculated in our code, or we can refer to an ArcGIS GeoServices layer. For the GeoServices Layer, Cedar will make the HTTP API calls to request data for us.
 
 <pre class="prettyprint">chart.dataset = {
   "url":"http://server.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/4"
 };
 </pre>
 
-Third, we now create a Mapping between the dataset and the chart type. 
+Third, we now create a Mapping between the dataset and the chart type.
 
 <pre class="prettyprint">chart.dataset.mappings = {
   "x": {"field":"NAME","label":"US State"},
@@ -78,9 +78,9 @@ var chart = new Cedar({
   elementId: "#chart",
   autolabels: true,
   renderer: "svg"
-});    
-</script> 
+});
+</script>
 
 <h3>Learn more</h3>
 
-Now explore the <a href="/examples/">Examples</a> or <a href="/api/">API documentation</a> to learn more about Cedar.
+Now explore the <a href="../examples/">Examples</a> or <a href="../api/">API documentation</a> to learn more about Cedar.

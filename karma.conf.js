@@ -14,8 +14,8 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       'bower_components/d3/d3.js',
-      'bower_components/vega/vega.js',
-      'bower_components/underscore/underscore.js',
+      'node_modules/vega/vega.js',
+      'node_modules/underscore/underscore.js',
       'spec/**/*.spec.js',
       'src/cedar.js'
     ],
