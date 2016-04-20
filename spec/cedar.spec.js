@@ -35,7 +35,7 @@ describe('Cedar', function () {
       }
     });
 
-    
+
 
     it("should accept options.definition as url", function(/*done*/) {
       chart = new Cedar({definition:'http://foo.com'});
@@ -47,7 +47,7 @@ describe('Cedar', function () {
     });
 
     it("should accept options.definition as an object ", function() {
-      
+
       chart = new Cedar({"definition":fakeDefinition});
       expect(chart.dataset).to.equal(fakeDefinition.dataset);
       expect(chart.dataset.url).to.equal(fakeDefinition.dataset.url);
@@ -128,7 +128,7 @@ describe('Cedar', function () {
       var out = Cedar._validateData(data, mappings);
       expect(out).to.be.an('array');
       expect(out).to.be.empty;
-    });  
+    });
 
   });
 
@@ -182,55 +182,53 @@ describe('Cedar', function () {
   });
 
   xdescribe('properties', function () {
-  
+
     describe('dataset', function () {
       it("should get/set dataset object", function() {
-        
+
       });
 
       it("should expose the passed in dataset", function() {
-        
+
       });
     });
 
     describe('template', function () {
-      
+
       it("should get/set a template object", function() {
-        
+
       });
 
       it("should expose the passed in template", function() {
-        
+
       });
     });
 
   });
 
   xdescribe('drawing a chart', function () {
-  
+
     describe('returns error when', function () {
-      
+
       it("dataset is not set", function() {
-        
+
       });
-      
+
       it("dataset.url and dataset.data are not set ", function() {
-        
+
       });
-      
+
       it("dataset.mappings is not set", function() {
-        
+
       });
 
       it("specification.template not set", function() {
-        
+
       });
-      
+
     });
 
   });
 
-    
+
 });
-
-
