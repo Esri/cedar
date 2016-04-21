@@ -1,15 +1,21 @@
 language: node_js
 node_js:
 - "0.10"
-before_script:
-  - npm update -q
+cache:
+  directories:
+    - node_modules
+    - bower_components
+before_install:
   - gem install sass
   - npm install -g grunt-cli
   - npm install -g bower
-  - bower install
 install:
   - sudo apt-get install libgif-dev
-script: bash ./deploy.sh
+  - npm install
+  - bower install
+script:
+  - npm test
+  - bash ./deploy.sh
 env:
   global:
     - GH_REF: github.com/Esri/cedar.git
