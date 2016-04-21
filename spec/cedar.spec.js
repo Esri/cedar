@@ -97,23 +97,23 @@ describe('Cedar', function () {
     beforeEach(function() {
       data = {
         "features":[
-        {
-          "attributes":{
-            "ZIP_CODE":"80563",
-            "TOTAL_STUD_SUM":1231
+          {
+            "attributes":{
+              "ZIP_CODE":"80563",
+              "TOTAL_STUD_SUM":1231
+            }
+          },
+          {
+            "attributes":{
+              "ZIP_CODE":"80564",
+              "TOTAL_STUD_SUM":132
+            }
           }
-        },
-        {
-          "attributes":{
-            "ZIP_CODE":"80564",
-            "TOTAL_STUD_SUM":132
-          }
-        }
         ]
       };
       mappings = {
-          "group": {"field":"ZIP_CODE","label":"ZIP Code"},
-          "count": {"field":"TOTAL_STUD","label":"Total Students"}
+        "group": {"field":"ZIP_CODE","label":"ZIP Code"},
+        "count": {"field":"TOTAL_STUD","label":"Total Students"}
       }
     });
 
@@ -152,7 +152,7 @@ describe('Cedar', function () {
       dataset.query = {
         "where":"ZIP = 80524"
       };
-      var u = Cedar._createFeatureServiceRequest(dataset);
+      var u = Cedar._createFeatureServiceRequest(dataset, dataset.query);
       expect(u).to.equal('http://not-real.com/arcgis/rest/foobar/featureserver/4/query?where=ZIP%20%3D%2080524&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json');
     });
     it("should serialize the token", function() {
@@ -164,7 +164,7 @@ describe('Cedar', function () {
       dataset.query = {
         "bbox":"-103,30,-102,40"
       };
-      var u = Cedar._createFeatureServiceRequest(dataset);
+      var u = Cedar._createFeatureServiceRequest(dataset, dataset.query);
       expect(u).to.equal('http://not-real.com/arcgis/rest/foobar/featureserver/4/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json&geometry=%7B%22xmin%22%3A%22-103%22%2C%22ymin%22%3A%22-102%22%2C%22xmax%22%3A%2230%22%2C%22ymax%22%3A%2240%22%7D&inSR=4326');
     });
   });

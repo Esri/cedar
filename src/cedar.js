@@ -744,9 +744,9 @@ Cedar._validateData = function(data, mappings){
  */
 Cedar._getMappingFieldName = function(mappingName, fieldName){
   var name = fieldName;
-  //if(mappingName.toLowerCase() === 'count'){
-  //  name = fieldName + '_SUM';
-  //}
+  if(mappingName.toLowerCase() === 'count'){
+   name = fieldName + '_SUM';
+  }
   return name;
 };
 
