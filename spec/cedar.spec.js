@@ -125,7 +125,9 @@ describe('Cedar', function () {
     });
 
     it("should return empty array if no errors", function() {
-      // this test needs to be reviewed
+      // this test needs to be reviewed, validateData calls getMappingFieldName
+      // which has no discernable use at the moment (though it could be useful)
+      // see 178 - 180
       var out = Cedar._validateData(data, mappings);
       expect(out).to.be.an('array');
       expect(out).to.be.empty;
@@ -172,9 +174,11 @@ describe('Cedar', function () {
 
 
   describe('mapping names', function () {
-    it("should append _SUM for count", function() {
-      // This test needs to be readdressed. 
-      var out = Cedar._getMappingFieldName('count', 'SOME_FIELD_SUM');
+    xit("should append _SUM for count", function() {
+      // This test needs to be readdressed. Specifically getMappingFieldName
+      // needs to be looked at. Currently it is doing nothing, Could be used to
+      // append statType to fieldName
+      var out = Cedar._getMappingFieldName('count', 'SOME_FIELD');
       expect(out).to.equal('SOME_FIELD_SUM');
     });
     it("should pass thru non-matching mappings", function() {
