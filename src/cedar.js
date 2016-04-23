@@ -743,10 +743,13 @@ Cedar._validateData = function(data, mappings){
  * @access private
  */
 Cedar._getMappingFieldName = function(mappingName, fieldName){
+
+  // this function why?
+
   var name = fieldName;
-  //if(mappingName.toLowerCase() === 'count'){
+  // if(mappingName.toLowerCase() === 'count'){
   //  name = fieldName + '_SUM';
-  //}
+  // }
   return name;
 };
 
@@ -1011,6 +1014,7 @@ Cedar._createFeatureServiceRequest = function( dataset, queryFromSpec ) {
       mergedQuery.groupByFieldsForStatistics = dataset.mappings.group.field;
   }
   if(!mergedQuery.outStatistics && dataset.mappings.count) {
+    // Why are we explicitly statting _SUM as stats type?
     mergedQuery.orderByFields = dataset.mappings.count.field + "_SUM";
     mergedQuery.outStatistics = JSON.stringify([{"statisticType": "sum", "onStatisticField": dataset.mappings.count.field, "outStatisticFieldName": dataset.mappings.count.field + "_SUM"}]);
   }

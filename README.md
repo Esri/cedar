@@ -1,5 +1,7 @@
 # Cedar
 
+[![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=develop)](https://travis-ci.org/Esri/cedar)
+
 Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.
 
 At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
@@ -80,8 +82,8 @@ Once Cedar is loaded you can create and show the chart at a designated element a
     "query": {
       "groupByFieldsForStatistics": "ZIP_CODE",
       "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
+        "statisticType": "sum",
+        "onStatisticField": "TOTAL_STUD",
         "outStatisticFieldName": "TOTAL_STUD_SUM"
       }]
     },
