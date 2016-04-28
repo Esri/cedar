@@ -1,6 +1,6 @@
 {
   "name": "cedar",
-  "version": "0.0.0",
+  "version": "0.4.0",
   "homepage": "https://github.com/esri/cedar",
   "authors": [
     "Dave Bouwman <dave@davebouwman.com>"
@@ -26,14 +26,5 @@
     "Gruntfile.js",
     "karma.conf.js",
     "package.json"
-  ],
-  "dependencies": {
-    "d3": "~3.5.6"
-  },
-  "resolutions": {
-    "d3": "~3.5.6"
-  },
-  "devDependencies": {
-    "bootstrap-sass-official": "~3.3.4"
-  }
+  ]
 }
