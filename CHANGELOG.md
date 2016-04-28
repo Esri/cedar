@@ -3,13 +3,20 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## v0.4
-
+## [0.4] - 2016-04-28
 ### Added
 - Added grouped bar charts
+- Dashboard examples
+- Map chart example
+- Deploy runs tests in Travis
 
-## v0.3
+### Changed
+- Fix leaflet map location
+- Show dynamic negative values
+- Fix pie chart labels
+- Update tooling
 
+## [0.3] - 2015-08-04
 ### Added
 - Option for automatic tick marks based on chart size
 - Added Tooltips API
@@ -24,7 +31,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Support
 - Added example demo links to JSFiddle
 
-## v0.2
+## [0.2] - 2015-07-14
 
 ### Added
 - Sparkline chart type
@@ -35,10 +42,15 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Tooltip demo improvements
 - Homepage improvements
 
-## v0.1
-
+## [0.1] - 2015-07-08
 Baseline version.
 
+### Added
 - Types: Bar, Horizontal, Pie, Scatter, Bubble, Time line
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
+
+[0.4]: https://github.com/Esri/cedar/compare/v0.3...v0.4
+[0.3]: https://github.com/Esri/cedar/compare/v0.2...v0.3
+[0.2]: https://github.com/Esri/cedar/compare/v0.1...v0.2
+[0.1]: https://github.com/Esri/cedar/releases/tag/v0.1
