@@ -5,20 +5,22 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 ### Changed
-- Removed bower dependencies
+- Removed bower_components as a dev dependency
 
 ## [0.4.0] - 2016-04-28
 ### Added
 - Added grouped bar charts
+
+### Changed
+- Show dynamic negative values
+- Fix pie chart labels
+
+### Support
 - Dashboard examples
 - Map chart example
 - Deploy runs tests in Travis
-
-### Changed
-- Fix leaflet map location
-- Show dynamic negative values
-- Fix pie chart labels
 - Update tooling
+- Fix leaflet map location
 
 ## [0.3] - 2015-08-04
 ### Added
