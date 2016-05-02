@@ -6,25 +6,23 @@
   ],
   "description": "Charting for the ArcGIS platform",
   "main": [
-    "src/cedar.js",
-    "src/charts/bar-horizontal.json",
-    "src/charts/bar.json",
-    "src/charts/bubble.json",
-    "src/charts/pie.json",
-    "src/charts/scatter.json",
-    "src/charts/sparkline.json",
-    "src/charts/time.json"
+    "dist/cedar.js",
+    "dist/charts/bar-horizontal.json",
+    "dist/charts/bar.json",
+    "dist/charts/bubble.json",
+    "dist/charts/pie.json",
+    "dist/charts/scatter.json",
+    "dist/charts/sparkline.json",
+    "dist/charts/time.json"
   ],
   "license": "Apache 2",
   "private": true,
   "ignore": [
     "site",
     "spec",
-    ".gitignore",
-    ".jshintrc",
-    "Gruntfile.js",
-    "karma.conf.js",
-    "package.json"
+    "examples",
+    "js",
+    "node_modules"
   ],
   "dependencies": {
     "d3": "^3.5.6",

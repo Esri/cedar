@@ -120,7 +120,7 @@ module.exports = function(grunt) {
       },
       core: {
         src: cedar_core,
-        dest: 'dist/builds/cedar.js'
+        dest: 'dist/cedar.js'
       }
     },
 
@@ -135,7 +135,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/builds/cedar.min.js': cedar_core
+          'dist/cedar.min.js': cedar_core
         }
       }
     },
@@ -228,14 +228,15 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: [
-          { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
+          { expand: true, cwd: 'dist', src: '*.js*', dest: 'site/build/js/'},
           { expand: true, cwd: 'node_modules/d3', src: '*.js*', dest: 'site/build/js/'},
           { expand: true, cwd: 'node_modules/vega', src: '*.js*', dest: 'site/build/js/'}
         ]
       },
       specs: {
         files: [
-          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'}
+          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'},
+          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'dist/charts'}
         ]
       }
 
@@ -319,7 +320,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['concurrent:dev']);
   grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify']);
   grunt.registerTask('test', ['jshint', 'karma:run']);
-  grunt.registerTask('prepublish', ['concat', 'uglify']);
+  grunt.registerTask('prepublish', ['concat', 'uglify', 'copy:specs']);
   grunt.registerTask('release', ['releaseable', 's3']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 

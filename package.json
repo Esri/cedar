@@ -1,8 +1,8 @@
 {
-  "name": "cedar",
+  "name": "arcgis-cedar",
   "version": "0.4.0",
   "description": "Visualization framework for the ArcGIS Platform",
-  "main": "index.js",
+  "main": "./dist/cedar.js",
   "scripts": {
     "prepublish": "node -e \"require('grunt').tasks(['prepublish']);\"",
     "start": "node -e \"require('grunt').tasks(['default']);\"",
