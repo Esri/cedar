@@ -320,7 +320,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['concurrent:dev']);
   grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify', 'copy:specs']);
   grunt.registerTask('test', ['jshint', 'karma:run']);
-  grunt.registerTask('prepublish', ['concat', 'uglify', 'copy:specs']);
+  grunt.registerTask('publish', ['concat', 'uglify', 'copy:specs']);
   grunt.registerTask('release', ['releaseable', 's3']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 

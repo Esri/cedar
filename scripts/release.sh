@@ -12,7 +12,7 @@ grunt build || exit 1
 git checkout -b gh-release
 
 # run build
-npm run prepublish
+grunt publish
 
 # force add files
 git add dist -f
@@ -35,7 +35,7 @@ git branch -D gh-release
 git push origin :gh-release
 
 # re-run build in prevgit  branch before publishing
-npm run prepublish
+grunt publish
 
 # publish release on NPM
 # TODO: only publish if gh-release was successful, currently
