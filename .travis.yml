@@ -17,6 +17,3 @@ branches:
   except:
     -gh-release
     -gh-pages
-env:
-  global:
-    - GH_REF: github.com/Esri/cedar.git
