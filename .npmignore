@@ -31,3 +31,5 @@ debug/*.html
 site
 examples
 js
+
+*.zip

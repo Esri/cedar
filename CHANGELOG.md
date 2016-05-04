@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.2] - 2016-05-04
+### Support
+- Exclude gh-release and gh-pages from travis build
+
 ## [0.4.1] - 2016-05-04
 ### Support
 - Removed bower_components as a dev dependency
@@ -58,6 +62,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.4.2]: https://github.com/Esri/cedar/compare/v0.4.1...v0.4.2
 [0.4.1]: https://github.com/Esri/cedar/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Esri/cedar/compare/v0.3...v0.4.0
 [0.3]: https://github.com/Esri/cedar/compare/v0.2...v0.3
