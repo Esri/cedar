@@ -16,7 +16,7 @@
     "dist/charts/time.json"
   ],
   "license": "Apache 2",
-  "private": true,
+  "private": false,
   "ignore": [
     "site",
     "spec",
