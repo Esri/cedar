@@ -13,7 +13,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/d3/d3.js',
+      'node_modules/d3/d3.js',
       'node_modules/vega/vega.js',
       'node_modules/underscore/underscore.js',
       'spec/**/*.spec.js',

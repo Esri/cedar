@@ -1,39 +1,31 @@
 {
-  "name": "cedar",
-  "version": "0.0.0",
+  "name": "arcgis-cedar",
   "homepage": "https://github.com/esri/cedar",
   "authors": [
     "Dave Bouwman <dave@davebouwman.com>"
   ],
   "description": "Charting for the ArcGIS platform",
   "main": [
-    "src/cedar.js",
-    "src/charts/bar-horizontal.json",
-    "src/charts/bar.json",
-    "src/charts/bubble.json",
-    "src/charts/pie.json",
-    "src/charts/scatter.json",
-    "src/charts/sparkline.json",
-    "src/charts/time.json"
+    "dist/cedar.js",
+    "dist/charts/bar-horizontal.json",
+    "dist/charts/bar.json",
+    "dist/charts/bubble.json",
+    "dist/charts/pie.json",
+    "dist/charts/scatter.json",
+    "dist/charts/sparkline.json",
+    "dist/charts/time.json"
   ],
   "license": "Apache 2",
-  "private": true,
+  "private": false,
   "ignore": [
     "site",
     "spec",
-    ".gitignore",
-    ".jshintrc",
-    "Gruntfile.js",
-    "karma.conf.js",
-    "package.json"
+    "examples",
+    "js",
+    "node_modules"
   ],
   "dependencies": {
-    "d3": "~3.5.6"
+    "d3": "^3.5.6",
+    "vega": "^2.0.1"
   },
-  "resolutions": {
-    "d3": "~3.5.6"
-  },
-  "devDependencies": {
-    "bootstrap-sass-official": "~3.3.4"
-  }
 }

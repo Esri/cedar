@@ -4,15 +4,12 @@ node_js:
 cache:
   directories:
     - node_modules
-    - bower_components
 before_install:
   - gem install sass
   - npm install -g grunt-cli
-  - npm install -g bower
 install:
   - sudo apt-get install libgif-dev
   - npm install
-  - bower install
 script:
   - npm test
   - bash ./deploy.sh
