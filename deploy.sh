@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ "$TRAVIS_BRANCH" == "develop" ]; then
+if [ "$TRAVIS_PULL_REQUEST" != "false" -o "$TRAVIS_BRANCH" == "develop" ]; then
 	set -e # exit with nonzero exit code if anything fails
 
 	# clear and re-create the out directory
