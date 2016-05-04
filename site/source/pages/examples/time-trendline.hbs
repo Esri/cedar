@@ -1,0 +1,150 @@
+---
+title: Time with trendline chart
+layout: example.hbs
+---
+
+
+<h1>Time with Trendline Example</h1>
+
+
+<div id="chart"></div>
+
+<pre class="prettyprint">
+
+  var chart = new Cedar({"type":"time-trendline"});
+
+  var dataset = {
+    "url":"http://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Temperature/FeatureServer/0",
+    "mappings":{
+      "time": {"field":"year", "label": "Year"},
+      "value": {"field":"annual", "label": "Annual Air Temperature"},
+      "trendline": {"field": "trendline", label: ""},
+      "sort": "year"
+    }
+  };
+
+  chart.dataset = dataset;
+  chart.show({
+    elementId: "#chart"
+  }); 
+
+  chart.override = {
+    axes: [
+      {
+        "type" : "x",
+        "scale" : "x",
+        "values" : [1900,1920,1940,1960,1980,2000,2015]
+      },
+      {
+        "type" : "y",
+        "scale" : "y",
+        "grid" : true,
+        "format": "0d",
+        "values" : [47,48,49,50,51,52,53]
+      }
+    ],
+    scales: [
+      {
+        "name": "x",
+        "type": "ordinal",
+        "range": "width",
+        "nice": "year",
+        "zero": false
+      },
+      {
+        "name" : "y",
+        "zero" : false,
+        "nice" : true
+      }
+    ],
+    marks: [
+      {
+        "properties": {
+          "enter" : {
+            "stroke": {"value": "#e05757"},
+            "strokeWidth": {"value": 3}
+          }
+        }
+      },
+      {
+        "properties": {
+          "enter" : {
+            "stroke": {"value": "#000000"},
+            "strokeWidth": {"value": 3}
+          }
+        }
+      }
+    ]
+  }; 
+</pre>
+
+<script>
+  
+  var chart = new Cedar({"type":"time-trendline"});
+
+  var dataset = {
+    "url":"http://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Temperature/FeatureServer/0",
+    "mappings":{
+      "time": {"field":"year", "label": "Year"},
+      "value": {"field":"annual", "label": "Annual Air Temperature"},
+      "trendline": {"field": "trendline", label: ""},
+      "sort": "year"
+    }
+  };
+
+  chart.dataset = dataset;
+  chart.show({
+    elementId: "#chart"
+  }); 
+
+  chart.override = {
+    axes: [
+      {
+        "type" : "x",
+        "scale" : "x",
+        "values" : [1900,1920,1940,1960,1980,2000,2015]
+      },
+      {
+        "type" : "y",
+        "scale" : "y",
+        "grid" : true,
+        "format": "0d",
+        "values" : [47,48,49,50,51,52,53]
+      }
+    ],
+    scales: [
+      {
+        "name": "x",
+        "type": "ordinal",
+        "range": "width",
+        "nice": "year",
+        "zero": false
+      },
+      {
+        "name" : "y",
+        "zero" : false,
+        "nice" : true
+      }
+    ],
+    marks: [
+      {
+        "properties": {
+          "enter" : {
+            "stroke": {"value": "#e05757"},
+            "strokeWidth": {"value": 3}
+          }
+        }
+      },
+      {
+        "properties": {
+          "enter" : {
+            "stroke": {"value": "#000000"},
+            "strokeWidth": {"value": 3}
+          }
+        }
+      }
+    ]
+  };
+
+
+</script>
