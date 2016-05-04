@@ -3,9 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [0.4.1] - 2016-05-04
 ### Support
 - Removed bower_components as a dev dependency
+- Added Release script
+- Npm and bower release
 
 ## [0.4.0] - 2016-04-28
 ### Added
@@ -56,6 +58,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.4.1]: https://github.com/Esri/cedar/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Esri/cedar/compare/v0.3...v0.4.0
 [0.3]: https://github.com/Esri/cedar/compare/v0.2...v0.3
 [0.2]: https://github.com/Esri/cedar/compare/v0.1...v0.2
