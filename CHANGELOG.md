@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Support
+- Docs should only build on merging a PR
+- PRs from forks should not break Travis
+
 ## [0.4.2] - 2016-05-04
 ### Support
 - Exclude gh-release and gh-pages from travis build

@@ -12,7 +12,8 @@ install:
   - npm install
 script:
   - npm test
-  - bash ./deploy.sh
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && bash ./scripts/deploy.sh
 branches:
   except:
     -gh-release
