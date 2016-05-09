@@ -282,7 +282,7 @@ Cedar.prototype.baseUrl = baseUrl;
  *
  * ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time'];
  */
-Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time'];
+Cedar.prototype.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time', 'time-trendline'];
 
 /**
  * Inspect the current state of the object
