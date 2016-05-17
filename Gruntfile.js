@@ -45,6 +45,19 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    babel: {
+      options: {
+        sourceMap: true,
+        presets: ['es2015'],
+        plugins: ['transform-es2015-modules-umd']
+      },
+      dist: {
+        files: {
+          'dist/cedar.js': 'src/cedar.js'
+        }
+      }
+    },
+
     jshint: {
       options: {
         jshintrc: '.jshintrc'
@@ -113,16 +126,16 @@ module.exports = function(grunt) {
       dev: ['watch:scripts', 'karma:watch', 'docs']
     },
 
-    concat: {
-      options: {
-        sourceMap: true,
-        separator: '\n\n'
-      },
-      core: {
-        src: cedar_core,
-        dest: 'dist/cedar.js'
-      }
-    },
+    // concat: {
+    //   options: {
+    //     sourceMap: true,
+    //     separator: '\n\n'
+    //   },
+    //   core: {
+    //     src: cedar_core,
+    //     dest: 'dist/cedar.js'
+    //   }
+    // },
 
     uglify: {
       options: {
@@ -135,7 +148,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/cedar.min.js': cedar_core
+          'dist/cedar.min.js': 'dist/cedar.js'
         }
       }
     },
@@ -274,7 +287,7 @@ module.exports = function(grunt) {
 
       },
       src: ['**']
-    },
+    }
 
     // s3: {
     //   options: {
@@ -298,16 +311,16 @@ module.exports = function(grunt) {
     //   }
     // },
 
-    releaseable: {
-      release: {
-        options: {
-          remote: 'upstream',
-          dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
-          silent: false
-        },
-        src: [ 'dist/**/*.js','dist/**/*.map' ]
-      }
-    }
+    // releaseable: {
+    //   release: {
+    //     options: {
+    //       remote: 'upstream',
+    //       dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
+    //       silent: false
+    //     },
+    //     src: [ 'dist/**/*.js','dist/**/*.map' ]
+    //   }
+    // }
   });
 
   // var awsExists = fs.existsSync(process.env.HOME + '/esri-leaflet-s3.json');
@@ -318,10 +331,10 @@ module.exports = function(grunt) {
 
   // Development Tasks
   grunt.registerTask('default', ['concurrent:dev']);
-  grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify', 'copy:specs']);
-  grunt.registerTask('test', ['jshint', 'karma:run']);
+  grunt.registerTask('build', ['jshint', 'babel', 'uglify', 'copy:specs']);
+  grunt.registerTask('test', ['jshint', 'karma:run', 'karma:coverage']);
   grunt.registerTask('publish', ['concat', 'uglify', 'copy:specs']);
-  grunt.registerTask('release', ['releaseable', 's3']);
+  // grunt.registerTask('release', ['releaseable', 's3']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks

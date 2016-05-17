@@ -26,7 +26,7 @@
 
   // get cedar root URL for loading chart specs
   var baseUrl = (function() {
-    var cdnProtocol = 'http:';
+    let cdnProtocol = 'http:';
     var cdnUrl = '//esri.github.io/cedar/js';
     var src;
     if (window && window.document) {
