@@ -2,6 +2,7 @@ describe('Cedar', function () {
   var chart;
   var xhr;
   var requests = [];
+  var expect = chai.expect;
 
   beforeEach(function(){
     xhr = sinon.useFakeXMLHttpRequest();
