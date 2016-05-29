@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Support
 - Docs should only build on merging a PR
 - PRs from forks should not break Travis
+- Prism 1.5.0 added to include syntax highlighting on docs
 
 ## [0.4.2] - 2016-05-04
 ### Support
