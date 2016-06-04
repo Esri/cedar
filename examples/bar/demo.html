@@ -1,5 +1,113 @@
-<script type="text/javascript" src="//esri.github.io/cedar/js/d3.min.js"></script>
-<script type="text/javascript" src="//esri.github.io/cedar/js/vega.js"></script>
-<script type="text/javascript" src="//esri.github.io/cedar/js/cedar.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//vega.github.io/vega/vega.js"></script>
+
+<script src="//vega.github.io/vega-lite/vega-lite.js"></script>
+<script src="//vega.github.io/vega-editor/vendor/vega-embed.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/then-request/2.2.0/request.js"></script>
+<script type="text/javascript" src="../../src/cedar.js"></script>
+
+<style type="text/css">
+#chart {
+  height: 500px;
+  width: 500px;
+}
+</style>
 
 <div id="chart"></div>
+<div id="vis"></div>
+
+<div id="chart-container">
+  <div id="chart"></div>
+</div>
+
+
+
+<script>
+// Cedar
+var chart = new Cedar({"type": "bar-horizontal"});
+
+
+//create the dataset w/ mappings
+var dataset = {
+  "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+  "query": {
+    "groupByFieldsForStatistics": "Zip",
+    "outStatistics": [{
+      "statisticType": "sum",
+      "onStatisticField": "Number_of",
+      "outStatisticFieldName": "Number_of_SUM"
+    }]
+  },
+  "mappings":{
+    "y": {"field":"Zip","label":"ZIP Code"},
+    "x": {"field":"Number_of_SUM","label":"Total Students"}
+  }
+};
+
+//assign to the chart
+chart.dataset = dataset;
+
+// fix placement of axes labels
+chart.override = {
+  "axes": [
+    {
+      "titleOffset": 25,
+      "title": "Total Number of Students"
+    },
+    {
+      "titleOffset": 50
+    }
+  ]
+};
+
+chart.tooltip = {
+  "id": "cedar-tooltip",
+  "title": "{Zip}",
+  "content": "{Number_of_SUM} students in the {Zip} zipcode."
+};
+
+//show the chart
+chart.show({
+  elementId: "#chart"
+});
+
+
+// Vega Lite test
+// request('GET', 'http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Cultural_and_Society_WebMercator/MapServer/51/query?where=ART_TYPE%20%3D%20%27Mural%27&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json&groupByFieldsForStatistics=MEDIUM&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22OBJECTID%22%2C%22outStatisticFieldName%22%3A%22count_SUM%22%7D%5D&orderByFields=count_SUM%20DESC')
+//   .done(function(res) {
+//     var response = JSON.parse(res.getBody());
+//     console.log(response);
+//     var data = response.features.map(function(attr) { return attr.attributes; });
+//     console.log(data);
+//     var vlSpec = {
+//     "data": {
+//       "values": data
+//     },
+//     "mark": "bar",
+//     "encoding": {
+//       "x": {"field": "MEDIUM", "type": "nominal"},
+//       "y": {
+//         "field": "count_SUM", "type": "quantitative",
+//         "axis": {
+//           "title": "Average of b"
+//         }
+//       }
+//     }
+//   };
+//   var embedSpec = {
+//     mode: "vega-lite",  // Instruct Vega-Embed to use the Vega-Lite compiler
+//     spec: vlSpec,
+//     actions: {
+//       export: false,
+//       source: false,
+//       editor: false
+//     }
+//   };
+//   // Embed the visualization in the container with id `vis`
+//   vg.embed("#vis", embedSpec, function(error, result) {
+//     // Callback receiving the View instance and parsed Vega spec
+//     // result.view is the View, which resides under the '#vis' element
+//     console.log(result);
+//   });
+// });
+</script>
