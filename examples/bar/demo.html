@@ -6,73 +6,59 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/then-request/2.2.0/request.js"></script>
 <script type="text/javascript" src="../../src/cedar.js"></script>
 
-<style type="text/css">
-#chart {
-  height: 500px;
-  width: 500px;
-}
-</style>
 
-<div id="chart"></div>
+<div id="testEverything">
+
+</div>
+
 <div id="vis"></div>
 
-<div id="chart-container">
   <div id="chart"></div>
-</div>
 
 
 
 <script>
 // Cedar
-var chart = new Cedar({"type": "bar-horizontal"});
+//create a cedar chart
+// var chart = new Cedar({"type": "bar"});
+//
+// //create the dataset w/ mappings
+// var dataset = {
+//   "url":"https://services2.arcgis.com/1cdV1mIckpAyI7Wo/arcgis/rest/services/Public_Schools/FeatureServer/0",
+//   "query": {
+//     "groupByFieldsForStatistics": "COUNTY",
+//     "outStatistics": [{
+//       "statisticType": "sum",
+//       "onStatisticField": "POPULATION",
+//       "outStatisticFieldName": "POPULATION_SUM"
+//     }]
+//   },
+//   "mappings":{
+//     "x": {"field":"COUNTY","label":"Population by county"},
+//     "y": {"field":"POPULATION_SUM","label":"County"}
+//   }
+// };
+//
+// //assign to the chart
+// chart.dataset = dataset;
+//
+// // fix placement of axes label
+//
+// // chart.tooltip = {
+// //   "id": "cedar-tooltip",
+// //   "title": "{Zip}",
+// //   "content": "{Number_of_SUM} students in the {Zip} zipcode."
+// // };
+//
+// //show the chart
+// chart.show({
+//   elementId: "#chart",
+//   height: 750,
+//   width: 750
+// });
 
-
-//create the dataset w/ mappings
-var dataset = {
-  "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-  "query": {
-    "groupByFieldsForStatistics": "Zip",
-    "outStatistics": [{
-      "statisticType": "sum",
-      "onStatisticField": "Number_of",
-      "outStatisticFieldName": "Number_of_SUM"
-    }]
-  },
-  "mappings":{
-    "y": {"field":"Zip","label":"ZIP Code"},
-    "x": {"field":"Number_of_SUM","label":"Total Students"}
-  }
-};
-
-//assign to the chart
-chart.dataset = dataset;
-
-// fix placement of axes labels
-chart.override = {
-  "axes": [
-    {
-      "titleOffset": 25,
-      "title": "Total Number of Students"
-    },
-    {
-      "titleOffset": 50
-    }
-  ]
-};
-
-chart.tooltip = {
-  "id": "cedar-tooltip",
-  "title": "{Zip}",
-  "content": "{Number_of_SUM} students in the {Zip} zipcode."
-};
-
-//show the chart
-chart.show({
-  elementId: "#chart"
-});
-
-
-// Vega Lite test
+// //
+// // // Vega Lite test
 // request('GET', 'http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Cultural_and_Society_WebMercator/MapServer/51/query?where=ART_TYPE%20%3D%20%27Mural%27&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&f=json&groupByFieldsForStatistics=MEDIUM&outStatistics=%5B%7B%22statisticType%22%3A%22count%22%2C%22onStatisticField%22%3A%22OBJECTID%22%2C%22outStatisticFieldName%22%3A%22count_SUM%22%7D%5D&orderByFields=count_SUM%20DESC')
 //   .done(function(res) {
 //     var response = JSON.parse(res.getBody());
@@ -110,4 +96,45 @@ chart.show({
 //     console.log(result);
 //   });
 // });
+//
+// // pull everything in test
+// //
+
+request('GET', 'https://services2.arcgis.com/1cdV1mIckpAyI7Wo/arcgis/rest/services/Public_Schools/FeatureServer/0/query?where=1%3D1&objectIds=&time=&geometry=&geometryType=esriGeometryEnvelope&inSR=&spatialRel=esriSpatialRelIntersects&resultType=none&distance=&units=esriSRUnit_Meter&outFields=*&returnGeometry=false&multipatchOption=&maxAllowableOffset=&geometryPrecision=&outSR=&returnIdsOnly=false&returnCountOnly=false&returnExtentOnly=false&returnDistinctValues=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&resultOffset=&resultRecordCount=&returnZ=false&returnM=false&quantizationParameters=&f=pjson&token=')
+  .then(function(res) {
+    var response = JSON.parse(res.getBody());
+    var data = response.features.map(function(attr) {
+      return attr.attributes;
+    });
+    console.log('yay it worked', data);
+    return data;
+  }).then(function(data) {
+    var vlSpec = {
+      "description": "arghhhhhhh",
+      "data": {
+        "values": data
+      },
+      "mark": "point",
+      "encoding": {
+        "x": {"field":"ENROLLMENT","type": "quantitative"},
+        "y": {"field": "FULL_TIME_","type": "quantitative"}
+      }
+  //     "mark": "bar",
+  // "encoding": {
+  //   "x": {"field": "COUNTY","type": "ordinal"},
+  //   "y": {"field": "POPULATION","type": "quantitative"}
+  // }
+    };
+    var embedSpec = {
+      mode: "vega-lite",
+      spec: vlSpec
+    };
+
+    vg.embed("#testEverything", embedSpec, function(error, result) {
+      if (error) console.log('err ', error);
+      console.log('result ', result);
+    });
+  }).done();
+
+
 </script>
