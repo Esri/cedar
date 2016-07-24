@@ -482,6 +482,7 @@ Cedar.prototype._renderSpec = function(spec){
     }
     //use vega to parse the spec
     //it will handle the spec as an object or url
+    console.log('the spec is: ', spec);
     vg.parse.spec(spec, function(error, chartCtor) {
 
       if (error) return error;

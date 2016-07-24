@@ -1,3 +1,3 @@
 import stampit from 'stampit';
 
-const ConstructQuery = stampit().init
+const ConstructQuery = stampit

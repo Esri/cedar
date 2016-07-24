@@ -126,16 +126,16 @@ module.exports = function(grunt) {
       dev: ['watch:scripts', 'karma:watch', 'docs']
     },
 
-    // concat: {
-    //   options: {
-    //     sourceMap: true,
-    //     separator: '\n\n'
-    //   },
-    //   core: {
-    //     src: cedar_core,
-    //     dest: 'dist/cedar.js'
-    //   }
-    // },
+    concat: {
+      options: {
+        sourceMap: true,
+        separator: '\n\n'
+      },
+      core: {
+        src: cedar_core,
+        dest: 'dist/cedar.js'
+      }
+    },
 
     uglify: {
       options: {
@@ -331,8 +331,8 @@ module.exports = function(grunt) {
 
   // Development Tasks
   grunt.registerTask('default', ['concurrent:dev']);
-  grunt.registerTask('build', ['jshint', 'babel', 'uglify', 'copy:specs']);
-  grunt.registerTask('test', ['jshint', 'karma:run', 'karma:coverage']);
+  grunt.registerTask('build', ['babel', 'uglify', 'copy:specs']);
+  grunt.registerTask('test', [ 'karma:run', 'karma:coverage']);
   grunt.registerTask('publish', ['concat', 'uglify', 'copy:specs']);
   // grunt.registerTask('release', ['releaseable', 's3']);
   grunt.registerTask('test:sauce', ['karma:sauce']);

@@ -4,9 +4,12 @@
   "description": "Visualization framework for the ArcGIS Platform",
   "main": "./dist/cedar.js",
   "scripts": {
+    "clean": "rimraf dist/*",
+    "clean:docs": "rimraf site/build/*",
     "build": "node -e \"require('grunt').tasks(['build']);\"",
     "start": "node -e \"require('grunt').tasks(['default']);\"",
-    "test": "node -e \"require('grunt').tasks(['test']);\""
+    "test": "karma start karma.conf.js",
+    "test:watch": "npm run test --auto-watch"
   },
   "repository": {
     "type": "git",
@@ -26,7 +29,7 @@
   },
   "homepage": "https://github.com/esri/cedar",
   "devDependencies": {
-    "assemble": "^0.11.0",
+    "assemble": "^0.4.37",
     "ava": "^0.15.2",
     "babel-core": "^6.9.0",
     "babel-plugin-transform-es2015-modules-umd": "^6.8.0",
@@ -61,6 +64,7 @@
     "karma-safari-launcher": "^0.1.1",
     "karma-sauce-launcher": "^0.2.10",
     "load-grunt-tasks": "^3.5.0",
+    "rimraf": "^2.5.3",
     "rollup": "^0.26.7",
     "sinon": "^1.11.1",
     "underscore": "^1.7.0"
