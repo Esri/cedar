@@ -782,6 +782,7 @@ Cedar._defaultQuery = function(){
     "returnIdsOnly": false,
     "returnCountOnly": false,
     "outFields": "*",
+    "sqlFormat": "standard",
     "f": "json"
   };
   return defaultQuery;
