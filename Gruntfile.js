@@ -106,13 +106,6 @@ module.exports = function(grunt) {
       }
     },
 
-    concurrent: {
-      options: {
-        logConcurrentOutput: true
-      },
-      dev: ['watch:scripts', 'karma:watch', 'docs']
-    },
-
     concat: {
       options: {
         sourceMap: true,
@@ -317,7 +310,7 @@ module.exports = function(grunt) {
   // }
 
   // Development Tasks
-  grunt.registerTask('default', ['concurrent:dev']);
+  grunt.registerTask('default', ['docs']);
   grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify', 'copy:specs']);
   grunt.registerTask('test', ['jshint', 'karma:run']);
   grunt.registerTask('publish', ['concat', 'uglify', 'copy:specs']);
