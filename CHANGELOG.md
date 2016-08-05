@@ -6,12 +6,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Changed
 - Default query adds `"sqlFormat": "standard"`
+
 ### Support
 - Docs should only build on merging a PR
 - PRs from forks should not break Travis
 - Prism 1.5.0 added to include syntax highlighting on docs
 - Added example for time aggregation with hosted services
 - Fixed specs to accept &sqlFormat=standard
+- Added missing peer dependencies as dev dependencies for npm3 users
 
 ## [0.4.2] - 2016-05-04
 ### Support
