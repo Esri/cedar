@@ -16,6 +16,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Added missing peer dependencies as dev dependencies for npm3 users
 - use node-sass so ruby is not required to run docs site
 - fix bug where `npm start` causes machine to freeze
+- remove unused grunt tasks/plugins
 
 ## [0.4.2] - 2016-05-04
 ### Support

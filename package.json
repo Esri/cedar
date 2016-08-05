@@ -20,7 +20,7 @@
     "D3"
   ],
   "author": "Esri DC",
-  "license": "Apache 2",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/esri/cedar/issues"
   },
@@ -41,8 +41,6 @@
     "grunt-gh-pages": "^0.8.1",
     "grunt-karma": "^0.8.3",
     "grunt-newer": "^0.7.0",
-    "grunt-releaseable": "0.0.12",
-    "grunt-s3": "^0.2.0-alpha.3",
     "grunt-sass": "^1.2.0",
     "highlight.js": "^8.0.0",
     "karma": "^0.12.16",

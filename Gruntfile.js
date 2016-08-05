@@ -267,54 +267,14 @@ module.exports = function(grunt) {
 
       },
       src: ['**']
-    },
-
-    // s3: {
-    //   options: {
-    //     key: '<%= aws.key %>',
-    //     secret: '<%= aws.secret %>',
-    //     bucket: '<%= aws.bucket %>',
-    //     access: 'public-read',
-    //     headers: {
-    //       // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
-    //       'Cache-Control': 'max-age=630720000, public',
-    //       'Expires': new Date(Date.now() + 63072000000).toUTCString()
-    //     }
-    //   },
-    //   upload: {
-    //     upload: [
-    //       {
-    //         src: 'dist/**/*',
-    //         dest: 'esri-leaflet/<%= pkg.version %>/'
-    //       }
-    //     ]
-    //   }
-    // },
-
-    releaseable: {
-      release: {
-        options: {
-          remote: 'upstream',
-          dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
-          silent: false
-        },
-        src: [ 'dist/**/*.js','dist/**/*.map' ]
-      }
     }
   });
-
-  // var awsExists = fs.existsSync(process.env.HOME + '/esri-leaflet-s3.json');
-
-  // if (awsExists) {
-  //   grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/esri-leaflet-s3.json'));
-  // }
 
   // Development Tasks
   grunt.registerTask('default', ['docs']);
   grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify', 'copy:specs']);
   grunt.registerTask('test', ['jshint', 'karma:run']);
   grunt.registerTask('publish', ['concat', 'uglify', 'copy:specs']);
-  grunt.registerTask('release', ['releaseable', 's3']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks
