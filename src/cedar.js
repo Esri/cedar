@@ -543,6 +543,8 @@ Cedar.prototype._placeLabels = function(spec) {
     spec.data[0].values.features.forEach(function(feature) {
       inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
+        // Needed to make sure that the gap between title and labels isn't ridiculous
+        length = length < 21 ? length : 20;
         if( length > lengths[axis]) {
           lengths[axis] = length;
         }
@@ -560,6 +562,9 @@ Cedar.prototype._placeLabels = function(spec) {
         if(spec.axes[index].type == 'y' ) {
           angle = 100 - angle;
         }
+        // Set max length of axes titles
+        spec.axes[index].properties.labels.text = {"template": "{{ datum.data | truncate:20}}"};
+        // set title offset
         spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
         //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
       }
