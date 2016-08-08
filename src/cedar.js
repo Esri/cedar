@@ -454,8 +454,8 @@ Cedar.prototype.update = function(){
           if (err) {
             throw new Error('Error fetching data, ', err);
           } else if ( data.error ) {
-            var err = data.error.message || data.error.details[0];
-            throw new Error(err);
+            var xhrErr = data.error.message || data.error.details[0];
+            throw new Error(xhrErr);
           }
           //todo add error handlers for xhr and ags errors
           spec.data[0].values = data;
