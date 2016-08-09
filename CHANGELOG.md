@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- Errors from AGO / AGS Server will properly throw errors
+
 ## [0.4.3] - 2016-08-05
 ### Changed
 - Default query adds `"sqlFormat": "standard"`
