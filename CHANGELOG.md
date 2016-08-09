@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- Optional callback on Cedar.show to catch errors from ago / ags server
+
 ## [0.4.4] - 2016-08-09
 ### Changed
 - Errors from AGO / AGS Server will properly throw errors
