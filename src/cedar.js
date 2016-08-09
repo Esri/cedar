@@ -332,10 +332,10 @@ Cedar.prototype.canDraw = function(){
  * @param {Boolean} options.autolabels place axis labels outside any tick labels (default: false)
  * @param {String} options.token Token to be used if the data or spec are on a secured server
  */
-Cedar.prototype.show = function(options){
+Cedar.prototype.show = function(options, clb){
   if(this._pendingXhr){
 
-    this._addToMethodQueue('show', [options]);
+    this._addToMethodQueue('show', [options, clb]);
 
   }else{
 
@@ -368,7 +368,7 @@ Cedar.prototype.show = function(options){
     var chk = this.canDraw();
     if(chk.drawable){
       //update centralizes the spec compilation & drawing
-      this.update();
+      this.update(clb);
     }else{
       //report the issues
       var errs = chk.issues.join(',');
@@ -390,7 +390,7 @@ Cedar.prototype.show = function(options){
  * chart.dataset.query.where = "POPULATION>30000";
  * chart.update();
  */
-Cedar.prototype.update = function(){
+Cedar.prototype.update = function(clb){
   var self = this;
 
   if ( this._view ) {
@@ -450,19 +450,21 @@ Cedar.prototype.update = function(){
 
         //create a callback closure to carry the spec
         var cb = function(err,data){
-
-          if (err) {
-            throw new Error('Error fetching data, ', err);
-          } else if ( data.error ) {
-            var xhrErr = data.error.message || data.error.details[0];
-            throw new Error(xhrErr);
+          // Normalize error response
+          if (!err && data.error) {
+            err = new Error(data.error.message || data.error.details[0]);
           }
-          //todo add error handlers for xhr and ags errors
-          spec.data[0].values = data;
-          console.dir(spec);
-          //send to vega
-          self._renderSpec(spec);
-
+          // if no errors then continue...
+          if (!err) {
+            //todo add error handlers for xhr and ags errors
+            spec.data[0].values = data;
+            //send to vega
+            self._renderSpec(spec);
+          }
+          // optional callback
+          if (clb && typeof clb === 'function') {
+            clb(err, data);
+          }
         };
 
         //fetch the data from the service
