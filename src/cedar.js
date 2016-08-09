@@ -451,6 +451,12 @@ Cedar.prototype.update = function(){
         //create a callback closure to carry the spec
         var cb = function(err,data){
 
+          if (err) {
+            throw new Error('Error fetching data, ', err);
+          } else if ( data.error ) {
+            var xhrErr = data.error.message || data.error.details[0];
+            throw new Error(xhrErr);
+          }
           //todo add error handlers for xhr and ags errors
           spec.data[0].values = data;
           console.dir(spec);
