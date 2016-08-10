@@ -490,19 +490,20 @@ Cedar.prototype._renderSpec = function(spec){
     }
     //use vega to parse the spec
     //it will handle the spec as an object or url
-    vg.parse.spec(spec, function(chartCtor) {
+    vg.parse.spec(spec, function(error, chartCtor) {
+
+      if (error) { return error; }
 
       //create the view
       self._view = chartCtor({
         el: self._elementId,
         renderer: self._renderer
-      });
-
+      }).update();
 
       var width = self.width || parseInt(d3.select(self._elementId).style('width'), 10) || 500;
       var height = self.height || parseInt(d3.select(self._elementId).style('height'), 10) || 500;
 
-      //render into the element
+
       self._view.width(width).height(height).update();
 
       //attach event proxies

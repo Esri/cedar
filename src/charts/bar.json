@@ -11,13 +11,13 @@
         "type": "x",
         "scale": "x",
         "titleOffset": 45,
-        "title": "{x.label}",          
+        "title": "{x.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "normal"}
-          },          
+          },
           "axis": {
              "stroke": {"value": "#dbdad9"},
              "strokeWidth": {"value": 1.5}
@@ -29,7 +29,8 @@
             "fill": {"value": "#999"},
             "angle": {"value": -50},
             "align": {"value": "right"},
-            "baseline": {"value": "middle"}
+            "baseline": {"value": "middle"},
+            "wrap": {"value": true}
           }
         }
       },
@@ -43,7 +44,7 @@
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "normal"}
-          },          
+          },
           "axis": {
              "stroke": {"value": "#dbdad9"},
              "strokeWidth": {"value": 1.5}
@@ -55,14 +56,14 @@
             "fill": {"value": "#999"}
           }
         }
-      }      
+      }
     ],
     "data": [
       {
         "name": "table",
         "format": {"property": "features"}
       }
-    ],    
+    ],
     "marks": [
       {
         "from": {"data": "table"},
@@ -73,7 +74,7 @@
             "width": {"band": true, "offset": -1, "scale": "x"},
             "x": {"field": "attributes.{x.field}", "scale": "x"},
             "y": {"field": "attributes.{y.field}", "scale": "y"},
-            "y2": {"scale": "y", "value": 0 },            
+            "y2": {"scale": "y", "value": 0 },
             "fill": {"value": "#0079c1"}
           },
           "hover": {
@@ -82,7 +83,7 @@
         },
         "type": "rect"
       }
-    ],    
+    ],
     "scales": [
       {
         "domain": {
