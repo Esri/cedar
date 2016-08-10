@@ -3,8 +3,8 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
-### Changed
+## [0.5.0] - 2016-08-09
+### Added
 - Optional callback on Cedar.show to catch errors from ago / ags server
 
 ## [0.4.4] - 2016-08-09
@@ -85,6 +85,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.5.0]: https://github.com/Esri/cedar/compare/v0.4.4...v0.5.0
 [0.4.4]: https://github.com/Esri/cedar/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/Esri/cedar/compare/v0.4.2...v0.4.3
 [0.4.2]: https://github.com/Esri/cedar/compare/v0.4.1...v0.4.2
