@@ -4,10 +4,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.6.0] - 2016-08-11
-## Added
+### Added
 - Timeout can be added to the Cedar() constructor to set a timeout on fetching data
 - maxLabelLength can be set via .show() It will truncate axis labels that exceed a set length
-## Changed
+### Changed
 - Optional callback drills down into renderSpec to catch errors from Vega
 
 ## [0.5.0] - 2016-08-09
