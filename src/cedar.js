@@ -110,7 +110,7 @@ var Cedar = function Cedar(options){
   this.width = undefined;
   this.height = undefined;
   this.autolabels = true;
-  this.truncateLabelLength = undefined;
+  this.maxLabelLength = undefined;
 
   // Array to hold event handlers
   this._events = [];
@@ -359,7 +359,7 @@ Cedar.prototype.show = function(options){
       this.autolabels = options.autolabels;
     }
     // check if truncate label length has been passed in
-    this.truncateLabelLength = options.truncateLabelLength || 20;
+    this.maxLabelLength = options.maxLabelLength || undefined;
 
     //hold onto the token
     if(options.token){
@@ -547,8 +547,10 @@ Cedar.prototype._placeLabels = function(spec) {
     spec.data[0].values.features.forEach(function(feature) {
       inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
-        // Needed to make sure that the gap between title and labels isn't ridiculous
-        length = length < (self.truncateLabelLength + 1) ? length : 20;
+        if (!!self.maxLabelLength) {
+          // Needed to make sure that the gap between title and labels isn't ridiculous
+          length = length < (self.maxLabelLength + 1) ? length : self.maxLabelLength;
+        }
         if( length > lengths[axis]) {
           lengths[axis] = length;
         }
@@ -566,8 +568,10 @@ Cedar.prototype._placeLabels = function(spec) {
         if(spec.axes[index].type == 'y' ) {
           angle = 100 - angle;
         }
-        // Set max length of axes titles
-        spec.axes[index].properties.labels.text = {"template": "{{ datum.data | truncate:" + self.truncateLabelLength + "}}"};
+        if (!!self.maxLabelLength) {
+          // Set max length of axes titles
+          spec.axes[index].properties.labels.text = {"template": "{{ datum.data | truncate:" + self.maxLabelLength + "}}"};
+        }
         // set title offset
         spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
         //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
