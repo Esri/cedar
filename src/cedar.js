@@ -128,7 +128,12 @@ var Cedar = function Cedar(options){
   this._methodQueue=[];
 
   // Set a base timeout
-  this._timeout = options.timeout || undefined;
+  this._timeout = undefined;
+
+  // override the base timeout
+  if (options.timeout) {
+    this._timeout = options.timeout;
+  }
 
   // override base URL
   if (opts.baseUrl) {
@@ -155,7 +160,7 @@ var Cedar = function Cedar(options){
         self._pendingXhr = false;
         self._definition = data;
         self._purgeMethodQueue();
-      });
+      }, this._timeout);
     }else{
       throw new Error('parameter definition must be an object or string (url)');
     }
@@ -188,7 +193,7 @@ var Cedar = function Cedar(options){
         self._pendingXhr = false;
         self._definition.specification = data;
         self._purgeMethodQueue();
-      });
+      }, this._timeout);
     }else{
       throw new Error('parameter specification must be an object or string (url)');
     }
@@ -363,10 +368,6 @@ Cedar.prototype.show = function(options, clb){
     //hold onto the token
     if(options.token){
       this._token = options.token;
-    }
-    // check for if a timeout has been supplied.
-    if (options.timeout) {
-      this._timeout = options.timeout;
     }
 
     if( err ){
