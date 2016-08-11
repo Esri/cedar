@@ -127,6 +127,14 @@ var Cedar = function Cedar(options){
   //xhrs are in progress
   this._methodQueue=[];
 
+  // Set a base timeout
+  this._timeout = undefined;
+
+  // override the base timeout
+  if (options.timeout) {
+    this._timeout = options.timeout;
+  }
+
   // override base URL
   if (opts.baseUrl) {
     this.baseUrl = opts.baseUrl;
@@ -152,7 +160,7 @@ var Cedar = function Cedar(options){
         self._pendingXhr = false;
         self._definition = data;
         self._purgeMethodQueue();
-      });
+      }, this._timeout);
     }else{
       throw new Error('parameter definition must be an object or string (url)');
     }
@@ -185,7 +193,7 @@ var Cedar = function Cedar(options){
         self._pendingXhr = false;
         self._definition.specification = data;
         self._purgeMethodQueue();
-      });
+      }, this._timeout);
     }else{
       throw new Error('parameter specification must be an object or string (url)');
     }
@@ -441,7 +449,7 @@ Cedar.prototype.update = function(clb){
         spec.data[0].values = this._definition.dataset.data;
 
         //send to vega
-        this._renderSpec(spec);
+        this._renderSpec(spec, clb);
 
       }else{
 
@@ -459,16 +467,17 @@ Cedar.prototype.update = function(clb){
             //todo add error handlers for xhr and ags errors
             spec.data[0].values = data;
             //send to vega
-            self._renderSpec(spec);
-          }
-          // optional callback
-          if (clb && typeof clb === 'function') {
-            clb(err, data);
+            self._renderSpec(spec, clb);
+          } else {
+            // optional callback
+            if (clb && typeof clb === 'function') {
+              clb(err, data);
+            }
           }
         };
 
         //fetch the data from the service
-        Cedar.getJson(url, cb);
+        Cedar.getJson(url, cb, self._timeout);
       }
     }
     catch(ex){
@@ -481,7 +490,7 @@ Cedar.prototype.update = function(clb){
  * Render a compiled Vega specification using Vega Runtime
  * @access private
  */
-Cedar.prototype._renderSpec = function(spec){
+Cedar.prototype._renderSpec = function(spec, clb){
   var self = this;
   // try{
     if(self.autolabels === true) {
@@ -490,8 +499,7 @@ Cedar.prototype._renderSpec = function(spec){
     }
     //use vega to parse the spec
     //it will handle the spec as an object or url
-    vg.parse.spec(spec, function(chartCtor) {
-
+    vg.parse.spec(spec, function(err, chartCtor) {
       //create the view
       self._view = chartCtor({
         el: self._elementId,
@@ -512,6 +520,10 @@ Cedar.prototype._renderSpec = function(spec){
         self.emit('update-end');
       }
 
+      // Expose errors
+      if (clb && typeof clb === 'function') {
+        clb(err, spec);
+      }
     });
   // }
   // catch(ex){
@@ -978,20 +990,28 @@ Cedar._mixin = function(source) {
  * @param  {String}   url      URL to json file
  * @param  {Function} callback node-style callback function (error, data)
  */
-Cedar.getJson = function( url, callback ){
+Cedar.getJson = function( url, callback, timeout ){
   var cb = function(err,data) {
-    if(err){
-      callback('Error loading ' + url + ' ' + err.message);
+    // if timeout error then return a timeout error
+    if(err && err.response === '') {
+      callback(new Error('This service is taking too long to respond, unable to chart'));
+    } else if (err){
+      // Other errors return generic Error.
+      callback(new Error('Error loading ' + url + ' ' + err.message));
+    } else {
+      callback(null, JSON.parse(data.responseText));
     }
-    callback(null, JSON.parse(data.responseText));
   };
   if(url.length > 2000) {
     var uri = url.split("?");
     d3.xhr(uri[0])
+      .on('beforesend', function(xhr) { xhr.timeout = timeout; xhr.ontimeout = xhr.onload; })
       .header("Content-Type", "application/x-www-form-urlencoded")
       .post(uri[1], cb);
   } else {
-    d3.xhr(url).get(cb);
+    d3.xhr(url)
+      .on('beforesend', function(xhr) { xhr.timeout = timeout; xhr.ontimeout = xhr.onload; })
+      .get(cb);
   }
 };
 /**

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+## Added
+- Timeout can be added to the Cedar() constructor to set a timeout on fetching data
+## Changed
+- Optional callback drills down into renderSpec to catch errors from Vega
+
 ## [0.5.0] - 2016-08-09
 ### Added
 - Optional callback on Cedar.show to catch errors from ago / ags server
