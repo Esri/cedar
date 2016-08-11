@@ -358,8 +358,10 @@ Cedar.prototype.show = function(options){
     if(options.autolabels !== undefined && options.autolabels !== null){
       this.autolabels = options.autolabels;
     }
-    // check if truncate label length has been passed in
-    this.maxLabelLength = options.maxLabelLength || undefined;
+    if (options.maxLabelLength) {
+      // check if truncate label length has been passed in
+      this.maxLabelLength = options.maxLabelLength;
+    }
 
     //hold onto the token
     if(options.token){
