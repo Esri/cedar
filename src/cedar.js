@@ -110,6 +110,7 @@ var Cedar = function Cedar(options){
   this.width = undefined;
   this.height = undefined;
   this.autolabels = true;
+  this._truncateLabelLength = 20;
 
   // Array to hold event handlers
   this._events = [];
@@ -357,6 +358,10 @@ Cedar.prototype.show = function(options){
     if(options.autolabels !== undefined && options.autolabels !== null){
       this.autolabels = options.autolabels;
     }
+    // check if truncate label length has been passed in
+    if (options.truncateLabelLength) {
+      this._truncateLabelLength = options.truncateLabelLength;
+    }
     //hold onto the token
     if(options.token){
       this._token = options.token;
@@ -544,7 +549,7 @@ Cedar.prototype._placeLabels = function(spec) {
       inputs.forEach(function(axis) {
         length = (feature.attributes[fields[axis]] || "").toString().length;
         // Needed to make sure that the gap between title and labels isn't ridiculous
-        length = length < 21 ? length : 20;
+        length = length < (self._truncateLabelLength + 1) ? length : 20;
         if( length > lengths[axis]) {
           lengths[axis] = length;
         }
@@ -563,7 +568,7 @@ Cedar.prototype._placeLabels = function(spec) {
           angle = 100 - angle;
         }
         // Set max length of axes titles
-        spec.axes[index].properties.labels.text = {"template": "{{ datum.data | truncate:20}}"};
+        spec.axes[index].properties.labels.text = {"template": "{{ datum.data | truncate:" + self._truncateLabelLength + "}}"};
         // set title offset
         spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
         //chart._view.model().defs().marks.axes[index].titleOffset = lengths[axis]*4+20
