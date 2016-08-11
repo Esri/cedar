@@ -1,0 +1,232 @@
+{
+    "inputs": [
+        {
+            "name": "x",
+            "required": true,
+            "type": [
+                "numeric",
+                "string"
+            ]
+        },
+        {
+            "name": "group",
+            "required": true,
+            "type": [
+                "string"
+            ]
+        }
+    ],
+    "query": {},
+    "template": {
+        "axes": [
+            {
+                "properties": {
+                    "axis": {
+                        "stroke": {
+                            "value": "#dbdad9"
+                        },
+                        "strokeWidth": {
+                            "value": 1.5
+                        }
+                    },
+                    "labels": {
+                        "align": {
+                            "value": "right"
+                        },
+                        "angle": {
+                            "value": -50
+                        },
+                        "baseline": {
+                            "value": "middle"
+                        },
+                        "fill": {
+                            "value": "#999"
+                        }
+                    },
+                    "ticks": {
+                        "stroke": {
+                            "value": "#dbdad9"
+                        }
+                    },
+                    "title": {
+                        "fill": {
+                            "value": "#999"
+                        },
+                        "fontSize": {
+                            "value": 15
+                        },
+                        "fontWeight": {
+                            "value": "normal"
+                        }
+                    }
+                },
+                "scale": "cat",
+                "tickPadding": 8,
+                "tickSize": 0,
+                "type": "x"
+            },
+            {
+                "grid": true,
+                "layer": "back",
+                "properties": {
+                    "axis": {
+                        "stroke": {
+                            "value": "#dbdad9"
+                        },
+                        "strokeWidth": {
+                            "value": 1.5
+                        }
+                    },
+                    "labels": {
+                        "fill": {
+                            "value": "#999"
+                        }
+                    },
+                    "ticks": {
+                        "stroke": {
+                            "value": "#dbdad9"
+                        }
+                    },
+                    "title": {
+                        "fill": {
+                            "value": "#999"
+                        },
+                        "fontSize": {
+                            "value": 15
+                        },
+                        "fontWeight": {
+                            "value": "normal"
+                        }
+                    }
+                },
+                "scale": "val",
+                "type": "y"
+            }
+        ],
+        "data": [
+            {
+                "format": {
+                    "property": "features"
+                },
+                "name": "table",
+                "transform": [
+                    {
+                        "fields": "{x.field}",
+                        "output": {
+                            "key": "group",
+                            "value": "count"
+                        },
+                        "type": "fold"
+                    }
+                ]
+            }
+        ],
+        "legends": [
+            {
+                "fill": "color",
+                "title": "{x.label}"
+            }
+        ],
+        "marks": [
+            {
+                "from": {
+                    "data": "table",
+                    "transform": [
+                        {
+                            "groupby": [
+                                "attributes.{group.field}"
+                            ],
+                            "type": "facet"
+                        }
+                    ]
+                },
+                "marks": [
+                    {
+                        "name": "bars",
+                        "properties": {
+                            "enter": {
+                                "fill": {
+                                    "field": "group",
+                                    "scale": "color"
+                                },
+                                "width": {
+                                    "band": true,
+                                    "scale": "pos"
+                                },
+                                "x": {
+                                    "field": "group",
+                                    "scale": "pos"
+                                },
+                                "y": {
+                                    "field": "count",
+                                    "scale": "val"
+                                },
+                                "y2": {
+                                    "scale": "val",
+                                    "value": 0
+                                }
+                            }
+                        },
+                        "type": "rect"
+                    }
+                ],
+                "properties": {
+                    "enter": {
+                        "height": {
+                            "band": true,
+                            "scale": "cat"
+                        },
+                        "x": {
+                            "field": "key",
+                            "scale": "cat"
+                        }
+                    }
+                },
+                "scales": [
+                    {
+                        "domain": {
+                            "field": "group"
+                        },
+                        "name": "pos",
+                        "range": "height",
+                        "type": "ordinal"
+                    }
+                ],
+                "type": "group"
+            }
+        ],
+        "padding": "strict",
+        "scales": [
+            {
+                "domain": {
+                    "data": "table",
+                    "field": "attributes.{group.field}"
+                },
+                "name": "cat",
+                "padding": 0.2,
+                "range": "width",
+                "type": "ordinal"
+            },
+            {
+                "domain": {
+                    "data": "table",
+                    "field": "count"
+                },
+                "name": "val",
+                "nice": true,
+                "range": "height",
+                "round": true,
+                "type": "linear"
+            },
+            {
+                "domain": {
+                    "data": "table",
+                    "field": "group"
+                },
+                "name": "color",
+                "range": "category20",
+                "type": "ordinal"
+            }
+        ]
+    }
+}
