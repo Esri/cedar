@@ -449,7 +449,7 @@ Cedar.prototype.update = function(clb){
         spec.data[0].values = this._definition.dataset.data;
 
         //send to vega
-        this._renderSpec(spec);
+        this._renderSpec(spec, clb);
 
       }else{
 
@@ -467,11 +467,12 @@ Cedar.prototype.update = function(clb){
             //todo add error handlers for xhr and ags errors
             spec.data[0].values = data;
             //send to vega
-            self._renderSpec(spec);
-          }
-          // optional callback
-          if (clb && typeof clb === 'function') {
-            clb(err, data);
+            self._renderSpec(spec, clb);
+          } else {
+            // optional callback
+            if (clb && typeof clb === 'function') {
+              clb(err, data);
+            }
           }
         };
 
@@ -489,7 +490,7 @@ Cedar.prototype.update = function(clb){
  * Render a compiled Vega specification using Vega Runtime
  * @access private
  */
-Cedar.prototype._renderSpec = function(spec){
+Cedar.prototype._renderSpec = function(spec, clb){
   var self = this;
   // try{
     if(self.autolabels === true) {
@@ -498,8 +499,7 @@ Cedar.prototype._renderSpec = function(spec){
     }
     //use vega to parse the spec
     //it will handle the spec as an object or url
-    vg.parse.spec(spec, function(chartCtor) {
-
+    vg.parse.spec(spec, function(err, chartCtor) {
       //create the view
       self._view = chartCtor({
         el: self._elementId,
@@ -520,6 +520,10 @@ Cedar.prototype._renderSpec = function(spec){
         self.emit('update-end');
       }
 
+      // Expose errors
+      if (clb && typeof clb === 'function') {
+        clb(err, spec);
+      }
     });
   // }
   // catch(ex){
