@@ -127,6 +127,9 @@ var Cedar = function Cedar(options){
   //xhrs are in progress
   this._methodQueue=[];
 
+  // Set a base timeout
+  this._timeout = options.timeout || undefined;
+
   // override base URL
   if (opts.baseUrl) {
     this.baseUrl = opts.baseUrl;
@@ -361,6 +364,10 @@ Cedar.prototype.show = function(options, clb){
     if(options.token){
       this._token = options.token;
     }
+    // check for if a timeout has been supplied.
+    if (options.timeout) {
+      this._timeout = options.timeout;
+    }
 
     if( err ){
       throw new Error( err );
@@ -468,7 +475,7 @@ Cedar.prototype.update = function(clb){
         };
 
         //fetch the data from the service
-        Cedar.getJson(url, cb);
+        Cedar.getJson(url, cb, self._timeout);
       }
     }
     catch(ex){
@@ -978,20 +985,28 @@ Cedar._mixin = function(source) {
  * @param  {String}   url      URL to json file
  * @param  {Function} callback node-style callback function (error, data)
  */
-Cedar.getJson = function( url, callback ){
+Cedar.getJson = function( url, callback, timeout ){
   var cb = function(err,data) {
-    if(err){
-      callback('Error loading ' + url + ' ' + err.message);
+    // if timeout error then return a timeout error
+    if(err && err.response === '') {
+      callback(new Error('This service is taking too long to respond, unable to chart'));
+    } else if (err){
+      // Other errors return generic Error.
+      callback(new Error('Error loading ' + url + ' ' + err.message));
+    } else {
+      callback(null, JSON.parse(data.responseText));
     }
-    callback(null, JSON.parse(data.responseText));
   };
   if(url.length > 2000) {
     var uri = url.split("?");
     d3.xhr(uri[0])
+      .on('beforesend', function(xhr) { xhr.timeout = timeout; xhr.ontimeout = xhr.onload; })
       .header("Content-Type", "application/x-www-form-urlencoded")
       .post(uri[1], cb);
   } else {
-    d3.xhr(url).get(cb);
+    d3.xhr(url)
+      .on('beforesend', function(xhr) { xhr.timeout = timeout; xhr.ontimeout = xhr.onload; })
+      .get(cb);
   }
 };
 /**
