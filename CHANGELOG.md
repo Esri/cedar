@@ -3,9 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [0.6.0] - 2016-08-11
 ## Added
 - Timeout can be added to the Cedar() constructor to set a timeout on fetching data
+- maxLabelLength can be set via .show() It will truncate axis labels that exceed a set length
 ## Changed
 - Optional callback drills down into renderSpec to catch errors from Vega
 
@@ -91,6 +92,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.6.0]: https://github.com/Esri/cedar/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Esri/cedar/compare/v0.4.4...v0.5.0
 [0.4.4]: https://github.com/Esri/cedar/compare/v0.4.3...v0.4.4
 [0.4.3]: https://github.com/Esri/cedar/compare/v0.4.2...v0.4.3
