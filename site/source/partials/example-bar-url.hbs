@@ -8,7 +8,7 @@
 <script>
   //create a cedar chart using the known 'bar' type
   // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
-  var chart = new Cedar({"type": "bar", timeout: 5000});
+  var chart = new Cedar({"type": "bar"});
   //create the dataset w/ mappings
   var dataset = {
     "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -38,9 +38,6 @@
   //show the chart
   chart.show({
     elementId: "#chart-url"
-  }, function(err,data) {
-    console.log(err);
-    console.log(data);
   });
 
   $(function() {
