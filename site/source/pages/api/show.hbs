@@ -17,7 +17,7 @@ Renders a cedar chart object into the specified element in the DOM.
 | `width`     | `number` | no | Explicit pixel width of chart. If not specified, will use width of `elementId`. |
 | `height` 	  | `number` | no | Explicit pixel height of chart. If not specified, will use height of `elementId`. |
 | `maxLabelLength` | `number` | no | Explicit max length of axis labels. If set, axis labels will be truncated to the given length. |
-| `callback` | `function` | no | Optional callback to better capture errors from requests and vega.
+| `callback` | `function` | no | Function to call once the chart has been shown. Will be called with (err, data) arguments. If there was an error it will be available as err.
 
 #### Example Code
 ```js
