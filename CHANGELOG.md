@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## unreleased
+### Changed
+- Updated dependencies to most recent version of vega to avoid dependencies issues.
+- Updated API docs to reflect recent changes.
+
 ## [0.6.0] - 2016-08-11
 ### Added
 - Timeout can be added to the Cedar() constructor to set a timeout on fetching data

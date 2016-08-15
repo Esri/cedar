@@ -16,9 +16,11 @@ Renders a cedar chart object into the specified element in the DOM.
 | `renderer`  | `string` | no | `svg` or `canvas` (default) for drawing the chart. |
 | `width`     | `number` | no | Explicit pixel width of chart. If not specified, will use width of `elementId`. |
 | `height` 	  | `number` | no | Explicit pixel height of chart. If not specified, will use height of `elementId`. |
+| `maxLabelLength` | `number` | no | Explicit max length of axis labels. If set, axis labels will be truncated to the given length. |
+| `callback` | `function` | no | Optional callback to better capture errors from requests and vega.
 
 #### Example Code
-```
+```js
 <div id='chartDiv'></div>
 
 <script>
@@ -36,6 +38,8 @@ var dataset = {
 chart.show({
   'elementId': '#chartDiv',
   'renderer': 'canvas'
+}, function(err, data) {
+  if (err) { console.log(err); }
 });
 
 </script>
