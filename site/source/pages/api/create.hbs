@@ -20,6 +20,7 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
 | `dataset` | <`object`> | no | <a href="{{assets}}api/json/dataset-json.html">dataset</a> object. |
 | `type` | <`string`> | no | Shorthand for specifying a URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a>. Can be one of the pre-defined types ('bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'time') or a URL to a secificatin JSON file. |
 | `baseUrl` | <`string`> | no | The URL of the folder which contains the Cedar script file (cedar.js or cedar.min.js).* |
+| `timeout` | <`number`> | no | The maximum amount of time (in milliseconds) to wait for response to asynchronous requests. |
 
 ### Examples
 
@@ -34,8 +35,8 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
     "query": {
       "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "Number_of", 
+        "statisticType": "sum",
+        "onStatisticField": "Number_of",
         "outStatisticFieldName": "Number_of_SUM"
       }]
     },
