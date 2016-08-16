@@ -1,0 +1,116 @@
+{
+  "inputs":[
+    {"name":"time","type":["time"], "required":true},
+    {"name":"value","type":["numeric"], "required":true},
+    {"name":"trendline","type":["numeric"], "required":true}
+  ],
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "url":"{data}&orderByFields={time.field}",
+        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+      },
+      {
+        "name": "exports",
+        "source": "table",
+        "transform": [
+          {"type": "formula", "field": "export", "expr": "datum"}
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "time",
+        "range": "width",
+        "nice": "month",
+        "zero": false,
+        "domain": {"data": "table", "field": "attributes.{time.field}"}
+      },
+      {
+        "name": "y",
+        "type": "linear",
+        "range": "height",
+        "nice": true,
+        "domain": {"data": "table", "field": "attributes.{value.field}"}
+      }
+    ],
+    "axes": [
+      {
+        "type": "x", 
+        "scale": "x",
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },
+          "ticks": {
+            "strokeWidth" : {"value" :0}          
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 0}
+          }
+        }
+      },
+      {
+        "type": "y", 
+        "scale": "y",
+        "ticks": 5,
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },          
+          "ticks": {
+             "strokeWidth" : {"value" :0}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 0}
+          }
+        }
+      }
+    ],
+    "marks": [
+      {
+        "type": "line",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
+            "stroke": {"value": "#0079c1"},
+            "strokeWidth" : { "value" : 3}
+          }
+        }
+      },
+      {
+        "type": "line",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{trendline.field}"},
+            "stroke": {"value": "#000000"},
+            "strokeWidth" : { "value" : 3},
+            "strokeDash" : { "value" : [7, 2]}
+          }
+        }
+      }
+
+    ]
+  }
+}
