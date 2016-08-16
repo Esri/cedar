@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## unreleased
+## [0.6.1] - 2016-08-15
 ### Changed
 - Updated dependencies to most recent version of vega to avoid dependencies issues.
 - Updated API docs to reflect recent changes.
@@ -97,6 +97,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.6.1]: https://github.com/Esri/cedar/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/Esri/cedar/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Esri/cedar/compare/v0.4.4...v0.5.0
 [0.4.4]: https://github.com/Esri/cedar/compare/v0.4.3...v0.4.4
