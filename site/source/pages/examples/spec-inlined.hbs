@@ -21,8 +21,6 @@ layout: example.hbs
 
 
 <script>
-  //create a cedar chart
-  var chart = new Cedar();
 
   //create the specification
   var spec ={
@@ -65,9 +63,9 @@ layout: example.hbs
     ],
     "axes": [
       {
-        "type": "x", 
+        "type": "x",
         "scale": "x",
-        "title": "{time.label}", 
+        "title": "{time.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
@@ -88,16 +86,16 @@ layout: example.hbs
         }
       },
       {
-        "type": "y", 
+        "type": "y",
         "scale": "y",
-        "title": "{value.label}", 
+        "title": "{value.label}",
         "ticks": 2,
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "normal"}
-          },          
+          },
           "ticks": {
              "stroke": {"value": "#dbdad9"}
           },
@@ -172,7 +170,7 @@ var chart = new Cedar({"specification":spec});
     elementId: "#chart",
     autolabels: true,
     renderer: "svg"
-  }); 
+  });
 
 
   $(function() {
@@ -181,4 +179,3 @@ var chart = new Cedar({"specification":spec});
     });
   });
 </script>
-
