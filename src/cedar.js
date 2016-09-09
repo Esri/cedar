@@ -103,7 +103,6 @@ var Cedar = function Cedar(options){
 
   var spec;
 
-
   // Internals for holding state
 
   // Cedar configuration such as size
@@ -132,8 +131,8 @@ var Cedar = function Cedar(options){
   this._timeout = undefined;
 
   // override the base timeout
-  if (options.timeout) {
-    this._timeout = options.timeout;
+  if (opts.timeout) {
+    this._timeout = opts.timeout;
   }
 
   // override base URL
