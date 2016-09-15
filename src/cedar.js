@@ -1146,7 +1146,7 @@ Cedar._supplant = function( tmpl, params ){
   return t.replace(/"{([^{}]*)}"/g,
     function(a, b) {
       var r = Cedar._getTokenValue(params, b);
-      return r.constructor === Array ? r = JSON.stringify(r) : a;
+      return (r !== null && r.constructor === Array) ? r = JSON.stringify(r) : a;
     }
   );
 };
