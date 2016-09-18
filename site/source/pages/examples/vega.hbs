@@ -1,0 +1,453 @@
+---
+title: Example - Vega chart
+layout: example.hbs
+---
+
+
+<h1></h1>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+    #examples { height: 1800px; }
+    #resizable { width: 750px; height: 550px; padding: 0.5em; }
+    #resizable h3 { text-align: center; margin: 0; }
+  </style>
+
+  <div id="resizable" class="ui-widget-content">
+    <div id="chart" style="height: 100%"></div>
+    </div>
+
+
+<script>
+
+  //create the specification
+  var spec ={
+    "inputs": [],
+    "template": {
+      "padding": "strict",
+      "data": [
+        {
+          "name": "dummy",
+          "url": "http://example.org",
+          "format": {
+            "type": "json",
+            "property": "features"
+          }
+        },
+        {
+          "name": "data",
+          "url": "https://api.resourcewatch.org/query/3feaf26c-42c8-43ce-b1b5-07a02a773c36?sql=select * from index_3feaf26c42c843ceb1b507a02a773c36 order by date asc",
+          "format": {
+            "type": "json",
+            "property": "data"
+          }
+        },
+        {
+          "name": "hist",
+          "source": "data",
+          "transform": [
+            {
+                    "type": "filter",
+                    "test": "datum.date < 2010"
+                  }
+          ]
+        },
+        {
+          "name": "modeled",
+          "source": "data",
+          "transform": [
+            {
+                    "type": "filter",
+                    "test": "datum.date > 2009"
+                  }
+          ]
+        },
+        {
+          "name": "legend",
+          "values": [
+            {"cat": "Historic"},
+            {"cat": "PCM A2"},
+            {"cat": "Models amplitude"}
+
+          ]
+            },
+        {
+          "name": "tooltip",
+          "source": "data",
+          "transform": [
+            {
+              "test": "datum.date == indexDate.date",
+              "type": "filter"
+            },
+            {
+              "expr": "datum.date > 2060 ? indexDate.xRight : indexDate.xLeft",
+              "type": "formula",
+              "field": "xTooltip"
+            },
+            {
+              "expr": "datum.date < 2010 ? datum.HST : datum.PCM_A2",
+              "type": "formula",
+              "field": "value"
+            },
+            {
+              "expr": "indexDate.xLeft",
+              "type": "formula",
+              "field": "xData"
+            },
+            {"type": "sort", "by": "date"}
+          ]
+        }
+      ],
+      "signals": [
+        {
+          "init": {"xval": 0,"yval": 0},
+          "name": "indexDate",
+          "streams": [
+            {
+              "type": "mousemove",
+              "expr": "{xLeft: +iscale('x', eventX() + 10), xRight: +iscale('x', eventX() - 130), date: +iscale('x', eventX()), yval: +iscale('y', eventY())}"
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "x",
+          "type": "ordinal",
+          "range": "width",
+          "domain": {"fields": [{"data": "data","field": "date"}]},
+          "domainMin":1920,
+          "domainMax":2100
+        },
+        {
+          "name": "y",
+          "type": "linear",
+          "range": "height",
+          "zero": false,
+          "domain": {"fields": [{"data": "data","field": "max"}]},
+          "domainMin":25,
+          "domainMax":40
+        },
+        {
+          "name": "color",
+          "type": "ordinal",
+          "zero": false,
+          "points": true,
+          "range": [
+            "#efa600",
+            "#D2E2EC",
+            "#1a6d9e"
+          ],
+          "domain": {
+            "fields": [{"data": "legend","field": "cat"}],
+            "sort": true
+          }
+        }
+      ],
+      "axes": [
+        {
+          "type": "x",
+          "scale": "x",
+          "title": "years",
+          "ticks": 5,
+          "values":[1920,1940,1960,1980,2000,2020,2040,2060,2080,2099],
+          "properties": {
+            "title": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fontSize": {"value": 12},
+              "fill": {"value": "#9BA2AA"}
+            },
+            "ticks": {"stroke": {"value": "#9BA2AA"}},
+            "labels": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fill": {"value": "#9BA2AA"},
+              "fontSize": {"value": 10},
+              "align": {"value": "center"},
+              "baseline": {"value": "top"}
+            },
+            "axis": {
+              "stroke": {"value": "#E6E6E6"},
+              "opacity": {"value": 1},
+              "strokeWidth": {"value": 1.5}
+            }
+          }
+        },
+        {
+          "type": "y",
+          "scale": "y",
+          "title": "Summer max temperature ºC",
+          "titleOffset": 15,
+          "grid": false,
+          "ticks": 10,
+          "properties": {
+            "axis": {
+              "stroke": {"value": "#E6E6E6"},
+              "opacity": {"value": 1},
+              "strokeWidth": {"value": 1.5}
+            },
+            "ticks": {"stroke": {"value": "#9BA2AA"}},
+            "labels": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fill": {"value": "#9BA2AA"},
+              "fontSize": {"value": 10},
+              "align": {"value": "right"},
+              "baseline": {"value": "middle"}
+            },
+            "title": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fontSize": {"value": 12},
+              "y": {"value": -20},
+              "x": {"value": 50},
+              "angle": 90,
+              "fill": {"value": "#9BA2AA"}
+            }
+          }
+        }
+      ],
+      "marks": [
+        {
+          "name": "datalines-hist",
+          "type": "group",
+          "marks": [
+            {
+              "type": "line",
+              "from": {
+                "data": "hist"
+              },
+              "properties": {
+                "enter": {
+                  "x": {"scale": "x","field": "date"},
+                  "y": {"scale": "y","field": "HST"},
+                  "height": {"scale": "y"},
+                  "stroke": {"value": "#efa600"},
+                  "strokeOpacity": {"value": 1},
+                  "strokeWidth": {"value": 1.5}
+                }
+              }
+            }
+
+          ]
+        },
+        {
+          "name": "datalines-modeled",
+          "type": "group",
+          "marks": [
+            {
+              "type": "area",
+              "from": {"data": "modeled"},
+              "properties": {
+                "enter": {
+                  "interpolate": {
+                    "value": "linear"
+                  },
+                  "x": {
+                    "field": "date",
+                    "scale": "x"
+                  },
+                  "y": {
+                    "field": "min",
+                    "scale": "y"
+                  },
+                  "y2": {
+                    "field": "max",
+                    "scale": "y"
+                  },
+                  "fill": {
+                    "value":"#1a6d9e"
+                  },
+                  "fillOpacity": {"value": 0.2}
+                }
+              }
+            },
+            {
+              "type": "line",
+              "from": {
+                "data": "modeled"
+              },
+              "properties": {
+                "enter": {
+                  "x": {"scale": "x","field": "date"},
+                  "y": {"scale": "y","field": "PCM_A2"},
+                  "height": {"scale": "y"},
+                  "stroke": {"value": "#1a6d9e"},
+                  "strokeOpacity": {"value": 1},
+                  "strokeWidth": {"value": 1.5}
+                }
+              }
+            }
+
+          ]
+        },
+        { "name":"90 perc",
+          "type": "rule",
+          "properties": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"scale": "y","value": 31.35},
+              "x2": {"field": {"group": "width"}},
+              "stroke": {"value": "#263e57"},
+              "strokeWidth": {"value": 1.5},
+              "strokeOpacity": {"value": 0.2}
+            }
+          }
+        },
+        { "name":"10 perc",
+          "type": "rule",
+          "properties": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"scale": "y","value": 29.3},
+              "x2": {"field": {"group": "width"}},
+              "stroke": {"value": "#263e57"},
+              "strokeWidth": {"value": 1.5},
+              "strokeOpacity": {"value": 0.2}
+            }
+          }
+        },
+        {
+          "name": "tooltip",
+          "type": "group",
+          "from": {"data": "tooltip"},
+          "marks": [
+            {
+              "type": "text",
+              "properties": {
+                "update": {
+                  "x": {"value": 10},
+                  "y": {"value": 17},
+                  "fill": {"value": "#3B4F63"},
+                  "font": {"value": "\"Montserrat\", sans-serif"},
+                  "text": {
+                    "template": "{{indexDate.xLeft}}"
+                  },
+                  "opacity": {"value": 0.8},
+                  "fontSize": {"value": 11},
+                  "fontWeight": {"value": "bold"}
+                }
+              }
+            },
+            { "name":"mean",
+              "type": "text",
+              "properties": {
+                "update": {
+                  "x": {"value": 11},
+                  "y": {"value": 35},
+                  "fill": {"value": "#3B4F63"},
+                  "font": {"value": "\"Montserrat\", sans-serif"},
+                  "text": {
+                    "template": "{{parent.value}}"
+                  },
+                  "opacity": {"value": 0.8},
+                  "fontSize": {"value": 11}
+                }
+              }
+            }
+          ],
+          "properties": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "xTooltip",
+                "offset": 0
+              },
+              "y": {"scale": "y","signal": "indexDate.yval", "offset": -10},
+              "fill": {"value": "#fff"},
+              "width": {"value": 130},
+              "height": {"value": 55},
+              "fillOpacity": {"value": 0.85}
+            }
+          }
+        },
+        {
+          "from": {"data": "tooltip"},
+          "size": 4,
+          "ease":"in-out",
+          "type": "rule",
+          "properties": {
+            "update": {
+              "x": {"field": "date","scale": "x"},
+              "y": {"value": 0},
+              "y2":{"field": {"group": "height"}},
+              "stroke": {"value": "#000000"},
+
+              "strokeWidth": {"value": 2},
+              "opacity": {"value": 0.2}
+            }
+          }
+        },
+        {
+          "from": {"data": "tooltip"},
+          "size": 4,
+          "ease":"in-out",
+          "type": "symbol",
+          "properties": {
+            "update": {
+              "x": {"field": "date","scale": "x"},
+              "y": {"field": "value","scale": "y"},
+              "fill": {"value": "#c15467"},
+              "size": {"value": 20}
+            }
+          }
+        }
+      ],
+      "legends": [
+        {
+          "fill": "color",
+          "offset": 50,
+          "properties": {
+            "legend": {
+              "x": {
+                "field": {"group": "width"},
+                "mult": 0.05,
+                "offset": 0
+              },
+              "y": {
+                "field": {"group": "height"},
+                "mult": 0.05,
+                "offset": -10
+              }
+            },
+            "title": {
+              "fontSize": {"value": 12},
+              "dy": {"value": -2},
+              "dx": {"value": 0}
+            },
+            "labels": {
+              "fontSize": {"value": 10},
+              "fill": {"value": "#9BA2AA"},
+              "text": {"template": "{{datum.data}}"}
+            },
+            "symbols": {"shape": {"value": "square"},"size": {"value": 30},"strokeOpacity":{"value": 0}}
+          }
+        }
+      ]
+    }
+  }
+
+var chart = new Cedar({"specification":spec});
+
+
+  chart.dataset = {
+    "data": {
+      "features": []
+    },
+    "mappings": {
+      "query": {}
+    }
+  };
+
+  chart.show({
+    elementId: "#chart",
+    autolabels: true,
+    renderer: "svg"
+  });
+
+
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chart.update(); }
+    });
+  });
+</script>
