@@ -425,12 +425,16 @@ export default class Cedar {
   }
 
   /**
+   * RENDER CHART FUNCTIONS
+   *
+   *
    * Render a compiled Vega specification using vega runtime
    */
 
   _renderSpec(spec, clb) {
     if (this.autolabels === true) {
-      console.log('bob');
+      spec = this._placeLabels(spec);
+      spec = this._placeaAxisTicks(spec);
     }
     // Use vega to parse the spec
     // It will handle the spec as an object or url
@@ -460,6 +464,99 @@ export default class Cedar {
       }
     });
   }
+
+  /**
+   * AXIS TICK FUNCTIONS START HERE
+   *
+   *
+   * Automatically determines axis title placement
+   *
+   * Calculates the maximum length of a tick label and adds padding
+   */
+
+  _placeLabels(spec) {
+    try {
+      const fields = [];
+      const lengths = [];
+      const inputs = [];
+      // Get all inputs that may be axes
+      for (let input in this._definition.dataset.mappings) {
+        // check also if property is not inherited from prototype
+        if (this._definition.dataset.mappings.hasOwnProperty(input)) {
+          const field = this._definition.dataset.mappings[input].field;
+          if (!!field) {
+            inputs.push(input);
+            fields[input] = field;
+            lengths[input] = 0;
+          }
+        }
+      }
+      let length = 0;
+
+      // find the max length value for each axis
+      spec.data[0].values.features.forEach((feature) => {
+        inputs.forEach((axis) => {
+          length = (feature.attributes[fields[axis]] || "").toString().length;
+          if (!!this.maxLabelLength) {
+            // Need to make sure that the gap between title and labels isn't ridiculous
+            length = length < (this.maxLabelLength + 1) ? length : this.maxLabelLength;
+          }
+          if (length > lengths[axis]) {
+            lengths[axis] = length;
+          }
+        });
+      });
+
+      // Change each axis title offset based on longest value
+      inputs.forEach((axis, index) => {
+        let angle = 0;
+        if (!!spec.axes && !!spec.axes[index]) {
+
+          if (!!spec.axes[index].properties.labels.angle) {
+            angle = spec.axes[index].properties.labels.angle.value;
+          }
+          if (spec.axes[index].type === 'y') {
+            angle = 100 - angle;
+          }
+          if (!!this.maxLabelLength) {
+            // Set max length of axes titles
+            spec.axes[index].properties.labels.text = {"template": `{{ datum.data | truncate:"${this.maxLabelLength}"}}`};
+          }
+          // set title offset
+          spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
+        }
+      });
+      return spec;
+
+    } catch(ex) {
+      throw(ex);
+    }
+  }
+
+  /**
+   * Automatically determines number of axis tick marks
+   *
+   * Calculates the maximum length of a tick label and adds padding
+   * TODO: remove expectation that there are both x,y axes
+   */
+
+  _placeaAxisTicks(spec) {
+    if (!!spec.axes) {
+      try {
+        const width = this.width || parseInt(d3.select(this._elementId).style('width'), 10) || 500;
+        const height = this.height || parseInt(d3.select(this._elementId).style('height'), 10) || 500;
+
+        spec.axes[0].ticks = width / 100;
+        if (!!spec.axes[1]) {
+          spec.axes[1].ticks = height / 30;
+        }
+      } catch(ex) {
+        throw(ex);
+      }
+    }
+    return spec;
+  }
+
 
   /**
    * TOOLTIP LOGIC HERE
@@ -641,5 +738,60 @@ export default class Cedar {
       });
     };
     return handler;
+  }
+
+  /**
+   * SELECT LOGIC STARTS HERE
+   *
+   * Highlight marker based on attribute value
+   *
+   * @example
+   * chart = new Cedar({...});
+   * chart.select({key: 'ZIP_CODE', value: '20002'});
+   *
+   * @param {object} options - Object(key, value) to match. Calls hover on work
+   * @returns {Array} items - array of chart objects that match the criteria
+   */
+
+  select(options) {
+    let view = this._view;
+    let items = view.model().scene().items[0].items[0].items;
+    
+    items.forEach((item) => {
+      if ( item.datum.attributes[options.key] === options.value) {
+        if (item.hasPropertySet('hover')) {
+          this._view.update({props: 'hover', items: item});
+        }
+      }
+    });
+
+    return items;
+  }
+
+
+   /**
+    * Removes highlighted chart items
+    *
+    * If "options" are used, only clear specific items, otherwise clears all highlights.
+    * @param {Object} options - Object(key, value) to match. Calls hover on mark
+    * @returns {Array} items - array of chart objects that match the criteria, or null if all items.
+    */
+
+  clearSelection(options) {
+    let view = this._view;
+
+    if (!!options && !!options.key) {
+      let items = view.model().scene().items[0].items[0].items;
+      items.forEach((item) => {
+        if ( item.datum.attributes[options.key] === options.value) {
+          this._view.update({props: 'update', items: item});
+        }
+      });
+      return items;
+    } else {
+      // clear all
+      this._view.update();
+      return null;
+    }
   }
 };
