@@ -13,7 +13,7 @@ export default {
   entry: 'src/index.js',
   moduleName: 'Cedar',
   format: 'umd',
-  external: ['d3', 'vega', 'arcgis-cedar'],
+  external: ['d3', 'vega'],
   plugins: [json(), babel()],
   globals: {
     'arcgis-cedar': 'Cedar',
