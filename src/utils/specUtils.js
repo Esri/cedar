@@ -35,24 +35,24 @@ export function defaultQuery() {
  * @return {object}          Returns mappings
  */
 export function applyDefaultsToMappings(mappings, inputs) {
-  const errs = []
+  const errs = [];
   // iterate over inputs
   for (let i = 0; i < inputs.length; i++) {
-    const input = inputs[i]
+    const input = inputs[i];
 
     // If required but not there
     if (input.required && !mappings[input.name]) {
-      errs.push(input.name)
+      errs.push(input.name);
     }
 
     // if it's not required, has a default and not in the mappings
     if (!input.required && !mappings[input.name] && input['default']) {
       // add the default
-      mappings[input.name] = input['default']
+      mappings[input.name] = input['default'];
     }
   }
   if (errs.length > 0) {
-    throw new Error(`Required Mappings Missing: ${errs.join(',')}`)
+    throw new Error(`Required Mappings Missing: ${errs.join(',')}`);
   } else {
     return mappings;
   }

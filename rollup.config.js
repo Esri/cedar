@@ -10,7 +10,8 @@ export default {
   plugins: [json(), babel()],
   globals: {
     'arcgis-cedar': 'Cedar',
-    'd3': 'd3'
+    'd3': 'd3',
+    'vega': 'vg'
   },
   dest: 'dist/bundle.js'
 };

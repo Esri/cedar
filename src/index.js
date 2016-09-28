@@ -4,6 +4,7 @@ import requestUtils from './utils/requestUtils';
 import specUtils from './utils/specUtils';
 import specTemplates from './charts/specs';
 import * as d3 from 'd3';
+import vg from 'vega';
 
 export default class Cedar {
   /**
@@ -321,7 +322,7 @@ export default class Cedar {
         this.update(clb);
       } else {
         // report the issues
-        const errors = chk.issues.join(',');
+        const errs = chk.issues.join(',');
         throw new Error(`Chart can not be drawn because: ${errs}`);
       }
     }
@@ -352,7 +353,7 @@ export default class Cedar {
       if (!!this._view) {
         // remove handlers
         // TODO Remove existing handlers
-        this.remove(this._view)
+        this.remove(this._view);
       }
 
       try {
@@ -384,7 +385,7 @@ export default class Cedar {
 
         if (!!this._definition.dataset.data) {
           // create the data node using the passed in data
-          spec.data[0].values = this._definition.dataset.data // TODO: only works on first spec, need to address for multiple datasets.
+          spec.data[0].values = this._definition.dataset.data; // TODO: only works on first spec, need to address for multiple datasets.
 
           // Send to vega
           this._renderSpec(spec, clb);
@@ -665,7 +666,7 @@ export default class Cedar {
    * @param {string} eventName - ["mouseover","mouseout","click","update-start","update-end"]
    */
   emit(eventName) {
-    if ( !!this._view._handler._handlers[ eventName ] & !!this._view._handler._handlers[ eventName ][0] ) {
+    if ( !!this._view._handler._handlers[ eventName ] && !!this._view._handler._handlers[ eventName ][0] ) {
       this._view._handler._handlers[ eventName ][0].handler();
     }
   }
@@ -756,7 +757,7 @@ export default class Cedar {
   select(options) {
     let view = this._view;
     let items = view.model().scene().items[0].items[0].items;
-    
+
     items.forEach((item) => {
       if ( item.datum.attributes[options.key] === options.value) {
         if (item.hasPropertySet('hover')) {
@@ -794,4 +795,4 @@ export default class Cedar {
       return null;
     }
   }
-};
+}

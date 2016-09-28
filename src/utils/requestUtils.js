@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import { mixin } from './utils';
-import { defaultQuery } from './specUtils'
+import { defaultQuery } from './specUtils';
 
 /**
  * Takes in params, iterates over them, encodes and returns stringified and encoded query
