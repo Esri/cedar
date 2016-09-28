@@ -4,7 +4,7 @@ import requestUtils from './utils/requestUtils';
 import specUtils from './utils/specUtils';
 import specTemplates from './charts/specs';
 import * as d3 from 'd3';
-import vg from 'vega';
+import * as vg from 'vega';
 
 export default class Cedar {
   /**
@@ -149,9 +149,9 @@ export default class Cedar {
         // assume it's a url (rel or abs) and fetch the template object
         this._pendingXhr = true;
         this._pendingXhr = true;
-        requestUtils.getJson(opts.definition, (err, data) => {
+        requestUtils.getJson(spec, (err, data) => {
           this._pendingXhr = false;
-          this._definition = data;
+          this._definition.specification = data;
           this.purgeMethodQueue();
         }, this._timeout);
       } else {
@@ -794,5 +794,21 @@ export default class Cedar {
       this._view.update();
       return null;
     }
+  }
+
+  /**
+   * Other now exposed utils!
+   */
+  static _validateMappings(inputs, mappings) {
+    return utils.validateMappings(inputs, mappings);
+  }
+  static _validateData(data, mappings) {
+    return utils.validateData(data, mappings);
+  }
+  static _createFeatureServiceRequest(dataset, queryFromSpec) {
+    return requestUtils.createFeatureServiceRequest(dataset, queryFromSpec);
+  }
+  static _getMappingFieldName(mappingName, fieldName) {
+    return utils.getMappingFieldName(mappingName, fieldName);
   }
 }

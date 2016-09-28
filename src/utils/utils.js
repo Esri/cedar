@@ -1,4 +1,4 @@
-
+import * as d3 from 'd3';
 /**
  * Merges n objects
  * @param  {object} source Empty object that other objects will be merged into
@@ -7,9 +7,9 @@
 export function mixin(source) {
   const args = [...arguments];
   for (let i = 1; i < args.length; i++) {
-    for ( const key of Object.keys(args[i])) {
-      source[key] = args[i][key];
-    }
+    d3.entries(args[i]).forEach((p) => {
+      source[p.key] = p.value;
+    });
   }
   return source;
 }
@@ -73,11 +73,69 @@ export function supplant(template, params) {
    return tempTokens;
  }
 
+ /**
+  * Helper function that validates that the
+  * mappings hash contains values for all
+  * the inputs
+  * @param  {array} inputs   Array of inputs
+  * @param  {object} mappings Hash of mappings
+  * @return {array}          Missing mappings
+  * @access private
+  */
+ export function validateMappings(inputs, mappings) {
+   return inputs.filter((input) => {
+     if (input.required && !mappings[input.name]) {
+       return input;
+     }
+   });
+ }
+
+ /**
+  * Validate that the incoming data has the fields expected
+  * in the mappings
+  * @access private
+  */
+ export function validateData(data, mappings) {
+   const missingInputs = [];
+   if (!data.features || !Array.isArray(data.features)) {
+     throw new Error('Data is expected to have features array!');
+   }
+   const firstRow = data.features[0].attributes;
+   for (let key in mappings) {
+     if (mappings.hasOwnProperty(key)) {
+       let fld = getMappingFieldName(key, mappings[key].field);
+       if (!firstRow.hasOwnProperty(fld)) {
+         missingInputs.push(fld);
+       }
+     }
+   }
+   return missingInputs;
+ }
+
+ /**
+  * TODO does nothing, must figure out.
+  * Centralize and abstract the computation of
+  * expected field names, based on the mapping name
+  * @access private
+  */
+ export function getMappingFieldName(mappingName, fieldName) {
+   // this function why?
+
+   let name = fieldName;
+   // if(mappingName.toLowerCase() === 'count'){
+   //  name = fieldName + '_SUM';
+   // }
+   return name;
+ }
+
 const utils = {
   mixin,
   supplant,
   mergeRecursive,
-  getTokenValue
+  getTokenValue,
+  validateMappings,
+  validateData,
+  getMappingFieldName
 };
 
 export default utils;
