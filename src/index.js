@@ -1,7 +1,7 @@
 import { version } from '../package.json';
 import utils from './utils/utils';
-import requestUtils from './utils/requestUtils';
-import specUtils from './utils/specUtils';
+import requestUtils from './utils/request';
+import specUtils from './utils/spec';
 import specTemplates from './charts/specs';
 import * as d3 from 'd3';
 import * as vg from 'vega';
@@ -114,7 +114,7 @@ export default class Cedar {
         requestUtils.getJson(opts.definition, (err, data) => {
           this._pendingXhr = false;
           this._definition = data;
-          this.purgeMethodQueue();
+          this._purgeMethodQueue();
         }, this._timeout);
       } else {
         throw new Error('parameter definition must be an object or string (url)');
@@ -152,7 +152,7 @@ export default class Cedar {
         requestUtils.getJson(spec, (err, data) => {
           this._pendingXhr = false;
           this._definition.specification = data;
-          this.purgeMethodQueue();
+          this._purgeMethodQueue();
         }, this._timeout);
       } else {
         throw new Error('parameter specification must be an object or string (url)');
