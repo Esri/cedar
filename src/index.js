@@ -132,7 +132,8 @@ export default class Cedar {
 
     // first, check for pre-defined chart type passed in as 'type'
     if (opts.type) {
-      spec = this.chartTypes[opts.type];
+      let type = opts.type.replace(/-/g, '_');
+      spec = this.chartTypes[type];
     }
 
     // If url or object passed use that...
@@ -280,6 +281,7 @@ export default class Cedar {
     if (this._pendingXhr) {
       console.log('bob');
       // TODO addToMethodQueue
+      this._addToMethodQueue('show', [options, clb]);
     } else {
 
       let err;
@@ -347,13 +349,13 @@ export default class Cedar {
     }
 
     if (!!this._pendingXhr) {
-      this.addToMethodQueue('update');
+      this._addToMethodQueue('update');
     } else {
 
       if (!!this._view) {
         // remove handlers
         // TODO Remove existing handlers
-        this.remove(this._view);
+        this._remove(this._view);
       }
 
       try {
@@ -477,8 +479,8 @@ export default class Cedar {
 
   _placeLabels(spec) {
     try {
-      const fields = [];
-      const lengths = [];
+      const fields = {};
+      const lengths = {};
       const inputs = [];
       // Get all inputs that may be axes
       for (let input in this._definition.dataset.mappings) {
@@ -495,6 +497,7 @@ export default class Cedar {
       let length = 0;
 
       // find the max length value for each axis
+      console.log(spec);
       spec.data[0].values.features.forEach((feature) => {
         inputs.forEach((axis) => {
           length = (feature.attributes[fields[axis]] || "").toString().length;
@@ -794,6 +797,10 @@ export default class Cedar {
       this._view.update();
       return null;
     }
+  }
+
+  static getJson(url, callback, timeout) {
+    return requestUtils.getJson(url, callback, timeout);
   }
 
   /**
