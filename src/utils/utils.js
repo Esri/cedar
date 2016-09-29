@@ -53,7 +53,7 @@ export function supplant(template, params) {
   return t.replace(/"{([^{}]*)}"/g,
     (a, b) => {
       let r = getTokenValue(params, b);
-      return r.constructor === Array ? r = JSON.stringify(r) : a;
+      return (!!r && r.constructor === Array) ? r = JSON.stringify(r) : a;
     });
 }
 

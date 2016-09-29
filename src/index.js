@@ -2,9 +2,31 @@ import { version } from '../package.json';
 import utils from './utils/utils';
 import requestUtils from './utils/request';
 import specUtils from './utils/spec';
-import specTemplates from './charts/specs';
+// import specTemplates from './charts/specs';
 import * as d3 from 'd3';
 import * as vg from 'vega';
+
+// get cedar root URL for loading chart specs
+const baseUrl = (function() {
+  var cdnProtocol = 'http:';
+  var cdnUrl = '//esri.github.io/cedar/js';
+  var src;
+  if (window && window.document) {
+    src = (window.document.currentScript && window.document.currentScript.src);
+    if (src) {
+      // real browser, get base url from current script
+      return src.substr(0, src.lastIndexOf('/'));
+    } else {
+      // ie, set base url to CDN
+      // NOTE: could fallback to CDN only if can't find any scripts named cedar
+      return (window.document.location ? window.document.location.protocol : cdnProtocol) + cdnUrl;
+    }
+  } else {
+    // node, set base url to CDN
+    return cdnProtocol + cdnUrl;
+  }
+})();
+
 
 export default class Cedar {
   /**
@@ -59,11 +81,14 @@ export default class Cedar {
   constructor(options) {
     this.version = version;
     // Pull templates in
-    this.chartTypes = specTemplates;
+    // this.chartTypes = specTemplates;
 
     let opts = options || {};
 
     let spec;
+
+    this.baseUrl = baseUrl;
+    this.chartTypes = ['bar', 'bar-horizontal', 'bubble', 'grouped', 'pie', 'scatter', 'sparkline', 'time', 'time-trendline'];
 
     // Cedar configs such as size..
     this.width = undefined;
@@ -92,6 +117,11 @@ export default class Cedar {
     // override the base timeout
     if (opts.timeout) {
       this._timeout = opts.timeout;
+    }
+
+    // override the base url
+    if (!!opts.baseUrl) {
+      this.baseUrl = opts.baseUrl;
     }
 
     /**
@@ -131,10 +161,7 @@ export default class Cedar {
      */
 
     // first, check for pre-defined chart type passed in as 'type'
-    if (opts.type) {
-      let type = opts.type.replace(/-/g, '_');
-      spec = this.chartTypes[type];
-    }
+    spec = this._getSpecificationUrl(opts.type);
 
     // If url or object passed use that...
     if (opts.specification) {
@@ -218,6 +245,7 @@ export default class Cedar {
   }
   set override(val) {
     this._definition.override = val;
+    // return this.update(); // TODO is this the best way?
   }
 
   // Tooltip
@@ -229,6 +257,13 @@ export default class Cedar {
     if (this._definition.tooltip.id === undefined || this._definition.tooltip.id === null) {
       this._definition.tooltip.id = `cedar-${Date.now()}`;
     }
+  }
+
+  _getSpecificationUrl(spec) {
+    if (this.chartTypes.indexOf(spec) !== -1) {
+      spec = `${this.baseUrl}/charts/${this.chartTypes[this.chartTypes.indexOf(spec)]}.json`;
+    }
+    return spec;
   }
 
   /**
