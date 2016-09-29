@@ -5,7 +5,7 @@
   "main": "./dist/cedar.js",
   "scripts": {
     "build": "node -e \"require('grunt').tasks(['build']);\"",
-    "build-rollup": "rollup -w -c rollup.config.js",
+    "build-rollup": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
     "start": "node -e \"require('grunt').tasks(['default']);\"",
     "test": "node -e \"require('grunt').tasks(['test']);\""
   },
