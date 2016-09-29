@@ -279,7 +279,6 @@ export default class Cedar {
    */
   show(options, clb) {
     if (this._pendingXhr) {
-      console.log('bob');
       // TODO addToMethodQueue
       this._addToMethodQueue('show', [options, clb]);
     } else {
@@ -299,8 +298,7 @@ export default class Cedar {
       this._renderer = options.renderer || 'svg'; // default to svg
       this.width = options.width || this.height;
       this.height = options.height || this.height;
-
-      if (!!options.autolabels) {
+      if (options.autolabels !== undefined && options.autolabels !== null) {
         this.autolabels = options.autolabels;
       }
 
@@ -497,7 +495,6 @@ export default class Cedar {
       let length = 0;
 
       // find the max length value for each axis
-      console.log(spec);
       spec.data[0].values.features.forEach((feature) => {
         inputs.forEach((axis) => {
           length = (feature.attributes[fields[axis]] || "").toString().length;
