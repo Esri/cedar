@@ -45,37 +45,37 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: {
-        src: [
-          'src/**/*.js'
-        ]
-      }
-    },
+    // jshint: {
+    //   options: {
+    //     jshintrc: '.jshintrc'
+    //   },
+    //   all: {
+    //     src: [
+    //       'src/**/*.js'
+    //     ]
+    //   }
+    // },
 
     watch: {
-      scripts: {
-        files: [
-          'src/**/*.js',
-          'spec/**/*.spec.js'
-        ],
-        tasks: ['jshint', 'concat', 'uglify', 'copy:scripts'],
-        options: {
-          spawn: false
-        }
-      },
-      specs: {
-        files: [
-          'src/charts/*.json'
-        ],
-        tasks: ['copy:specs'],
-        options: {
-          spawn: false
-        }
-      },
+      // scripts: {
+      //   files: [
+      //     'src/**/*.js',
+      //     'spec/**/*.spec.js'
+      //   ],
+      //   tasks: ['jshint', 'concat', 'uglify', 'copy:scripts'],
+      //   options: {
+      //     spawn: false
+      //   }
+      // },
+      // specs: {
+      //   files: [
+      //     'src/charts/*.json'
+      //   ],
+      //   tasks: ['copy:specs'],
+      //   options: {
+      //     spawn: false
+      //   }
+      // },
       'docs-sass': {
         files: ['site/source/scss/**/*.scss'],
         tasks: ['sass'],
@@ -106,33 +106,34 @@ module.exports = function(grunt) {
       }
     },
 
-    concat: {
-      options: {
-        sourceMap: true,
-        separator: '\n\n'
-      },
-      core: {
-        src: cedar_core,
-        dest: 'dist/cedar.js'
-      }
-    },
+    // concat: {y
+    //   options: {
+    //     sourceMap: true,
+    //     separator: '\n\n'
+    //   },
+    //   core: {
+    //     src: cedar_core,
+    //     dest: 'dist/cedar.js'
+    //   }
+    // },
+    //
+    // uglify: {
+    //   options: {
+    //     sourceMap: true,
+    //     sourceMapIncludeSources: true,
+    //     wrap: false,
+    //     mangle:true,
+    //     preserveComments: 'some',
+    //     report: 'gzip'
+    //   },
+    //   dist: {
+    //     files: {
+    //       'dist/cedar.min.js': cedar_core
+    //     }
+    //   }
+    // },
 
-    uglify: {
-      options: {
-        sourceMap: true,
-        sourceMapIncludeSources: true,
-        wrap: false,
-        mangle:true,
-        preserveComments: 'some',
-        report: 'gzip'
-      },
-      dist: {
-        files: {
-          'dist/cedar.min.js': cedar_core
-        }
-      }
-    },
-
+    // TODO: move these to own karma.conf files
     karma: {
       options: {
         configFile: 'karma.conf.js'
@@ -272,19 +273,19 @@ module.exports = function(grunt) {
 
   // Development Tasks
   grunt.registerTask('default', ['docs']);
-  grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify', 'copy:specs']);
-  grunt.registerTask('test', ['jshint', 'karma:run']);
-  grunt.registerTask('publish', ['concat', 'uglify', 'copy:specs']);
+  // grunt.registerTask('build', [/*'jshint', */'karma:coverage', /*'concat', 'uglify', */'copy:specs']);
+  grunt.registerTask('test', [/*'jshint',*/ 'karma:run']);
+  grunt.registerTask('publish', [/*'concat', 'uglify', */'copy:specs']);
   grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks
   grunt.registerTask('docs', ['assemble:dev', /*'concat', 'uglify',*/ 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Local built to site/build
-  grunt.registerTask('docs:build', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin']);
+  grunt.registerTask('docs:build', ['assemble:build', /*'concat', 'uglify', */'sass','copy', 'imagemin']);
 
   // Push to GH Pages
-  grunt.registerTask('docs:deploy', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin', 'gh-pages']);
+  grunt.registerTask('docs:deploy', ['assemble:build', /*'concat', 'uglify', */'sass','copy', 'imagemin', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});

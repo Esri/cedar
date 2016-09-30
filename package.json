@@ -4,10 +4,12 @@
   "description": "Visualization framework for the ArcGIS Platform",
   "main": "./dist/cedar.js",
   "scripts": {
-    "build": "node -e \"require('grunt').tasks(['build']);\"",
-    "build-rollup": "rollup -c profiles/debug.js & rollup -c profiles/production.js",
-    "start": "node -e \"require('grunt').tasks(['default']);\"",
-    "test": "node -e \"require('grunt').tasks(['test']);\""
+    "lint": "jshint src || true",
+    "prebuild": "npm run lint",
+    "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js & grunt copy:specs && grunt copy:scripts",
+    "postbuild": "npm run test",
+    "start": "watch 'npm run build' src & grunt",
+    "test": "karma start"
   },
   "repository": {
     "type": "git",
@@ -65,7 +67,8 @@
     "rollup-watch": "^2.5.0",
     "sinon": "^1.11.1",
     "sinon-chai": "^2.8.0",
-    "underscore": "^1.7.0"
+    "underscore": "^1.7.0",
+    "watch": "^0.19.2"
   },
   "dependencies": {
     "d3": "^3.5.6",
