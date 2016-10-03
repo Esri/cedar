@@ -61,6 +61,7 @@
     "mocha": "^3.0.1",
     "rollup": "^0.36.0",
     "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-buble": "^0.14.0",
     "rollup-plugin-json": "^2.0.2",
     "rollup-plugin-uglify": "^1.0.1",
     "rollup-watch": "^2.5.0",

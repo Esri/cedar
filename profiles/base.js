@@ -1,6 +1,6 @@
 import json from 'rollup-plugin-json';
-import babel from 'rollup-plugin-babel';
-
+// import babel from 'rollup-plugin-babel';
+import buble from 'rollup-plugin-buble';
 const pkg = require('../package.json');
 const copyright = `/**
 * ${pkg.name} - v${pkg.version} - ${new Date().toString()}
@@ -13,7 +13,7 @@ export default {
   moduleName: 'Cedar',
   format: 'umd',
   external: ['d3', 'vega'],
-  plugins: [json(), babel()],
+  plugins: [json(), buble()],
   globals: {
     'arcgis-cedar': 'Cedar',
     'd3': 'd3',
