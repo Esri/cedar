@@ -30,6 +30,7 @@
   "homepage": "https://github.com/esri/cedar",
   "devDependencies": {
     "assemble": "^0.4.37",
+    "babel-preset-es2015": "^6.16.0",
     "babel-preset-es2015-rollup": "^1.2.0",
     "bootstrap-sass": "^3.3.6",
     "browserify": "~8.0.2",
