@@ -134,36 +134,36 @@ module.exports = function(grunt) {
     // },
 
     // TODO: move these to own karma.conf files
-    karma: {
-      options: {
-        configFile: 'karma.conf.js'
-      },
-      run: {
-        reporters: ['progress'],
-        browsers: browsers
-      },
-      coverage: {
-        reporters: ['progress', 'coverage'],
-        browsers: browsers,
-        preprocessors: {
-          'src/**/*.js': 'coverage'
-        }
-      },
-      watch: {
-        singleRun: false,
-        autoWatch: true,
-        browsers: browsers
-      },
-      sauce: {
-        sauceLabs: {
-          testName: 'Cedar Unit Tests'
-        },
-        customLaunchers: customLaunchers,
-        browsers: Object.keys(customLaunchers),
-        reporters: ['progress', 'saucelabs'],
-        singleRun: true
-      }
-    },
+    // karma: {
+    //   options: {
+    //     configFile: 'karma.conf.js'
+    //   },
+    //   run: {
+    //     reporters: ['progress'],
+    //     browsers: browsers
+    //   },
+    //   coverage: {
+    //     reporters: ['progress', 'coverage'],
+    //     browsers: browsers,
+    //     preprocessors: {
+    //       'src/**/*.js': 'coverage'
+    //     }
+    //   },
+    //   watch: {
+    //     singleRun: false,
+    //     autoWatch: true,
+    //     browsers: browsers
+    //   },
+    //   sauce: {
+    //     sauceLabs: {
+    //       testName: 'Cedar Unit Tests'
+    //     },
+    //     customLaunchers: customLaunchers,
+    //     browsers: Object.keys(customLaunchers),
+    //     reporters: ['progress', 'saucelabs'],
+    //     singleRun: true
+    //   }
+    // },
 
     connect: {
       server: {
@@ -274,9 +274,9 @@ module.exports = function(grunt) {
   // Development Tasks
   grunt.registerTask('default', ['docs']);
   // grunt.registerTask('build', [/*'jshint', */'karma:coverage', /*'concat', 'uglify', */'copy:specs']);
-  grunt.registerTask('test', [/*'jshint',*/ 'karma:run']);
+  // grunt.registerTask('test', [/*'jshint',*/ 'karma:run']);
   grunt.registerTask('publish', [/*'concat', 'uglify', */'copy:specs']);
-  grunt.registerTask('test:sauce', ['karma:sauce']);
+  // grunt.registerTask('test:sauce', ['karma:sauce']);
 
   // Documentation Site Tasks
   grunt.registerTask('docs', ['assemble:dev', /*'concat', 'uglify',*/ 'sass', 'copy', 'connect:docs', 'watch']);
