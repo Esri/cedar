@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "jshint src || true",
     "prebuild": "npm run lint",
-    "build": "rollup -c profiles/debug.js & rollup -c profiles/production.js & grunt copy:specs && grunt copy:scripts",
+    "build": "rollup -c profiles/dev.js & rollup -c profiles/prod.js & rollup -c profiles/production.js & grunt copy:specs && grunt copy:scripts",
     "postbuild": "npm run test",
     "start": "watch 'npm run build' src & grunt",
     "test": "karma start"
