@@ -17,7 +17,7 @@ module.exports = function(config) {
       'node_modules/vega/vega.js',
       'node_modules/underscore/underscore.js',
       'spec/**/*.spec.js',
-      'dist/cedar-debug.js'
+      'dist/cedar.js'
     ],
 
     // list of files to exclude
