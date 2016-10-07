@@ -5,10 +5,11 @@
   "main": "./dist/cedar.js",
   "scripts": {
     "lint": "jshint src || true",
-    "prebuild": "npm run lint",
-    "build": "concurrently \"rollup -c profiles/dev.js\" \"rollup -c profiles/prod.js\" \"rollup -c profiles/production.js\" \"grunt copy:specs && grunt copy:scripts\"",
+    "clean": "rimraf ./dist && mkdir dist",
+    "prebuild": "npm run clean & npm run lint",
+    "build": "rollup -c profiles/dev.js & rollup -c profiles/prod.js & rollup -c profiles/production.js & grunt copy:specs && grunt copy:scripts",
     "postbuild": "npm run test",
-    "start": "concurrently \"watch 'npm run build' src\" \"grunt\"",
+    "start": "watch 'npm run build' src & grunt",
     "test": "karma start"
   },
   "repository": {
@@ -33,7 +34,6 @@
     "bootstrap-sass": "^3.3.6",
     "browserify": "~8.0.2",
     "chai": "^3.5.0",
-    "concurrently": "^3.1.0",
     "eslint": "^3.6.1",
     "grunt": "^0.4.2",
     "grunt-contrib-connect": "^0.4.1",
