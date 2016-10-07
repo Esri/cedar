@@ -6,8 +6,10 @@
   "scripts": {
     "lint": "jshint src || true",
     "clean": "rimraf ./dist && mkdir dist",
+    "clean-docs": "rimraf ./site/build",
+    "copy-specs": "copyfiles -f src/charts/*.json dist/charts dev/charts site/build/js/charts",
     "prebuild": "npm run clean & npm run lint",
-    "build": "rollup -c profiles/dev.js & rollup -c profiles/prod.js & rollup -c profiles/production.js & grunt copy:specs && grunt copy:scripts",
+    "build": "rollup -c profiles/dev.js & rollup -c profiles/prod.js & rollup -c profiles/production.js & npm run copy-specs && grunt copy:scripts",
     "postbuild": "npm run test",
     "start": "watch 'npm run build' src & grunt",
     "test": "karma start"
@@ -34,6 +36,7 @@
     "bootstrap-sass": "^3.3.6",
     "browserify": "~8.0.2",
     "chai": "^3.5.0",
+    "copyfiles": "^1.0.0",
     "eslint": "^3.6.1",
     "grunt": "^0.4.2",
     "grunt-contrib-connect": "^0.4.1",
