@@ -12,7 +12,10 @@ npm run build || exit 1
 git checkout -b gh-release
 
 # run build
-grunt publish
+# guessing this was only to copy chart JSON to dist,
+# which is now taken care of by npm run build,
+# and not to copy them site/build/js/charts (which it also did)
+# grunt publish
 
 # force add files
 git add dist -f
@@ -35,7 +38,8 @@ git branch -D gh-release
 git push origin :gh-release
 
 # re-run build in prevgit  branch before publishing
-grunt publish
+# again, this should not be needed b/c handled by npm run build
+# grunt publish
 
 # publish release on NPM
 # TODO: only publish if gh-release was successful, currently

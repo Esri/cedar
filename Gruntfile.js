@@ -164,19 +164,19 @@ module.exports = function(grunt) {
           { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
           { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
-      },
-      scripts: {
-        files: [
-          { expand: true, cwd: 'dist', src: '*.js*', dest: 'site/build/js/'},
-          { expand: true, cwd: 'node_modules/d3', src: '*.js*', dest: 'site/build/js/'},
-          { expand: true, cwd: 'node_modules/vega', src: '*.js*', dest: 'site/build/js/'}
-        ]
-      },
-      specs: {
-        files: [
-          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'},
-          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'dist/charts'}
-        ]
+      // },
+      // scripts: {
+      //   files: [
+      //     { expand: true, cwd: 'dist', src: '*.js*', dest: 'site/build/js/'},
+      //     { expand: true, cwd: 'node_modules/d3', src: '*.js*', dest: 'site/build/js/'},
+      //     { expand: true, cwd: 'node_modules/vega', src: '*.js*', dest: 'site/build/js/'}
+      //   ]
+      // },
+      // specs: {
+      //   files: [
+      //     { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'},
+      //     { expand: true, cwd: 'src/charts', src: '*.json', dest: 'dist/charts'}
+      //   ]
       }
 
     },
@@ -219,7 +219,7 @@ module.exports = function(grunt) {
   // Development Tasks
   grunt.registerTask('default', ['docs']);
 
-  grunt.registerTask('publish', ['copy:specs']);
+  // grunt.registerTask('publish', ['copy:specs']);
 
 
   // Documentation Site Tasks
