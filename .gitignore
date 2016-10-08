@@ -36,5 +36,5 @@ site/build
 # Built Files
 dist
 
-dev/cedar-dev.js
-dev/charts
+# Dev Build
+dev/js
