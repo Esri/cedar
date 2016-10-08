@@ -15,6 +15,7 @@ if [ "$TRAVIS_BRANCH" != "develop" ]
 
  npm install
  # run our compile script, discussed above
+ npm run predeploy
  grunt docs:build
 
  # go to the out directory and create a *new* Git repo

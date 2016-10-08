@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- source converted to ES2015 and compiled with rollup/buble
+- tooling updated to favor npm scripts instead of grunt
+- test pages and specs moved under test folder
+- clean up of unused grunt tasks, dependencies, and misc files
+
 ## [0.6.1] - 2016-08-15
 ### Changed
 - Updated dependencies to most recent version of vega to avoid dependencies issues.

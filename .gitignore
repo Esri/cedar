@@ -35,3 +35,6 @@ site/build
 
 # Built Files
 dist
+
+# Test Build
+test/js
