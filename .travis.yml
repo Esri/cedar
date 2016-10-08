@@ -11,7 +11,7 @@ install:
   - sudo apt-get install libgif-dev
   - npm install
 script:
-  - npm run build
+  - npm test
 after_success:
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && bash ./scripts/deploy.sh
 branches:

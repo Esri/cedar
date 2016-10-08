@@ -2,45 +2,6 @@
 
 /* jshint strict: false, camelcase: false */
 module.exports = function(grunt) {
-  var browsers = grunt.option('browser') ? grunt.option('browser').split(',') : ['PhantomJS'];
-
-  // var copyright = '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\'yyyy-mm-dd\') %>\n' +
-  //                 '*   Copyright (c) <%= grunt.template.today(\'yyyy\') %> Environmental Systems Research Institute, Inc.\n' +
-  //                 '*   Apache License' +
-  //                 '*/\n';
-
-  var cedar_core = [
-    'src/cedar.js',
-  ];
-
-
-
-  var customLaunchers = {
-    sl_chrome: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      platform: 'Windows 7',
-      version: '35'
-    },
-    sl_firefox: {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      version: '30'
-    },
-    sl_ios_safari: {
-      base: 'SauceLabs',
-      browserName: 'iphone',
-      platform: 'OS X 10.9',
-      version: '7.1'
-    },
-    sl_ie_11: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8.1',
-      version: '11'
-    }
-  };
-
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -77,38 +38,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    // TODO: move these to own karma.conf files
-    // karma: {
-    //   options: {
-    //     configFile: 'karma.conf.js'
-    //   },
-    //   run: {
-    //     reporters: ['progress'],
-    //     browsers: browsers
-    //   },
-    //   coverage: {
-    //     reporters: ['progress', 'coverage'],
-    //     browsers: browsers,
-    //     preprocessors: {
-    //       'src/**/*.js': 'coverage'
-    //     }
-    //   },
-    //   watch: {
-    //     singleRun: false,
-    //     autoWatch: true,
-    //     browsers: browsers
-    //   },
-    //   sauce: {
-    //     sauceLabs: {
-    //       testName: 'Cedar Unit Tests'
-    //     },
-    //     customLaunchers: customLaunchers,
-    //     browsers: Object.keys(customLaunchers),
-    //     reporters: ['progress', 'saucelabs'],
-    //     singleRun: true
-    //   }
-    // },
 
     connect: {
       server: {
@@ -164,19 +93,6 @@ module.exports = function(grunt) {
           { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
           { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
-      // },
-      // scripts: {
-      //   files: [
-      //     { expand: true, cwd: 'dist', src: '*.js*', dest: 'site/build/js/'},
-      //     { expand: true, cwd: 'node_modules/d3', src: '*.js*', dest: 'site/build/js/'},
-      //     { expand: true, cwd: 'node_modules/vega', src: '*.js*', dest: 'site/build/js/'}
-      //   ]
-      // },
-      // specs: {
-      //   files: [
-      //     { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'},
-      //     { expand: true, cwd: 'src/charts', src: '*.json', dest: 'dist/charts'}
-      //   ]
       }
 
     },
@@ -219,9 +135,6 @@ module.exports = function(grunt) {
   // Development Tasks
   grunt.registerTask('default', ['docs']);
 
-  // grunt.registerTask('publish', ['copy:specs']);
-
-
   // Documentation Site Tasks
   grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
 
@@ -233,5 +146,4 @@ module.exports = function(grunt) {
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
-
 };

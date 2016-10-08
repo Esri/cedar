@@ -15,8 +15,7 @@ module.exports = function(config) {
     files: [
       'node_modules/d3/d3.js',
       'node_modules/vega/vega.js',
-      'node_modules/underscore/underscore.js',
-      'spec/**/*.spec.js',
+      'test/spec/**/*.spec.js',
       'dist/cedar.js'
     ],
 
@@ -57,14 +56,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
-
-    // Configure the coverage reporters
-    coverageReporter: {
-      reporters:[
-        {type: 'html', dir:'coverage/'},
-        {type: 'text'}
-      ]
-    }
+    singleRun: true
   });
 };

@@ -1,6 +1,6 @@
 import config from './base';
 
-config.dest = 'dev/js/cedar.js';
-config.sourceMap = 'inline';
+config.dest = 'dist/cedar.js';
+config.sourceMap = 'dist/cedar.js.map';
 
 export default config;
