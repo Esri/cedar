@@ -1,4 +1,5 @@
 ---
+title: Example - Chart Events
 layout: example.hbs
 ---
 
@@ -22,7 +23,7 @@ layout: example.hbs
 
   <ul>
     <li>Name: <%=NAME%></li>
-    <li>Type: <%=FACUSE%></li>
+    <li>Type: <%=Type%></li>
     <li>Address: <%=ADDRESS%></li>
     <li>Phone: <%=PHONE%></li>
   </ul>
@@ -64,20 +65,15 @@ layout: example.hbs
   var chart = new Cedar({
     "type": "scatter",
     "dataset":{
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query":{},
       "mappings":{
-        "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
-        "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
-        "color":{"field":"FACUSE","label":"Facility Type"}
+        "x": {"field":"Number_of","label":"Enrollment"},
+        "y": {"field":"F_of_teach","label":"Fraction of Teachers"},
+        "color":{"field":"Type","label":"Facility Type"}
       }
     }
   });
-
-  chart.override = {
-    "width": 400,
-    "legends": [{"properties":{"labels": {"fontSize": {"value": 8} }}}]
-  }
 
   //render the chart
   chart.show({

@@ -2,80 +2,13 @@
 
 /* jshint strict: false, camelcase: false */
 module.exports = function(grunt) {
-  var browsers = grunt.option('browser') ? grunt.option('browser').split(',') : ['PhantomJS'];
-
-  // var copyright = '/*! <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today(\'yyyy-mm-dd\') %>\n' +
-  //                 '*   Copyright (c) <%= grunt.template.today(\'yyyy\') %> Environmental Systems Research Institute, Inc.\n' +
-  //                 '*   Apache License' +
-  //                 '*/\n';
-
-  var cedar_core = [
-    'src/cedar.js',
-  ];
-
-
-
-  var customLaunchers = {
-    sl_chrome: {
-      base: 'SauceLabs',
-      browserName: 'chrome',
-      platform: 'Windows 7',
-      version: '35'
-    },
-    sl_firefox: {
-      base: 'SauceLabs',
-      browserName: 'firefox',
-      version: '30'
-    },
-    sl_ios_safari: {
-      base: 'SauceLabs',
-      browserName: 'iphone',
-      platform: 'OS X 10.9',
-      version: '7.1'
-    },
-    sl_ie_11: {
-      base: 'SauceLabs',
-      browserName: 'internet explorer',
-      platform: 'Windows 8.1',
-      version: '11'
-    }
-  };
-
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: {
-        src: [
-          'src/**/*.js'
-        ]
-      }
-    },
 
     watch: {
-      scripts: {
-        files: [
-          'src/**/*.js',
-          'spec/**/*.spec.js'
-        ],
-        tasks: ['jshint', 'concat', 'uglify', 'copy:scripts'],
-        options: {
-          spawn: false
-        }
-      },
-      specs: {
-        files: [
-          'src/charts/*.json'
-        ],
-        tasks: ['copy:specs'],
-        options: {
-          spawn: false
-        }
-      },
+
       'docs-sass': {
         files: ['site/source/scss/**/*.scss'],
         tasks: ['sass'],
@@ -106,71 +39,6 @@ module.exports = function(grunt) {
       }
     },
 
-    concurrent: {
-      options: {
-        logConcurrentOutput: true
-      },
-      dev: ['watch:scripts', 'karma:watch', 'docs']
-    },
-
-    concat: {
-      options: {
-        sourceMap: true,
-        separator: '\n\n'
-      },
-      core: {
-        src: cedar_core,
-        dest: 'dist/builds/cedar.js'
-      }
-    },
-
-    uglify: {
-      options: {
-        sourceMap: true,
-        sourceMapIncludeSources: true,
-        wrap: false,
-        mangle:true,
-        preserveComments: 'some',
-        report: 'gzip'
-      },
-      dist: {
-        files: {
-          'dist/builds/cedar.min.js': cedar_core
-        }
-      }
-    },
-
-    karma: {
-      options: {
-        configFile: 'karma.conf.js'
-      },
-      run: {
-        reporters: ['progress'],
-        browsers: browsers
-      },
-      coverage: {
-        reporters: ['progress', 'coverage'],
-        browsers: browsers,
-        preprocessors: {
-          'src/**/*.js': 'coverage'
-        }
-      },
-      watch: {
-        singleRun: false,
-        autoWatch: true,
-        browsers: browsers
-      },
-      sauce: {
-        sauceLabs: {
-          testName: 'Cedar Unit Tests'
-        },
-        customLaunchers: customLaunchers,
-        browsers: Object.keys(customLaunchers),
-        reporters: ['progress', 'saucelabs'],
-        singleRun: true
-      }
-    },
-
     connect: {
       server: {
         options: {
@@ -181,7 +49,7 @@ module.exports = function(grunt) {
       },
       docs: {
         options: {
-          port: 8081,
+          port: 8082,
           hostname: '0.0.0.0',
           base: './site/build/'
         }
@@ -231,18 +99,6 @@ module.exports = function(grunt) {
           { src: 'site/source/js/script.js', dest: 'site/build/js/script.js'},
           { expand: true, cwd: 'site/source/data/', src: '**/*.*', dest: 'site/build/data/'}
         ]
-      },
-      scripts: {
-        files: [
-          { expand: true, cwd: 'dist/builds', src: '*.js*', dest: 'site/build/js/'},
-          { expand: true, cwd: 'node_modules/d3', src: 'd3.min.js', dest: 'site/build/js/'},
-          { expand: true, cwd: 'node_modules/vega', src: 'vega.min.js', dest: 'site/build/js/'}
-        ]
-      },
-      specs: {
-        files: [
-          { expand: true, cwd: 'src/charts', src: '*.json', dest: 'site/build/js/charts'}
-        ]
       }
 
     },
@@ -260,10 +116,15 @@ module.exports = function(grunt) {
 
     sass: {
       site: {
-        files: {
-          'site/build/css/style.css': 'site/source/scss/style.scss'
+          files: [{
+                    'expand': true,
+                    'dest': 'site/build/css/',
+                    'cwd': 'site/source/scss/',
+                    'src': ['*'],
+                    'ext': '.css',
+                    'style': 'compressed'
+                  }]
         }
-      }
     },
 
     'gh-pages': {
@@ -274,66 +135,21 @@ module.exports = function(grunt) {
 
       },
       src: ['**']
-    },
-
-    // s3: {
-    //   options: {
-    //     key: '<%= aws.key %>',
-    //     secret: '<%= aws.secret %>',
-    //     bucket: '<%= aws.bucket %>',
-    //     access: 'public-read',
-    //     headers: {
-    //       // 1 Year cache policy (1000 * 60 * 60 * 24 * 365)
-    //       'Cache-Control': 'max-age=630720000, public',
-    //       'Expires': new Date(Date.now() + 63072000000).toUTCString()
-    //     }
-    //   },
-    //   upload: {
-    //     upload: [
-    //       {
-    //         src: 'dist/**/*',
-    //         dest: 'esri-leaflet/<%= pkg.version %>/'
-    //       }
-    //     ]
-    //   }
-    // },
-
-    releaseable: {
-      release: {
-        options: {
-          remote: 'upstream',
-          dryRun: grunt.option('dryRun') ? grunt.option('dryRun') : false,
-          silent: false
-        },
-        src: [ 'dist/**/*.js','dist/**/*.map' ]
-      }
     }
   });
 
-  // var awsExists = fs.existsSync(process.env.HOME + '/esri-leaflet-s3.json');
-
-  // if (awsExists) {
-  //   grunt.config.set('aws', grunt.file.readJSON(process.env.HOME + '/esri-leaflet-s3.json'));
-  // }
-
   // Development Tasks
-  grunt.registerTask('default', ['concurrent:dev']);
-  grunt.registerTask('build', ['jshint', 'karma:coverage', 'concat', 'uglify']);
-  grunt.registerTask('test', ['jshint', 'karma:run']);
-  grunt.registerTask('prepublish', ['concat', 'uglify']);
-  grunt.registerTask('release', ['releaseable', 's3']);
-  grunt.registerTask('test:sauce', ['karma:sauce']);
+  grunt.registerTask('default', ['docs']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble:dev', 'concat', 'uglify', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
 
   // Local built to site/build
-  grunt.registerTask('docs:build', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin']);
+  grunt.registerTask('docs:build', ['assemble:build', 'sass','copy', 'imagemin']);
 
   // Push to GH Pages
-  grunt.registerTask('docs:deploy', ['assemble:build', 'concat', 'uglify', 'sass','copy', 'imagemin', 'gh-pages']);
+  grunt.registerTask('docs:deploy', ['assemble:build', 'sass','copy', 'imagemin', 'gh-pages']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
-
 };

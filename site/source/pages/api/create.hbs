@@ -20,6 +20,7 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
 | `dataset` | <`object`> | no | <a href="{{assets}}api/json/dataset-json.html">dataset</a> object. |
 | `type` | <`string`> | no | Shorthand for specifying a URL to a Cedar <a href="{{assets}}api/json/specification-json.html">specification</a>. Can be one of the pre-defined types ('bar', 'bar-horizontal', 'bubble', 'pie', 'scatter', 'time') or a URL to a secificatin JSON file. |
 | `baseUrl` | <`string`> | no | The URL of the folder which contains the Cedar script file (cedar.js or cedar.min.js).* |
+| `timeout` | <`number`> | no | The maximum amount of time (in milliseconds) to wait for response to asynchronous requests. |
 
 ### Examples
 
@@ -30,19 +31,19 @@ The chart will not appear until <a href="{{assets}}api/show.html">`.show()`</a> 
 
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "statisticType": "sum",
+        "onStatisticField": "Number_of",
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "sort": "TOTAL_STUD_SUM DESC",
-      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "sort": "Number_of_SUM DESC",
+      "x": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 

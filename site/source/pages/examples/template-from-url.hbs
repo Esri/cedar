@@ -1,4 +1,5 @@
 ---
+title: Custom Chart - Load from URL
 layout: example.hbs
 ---
 
@@ -21,13 +22,13 @@ layout: example.hbs
   var cedar = new Cedar();
 
   var dataSource = {
-    url:"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5"
+    url:"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
   };
 
   var fieldMappings = {
-    "x": "POPULATION_ENROLLED_2008",
-    "y": "SQUARE_FOOTAGE",
-    "color":"FACUSE"
+    "x": "Number_of",
+    "y": "F_of_teach",
+    "color":"Type"
   };
   
   var tmplUrl = "{{assets}}data/templates/scatter-template-v2.json";

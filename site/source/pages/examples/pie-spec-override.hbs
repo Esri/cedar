@@ -1,4 +1,5 @@
 ---
+title: Style Override
 layout: example.hbs
 ---
 
@@ -8,7 +9,7 @@ layout: example.hbs
 <p>Demonstrate how to override the specification such as changing colors or adding legend or marks.</p>
 
 <div id="chart"></div>
-<cite>DC Schools that are Capital Gains?</cite>
+<cite>DC Schools that are District?</cite>
 
 
 
@@ -19,10 +20,10 @@ layout: example.hbs
   var chart = new Cedar({"specification":"../data/templates/pie.json"});
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+      "group": {"field":"District","label":"District"},
+      "count": {"field":"Number_of","label":"Student Number_of"}
     }
   };
 
@@ -49,10 +50,10 @@ layout: example.hbs
   var chart = new Cedar({"specification":"{{assets}}data/templates/pie.json"});
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+      "group": {"field":"District","label":"District"},
+      "count": {"field":"Number_of","label":"Student Number_of"}
     }
   };
 

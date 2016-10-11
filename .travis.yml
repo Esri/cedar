@@ -1,15 +1,24 @@
 language: node_js
 node_js:
-- "0.10"
-before_script:
-  - npm update -q
-  - gem install sass
+- "4"
+- 6.3.0
+cache:
+  directories:
+    - node_modules
+before_install:
   - npm install -g grunt-cli
-  - npm install -g bower
-  - bower install
 install:
   - sudo apt-get update
   - sudo apt-get install libgif-dev
+  - npm install
+script:
+  - npm test
+after_success:
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && bash ./scripts/deploy.sh
+branches:
+  except:
+    -gh-release
+    -gh-pages
 env:
   global:
     - GH_REF: github.com/Esri/cedar.git

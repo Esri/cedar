@@ -1,9 +1,7 @@
 ---
+title: Pie Chart
 layout: example.hbs
 ---
-
-
-<h1>Simple Pie Chart</h1>
 
 <div id="chart"></div>
 
@@ -14,18 +12,18 @@ layout: example.hbs
   var chart = new Cedar({"type":"pie"});
 
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },    
     "mappings":{
-      "label": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
+      "label": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"},
       "radius": 270
     }
   };
@@ -45,30 +43,33 @@ layout: example.hbs
   var chart = new Cedar({"type":"pie"});
 
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "orderByFields": "TOTAL_STUD_SUM DESC",
-      "groupByFieldsForStatistics": "ZIP_CODE",
+      "orderByFields": "Number_of_SUM DESC",
+      "groupByFieldsForStatistics": "Zip",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },    
     "mappings":{
-      "label": {"field":"ZIP_CODE","label":"ZIP Code"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"},
+      "label": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"},
       "radius": 270
     }
   };
   chart.dataset = dataset;
 
-  chart.on('mouseover', function(e,d) { console.log("hover", d)});
-
+  chart.tooltip = {
+    "title": "{Zip} postcode",
+    "content": "{Number_of_SUM} students"
+  }
   chart.show({
     elementId: "#chart",
     width: 600,
-    height: 600
+    height: 600,
+    autolabels: false
   });  
 
 </script>

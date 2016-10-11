@@ -8,7 +8,7 @@ Icon
 /*.sublime-project
 *.sublime-workspace
 *.sublime-project
-.idea/*
+.idea
 
 # SASS
 .sass-cache
@@ -22,7 +22,7 @@ coverage
 # Grunt
 .grunt/
 
-# bower_components in site 
+# bower_components in site
 bower_components
 
 # Debugging Files
@@ -34,5 +34,7 @@ debug/*.html
 site/build
 
 # Built Files
-dist/**/*.js
-dist/**/*.map
+dist
+
+# Test Build
+test/js

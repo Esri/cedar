@@ -26,6 +26,9 @@
 
   <!-- stylesheet -->
   <link rel="stylesheet" href="{{assets}}css/style.css">
+  <link rel="stylesheet" href="{{assets}}css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
 
   <!-- Cedar and dependencies (d3, vega) -->
   <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
@@ -63,6 +66,9 @@
   <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
 
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
 
   <!-- Google Analytics -->
   <script>
@@ -77,5 +83,5 @@
   <!-- End Google Analytics -->
 </head>
 <body>
-  {{>navbar}}
 
+  {{>navbar}}

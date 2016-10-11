@@ -1,5 +1,5 @@
 ---
-title: Chart Sizes
+title: Example - Chart Resizing
 layout: example.hbs
 ---
 
@@ -33,18 +33,18 @@ layout: example.hbs
   var spec = {
     "type": "bar", 
     "dataset": {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query": {
-        "groupByFieldsForStatistics": "ZIP_CODE",
+        "groupByFieldsForStatistics": "Zip",
         "outStatistics": [{
           "statisticType": "sum", 
-          "onStatisticField": "TOTAL_STUD", 
-          "outStatisticFieldName": "TOTAL_STUD_SUM"
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
         }]
       },
       "mappings":{
-        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+        "x": {"field":"Zip","label":"ZIP Code"},
+        "y": {"field":"Number_of_SUM","label":"Total Students"}
       }
     }
   }
@@ -65,24 +65,24 @@ layout: example.hbs
   var spec = {
     "type": "bar", 
     "dataset": {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
       "query": {
-        "groupByFieldsForStatistics": "ZIP_CODE",
+        "groupByFieldsForStatistics": "Zip",
         "outStatistics": [{
           "statisticType": "sum", 
-          "onStatisticField": "TOTAL_STUD", 
-          "outStatisticFieldName": "TOTAL_STUD_SUM"
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
         }]
       },
       "mappings":{
-        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+        "x": {"field":"Zip","label":"ZIP Code"},
+        "y": {"field":"Number_of_SUM","label":"Total Students"}
       }
     }
   }
   var chartS = new Cedar(spec); chartS.show({elementId: "#chart-small"});
   var chartM = new Cedar(spec); chartM.show({elementId: "#chart-medium"});
-  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large"});
+  var chartL = new Cedar(spec); chartL.show({elementId: "#chart-large", autolabels: true});
 
 
   $(function() {

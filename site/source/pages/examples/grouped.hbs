@@ -1,0 +1,99 @@
+---
+title: Grouped Bar Chart
+layout: example.hbs
+---
+
+
+<div id="chart"></div>
+
+<pre class="prettyprint">
+var chart = new Cedar({
+	"type": "grouped",
+	"tooltip": {
+		"title": "{NAME}",
+		"content": "{POP2012} population in 2012"
+	},
+	"dataset":{
+	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+	  "mappings":{
+	    "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+	    "group":{"field":"NAME","label":"Name"}
+	  }
+	}
+});
+
+chart.show({
+	elementId: "#chart",
+	height: 300
+});	
+</pre>
+
+<div id="chart2"></div>
+
+<pre class="prettyprint">
+var chart2 = new Cedar({
+	"type": "grouped",
+	"tooltip": {
+		"title": "{STATE_NAME}",
+		"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+	},
+	"dataset":{
+	  "url": "http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
+	  "mappings":{
+	    "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
+	    "group":{"field":"STATE_NAME","label":"State"}
+	  }
+	}
+});
+
+chart2.show({
+	elementId: "#chart2",
+	height: 300
+});	
+</pre>
+<script>
+
+  var chart = new Cedar({
+    "type": "grouped",
+    "tooltip": {
+    	"title": "{NAME}",
+    	"content": "{POP2012} population in 2012"
+    },
+    "dataset":{
+	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+      "mappings":{
+        "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+        // "x": {"field":["attributes.AGE_5_9", "attributes.AGE_10_14", "attributes.AGE_15_19", "attributes.AGE_20_24", "attributes.AGE_25_34", "attributes.AGE_35_44", "attributes.AGE_45_54", "attributes.AGE_55_64", "attributes.AGE_75_84", "attributes.AGE_85_UP"],"label":"Age"},
+        "group":{"field":"NAME","label":"Name"}
+      }
+    }
+  });
+
+  chart.show({
+    elementId: "#chart",
+    height: 300
+  });
+
+
+  var chart2 = new Cedar({
+    "type": "grouped",
+    "tooltip": {
+    	"title": "{STATE_NAME}",
+    	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+    },
+    "dataset":{
+	  "url": "http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
+      "mappings":{
+        "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
+        "group":{"field":"STATE_NAME","label":"State"}
+      }
+    }
+  });
+
+  chart2.show({
+    elementId: "#chart2",
+    height: 300
+  });
+
+
+</script>

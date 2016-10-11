@@ -13,11 +13,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/d3/d3.js',
-      'bower_components/vega/vega.js',
-      'bower_components/underscore/underscore.js',
-      'spec/**/*.spec.js',
-      'src/cedar.js'
+      'node_modules/d3/d3.js',
+      'node_modules/vega/vega.js',
+      'test/spec/**/*.spec.js',
+      'dist/cedar.js'
     ],
 
     // list of files to exclude
@@ -57,14 +56,6 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: true,
-
-    // Configure the coverage reporters
-    coverageReporter: {
-      reporters:[
-        {type: 'html', dir:'coverage/'},
-        {type: 'text'}
-      ]
-    }
+    singleRun: true
   });
 };

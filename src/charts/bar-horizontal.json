@@ -20,11 +20,12 @@
         "scale": "x",
         "titleOffset": 45,
         "title": "{x.label}",
+        "tickPadding": 10,        
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -45,11 +46,12 @@
         "scale": "y",
         "titleOffset": 25,
         "title": "{y.label}",
+        "padding": 0.25,
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -78,8 +80,8 @@
         "properties": {
           "enter": {
             "height": {"band": true, "offset": -1, "scale": "y"},
-            "y": {"scale": "y", "field": "data.attributes.{y.field}"},
-            "x2": {"scale": "x", "field": "data.attributes.{x.field}"},
+            "y": {"scale": "y", "field": "attributes.{y.field}"},
+            "x2": {"scale": "x", "field": "attributes.{x.field}"},
             "x": {"scale": "x", "value": 0 }
           },
           "hover": {
@@ -96,16 +98,17 @@
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{y.field}"
+          "field": "attributes.{y.field}"
         },
         "name": "y",
         "range": "height",
-        "type": "ordinal"
+        "type": "ordinal",
+        "padding": 0.25
       },
       {
         "domain": {
           "data": "table",
-          "field": "data.attributes.{x.field}"
+          "field": "attributes.{x.field}"
         },
         "name": "x",
         "nice": true,

@@ -1,4 +1,5 @@
 ---
+title: Multiple Charts
 layout: example.hbs
 ---
 
@@ -18,19 +19,19 @@ layout: example.hbs
 ```js
 
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "CAPITALGAINS",
+      "groupByFieldsForStatistics": "District",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "CAPACITY", 
-        "outStatisticFieldName": "CAPACITY_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "x": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "y": {"field":"CAPACITY_SUM","label":"Student Capacity"},
-      "label": {"field":"CAPITALGAINS","label":"Capital Gains"}
+      "x": {"field":"District","label":"District"},
+      "y": {"field":"Number_of_SUM","label":"Student Number_of"},
+      "label": {"field":"District","label":"District"}
     }
   };
 
@@ -58,19 +59,19 @@ layout: example.hbs
 <script>
 
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "CAPITALGAINS",
+      "groupByFieldsForStatistics": "District",
       "outStatistics": [{
         "statisticType": "sum", 
-        "onStatisticField": "CAPACITY", 
-        "outStatisticFieldName": "CAPACITY_SUM"
+        "onStatisticField": "Number_of", 
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "x": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "y": {"field":"CAPACITY_SUM","label":"Student Capacity"},
-      "label": {"field":"CAPITALGAINS","label":"Capital Gains"}
+      "x": {"field":"District","label":"District"},
+      "y": {"field":"Number_of_SUM","label":"Student Number_of"},
+      "label": {"field":"District","label":"District"}
     }
   };
 

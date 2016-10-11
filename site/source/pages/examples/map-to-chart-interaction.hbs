@@ -1,4 +1,5 @@
 ---
+title: Example - Map to Chart Interaction
 layout: example.hbs
 amd: true
 ---
@@ -9,8 +10,8 @@ amd: true
 
 <h1>Map to Chart Interaction</h1>
 
+<div id="chart" style="height: 300px"></div>
 <div id="map"></div>
-<div id="chart"></div>
 
 
 
@@ -27,14 +28,14 @@ amd: true
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
 
     //create esri map
     var map = new Map("map", {
-      center: [-77, 38.9],
+      center: [-76.1474,43.04812],
       zoom: 11,
       basemap: "topo",
       smartNavigation: false
@@ -61,19 +62,20 @@ amd: true
 
     //create the dataset w/ mappings
     var dataset = {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
 
       "query": {
-        "groupByFieldsForStatistics": "ZIP_CODE",
+        "groupByFieldsForStatistics": "Zip",
         "outStatistics": [{
           "statisticType": "sum", 
-          "onStatisticField": "TOTAL_STUD", 
-          "outStatisticFieldName": "TOTAL_STUD_SUM"
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
         }]      
       },
       "mappings":{
-        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+        "sort": "Number_of_SUM DESC",
+        "x": {"field":"Zip","label":"ZIP Code"},
+        "y": {"field":"Number_of_SUM","label":"Total Students"}
       }
     };
 
@@ -117,7 +119,7 @@ amd: true
       
       map.graphics.clear();
 
-      var val = d.graphic.attributes["ZIP_CODE"];
+      var val = d.graphic.attributes["Zip"];
       chart.clearSelection({});
 
     }
@@ -135,8 +137,8 @@ amd: true
       map.graphics.add(highlightGraphic);
 
 
-      var val = d.graphic.attributes["ZIP_CODE"];
-      chart.select({key: "ZIP_CODE", value: val});
+      var val = d.graphic.attributes["Zip"];
+      chart.select({key: "Zip", value: val});
 
     });
 
@@ -160,14 +162,14 @@ amd: true
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
 
     //create esri map
     var map = new Map("map", {
-      center: [-77, 38.9],
+      center: [-76.1474,43.04812],
       zoom: 11,
       basemap: "topo",
       smartNavigation: false
@@ -187,19 +189,20 @@ amd: true
 
     //create the dataset w/ mappings
     var dataset = {
-      "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
 
       "query": {
-        "groupByFieldsForStatistics": "ZIP_CODE",
+        "groupByFieldsForStatistics": "Zip",
         "outStatistics": [{
           "statisticType": "sum", 
-          "onStatisticField": "TOTAL_STUD", 
-          "outStatisticFieldName": "TOTAL_STUD_SUM"
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
         }]      
       },
       "mappings":{
-        "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-        "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+        "sort": "Number_of_SUM DESC",
+        "x": {"field":"Zip","label":"ZIP Code"},
+        "y": {"field":"Number_of_SUM","label":"Total Students"}
       }
     };
 
@@ -248,7 +251,7 @@ amd: true
       
       map.graphics.clear();
 
-      var val = d.graphic.attributes["ZIP_CODE"];
+      var val = d.graphic.attributes["Zip"];
       chart.clearSelection({});
 
     }
@@ -266,8 +269,8 @@ amd: true
       map.graphics.add(highlightGraphic);
 
 
-      var val = d.graphic.attributes["ZIP_CODE"];
-      chart.select({key: "ZIP_CODE", value: val});
+      var val = d.graphic.attributes["Zip"];
+      chart.select({key: "Zip", value: val});
 
     });
 

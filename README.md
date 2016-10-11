@@ -1,5 +1,7 @@
 # Cedar
 
+[![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=develop)](https://travis-ci.org/Esri/cedar)
+
 Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.
 
 At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
@@ -80,8 +82,8 @@ Once Cedar is loaded you can create and show the chart at a designated element a
     "query": {
       "groupByFieldsForStatistics": "ZIP_CODE",
       "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
+        "statisticType": "sum",
+        "onStatisticField": "TOTAL_STUD",
         "outStatisticFieldName": "TOTAL_STUD_SUM"
       }]
     },
@@ -128,10 +130,9 @@ Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed
 
 1. `cd` into the `cedar` folder
 1. Install the dependencies with `npm install`
-1. Install additional dependencies with `bower install` (if you encounter an error connecting to github take a look at [this thread](https://github.com/angular/angular-phonecat/issues/141) for a possible fix).
-1. Run `grunt docs` from the command line. This will start the web server locally at [http://localhost:8081](http://localhost:8081) and start watching the source files and running linting and testing commands.
-1. Push your changes using `grunt docs:deploy` which pushes to your `origin/gh-pages`
-1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esri/cedar/master`
+1. Run `npm start` from the command line. This will start the web server locally at [http://localhost:8082](http://localhost:8082) and start watching the source files and running linting and testing commands.
+1. Deploy your changes using `grunt docs:deploy` which pushes to your `origin/gh-pages`
+1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esri/cedar/develop`
 
 ### Dependencies
 

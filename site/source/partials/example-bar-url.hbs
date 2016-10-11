@@ -1,29 +1,35 @@
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+    #resizable { width: 750px; height: 550px; padding: 0.5em; }
+  </style>
+
 <script>
   //create a cedar chart using the known 'bar' type
   // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
   var chart = new Cedar({"type": "bar"});
   //create the dataset w/ mappings
   var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "query": {
-      "groupByFieldsForStatistics": "FACUSE",
+      "groupByFieldsForStatistics": "Type",
       "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "TOTAL_STUD", 
-        "outStatisticFieldName": "TOTAL_STUD_SUM"
+        "statisticType": "sum",
+        "onStatisticField": "Number_of",
+        "outStatisticFieldName": "Number_of_SUM"
       }]
     },
     "mappings":{
-      "sort": "TOTAL_STUD_SUM DESC",
-      "x": {"field":"FACUSE","label":"Facility Use"},
-      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
+      "sort": "Number_of_SUM DESC",
+      "x": {"field":"Type","label":"Facility Use"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
     }
   };
 
-  var tooltipurl = {
-    "id": "tooltip-url",
-    "title": "{FACUSE}",
-    "content": "{TOTAL_STUD_SUM} Students in {FACUSE}"
+  chart.tooltip = {
+    "title": "{Type}",
+    "content": "{Number_of_SUM} Students in {Type}"
   }
 
   //assign to the chart
@@ -31,34 +37,12 @@
 
   //show the chart
   chart.show({
-    elementId: "#chart-url",
-    autolabels: true
+    elementId: "#chart-url"
   });
 
-  function positionTooltip(event, data) {
-      if(data === undefined || data === null) {
-        var cedartip = document.getElementById(tooltipurl.id);
-        cedartip.style.display = "none";
-        return;
-      }
-      var cedartip = document.getElementById(tooltipurl.id);
-      cedartip.style.top = event.offsetY+80 + "px";
-      cedartip.style.left = event.offsetX+30 + "px";
-      cedartip.style.display = "block";
-      var content = "<span class='title'>" + tooltipurl.title + "</span><br />";
-      content += "<p class='content'>" + tooltipurl.content + "</p>";
-
-      cedartip.innerHTML = content.replace( /\{(\w+)\}/g, function replacer(match, $1){
-        return data[$1];
-      } );
-
-  };
-
-  chart.on('mouseout', function(event,data){
-    positionTooltip(event, data);
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chart.update(); }
+    });
   });
-  chart.on('mousemove', function(event,data){
-    positionTooltip(event, data);
-  });  
-
 </script>

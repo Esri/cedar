@@ -1,7 +1,7 @@
 {
   "inputs": [
-    { "name": "x", "type": [ "numeric", "string" ], "required": false },
-    { "name": "y", "type": [ "string" ], "required": true }
+    { "name": "x", "type": [ "string" ], "required": true },
+    { "name": "y", "type": [ "numeric" ], "required": true }
   ],
   "query": {},
   "template":{
@@ -16,7 +16,7 @@
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },          
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -27,8 +27,8 @@
           },
           "labels": {
             "fill": {"value": "#999"},
-            "angle": {"value": 50},
-            "align": {"value": "left"},
+            "angle": {"value": -50},
+            "align": {"value": "right"},
             "baseline": {"value": "middle"}
           }
         }
@@ -37,12 +37,12 @@
         "type": "y",
         "scale": "y",
         "titleOffset": 45,
-        "title": "{y.label}",          
+        "title": "{y.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
-            "fontWeight": {"value": "bold"}
+            "fontWeight": {"value": "normal"}
           },          
           "axis": {
              "stroke": {"value": "#dbdad9"},
@@ -59,7 +59,8 @@
     ],
     "data": [
       {
-        "name": "table"
+        "name": "table",
+        "format": {"property": "features"}
       }
     ],    
     "marks": [
@@ -67,16 +68,16 @@
         "from": {"data": "table"},
         "properties": {
           "enter": {
+          },
+          "update": {
             "width": {"band": true, "offset": -1, "scale": "x"},
             "x": {"field": "attributes.{x.field}", "scale": "x"},
             "y": {"field": "attributes.{y.field}", "scale": "y"},
-            "y2": {"scale": "y", "value": 0 }
+            "y2": {"scale": "y", "value": 0 },            
+            "fill": {"value": "#0079c1"}
           },
           "hover": {
             "fill": {"value": "#29b6ea"}
-          },
-          "update": {
-            "fill": {"value": "#0079c1"}
           }
         },
         "type": "rect"

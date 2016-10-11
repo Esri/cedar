@@ -1,0 +1,70 @@
+---
+title: Dynamic Data
+layout: example.hbs
+---
+
+<div id="cedar"></div>
+
+<pre class="prettyprint">
+var countries = ["US", "Germany", "Netherlands", "Japan", "Italy", "Greece"];
+var features = [];
+for (var i = 0; i < countries.length; i++) {
+    features.push({attributes: {country: countries[i], sales: 100 }});
+};
+function updateData() {
+    for (var i = 0; i < features.length; i++) {
+        sales = Math.random() * 10000
+        cedar._view.data('table')
+            .update(function(d) {  
+                return d.attributes.country == countries[i]; },  
+                'attributes.sales', 
+                function(d) { return d.attributes.sales = sales; 
+            });     
+        cedar._view.update({duration: 300})
+    }
+}
+
+var cedar = new Cedar({
+    "type": "bar",
+    "dataset": {
+    "data": {features: features},
+      "mappings": {
+        "x": {"field":"country","label":"Country"},
+        "y": {"field":"sales","label":"Sales"} } } });
+
+cedar.show({ elementId: "#cedar" });
+window.setInterval(updateData, 1000);
+</pre>
+
+<script>
+var countries = ["US", "Germany", "Netherlands", "Japan", "Italy", "Greece"];
+var features = [];
+for (var i = 0; i < countries.length; i++) {
+    features.push({attributes: {country: countries[i], sales: 100 }});
+};
+function updateData() {
+    for (var i = 0; i < features.length; i++) {
+        sales = Math.random() * 10000 - 5000
+        cedar._view.data('table')
+            .update(function(d) {  
+                return d.attributes.country == countries[i]; },  
+                'attributes.sales', 
+                function(d) { return d.attributes.sales = sales; 
+            });     
+        cedar._view.update({duration: 300})
+    }
+}
+
+var cedar = new Cedar({
+    "type": "bar",
+    "dataset": {
+    "data": {features: features},
+      "mappings": {
+        "x": {"field":"country","label":"Country"},
+        "y": {"field":"sales","label":"Sales"} } } });
+
+cedar.show({ elementId: "#cedar" });
+window.setInterval(updateData, 1000);
+  
+</script>
+

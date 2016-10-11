@@ -16,17 +16,19 @@ Renders a cedar chart object into the specified element in the DOM.
 | `renderer`  | `string` | no | `svg` or `canvas` (default) for drawing the chart. |
 | `width`     | `number` | no | Explicit pixel width of chart. If not specified, will use width of `elementId`. |
 | `height` 	  | `number` | no | Explicit pixel height of chart. If not specified, will use height of `elementId`. |
+| `maxLabelLength` | `number` | no | Explicit max length of axis labels. If set, axis labels will be truncated to the given length. |
+| `callback` | `function` | no | Function to call once the chart has been shown. Will be called with (err, data) arguments. If there was an error it will be available as err.
 
 #### Example Code
-```
+```js
 <div id='chartDiv'></div>
 
 <script>
 var dataset = {
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
     "mappings":{
-      "group": {"field":"CAPITALGAINS","label":"Capital Gains"},
-      "count": {"field":"CAPACITY","label":"Student Capacity"}
+      "group": {"field":"District","label":"District"},
+      "count": {"field":"Number_of","label":"Student Number_of"}
     }
   };
 
@@ -36,6 +38,8 @@ var dataset = {
 chart.show({
   'elementId': '#chartDiv',
   'renderer': 'canvas'
+}, function(err, data) {
+  if (err) { console.log(err); }
 });
 
 </script>

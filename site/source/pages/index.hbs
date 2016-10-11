@@ -1,63 +1,157 @@
 ---
+title: cedar.js
 layout: page.hbs
 ---
 
-<div class="row">
-  <div class="col-lg-4">
-	<h2>cedar.js <small>charting for the ArcGIS platform</small></h2>  
- </div> 
-  <div class="col-lg-8">
+<div class="row page-header">
+  <div class="col-lg-3">
+    <img src="./img/cedar-logo-tree.png" height=300 ></img>
+  </div>
+  <div class="col-lg-9">
+    <h2 class="">{{page.title}}</h2>
   	<p>
-  	Cedar is a Javascript library for building visualizations from the GeoServices API. This includes common chart types such as bar charts, line charts, scatterplots, as well as custom visualizations designed with the <a href="http://vega.github.io">Vega grammar</a>. Built on D3.js - Cedar is extensible and interactive.
+  	Cedar is a Javascript library for crafting visualizations, in particular with the <a href="http://geoservices.github.io/">GeoServices API</a> from ArcGIS. This includes common chart types such as bar charts, line charts, scatterplots, as well as custom graphics designed with <a href="http://vega.github.io">Vega grammar</a>. Built on D3.js - Cedar is extensible and interactive.
   	</p>
   	<p>Cedar is open-source under the Apache license. Visit the <a href="http://github.com/esri/cedar">Esri Github</a> repository to learn more and contribute.</p>
   </div>
 
 </div>
 <div class="row">
+  <div class="col-lg-12">
+  <h2>Bar Chart</h2>
+  </div>
+  <div class="col-lg-6">
+  <pre class="prettyprint">
+    <code class="language-javascript">
+      var features = {"features": [...]};
+      var chart1 = new Cedar({
+        "type": "bar",
+        "tooltip": {
+          "title": "{Zip}",
+          "content": "{Number_of_Students} students"
+        },
+        "dataset": {
+          "data": features,
+          "mappings": {
+            "x": {"field":"Zip","label":"ZIP Code"},
+            "y": {"field":"Number_of_Students","label":"Total Students"} } } });
+      chart1.show({elementId: "#chart1", height: 300 });
+    </code>
+  </pre>
+  </div>
 
   <div class="col-lg-6">
   	<div  id="chart1"></div>
   </div>
+
+</div>
+
+<div class="row">
+  <hr>
+  <div class="col-lg-12">
+    <h2>Horizontal Chart</h2>
+  </div>
   <div class="col-lg-6">
-  	<div  id="chart2"></div>
+    <pre class="prettyprint">
+      <code class="language-javascript">
+        var chart2 = new Cedar({
+          "type": "bar-horizontal",
+          "tooltip": {
+            "title": "{Type}",
+            "content": "{Number_of_Students} students"
+          },
+          "dataset": {
+            "data": features,
+            "mappings": {
+              "x": {"field":"Number_of_Students","label":"Total Students"},
+              "y": {"field":"Type","label":"Facility Use"}}}});
+        chart2.show({elementId: "#chart2", height: 300});
+      </code>
+    </pre>
+  </div>
+  <div class="col-lg-6">
+    <div id="chart2"></div>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-lg-8">
+  <hr>
+  <div class="col-lg-12">
+    <h2>Scatterplot</h2>
+  </div>
+  <div class="col-lg-6">
+    <pre class="prettyprint">
+      <code class="language-javascript">
+        var chart3 = new Cedar({
+          "type": "scatter",
+          "tooltip": {
+            "title": "{Zip}",
+            "content": "{Number_of} students"
+          },
+          "dataset": {
+            "data": features,
+            "mappings": {
+              "x": {"field":"Number_of_Students","label":"Students"},
+              "y": {"field":"Number_of_Teachers","label":"Teachers"},
+              "color": {"field":"Type","label":"Total Students"}  } } });
+        chart3.show({elementId: "#chart3", height: 300 });
+      </code>
+    </pre>
+  </div>
+  <div class="col-lg-6">
   	<div  id="chart3"></div>
   </div>
  </div>
+<div class="row">
+  <hr>
+  <div class="col-lg-12">
+    <h2>Learn more...</h2>
+    <p>
+      Read the <a href="./tutorial/">Tutorial</a> for a walkthrough getting started with Cedar. See more <a href="examples/">Examples</a>, learn the <a href="api/">API</a>, or check out the code on <a href="https://github.com/Esri/cedar">GitHub</a>.
+    </p>
+  </div>
+ </div>
 <script>
-  var features = {"features":[{"attributes":{"CAPACITY":null,"TOTAL_STUD":0,"FACUSE":"ArtsCenter","SQUARE_FOOTAGE":null,"ZIP_CODE":20007}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":321,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20009}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":329,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":205776,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":253,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":null,"ZIP_CODE":20001}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":0,"FACUSE":"ArtsCenter","SQUARE_FOOTAGE":null,"ZIP_CODE":20010}},{"attributes":{"CAPACITY":1565,"TOTAL_STUD":910,"FACUSE":"HighSchool","SQUARE_FOOTAGE":271300,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":315,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":144900,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":735,"FACUSE":"YouthEngagement","SQUARE_FOOTAGE":null,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":471,"TOTAL_STUD":423,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":69600,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":556,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20008}},{"attributes":{"CAPACITY":1095,"TOTAL_STUD":514,"FACUSE":"HighSchool","SQUARE_FOOTAGE":343400,"ZIP_CODE":20001}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":23,"FACUSE":"YouthEngagement","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":84,"FACUSE":"ElementarySchool/Specialized","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":467,"TOTAL_STUD":306,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":119000,"ZIP_CODE":20012}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":211,"FACUSE":"ElementarySchool/Specialized","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":375,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":900,"TOTAL_STUD":89,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":109000,"ZIP_CODE":20024}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":670,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":355,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20008}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":328,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":459,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":82200,"ZIP_CODE":20010}},{"attributes":{"CAPACITY":438,"TOTAL_STUD":236,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20003}},{"attributes":{"CAPACITY":607,"TOTAL_STUD":489,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":66600,"ZIP_CODE":20010}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":429,"FACUSE":"MiddleSchool/HighSchool//Specialized","SQUARE_FOOTAGE":null,"ZIP_CODE":20010}},{"attributes":{"CAPACITY":525,"TOTAL_STUD":345,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":65500,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":173,"TOTAL_STUD":308,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":20000,"ZIP_CODE":20007}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":305,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":77700,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":571,"TOTAL_STUD":261,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":110800,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":60,"FACUSE":"YouthEngagement","SQUARE_FOOTAGE":null,"ZIP_CODE":20003}},{"attributes":{"CAPACITY":461,"TOTAL_STUD":224,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":56000,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":406,"TOTAL_STUD":290,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":63000,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":1240,"TOTAL_STUD":547,"FACUSE":"HighSchool","SQUARE_FOOTAGE":271300,"ZIP_CODE":20012}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":304,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20017}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":327,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20005}},{"attributes":{"CAPACITY":276,"TOTAL_STUD":292,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":46800,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":1565,"TOTAL_STUD":477,"FACUSE":"MiddleSchool/HighSchool","SQUARE_FOOTAGE":355400,"ZIP_CODE":20009}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":549,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":90,"TOTAL_STUD":67,"FACUSE":"YouthEngagement","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":181,"TOTAL_STUD":257,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":17400,"ZIP_CODE":20008}},{"attributes":{"CAPACITY":559,"TOTAL_STUD":341,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":73200,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":520,"TOTAL_STUD":384,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":500,"TOTAL_STUD":517,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":167500,"ZIP_CODE":20007}},{"attributes":{"CAPACITY":636,"TOTAL_STUD":235,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":87600,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":460,"TOTAL_STUD":327,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":83900,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":357,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20009}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":308,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":396,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20009}},{"attributes":{"CAPACITY":448,"TOTAL_STUD":386,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":77500,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":348,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":900,"TOTAL_STUD":1014,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":180000,"ZIP_CODE":20016}},{"attributes":{"CAPACITY":479,"TOTAL_STUD":269,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":57100,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":181,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":293,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":null,"ZIP_CODE":20017}},{"attributes":{"CAPACITY":486,"TOTAL_STUD":707,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":113600,"ZIP_CODE":20015}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":469,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":1110,"TOTAL_STUD":530,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":210700,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":517,"TOTAL_STUD":346,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":66600,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":474,"TOTAL_STUD":237,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":60200,"ZIP_CODE":20009}},{"attributes":{"CAPACITY":1085,"TOTAL_STUD":810,"FACUSE":"HighSchool","SQUARE_FOOTAGE":156000,"ZIP_CODE":20016}},{"attributes":{"CAPACITY":1485,"TOTAL_STUD":1633,"FACUSE":"HighSchool","SQUARE_FOOTAGE":271300,"ZIP_CODE":20016}},{"attributes":{"CAPACITY":213,"TOTAL_STUD":347,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":17400,"ZIP_CODE":20007}},{"attributes":{"CAPACITY":438,"TOTAL_STUD":254,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":70800,"ZIP_CODE":20024}},{"attributes":{"CAPACITY":549,"TOTAL_STUD":252,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":66200,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":460,"TOTAL_STUD":403,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":105900,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":364,"TOTAL_STUD":548,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":98200,"ZIP_CODE":20016}},{"attributes":{"CAPACITY":578,"TOTAL_STUD":521,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":69300,"ZIP_CODE":20003}},{"attributes":{"CAPACITY":471,"TOTAL_STUD":361,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":65000,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":547,"TOTAL_STUD":355,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":83800,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":258,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":412,"TOTAL_STUD":382,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":98900,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":332,"TOTAL_STUD":331,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":79700,"ZIP_CODE":20012}},{"attributes":{"CAPACITY":281,"TOTAL_STUD":244,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":69600,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":304,"TOTAL_STUD":310,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":38500,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":1425,"TOTAL_STUD":303,"FACUSE":"HighSchool","SQUARE_FOOTAGE":288800,"ZIP_CODE":20003}},{"attributes":{"CAPACITY":655,"TOTAL_STUD":277,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":154000,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":157,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20009}},{"attributes":{"CAPACITY":527,"TOTAL_STUD":463,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":79800,"ZIP_CODE":20010}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":412,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20007}},{"attributes":{"CAPACITY":446,"TOTAL_STUD":240,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":58908,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":418,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20001}},{"attributes":{"CAPACITY":452,"TOTAL_STUD":402,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":69600,"ZIP_CODE":20003}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":527,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":47200,"ZIP_CODE":20037}},{"attributes":{"CAPACITY":507,"TOTAL_STUD":223,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":59900,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":387,"TOTAL_STUD":482,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":250,"TOTAL_STUD":89,"FACUSE":"SpecialEducationSchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":320,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":78300,"ZIP_CODE":20032}},{"attributes":{"CAPACITY":1055,"TOTAL_STUD":497,"FACUSE":"HighSchool","SQUARE_FOOTAGE":331900,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":332,"TOTAL_STUD":242,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":43000,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":290,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20016}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":220,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":474,"TOTAL_STUD":296,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":63900,"ZIP_CODE":20018}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":301,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":54427,"ZIP_CODE":20001}},{"attributes":{"CAPACITY":850,"TOTAL_STUD":348,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":155100,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":528,"TOTAL_STUD":404,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":101400,"ZIP_CODE":20018}},{"attributes":{"CAPACITY":461,"TOTAL_STUD":256,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":88300,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":479,"TOTAL_STUD":344,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":64800,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":520,"TOTAL_STUD":233,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":95100,"ZIP_CODE":20037}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":150,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":670,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":null,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":1040,"TOTAL_STUD":784,"FACUSE":"HighSchool","SQUARE_FOOTAGE":247900,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":252,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":277000,"ZIP_CODE":20020}},{"attributes":{"CAPACITY":428,"TOTAL_STUD":265,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":65000,"ZIP_CODE":20001}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":497,"FACUSE":"YouthEngagement","SQUARE_FOOTAGE":null,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":625,"TOTAL_STUD":475,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":103700,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":90,"FACUSE":"SpecialEducationSchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20011}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":352,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20018}},{"attributes":{"CAPACITY":620,"TOTAL_STUD":413,"FACUSE":"HighSchool/Specialized","SQUARE_FOOTAGE":180000,"ZIP_CODE":20001}},{"attributes":{"CAPACITY":900,"TOTAL_STUD":174,"FACUSE":"MiddleSchool","SQUARE_FOOTAGE":109000,"ZIP_CODE":20024}},{"attributes":{"CAPACITY":322,"TOTAL_STUD":368,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":95000,"ZIP_CODE":20019}},{"attributes":{"CAPACITY":835,"TOTAL_STUD":384,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":215400,"ZIP_CODE":20002}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":442,"FACUSE":"EducationCampus","SQUARE_FOOTAGE":null,"ZIP_CODE":20010}},{"attributes":{"CAPACITY":null,"TOTAL_STUD":386,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":null,"ZIP_CODE":20016}},{"attributes":{"CAPACITY":276,"TOTAL_STUD":347,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":47500,"ZIP_CODE":20003}},{"attributes":{"CAPACITY":418,"TOTAL_STUD":457,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":49100,"ZIP_CODE":20008}},{"attributes":{"CAPACITY":474,"TOTAL_STUD":313,"FACUSE":"ElementarySchool","SQUARE_FOOTAGE":83400,"ZIP_CODE":20019}}]}
+  var features = {"features":[{"attributes":{"Number_of_Students":null,"Number_of_Teachers":0,"Type":"ArtsCenter","F_of_teach":null,"Zip":20007}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":321,"Type":"EducationCampus","F_of_teach":null,"Zip":20009}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":329,"Type":"HighSchool/Specialized","F_of_teach":205776,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":253,"Type":"HighSchool/Specialized","F_of_teach":null,"Zip":20001}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":0,"Type":"ArtsCenter","F_of_teach":null,"Zip":20010}},{"attributes":{"Number_of_Students":1565,"Number_of_Teachers":910,"Type":"HighSchool","F_of_teach":271300,"Zip":20032}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":315,"Type":"ElementarySchool","F_of_teach":144900,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":735,"Type":"YouthEngagement","F_of_teach":null,"Zip":20032}},{"attributes":{"Number_of_Students":471,"Number_of_Teachers":423,"Type":"EducationCampus","F_of_teach":69600,"Zip":20011}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":556,"Type":"ElementarySchool","F_of_teach":null,"Zip":20008}},{"attributes":{"Number_of_Students":1095,"Number_of_Teachers":514,"Type":"HighSchool","F_of_teach":343400,"Zip":20001}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":23,"Type":"YouthEngagement","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":84,"Type":"ElementarySchool/Specialized","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":467,"Number_of_Teachers":306,"Type":"EducationCampus","F_of_teach":119000,"Zip":20012}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":211,"Type":"ElementarySchool/Specialized","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":375,"Type":"ElementarySchool","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":900,"Number_of_Teachers":89,"Type":"MiddleSchool","F_of_teach":109000,"Zip":20024}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":670,"Type":"MiddleSchool","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":355,"Type":"EducationCampus","F_of_teach":null,"Zip":20008}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":328,"Type":"MiddleSchool","F_of_teach":null,"Zip":20019}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":459,"Type":"ElementarySchool","F_of_teach":82200,"Zip":20010}},{"attributes":{"Number_of_Students":438,"Number_of_Teachers":236,"Type":"ElementarySchool","F_of_teach":null,"Zip":20003}},{"attributes":{"Number_of_Students":607,"Number_of_Teachers":489,"Type":"ElementarySchool","F_of_teach":66600,"Zip":20010}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":429,"Type":"MiddleSchool/HighSchool//Specialized","F_of_teach":null,"Zip":20010}},{"attributes":{"Number_of_Students":525,"Number_of_Teachers":345,"Type":"ElementarySchool","F_of_teach":65500,"Zip":20032}},{"attributes":{"Number_of_Students":173,"Number_of_Teachers":308,"Type":"ElementarySchool","F_of_teach":20000,"Zip":20007}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":305,"Type":"ElementarySchool","F_of_teach":77700,"Zip":20032}},{"attributes":{"Number_of_Students":571,"Number_of_Teachers":261,"Type":"ElementarySchool","F_of_teach":110800,"Zip":20032}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":60,"Type":"YouthEngagement","F_of_teach":null,"Zip":20003}},{"attributes":{"Number_of_Students":461,"Number_of_Teachers":224,"Type":"ElementarySchool","F_of_teach":56000,"Zip":20019}},{"attributes":{"Number_of_Students":406,"Number_of_Teachers":290,"Type":"EducationCampus","F_of_teach":63000,"Zip":20011}},{"attributes":{"Number_of_Students":1240,"Number_of_Teachers":547,"Type":"HighSchool","F_of_teach":271300,"Zip":20012}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":304,"Type":"EducationCampus","F_of_teach":null,"Zip":20017}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":327,"Type":"ElementarySchool","F_of_teach":null,"Zip":20005}},{"attributes":{"Number_of_Students":276,"Number_of_Teachers":292,"Type":"ElementarySchool","F_of_teach":46800,"Zip":20002}},{"attributes":{"Number_of_Students":1565,"Number_of_Teachers":477,"Type":"MiddleSchool/HighSchool","F_of_teach":355400,"Zip":20009}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":549,"Type":"EducationCampus","F_of_teach":null,"Zip":20011}},{"attributes":{"Number_of_Students":90,"Number_of_Teachers":67,"Type":"YouthEngagement","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":181,"Number_of_Teachers":257,"Type":"ElementarySchool","F_of_teach":17400,"Zip":20008}},{"attributes":{"Number_of_Students":559,"Number_of_Teachers":341,"Type":"ElementarySchool","F_of_teach":73200,"Zip":20032}},{"attributes":{"Number_of_Students":520,"Number_of_Teachers":384,"Type":"ElementarySchool","F_of_teach":null,"Zip":20020}},{"attributes":{"Number_of_Students":500,"Number_of_Teachers":517,"Type":"HighSchool/Specialized","F_of_teach":167500,"Zip":20007}},{"attributes":{"Number_of_Students":636,"Number_of_Teachers":235,"Type":"ElementarySchool","F_of_teach":87600,"Zip":20019}},{"attributes":{"Number_of_Students":460,"Number_of_Teachers":327,"Type":"ElementarySchool","F_of_teach":83900,"Zip":20019}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":357,"Type":"ElementarySchool","F_of_teach":null,"Zip":20009}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":308,"Type":"ElementarySchool","F_of_teach":null,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":396,"Type":"ElementarySchool","F_of_teach":null,"Zip":20009}},{"attributes":{"Number_of_Students":448,"Number_of_Teachers":386,"Type":"ElementarySchool","F_of_teach":77500,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":348,"Type":"MiddleSchool","F_of_teach":null,"Zip":20019}},{"attributes":{"Number_of_Students":900,"Number_of_Teachers":1014,"Type":"MiddleSchool","F_of_teach":180000,"Zip":20016}},{"attributes":{"Number_of_Students":479,"Number_of_Teachers":269,"Type":"ElementarySchool","F_of_teach":57100,"Zip":20019}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":181,"Type":"ElementarySchool","F_of_teach":null,"Zip":20019}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":293,"Type":"HighSchool/Specialized","F_of_teach":null,"Zip":20017}},{"attributes":{"Number_of_Students":486,"Number_of_Teachers":707,"Type":"ElementarySchool","F_of_teach":113600,"Zip":20015}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":469,"Type":"ElementarySchool","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":1110,"Number_of_Teachers":530,"Type":"MiddleSchool","F_of_teach":210700,"Zip":20032}},{"attributes":{"Number_of_Students":517,"Number_of_Teachers":346,"Type":"EducationCampus","F_of_teach":66600,"Zip":20011}},{"attributes":{"Number_of_Students":474,"Number_of_Teachers":237,"Type":"ElementarySchool","F_of_teach":60200,"Zip":20009}},{"attributes":{"Number_of_Students":1085,"Number_of_Teachers":810,"Type":"HighSchool","F_of_teach":156000,"Zip":20016}},{"attributes":{"Number_of_Students":1485,"Number_of_Teachers":1633,"Type":"HighSchool","F_of_teach":271300,"Zip":20016}},{"attributes":{"Number_of_Students":213,"Number_of_Teachers":347,"Type":"ElementarySchool","F_of_teach":17400,"Zip":20007}},{"attributes":{"Number_of_Students":438,"Number_of_Teachers":254,"Type":"ElementarySchool","F_of_teach":70800,"Zip":20024}},{"attributes":{"Number_of_Students":549,"Number_of_Teachers":252,"Type":"ElementarySchool","F_of_teach":66200,"Zip":20032}},{"attributes":{"Number_of_Students":460,"Number_of_Teachers":403,"Type":"MiddleSchool","F_of_teach":105900,"Zip":20002}},{"attributes":{"Number_of_Students":364,"Number_of_Teachers":548,"Type":"ElementarySchool","F_of_teach":98200,"Zip":20016}},{"attributes":{"Number_of_Students":578,"Number_of_Teachers":521,"Type":"ElementarySchool","F_of_teach":69300,"Zip":20003}},{"attributes":{"Number_of_Students":471,"Number_of_Teachers":361,"Type":"ElementarySchool","F_of_teach":65000,"Zip":20032}},{"attributes":{"Number_of_Students":547,"Number_of_Teachers":355,"Type":"ElementarySchool","F_of_teach":83800,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":258,"Type":"ElementarySchool","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":412,"Number_of_Teachers":382,"Type":"ElementarySchool","F_of_teach":98900,"Zip":20002}},{"attributes":{"Number_of_Students":332,"Number_of_Teachers":331,"Type":"ElementarySchool","F_of_teach":79700,"Zip":20012}},{"attributes":{"Number_of_Students":281,"Number_of_Teachers":244,"Type":"EducationCampus","F_of_teach":69600,"Zip":20011}},{"attributes":{"Number_of_Students":304,"Number_of_Teachers":310,"Type":"ElementarySchool","F_of_teach":38500,"Zip":20011}},{"attributes":{"Number_of_Students":1425,"Number_of_Teachers":303,"Type":"HighSchool","F_of_teach":288800,"Zip":20003}},{"attributes":{"Number_of_Students":655,"Number_of_Teachers":277,"Type":"MiddleSchool","F_of_teach":154000,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":157,"Type":"ElementarySchool","F_of_teach":null,"Zip":20009}},{"attributes":{"Number_of_Students":527,"Number_of_Teachers":463,"Type":"ElementarySchool","F_of_teach":79800,"Zip":20010}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":412,"Type":"MiddleSchool","F_of_teach":null,"Zip":20007}},{"attributes":{"Number_of_Students":446,"Number_of_Teachers":240,"Type":"ElementarySchool","F_of_teach":58908,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":418,"Type":"EducationCampus","F_of_teach":null,"Zip":20001}},{"attributes":{"Number_of_Students":452,"Number_of_Teachers":402,"Type":"ElementarySchool","F_of_teach":69600,"Zip":20003}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":527,"Type":"HighSchool/Specialized","F_of_teach":47200,"Zip":20037}},{"attributes":{"Number_of_Students":507,"Number_of_Teachers":223,"Type":"ElementarySchool","F_of_teach":59900,"Zip":20019}},{"attributes":{"Number_of_Students":387,"Number_of_Teachers":482,"Type":"ElementarySchool","F_of_teach":null,"Zip":20011}},{"attributes":{"Number_of_Students":250,"Number_of_Teachers":89,"Type":"SpecialEducationSchool","F_of_teach":null,"Zip":20011}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":320,"Type":"ElementarySchool","F_of_teach":78300,"Zip":20032}},{"attributes":{"Number_of_Students":1055,"Number_of_Teachers":497,"Type":"HighSchool","F_of_teach":331900,"Zip":20011}},{"attributes":{"Number_of_Students":332,"Number_of_Teachers":242,"Type":"ElementarySchool","F_of_teach":43000,"Zip":20019}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":290,"Type":"ElementarySchool","F_of_teach":null,"Zip":20016}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":220,"Type":"ElementarySchool","F_of_teach":null,"Zip":20019}},{"attributes":{"Number_of_Students":474,"Number_of_Teachers":296,"Type":"EducationCampus","F_of_teach":63900,"Zip":20018}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":301,"Type":"ElementarySchool","F_of_teach":54427,"Zip":20001}},{"attributes":{"Number_of_Students":850,"Number_of_Teachers":348,"Type":"MiddleSchool","F_of_teach":155100,"Zip":20002}},{"attributes":{"Number_of_Students":528,"Number_of_Teachers":404,"Type":"EducationCampus","F_of_teach":101400,"Zip":20018}},{"attributes":{"Number_of_Students":461,"Number_of_Teachers":256,"Type":"ElementarySchool","F_of_teach":88300,"Zip":20020}},{"attributes":{"Number_of_Students":479,"Number_of_Teachers":344,"Type":"ElementarySchool","F_of_teach":64800,"Zip":20020}},{"attributes":{"Number_of_Students":520,"Number_of_Teachers":233,"Type":"EducationCampus","F_of_teach":95100,"Zip":20037}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":150,"Type":"ElementarySchool","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":670,"Type":"HighSchool/Specialized","F_of_teach":null,"Zip":20002}},{"attributes":{"Number_of_Students":1040,"Number_of_Teachers":784,"Type":"HighSchool","F_of_teach":247900,"Zip":20020}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":252,"Type":"MiddleSchool","F_of_teach":277000,"Zip":20020}},{"attributes":{"Number_of_Students":428,"Number_of_Teachers":265,"Type":"ElementarySchool","F_of_teach":65000,"Zip":20001}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":497,"Type":"YouthEngagement","F_of_teach":null,"Zip":20011}},{"attributes":{"Number_of_Students":625,"Number_of_Teachers":475,"Type":"EducationCampus","F_of_teach":103700,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":90,"Type":"SpecialEducationSchool","F_of_teach":null,"Zip":20011}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":352,"Type":"EducationCampus","F_of_teach":null,"Zip":20018}},{"attributes":{"Number_of_Students":620,"Number_of_Teachers":413,"Type":"HighSchool/Specialized","F_of_teach":180000,"Zip":20001}},{"attributes":{"Number_of_Students":900,"Number_of_Teachers":174,"Type":"MiddleSchool","F_of_teach":109000,"Zip":20024}},{"attributes":{"Number_of_Students":322,"Number_of_Teachers":368,"Type":"ElementarySchool","F_of_teach":95000,"Zip":20019}},{"attributes":{"Number_of_Students":835,"Number_of_Teachers":384,"Type":"EducationCampus","F_of_teach":215400,"Zip":20002}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":442,"Type":"EducationCampus","F_of_teach":null,"Zip":20010}},{"attributes":{"Number_of_Students":null,"Number_of_Teachers":386,"Type":"ElementarySchool","F_of_teach":null,"Zip":20016}},{"attributes":{"Number_of_Students":276,"Number_of_Teachers":347,"Type":"ElementarySchool","F_of_teach":47500,"Zip":20003}},{"attributes":{"Number_of_Students":418,"Number_of_Teachers":457,"Type":"ElementarySchool","F_of_teach":49100,"Zip":20008}},{"attributes":{"Number_of_Students":474,"Number_of_Teachers":313,"Type":"ElementarySchool","F_of_teach":83400,"Zip":20019}}]}
 
   var chart1 = new Cedar({
   	"type": "bar",
+    "tooltip": {
+      "title": "{Zip}",
+      "content": "{Number_of_Students} students"
+    },
     "dataset": {
     	"data": features,
 	    "mappings": {
-	      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
-	      "y": {"field":"TOTAL_STUD","label":"Total Students"} } } });
+	      "x": {"field":"Zip","label":"ZIP Code"},
+	      "y": {"field":"Number_of_Students","label":"Total Students"} } } });
   chart1.show({elementId: "#chart1", height: 300 });
 
   var chart2 = new Cedar({
   	"type": "bar-horizontal",
+    "tooltip": {
+      "title": "{Type}",
+      "content": "{Number_of_Students} students"
+    },
     "dataset": {
     	"data": features,
 	    "mappings": {
-	      "y": {"field":"FACUSE","label":""},
-	      "x": {"field":"TOTAL_STUD","label":"Total Students"} } } });
-  chart2.show({elementId: "#chart2", height: 300, autolabels: false});
+	      "x": {"field":"Number_of_Students","label":"Total Students"},
+        "y": {"field":"Type","label":"Facility Use"}} } });
+  chart2.show({elementId: "#chart2", height: 300});
 
   var chart3 = new Cedar({
   	"type": "scatter",
+    "tooltip": {
+      "title": "{Zip}",
+      "content": "{Number_of_Students} students"
+    },
     "dataset": {
     	"data": features,
 	    "mappings": {
-	      "x": {"field":"CAPACITY","label":"Capacity"},
-	      "y": {"field":"TOTAL_STUD","label":"Total Students"},
-	      "color": {"field":"FACUSE","label":"Total Students"}  } } });
-  chart3.show({elementId: "#chart3", height: 300, autolabels: true });
+	      "x": {"field":"Number_of_Students","label":"Students"},
+	      "y": {"field":"Number_of_Teachers","label":"Teachers"},
+	      "color": {"field":"Type","label":"Total Students"}  } } });
+  chart3.show({elementId: "#chart3", height: 300 });
 
 </script>
