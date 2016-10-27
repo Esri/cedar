@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - tooling updated to favor npm scripts instead of grunt
 - test pages and specs moved under test folder
 - clean up of unused grunt tasks, dependencies, and misc files
+- Semistandard for linting
 
 ## [0.6.1] - 2016-08-15
 ### Changed
