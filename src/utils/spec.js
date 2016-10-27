@@ -2,7 +2,7 @@
  * Return a default definition Object
  * @return {Object} Default definition
  */
-export function defaultDefinition() {
+export function defaultDefinition () {
   return {
     dataset: {
       query: defaultQuery()
@@ -15,7 +15,7 @@ export function defaultDefinition() {
  * Return AGO query defaults
  * @return {Object} Default query
  */
-export function defaultQuery() {
+export function defaultQuery () {
   return {
     where: '1=1',
     returnGeometry: false,
@@ -34,7 +34,7 @@ export function defaultQuery() {
  * @param  {array} inputs   Array of inputs in specification
  * @return {object}          Returns mappings
  */
-export function applyDefaultsToMappings(mappings, inputs) {
+export function applyDefaultsToMappings (mappings, inputs) {
   const errs = [];
   // iterate over inputs
   for (let i = 0; i < inputs.length; i++) {

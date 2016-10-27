@@ -9,18 +9,18 @@ import { defaultQuery } from './spec';
  *
  * @returns {string} - stringified and encoded query
  */
-function serializeQueryParams(params) {
+function serializeQueryParams (params) {
   const str = [];
   for (const param in params) {
-    if(params.hasOwnProperty(param)) {
+    if (params.hasOwnProperty(param)) {
       let val = params[param];
-      if (typeof val !== "string") {
+      if (typeof val !== 'string') {
         val = JSON.stringify(val);
       }
       str.push(`${encodeURIComponent(param)}=${encodeURIComponent(val)}`);
     }
   }
-  const queryString = str.join("&");
+  const queryString = str.join('&');
   return queryString;
 }
 
@@ -31,7 +31,7 @@ function serializeQueryParams(params) {
  * @param  {number}   timeout  Timeout on request
  * @return {object}            Response object
  */
-export function getJson(url, callback, timeout) {
+export function getJson (url, callback, timeout) {
   const cb = (err, data) => {
     // if timeout error then return a timeout error
     if (err && err.response === '') {
@@ -62,13 +62,13 @@ export function getJson(url, callback, timeout) {
  * @param  {object} queryFromSpec Query passed in by the user
  * @return {string}               url string
  */
-export function createFeatureServiceRequest(dataset, queryFromSpec) {
+export function createFeatureServiceRequest (dataset, queryFromSpec) {
   const mergedQuery = mixin({}, defaultQuery(), queryFromSpec);
 
   // Handle bbox
-  if (!!mergedQuery.bbox) {
+  if (mergedQuery.bbox) {
     // make sure a geometry was not also passed in
-    if (!!mergedQuery.geometry) {
+    if (mergedQuery.geometry) {
       throw new Error('Dataset.query can not have both a geometry and a bbox specified');
     }
     // Get the bbox (w,s,e,n)
@@ -101,15 +101,13 @@ export function createFeatureServiceRequest(dataset, queryFromSpec) {
     }]);
   }
 
-
-
-    //iterate the mappings keys to check for sort
-    //-----------------------------------------------------------------
-    //This approach would seem 'clean' but if there are multiple fields
-    //to sort by, the order would be determined by how javascript decides to
-    //iterate the mappings property hash.
-    //Thus, using mappings.sort gives the developer explicit control
-    //-----------------------------------------------------------------
+    // iterate the mappings keys to check for sort
+    // -----------------------------------------------------------------
+    // This approach would seem 'clean' but if there are multiple fields
+    // to sort by, the order would be determined by how javascript decides to
+    // iterate the mappings property hash.
+    // Thus, using mappings.sort gives the developer explicit control
+    // -----------------------------------------------------------------
     // var sort = [];
     // for (var property in dataset.mappings) {
     //   if (dataset.mappings.hasOwnProperty(property)) {
@@ -122,15 +120,16 @@ export function createFeatureServiceRequest(dataset, queryFromSpec) {
     // if(sort.length > 0){
     //   mergedQuery.orderByFields = sort.join(',');
     // }
-    //-----------------------------------------------------------------
-    //check for a sort passed directly in
-  if (!!dataset.mappings.sort) {
+    // -----------------------------------------------------------------
+    // check for a sort passed directly in
+
+  if (dataset.mappings.sort) {
     mergedQuery.orderByFields = dataset.mappings.sort;
   }
 
   let url = `${dataset.url}/query?${serializeQueryParams(mergedQuery)}`;
 
-  if (!!dataset.token) {
+  if (dataset.token) {
     url = `${url}&token=${dataset.token}`;
   }
 

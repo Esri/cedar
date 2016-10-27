@@ -4,7 +4,7 @@ import * as d3 from 'd3';
  * @param  {object} source Empty object that other objects will be merged into
  * @return {Object}        Merged objects
  */
-export function mixin(source) {
+export function mixin (source) {
   const args = [...arguments];
   for (let i = 1; i < args.length; i++) {
     d3.entries(args[i]).forEach((p) => {
@@ -17,17 +17,17 @@ export function mixin(source) {
 /**
  * Recursively merge properties of two objects
  */
-export function mergeRecursive(obj1, obj2) {
+export function mergeRecursive (obj1, obj2) {
   for (let p in obj2) {
     if (obj2.hasOwnProperty(p)) {
       try {
         // Property in destination object set; update its value.
-        if ( obj2[p].constructor === Object || obj2[p].constructor === Array ) {
+        if (obj2[p].constructor === Object || obj2[p].constructor === Array) {
           obj1[p] = mergeRecursive(obj1[p], obj2[p]);
         } else {
           obj1[p] = obj2[p];
         }
-      } catch(e) {
+      } catch (e) {
         // Property in destination object not set; create it and set its value
         obj1[p] = obj2[p];
       }
@@ -42,7 +42,7 @@ export function mergeRecursive(obj1, obj2) {
  * @param  {object} params   Object hash that maps to the tokens to be replaced
  * @return {string}          string with values replaced
  */
-export function supplant(template, params) {
+export function supplant (template, params) {
   const t = template.replace(/{([^{}]*)}/g,
     (a, b) => {
       const r = getTokenValue(params, b);
@@ -53,25 +53,25 @@ export function supplant(template, params) {
   return t.replace(/"{([^{}]*)}"/g,
     (a, b) => {
       let r = getTokenValue(params, b);
-      return (!!r && r.constructor === Array) ? r = JSON.stringify(r) : a;
+      return (!!r && r.constructor === Array) ? JSON.stringify(r) : a;
     });
 }
 
 /**
  * Get the value of a token from a hash
  */
- export function getTokenValue(tokens, tokenName) {
-   let tempTokens = tokens;
-   const tokenNameParts = tokenName.split('.');
-   for (let key in tokenNameParts) {
-     if (tempTokens.hasOwnProperty(tokenNameParts[key])) {
-       tempTokens = tempTokens[tokenNameParts[key]];
-     } else {
-       return null;
-     }
-   }
-   return tempTokens;
- }
+export function getTokenValue (tokens, tokenName) {
+  let tempTokens = tokens;
+  const tokenNameParts = tokenName.split('.');
+  for (let key in tokenNameParts) {
+    if (tempTokens.hasOwnProperty(tokenNameParts[key])) {
+      tempTokens = tempTokens[tokenNameParts[key]];
+    } else {
+      return null;
+    }
+  }
+  return tempTokens;
+}
 
  /**
   * Helper function that validates that the
@@ -82,35 +82,35 @@ export function supplant(template, params) {
   * @return {array}          Missing mappings
   * @access private
   */
- export function validateMappings(inputs, mappings) {
-   return inputs.filter((input) => {
-     if (input.required && !mappings[input.name]) {
-       return input;
-     }
-   });
- }
+export function validateMappings (inputs, mappings) {
+  return inputs.filter((input) => {
+    if (input.required && !mappings[input.name]) {
+      return input;
+    }
+  });
+}
 
  /**
   * Validate that the incoming data has the fields expected
   * in the mappings
   * @access private
   */
- export function validateData(data, mappings) {
-   const missingInputs = [];
-   if (!data.features || !Array.isArray(data.features)) {
-     throw new Error('Data is expected to have features array!');
-   }
-   const firstRow = data.features[0].attributes;
-   for (let key in mappings) {
-     if (mappings.hasOwnProperty(key)) {
-       let fld = getMappingFieldName(key, mappings[key].field);
-       if (!firstRow.hasOwnProperty(fld)) {
-         missingInputs.push(fld);
-       }
-     }
-   }
-   return missingInputs;
- }
+export function validateData (data, mappings) {
+  const missingInputs = [];
+  if (!data.features || !Array.isArray(data.features)) {
+    throw new Error('Data is expected to have features array!');
+  }
+  const firstRow = data.features[0].attributes;
+  for (let key in mappings) {
+    if (mappings.hasOwnProperty(key)) {
+      let fld = getMappingFieldName(key, mappings[key].field);
+      if (!firstRow.hasOwnProperty(fld)) {
+        missingInputs.push(fld);
+      }
+    }
+  }
+  return missingInputs;
+}
 
  /**
   * TODO does nothing, must figure out.
@@ -118,15 +118,15 @@ export function supplant(template, params) {
   * expected field names, based on the mapping name
   * @access private
   */
- export function getMappingFieldName(mappingName, fieldName) {
-   // this function why?
+export function getMappingFieldName (mappingName, fieldName) {
+  // this function why?
 
-   let name = fieldName;
+  let name = fieldName;
    // if(mappingName.toLowerCase() === 'count'){
    //  name = fieldName + '_SUM';
    // }
-   return name;
- }
+  return name;
+}
 
 const utils = {
   mixin,
