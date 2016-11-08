@@ -16,11 +16,11 @@
     /**
      * Url to the geoservices rest end-point
      */
-    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "url":"https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     /**
      * Query is optional means to filter the dataset
      * Params based on the ArGIS REST API
-     * http://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/
+     * https://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/
      */
     "query": {
       "where": "1=1",

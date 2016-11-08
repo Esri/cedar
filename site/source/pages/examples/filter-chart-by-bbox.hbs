@@ -14,8 +14,8 @@ amd: true
   }
 </style>
 
-<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
-<script src="http://js.arcgis.com/3.12/"></script>
+<link rel="stylesheet" href="https://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="https://js.arcgis.com/3.12/"></script>
 
 {{#markdown}}
 
@@ -45,7 +45,7 @@ This example shows how to filter the charted data based on a bounding box (bbox)
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
@@ -73,7 +73,7 @@ This example shows how to filter the charted data based on a bounding box (bbox)
     map.addLayer(featureLayer);
     
     var dataset = {
-      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
       "query": {
         "groupByFieldsForStatistics": "state",
         "outStatistics": [{
@@ -131,7 +131,7 @@ This example shows how to filter the charted data based on a bounding box (bbox)
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
@@ -159,7 +159,7 @@ This example shows how to filter the charted data based on a bounding box (bbox)
     map.addLayer(featureLayer);
     
     var dataset = {
-      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
       "query": {
         "groupByFieldsForStatistics": "state",
         "outStatistics": [{
