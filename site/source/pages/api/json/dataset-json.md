@@ -59,7 +59,7 @@ Since the inputs contain an optional parameter (`group`), the mappings can also 
 ### dataset.query
 Query is optional, but it is also a very useful parameter, as it allows the developer to specify additional Geoservices query parameters, such as a where clause, or bounding box.
 
-All properties of the query object will be converted into query parameters in the calls to fetch the data from the service. Thus, most geoservices [query parameters](http://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/) are supported. 
+All properties of the query object will be converted into query parameters in the calls to fetch the data from the service. Thus, most geoservices [query parameters](https://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/) are supported. 
 
 As a convenience, Cedar will add the correct `geometry` and `spatialRel`  parameters if a bbox is provided. Other geometric relations can be handled by manually configuring the parameters on the query object. 
 

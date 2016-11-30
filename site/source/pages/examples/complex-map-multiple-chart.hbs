@@ -36,8 +36,8 @@ amd: true
   }
 </style>
 
-<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
-<script src="http://js.arcgis.com/3.12/"></script>
+<link rel="stylesheet" href="https://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="https://js.arcgis.com/3.12/"></script>
 
 <div id="ex-container">
   <div id="map"></div>
@@ -59,7 +59,7 @@ amd: true
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",{
       mode: FeatureLayer.MODE_ONDEMAND,
       outFields: ["*"]
     });
@@ -88,7 +88,7 @@ amd: true
     console.log('featureLayer', featureLayer);
 
     var dataset = {
-      "url":"http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
+      "url":"https://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
       "query": {},
       "mappings":{
         "group": {"field":"STATE","label":"State"},
@@ -122,7 +122,7 @@ amd: true
 
     //chart two!
     var scatterset = {
-      "url":"http://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
+      "url":"https://services.arcgis.com/qEmpZrqTBf5yoq5n/arcgis/rest/services/tornadoes/FeatureServer/0",
       "query": {
         "groupByFieldsForStatistics": "MONTH",
         "outStatistics": [{

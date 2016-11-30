@@ -136,7 +136,7 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['docs']);
 
   // Documentation Site Tasks
-  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'connect:docs', 'watch']);
+  grunt.registerTask('docs', ['assemble:dev', 'sass', 'copy', 'imagemin', 'connect:docs', 'watch']);
 
   // Local built to site/build
   grunt.registerTask('docs:build', ['assemble:build', 'sass','copy', 'imagemin']);

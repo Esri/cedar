@@ -16,7 +16,7 @@ First, we create a new Cedar object and specify we want a bar chart. In this exa
 Now we need to define the data. We can either use an array of data that we have calculated in our code, or we can refer to an ArcGIS GeoServices layer. For the GeoServices Layer, Cedar will make the HTTP API calls to request data for us.
 
 <pre class="prettyprint">chart.dataset = {
-  "url":"http://server.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/4"
+  "url":"https://server.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/4"
 };
 </pre>
 
@@ -45,7 +45,7 @@ We could also pull all this into a single set of commands with some additional o
 <pre class="prettyprint">chart = new Cedar({
   "type": "bar",
   "dataset": {
-    "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
     "query": {
       "orderByFields": "TotPop DESC"
     },
@@ -65,7 +65,7 @@ We could also pull all this into a single set of commands with some additional o
 var chart = new Cedar({
   "type": "bar",
   "dataset": {
-    "url":"http://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
     "query": {
       "orderByFields": "TotPop DESC"
     },

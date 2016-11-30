@@ -14,8 +14,8 @@ amd: true
   }
 </style>
 
-<link rel="stylesheet" href="http://js.arcgis.com/3.12/esri/css/esri.css">
-<script src="http://js.arcgis.com/3.12/"></script>
+<link rel="stylesheet" href="https://js.arcgis.com/3.12/esri/css/esri.css">
+<script src="https://js.arcgis.com/3.12/"></script>
 
 
 <h1>Filter Chart by Geometry</h1>
@@ -38,7 +38,7 @@ amd: true
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
@@ -66,7 +66,7 @@ amd: true
     map.addLayer(featureLayer);
     
     var dataset = {
-      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
       "query": {
         "groupByFieldsForStatistics": "state",
         "outStatistics": [{
@@ -123,7 +123,7 @@ amd: true
 
     var rend = new SimpleRenderer(defaultSymbol);
 
-    var featureLayer = new FeatureLayer("http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
+    var featureLayer = new FeatureLayer("https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",{
       mode: FeatureLayer.SNAPSHOT,
       outFields: ["*"]
     });
@@ -151,7 +151,7 @@ amd: true
     map.addLayer(featureLayer);
     
     var dataset = {
-      "url":"http://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
       "query": {
         "groupByFieldsForStatistics": "state",
         "outStatistics": [{
