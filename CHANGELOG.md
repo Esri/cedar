@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Support
+- better pie chart example w/ SQL query expression
+
 ## [0.7.0] - 2015-11-30
 ### Changed
 - source converted to ES2015 and compiled with rollup/buble
