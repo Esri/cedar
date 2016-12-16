@@ -5,71 +5,111 @@ layout: example.hbs
 
 <div id="chart"></div>
 
-
+<p>This example uses the built in "pie" chart type and
+  also demonstrates how to use a SQL expression in your query
+  and include the output in your chart.</p>
 
 {{#markdown}}
 ```js
   var chart = new Cedar({"type":"pie"});
 
-  var dataset = {
-    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-    "query": {
-      "groupByFieldsForStatistics": "Zip",
-      "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "Number_of", 
-        "outStatisticFieldName": "Number_of_SUM"
-      }]
-    },    
-    "mappings":{
-      "label": {"field":"Zip","label":"ZIP Code"},
-      "y": {"field":"Number_of_SUM","label":"Total Students"},
-      "radius": 270
-    }
-  };
-  chart.dataset = dataset;
-
-  chart.show({
-    elementId: "#chart",
-    width: 600,
-    height: 600
-  });  
-```
-{{/markdown}}
-
-
-<script>
-  
-  var chart = new Cedar({"type":"pie"});
+  // build a SQL case when expression that
+  // converts month numbers to abbreviations
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var groupByExpression = "CASE ";
+  for (var i = 1, len = months.length; i <= len; i++) {
+    var month = months[i - 1];
+    groupByExpression = groupByExpression + "WHEN Month = " + i + " THEN '" + month + "'";
+  }
+  groupByExpression = groupByExpression + " END";
 
   var dataset = {
-    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+    "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
     "query": {
-      "orderByFields": "Number_of_SUM DESC",
-      "groupByFieldsForStatistics": "Zip",
+      "orderByFields": "FID_Count DESC",
+      // because we're using an expression here
+      // this will be named EXPR_1 in the JSON response's attributes
+      "groupByFieldsForStatistics": groupByExpression,
       "outStatistics": [{
-        "statisticType": "sum", 
-        "onStatisticField": "Number_of", 
-        "outStatisticFieldName": "Number_of_SUM"
+        "statisticType": "count",
+        // when counting records (not summing values)
+        // it's best to use the id field because
+        // it is guaranteed to have a value for every record
+        "onStatisticField": "FID",
+        "outStatisticFieldName": "FID_Count"
       }]
-    },    
+    },
     "mappings":{
-      "label": {"field":"Zip","label":"ZIP Code"},
-      "y": {"field":"Number_of_SUM","label":"Total Students"},
+      "label": {"field":"EXPR_1","label":"Month"},
+      "y": {"field":"FID_Count","label":"Number of Tornados"},
+      // the pie will be 540px tall/wide
       "radius": 270
     }
   };
   chart.dataset = dataset;
 
   chart.tooltip = {
-    "title": "{Zip} postcode",
-    "content": "{Number_of_SUM} students"
+    // this is the month abbreviation returned from the expresssion above
+    "title": "{EXPR_1}",
+    "content": "{FID_Count} tornados"
   }
   chart.show({
     elementId: "#chart",
     width: 600,
     height: 600,
     autolabels: false
-  });  
+  });
+```
+{{/markdown}}
 
+
+<script>
+  var chart = new Cedar({"type":"pie"});
+
+  // build a SQL case when expression that
+  // converts month numbers to abbreviations
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var groupByExpression = "CASE ";
+  for (var i = 1, len = months.length; i <= len; i++) {
+    var month = months[i - 1];
+    groupByExpression = groupByExpression + "WHEN Month = " + i + " THEN '" + month + "'";
+  }
+  groupByExpression = groupByExpression + " END";
+
+  var dataset = {
+    "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "orderByFields": "FID_Count DESC",
+      // because we're using an expression here
+      // this will be named EXPR_1 in the JSON response's attributes
+      "groupByFieldsForStatistics": groupByExpression,
+      "outStatistics": [{
+        "statisticType": "count",
+        // when counting records (not summing values)
+        // it's best to use the id field because
+        // it is guaranteed to have a value for every record
+        "onStatisticField": "FID",
+        "outStatisticFieldName": "FID_Count"
+      }]
+    },
+    "mappings":{
+      "label": {"field":"EXPR_1","label":"Month"},
+      "y": {"field":"FID_Count","label":"Number of Tornados"},
+      // the pie will be 540px tall/wide
+      "radius": 270
+    }
+  };
+  chart.dataset = dataset;
+
+  chart.tooltip = {
+    // this is the month abbreviation returned from the expresssion above
+    "title": "{EXPR_1}",
+    "content": "{FID_Count} tornados"
+  }
+  chart.show({
+    elementId: "#chart",
+    width: 600,
+    height: 600,
+    autolabels: false
+  });
 </script>
