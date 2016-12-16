@@ -107,6 +107,9 @@ export default class Cedar {
     // the vega tooltip
     this._tooltip = undefined;
 
+    // transform function
+    this._transform = undefined;
+
     // Queue to hold methods called while xhrs are in progress
     this._methodQueue = [];
 
@@ -223,6 +226,14 @@ export default class Cedar {
         };
       }
     }
+
+    /**
+     * tranform
+     */
+    // Allow a transform func to pass in
+    if (opts.transform && typeof opts.transform === 'function') {
+      this._transform = opts.transform;
+    }
   }
 
   /**
@@ -262,6 +273,14 @@ export default class Cedar {
     if (this._definition.tooltip.id === undefined || this._definition.tooltip.id === null) {
       this._definition.tooltip.id = `cedar-${Date.now()}`;
     }
+  }
+
+  // transform
+  get transform () {
+    return this._transform;
+  }
+  set transform (val) {
+    this._transform = val;
   }
 
   _getSpecificationUrl (spec) {
@@ -437,6 +456,9 @@ export default class Cedar {
             }
             // if no errors then continue...
             if (!err) {
+              if (this._transform && typeof this._transform === 'function') {
+                data = this._transform(data, this._definition.dataset);
+              }
               // TODO add error handlers for xhr and AGS errors.
               spec.data[0].values = data;
               // send to vega
