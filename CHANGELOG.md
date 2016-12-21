@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - add transform property to modify query results before rendering
 ### Support
 - better pie chart example w/ SQL query expression
+- update dependency urls and add jsfiddle to tutorial page
 
 ## [0.7.0] - 2015-11-30
 ### Changed
