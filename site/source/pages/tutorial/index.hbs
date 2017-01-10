@@ -4,9 +4,12 @@ description: A walkthrough of building a chart
 layout: example.hbs
 ---
 
+<p>Before starting on this tutorial, see <a href="https://github.com/Esri/cedar#loading-cedar">Loading Cedar</a> for details on how to load Cedar and its dependencies on the page.</p>
+
+<h3>Cedar Properties</h3>
 A Cedar chart needs four things: Chart Type, Data, Mappings, DOM Element.
 
-First, we create a new Cedar object and specify we want a bar chart. In this example we simply use `type: "bar"`, but instead we could refer to the full URL to a chart specification.
+First we create a new Cedar object and specify we want a bar chart. In this example we simply use `type: "bar"`, but instead we could refer to the full URL to a chart specification.
 
 <pre class="prettyprint">var chart = new Cedar({
   "type":"bar"
@@ -37,50 +40,38 @@ Lastly, we now show the chart and bind it to an HTML DOM element.
 
 And that's it, we now have a chart!
 
+See the <a href="../api/">API documentation</a> to learn more about the above properties.
+
 <hr>
-<h2>Full Output</h2>
+<h3>Constructor Options</h3>
 
-We could also pull all this into a single set of commands with some additional options:
+We could also create the instance of the Cedar chart by passing those properties as options to the constructor:
 
-<pre class="prettyprint">chart = new Cedar({
-  "type": "bar",
-  "dataset": {
-    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
-    "query": {
-      "orderByFields": "TotPop DESC"
-    },
-    "mappings":{
-      "x": {"field":"STATE_NAME","label":"US State"},
-      "y": {"field":"TotPop","label":"Population"}
+<pre class="prettyprint">
+  var chart = new Cedar({
+    "type": "bar",
+    "dataset": {
+      "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+      "query": {
+        "orderByFields": "TotPop DESC"
+      },
+      "mappings":{
+        "x": {"field":"STATE_NAME","label":"US State"},
+        "y": {"field":"TotPop","label":"Population"}
+      }
     }
-  }
-}).show({
-  elementId: "#chart"
-});
+  });
+
+  // show the chart and bind it to the DOM
+  chart.show({
+    elementId: '#chart'
+  });
 </pre>
-
-<div id="chart" style="width: 95%"></div>
-
-<script type="text/javascript">
-var chart = new Cedar({
-  "type": "bar",
-  "dataset": {
-    "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
-    "query": {
-      "orderByFields": "TotPop DESC"
-    },
-    "mappings":{
-      "x": {"field":"STATE_NAME","label":"US State"},
-      "y": {"field":"TotPop","label":"Population"}
-    }
-  }
-}).show({
-  elementId: "#chart",
-  autolabels: true,
-  renderer: "svg"
-});
-</script>
 
 <h3>Learn more</h3>
 
-Now explore the <a href="../examples/">Examples</a> or <a href="../api/">API documentation</a> to learn more about Cedar.
+<p>You can play around with this chart in a JSFiddle:</p>
+
+<iframe width="100%" height="600" src="//jsfiddle.net/tomwayson/dox5o6w4/embedded/result,js,html,resources/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+
+<p>Then explore the <a href="../examples/">Examples</a> to see how to use other chart types, override chart defaults and styles, handle events, and integrate charts with ArcGIS maps.</p>
