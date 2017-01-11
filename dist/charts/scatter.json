@@ -1,0 +1,165 @@
+{
+  "inputs":[
+    {"name":"x","type":["numeric"], "required":true},
+    {"name":"y","type":["numeric"], "required":true},
+    {"name":"color","type":["string"], "default": "#0079c1", "required":false}
+  ],
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "nice": true,
+        "range": "width",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{x.field}"
+        }
+      },
+      {
+        "name": "y",
+        "nice": true,
+        "range": "height",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{y.field}"
+        }
+      },
+      {
+        "name": "c",
+        "type": "ordinal",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{color.field}"
+        },
+        "range": "category10"
+      }
+    ],
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "{x.label}",
+        "tickPadding": 10,
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 0},
+            "fontSize": {"value": 14},
+            "align": {"value": "center"},
+            "baseline": {"value": "middle"}
+          }
+        }        
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "offset": 5,
+        "ticks": 5,
+        "title": "{y.label}",
+        "titleOffset": 50,
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "angle": {"value": 0},
+            "fontSize": {"value": 14},
+            "align": {"value": "right"}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }
+      }
+    ],
+    "legends": [
+      {
+        "fill": "c",
+        "title": "{color.label} ",
+        "offset": 0,
+        "properties": {
+          "symbols": {
+            "fillOpacity": {
+              "value": 0.5
+            },
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    ],
+    "marks": [
+      {
+        "type": "symbol",
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "x": {
+              "scale": "x",
+              "field": "attributes.{x.field}"
+            },
+            "y": {
+              "scale": "y",
+              "field": "attributes.{y.field}"
+            },
+            "fill": {
+              "scale": "c",
+              "field": "attributes.{color.field}"
+            },
+            "fillOpacity": {
+              "value": 0.5
+            }
+          },
+          "update": {
+            "size": {
+              "value": 100
+            },
+            "stroke": {
+              "value": "transparent"
+            }
+          },
+          "hover": {
+            "size": {
+              "value": 300
+            },
+            "stroke": {
+              "value": "white"
+            }
+          }
+        }
+      }
+    ]
+  }
+  
+}
