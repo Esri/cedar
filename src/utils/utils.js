@@ -58,19 +58,24 @@ export function supplant (template, params) {
 }
 
 /**
- * Get the value of a token from a hash
+  * Get the value of a token from a hash
+  * @param  {object} tokens    Hash {a: 'a', b: { c: 'c'} }
+  * @param  {string} tokenName Property name: 'a' would yield 'a', 'b.c' would yield 'c'
+  * @return {Any}           Returns value contained within property
+  * Pulled from gulp-token-replace (MIT license)
+  * https://github.com/Pictela/gulp-token-replace/blob/master/index.js
  */
 export function getTokenValue (tokens, tokenName) {
-  let tempTokens = tokens;
-  const tokenNameParts = tokenName.split('.');
-  for (let key in tokenNameParts) {
-    if (tempTokens.hasOwnProperty(tokenNameParts[key])) {
-      tempTokens = tempTokens[tokenNameParts[key]];
+  let tmpTokens = tokens;
+  let tokenNameParts = tokenName.split('.');
+  for (let i = 0; i < tokenNameParts.length; i++) {
+    if (tmpTokens.hasOwnProperty(tokenNameParts[i])) {
+      tmpTokens = tmpTokens[tokenNameParts[i]];
     } else {
       return null;
     }
   }
-  return tempTokens;
+  return tmpTokens;
 }
 
  /**
