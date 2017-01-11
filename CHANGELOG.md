@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [0.8.1]
 ### Support
 - getTokenValue now uses a for loop as it was previously erroneously using a for...in loop
 
@@ -116,6 +116,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.8.1]: https://github.com/Esri/cedar/compare/v0.8.0...v0.8.1
 [0.8.0]: https://github.com/Esri/cedar/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/Esri/cedar/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/Esri/cedar/compare/v0.6.0...v0.6.1
