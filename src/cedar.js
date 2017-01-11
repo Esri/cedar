@@ -7,7 +7,7 @@ import * as d3 from 'd3';
 import * as vg from 'vega';
 
 // get cedar root URL for loading chart specs
-const baseUrl = (function() {
+const baseUrl = (function () {
   var cdnProtocol = 'http:';
   var cdnUrl = '//esri.github.io/cedar/js';
   var src;
@@ -26,7 +26,6 @@ const baseUrl = (function() {
     return cdnProtocol + cdnUrl;
   }
 })();
-
 
 export default class Cedar {
   /**
@@ -78,7 +77,7 @@ export default class Cedar {
    * @param {String} options.tooltip.content - Templated tooltip body text. Uses "{Variable} template format"
    * @return {Object} new Cedar chart object
    */
-  constructor(options) {
+  constructor (options) {
     this.version = version;
     // Pull templates in
     // this.chartTypes = specTemplates;
@@ -108,6 +107,9 @@ export default class Cedar {
     // the vega tooltip
     this._tooltip = undefined;
 
+    // transform function
+    this._transform = undefined;
+
     // Queue to hold methods called while xhrs are in progress
     this._methodQueue = [];
 
@@ -120,7 +122,7 @@ export default class Cedar {
     }
 
     // override the base url
-    if (!!opts.baseUrl) {
+    if (opts.baseUrl) {
       this.baseUrl = opts.baseUrl;
     }
 
@@ -142,6 +144,9 @@ export default class Cedar {
         // assume it's a url (relative or absolute) and fetch the def object
         this._pendingXhr = true;
         requestUtils.getJson(opts.definition, (err, data) => {
+          if (err) {
+            throw new Error('Error fetching definition object', err);
+          }
           this._pendingXhr = false;
           this._definition = data;
           this._purgeMethodQueue();
@@ -178,6 +183,9 @@ export default class Cedar {
         this._pendingXhr = true;
         this._pendingXhr = true;
         requestUtils.getJson(spec, (err, data) => {
+          if (err) {
+            throw new Error('Error fetching template object', err);
+          }
           this._pendingXhr = false;
           this._definition.specification = data;
           this._purgeMethodQueue();
@@ -218,48 +226,64 @@ export default class Cedar {
         };
       }
     }
+
+    /**
+     * tranform
+     */
+    // Allow a transform func to pass in
+    if (opts.transform && typeof opts.transform === 'function') {
+      this._transform = opts.transform;
+    }
   }
 
   /**
    * Properties
    */
   // Datasets
-  get dataset() {
+  get dataset () {
     return this._definition.dataset;
   }
-  set dataset(val) {
+  set dataset (val) {
     this._definition.dataset = val;
   }
 
   // Specification
-  get specification() {
+  get specification () {
     return this._definition.specification;
   }
-  set specification(val) {
+  set specification (val) {
     this._definition.specification = val;
   }
 
   // override
-  get override() {
+  get override () {
     return this._definition.override;
   }
-  set override(val) {
+  set override (val) {
     this._definition.override = val;
     // return this.update(); // TODO is this the best way?
   }
 
   // Tooltip
-  get tooltip() {
+  get tooltip () {
     return this._definition.tooltip;
   }
-  set tooltip(val) {
+  set tooltip (val) {
     this._definition.tooltip = val;
     if (this._definition.tooltip.id === undefined || this._definition.tooltip.id === null) {
       this._definition.tooltip.id = `cedar-${Date.now()}`;
     }
   }
 
-  _getSpecificationUrl(spec) {
+  // transform
+  get transform () {
+    return this._transform;
+  }
+  set transform (val) {
+    this._transform = val;
+  }
+
+  _getSpecificationUrl (spec) {
     if (this.chartTypes.indexOf(spec) !== -1) {
       spec = `${this.baseUrl}/charts/${this.chartTypes[this.chartTypes.indexOf(spec)]}.json`;
     }
@@ -272,16 +296,16 @@ export default class Cedar {
    * to render the chart
    * @return {object} Hash of the draw state + any missing requirements
    */
-  canDraw() {
-    //dataset?
-    //dataset.url || dataset.data?
-    //dataset.mappings?
-    //specification?
-    //specification.template?
-    //specification.inputs?
-    //specification.inputs ~ dataset.mappings?
+  canDraw () {
+    // dataset?
+    // dataset.url || dataset.data?
+    // dataset.mappings?
+    // specification?
+    // specification.template?
+    // specification.inputs?
+    // specification.inputs ~ dataset.mappings?
 
-    return {drawable:true, errs:[]};
+    return {drawable: true, errs: []};
   }
 
   /**
@@ -312,12 +336,11 @@ export default class Cedar {
    * @param {Boolean} options.autolabels place axis labels outside any tick labels (default: false)
    * @param {String} options.token Token to be used if the data or spec are on a secured server
    */
-  show(options, clb) {
+  show (options, clb) {
     if (this._pendingXhr) {
       // TODO addToMethodQueue
       this._addToMethodQueue('show', [options, clb]);
     } else {
-
       let err;
       // ensure we got an elementId
       if (!options.elementId) {
@@ -337,23 +360,23 @@ export default class Cedar {
         this.autolabels = options.autolabels;
       }
 
-      if (!!options.maxLabelLength) {
+      if (options.maxLabelLength) {
         // check if truncate label length has been passed in
         this.maxLabelLength = options.maxLabelLength;
       }
 
       // hold onto the token
-      if (!!options.token) {
+      if (options.token) {
         this._token = options.token;
       }
 
-      if (!!err) {
+      if (err) {
         throw new Error(err);
       }
 
       var chk = this.canDraw();
 
-      if (!!chk.drawable) {
+      if (chk.drawable) {
         this.update(clb);
       } else {
         // report the issues
@@ -375,26 +398,23 @@ export default class Cedar {
    * chart.dataset.query.where = "POPULATION>30000";
    * chart.update();
    */
-  update(clb) {
-
-    if (!!this._view) {
+  update (clb) {
+    if (this._view) {
       this.emit('update-start');
     }
 
-    if (!!this._pendingXhr) {
+    if (this._pendingXhr) {
       this._addToMethodQueue('update');
     } else {
-
-      if (!!this._view) {
+      if (this._view) {
         // remove handlers
         // TODO Remove existing handlers
         this._remove(this._view);
       }
 
       try {
-
         // Creates the HTML Div and styling if not already created
-        if (!!this._definition.tooltip) {
+        if (this._definition.tooltip) {
           this._createTooltip(this._definition.tooltip.id);
         }
 
@@ -414,19 +434,17 @@ export default class Cedar {
         spec = utils.mergeRecursive(spec, this._definition.override);
 
         // if the spec has a url in the data node, delete it TODO: need to readress this.
-        if (!!spec.data[0].url) {
+        if (spec.data[0].url) {
           delete spec.data[0].url;
         }
 
-        if (!!this._definition.dataset.data) {
+        if (this._definition.dataset.data) {
           // create the data node using the passed in data
           spec.data[0].values = this._definition.dataset.data; // TODO: only works on first spec, need to address for multiple datasets.
 
           // Send to vega
           this._renderSpec(spec, clb);
-
         } else {
-
           // We need to fetch the data so....
           const url = requestUtils.createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
 
@@ -438,6 +456,9 @@ export default class Cedar {
             }
             // if no errors then continue...
             if (!err) {
+              if (this._transform && typeof this._transform === 'function') {
+                data = this._transform(data, this._definition.dataset);
+              }
               // TODO add error handlers for xhr and AGS errors.
               spec.data[0].values = data;
               // send to vega
@@ -453,9 +474,8 @@ export default class Cedar {
           // fetch the data from the service
           requestUtils.getJson(url, cb, this._timeout);
         }
-      }
-      catch(ex) {
-        throw(ex);
+      } catch (ex) {
+        throw (ex);
       }
     }
   }
@@ -467,7 +487,7 @@ export default class Cedar {
    * Render a compiled Vega specification using vega runtime
    */
 
-  _renderSpec(spec, clb) {
+  _renderSpec (spec, clb) {
     if (this.autolabels === true) {
       spec = this._placeLabels(spec);
       spec = this._placeaAxisTicks(spec);
@@ -490,7 +510,7 @@ export default class Cedar {
       // attach event proxies
       this._attach(this._view);
 
-      if (!!this._view) {
+      if (this._view) {
         this.emit('update-end');
       }
 
@@ -510,7 +530,7 @@ export default class Cedar {
    * Calculates the maximum length of a tick label and adds padding
    */
 
-  _placeLabels(spec) {
+  _placeLabels (spec) {
     try {
       const fields = {};
       const lengths = {};
@@ -520,7 +540,7 @@ export default class Cedar {
         // check also if property is not inherited from prototype
         if (this._definition.dataset.mappings.hasOwnProperty(input)) {
           const field = this._definition.dataset.mappings[input].field;
-          if (!!field) {
+          if (field) {
             inputs.push(input);
             fields[input] = field;
             lengths[input] = 0;
@@ -532,8 +552,8 @@ export default class Cedar {
       // find the max length value for each axis
       spec.data[0].values.features.forEach((feature) => {
         inputs.forEach((axis) => {
-          length = (feature.attributes[fields[axis]] || "").toString().length;
-          if (!!this.maxLabelLength) {
+          length = (feature.attributes[fields[axis]] || '').toString().length;
+          if (this.maxLabelLength) {
             // Need to make sure that the gap between title and labels isn't ridiculous
             length = length < (this.maxLabelLength + 1) ? length : this.maxLabelLength;
           }
@@ -547,25 +567,23 @@ export default class Cedar {
       inputs.forEach((axis, index) => {
         let angle = 0;
         if (!!spec.axes && !!spec.axes[index]) {
-
-          if (!!spec.axes[index].properties.labels.angle) {
+          if (spec.axes[index].properties.labels.angle) {
             angle = spec.axes[index].properties.labels.angle.value;
           }
           if (spec.axes[index].type === 'y') {
             angle = 100 - angle;
           }
-          if (!!this.maxLabelLength) {
+          if (this.maxLabelLength) {
             // Set max length of axes titles
-            spec.axes[index].properties.labels.text = {"template": `{{ datum.data | truncate:"${this.maxLabelLength}"}}`};
+            spec.axes[index].properties.labels.text = {'template': `{{ datum.data | truncate:"${this.maxLabelLength}"}}`};
           }
           // set title offset
-          spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle/100 * 8) + 35;
+          spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle / 100 * 8) + 35;
         }
       });
       return spec;
-
-    } catch(ex) {
-      throw(ex);
+    } catch (ex) {
+      throw (ex);
     }
   }
 
@@ -576,23 +594,22 @@ export default class Cedar {
    * TODO: remove expectation that there are both x,y axes
    */
 
-  _placeaAxisTicks(spec) {
-    if (!!spec.axes) {
+  _placeaAxisTicks (spec) {
+    if (spec.axes) {
       try {
         const width = this.width || parseInt(d3.select(this._elementId).style('width'), 10) || 500;
         const height = this.height || parseInt(d3.select(this._elementId).style('height'), 10) || 500;
 
         spec.axes[0].ticks = width / 100;
-        if (!!spec.axes[1]) {
+        if (spec.axes[1]) {
           spec.axes[1].ticks = height / 30;
         }
-      } catch(ex) {
-        throw(ex);
+      } catch (ex) {
+        throw (ex);
       }
     }
     return spec;
   }
-
 
   /**
    * TOOLTIP LOGIC HERE
@@ -600,26 +617,26 @@ export default class Cedar {
    * Instantiates the tooltip element and styling
    * @access private
    */
-  _createTooltip(elem) {
-    let tooltip_div = document.getElementById(elem);
+  _createTooltip (elem) {
+    let tooltipDiv = document.getElementById(elem);
 
     // Check if tooltip has been created or not...
-    if (!!tooltip_div) {
-      return tooltip_div;
+    if (tooltipDiv) {
+      return tooltipDiv;
     }
 
     // TODO: remove inline CSS
     let style = document.createElement('style');
     style.type = 'text/css';
-    style.innerHTML = ".cedar-tooltip {background-color: white; padding: 3px 10px; color: #333; margin: -30px 0 0 20px; position: absolute; z-index: 2000; font-size: 10px; border: 1px solid #BBB;} .cedar-tooltip .title {font-size: 13pt; font-weight: bold; } .cedar-tooltip .content {font-size: 10pt; } ";
+    style.innerHTML = '.cedar-tooltip {background-color: white; padding: 3px 10px; color: #333; margin: -30px 0 0 20px; position: absolute; z-index: 2000; font-size: 10px; border: 1px solid #BBB;} .cedar-tooltip .title {font-size: 13pt; font-weight: bold; } .cedar-tooltip .content {font-size: 10pt; } ';
     document.getElementsByTagName('head')[0].appendChild(style);
 
-    tooltip_div = document.createElement('div');
-    tooltip_div.className = 'cedar-tooltip';
-    tooltip_div.id = elem;
-    tooltip_div.cssText = 'display: none';
+    tooltipDiv = document.createElement('div');
+    tooltipDiv.className = 'cedar-tooltip';
+    tooltipDiv.id = elem;
+    tooltipDiv.cssText = 'display: none';
     // We need tooltip at the top of the page
-    document.body.insertBefore(tooltip_div, document.body.firstChild);
+    document.body.insertBefore(tooltipDiv, document.body.firstChild);
 
     this.on('mouseout', (event, data) => {
       this._updateTooltip(event, null);
@@ -627,7 +644,7 @@ export default class Cedar {
     this.on('mousemove', (event, data) => {
       this._updateTooltip(event, data);
     });
-    return tooltip_div;
+    return tooltipDiv;
   }
 
   /**
@@ -635,7 +652,7 @@ export default class Cedar {
    *
    * @access private
    */
-  _updateTooltip(event, data) {
+  _updateTooltip (event, data) {
     let cedartip = document.getElementById(this._definition.tooltip.id);
     if (!data) {
       cedartip.style.display = 'none';
@@ -648,7 +665,7 @@ export default class Cedar {
     let content = `<span class='title'>${this._definition.tooltip.title}</span><br />`;
     content += `<p class='content'>${this._definition.tooltip.content}</p>`;
 
-    cedartip.innerHTML = content.replace( /\{(\w+)\}/g, (match, $1) => {
+    cedartip.innerHTML = content.replace(/\{(\w+)\}/g, (match, $1) => {
       return data[$1];
     });
   }
@@ -682,15 +699,15 @@ export default class Cedar {
     * @param {String} eventName name of the event that invokes callback
     * @param {Cedar~eventCallback} callback - The callback that handles the event.
     */
-  on(evtName, callback) {
+  on (evtName, callback) {
     this._events.push({type: evtName, callback});
   }
   /**
    * Remove a hanlder for the named event
    */
-  off(evtName, callback) {
+  off (evtName, callback) {
     this._events.forEach((registeredEvent, index, object) => {
-      if ( registeredEvent.type == evtName && registeredEvent.callback == callback ) {
+      if (registeredEvent.type === evtName && registeredEvent.callback === callback) {
         object.splice(index, 1);
       }
     });
@@ -700,8 +717,8 @@ export default class Cedar {
    * Trigger a callback
    * @param {string} eventName - ["mouseover","mouseout","click","update-start","update-end"]
    */
-  emit(eventName) {
-    if ( !!this._view._handler._handlers[ eventName ] && !!this._view._handler._handlers[ eventName ][0] ) {
+  emit (eventName) {
+    if (!!this._view._handler._handlers[ eventName ] && !!this._view._handler._handlers[ eventName ][0]) {
       this._view._handler._handlers[ eventName ][0].handler();
     }
   }
@@ -710,11 +727,11 @@ export default class Cedar {
    * Attach the generic proxy hanlders to the chart view
    * @access private
    */
-  _attach(view) {
+  _attach (view) {
     view.on('mouseover', this._handler('mouseover'));
     view.on('mouseout', this._handler('mouseout'));
     view.on('mousemove', this._handler('mousemove'));
-    view.on('click', this._handler("click"));
+    view.on('click', this._handler('click'));
     view.on('update-start', this._handler('update-start'));
     view.on('update-end', this._handler('update-end'));
   }
@@ -723,7 +740,7 @@ export default class Cedar {
    * Remove all event handlers from the view
    * @access private
    */
-  _remove(view) {
+  _remove (view) {
     view.off('mouseover');
     view.off('mouseout');
     view.off('mousemove');
@@ -737,7 +754,7 @@ export default class Cedar {
    * once a pending xhr is completed
    * @access private
    */
-  _addToMethodQueue(name, args) {
+  _addToMethodQueue (name, args) {
     this._methodQueue.push({ method: name, args: args });
   }
 
@@ -747,7 +764,7 @@ export default class Cedar {
    * doing async things in the code
    * @access private
    */
-  _purgeMethodQueue() {
+  _purgeMethodQueue () {
     if (this._methodQueue.length > 0) {
       this._methodQueue.forEach((action, index) => {
         this[action.method].apply(this, action.args);
@@ -759,13 +776,13 @@ export default class Cedar {
    * Generic event handler proxy
    * @access private
    */
-  _handler(evtName) {
-    //return a handler function w/ the events hash closed over
+  _handler (evtName) {
+    // return a handler function w/ the events hash closed over
     const handler = (evt, item) => {
-      this._events.forEach( (registeredHandler) => {
+      this._events.forEach((registeredHandler) => {
         if (registeredHandler.type === evtName) {
           // invoke the callback with the data
-          if (!!item) {
+          if (item) {
             registeredHandler.callback(evt, item.datum.attributes);
           } else {
             registeredHandler.callback(evt, null);
@@ -789,12 +806,12 @@ export default class Cedar {
    * @returns {Array} items - array of chart objects that match the criteria
    */
 
-  select(options) {
+  select (options) {
     let view = this._view;
     let items = view.model().scene().items[0].items[0].items;
 
     items.forEach((item) => {
-      if ( item.datum.attributes[options.key] === options.value) {
+      if (item.datum.attributes[options.key] === options.value) {
         if (item.hasPropertySet('hover')) {
           this._view.update({props: 'hover', items: item});
         }
@@ -804,7 +821,6 @@ export default class Cedar {
     return items;
   }
 
-
    /**
     * Removes highlighted chart items
     *
@@ -813,13 +829,13 @@ export default class Cedar {
     * @returns {Array} items - array of chart objects that match the criteria, or null if all items.
     */
 
-  clearSelection(options) {
+  clearSelection (options) {
     let view = this._view;
 
     if (!!options && !!options.key) {
       let items = view.model().scene().items[0].items[0].items;
       items.forEach((item) => {
-        if ( item.datum.attributes[options.key] === options.value) {
+        if (item.datum.attributes[options.key] === options.value) {
           this._view.update({props: 'update', items: item});
         }
       });
@@ -831,23 +847,23 @@ export default class Cedar {
     }
   }
 
-  static getJson(url, callback, timeout) {
+  static getJson (url, callback, timeout) {
     return requestUtils.getJson(url, callback, timeout);
   }
 
   /**
    * Other now exposed utils!
    */
-  static _validateMappings(inputs, mappings) {
+  static _validateMappings (inputs, mappings) {
     return utils.validateMappings(inputs, mappings);
   }
-  static _validateData(data, mappings) {
+  static _validateData (data, mappings) {
     return utils.validateData(data, mappings);
   }
-  static _createFeatureServiceRequest(dataset, queryFromSpec) {
+  static _createFeatureServiceRequest (dataset, queryFromSpec) {
     return requestUtils.createFeatureServiceRequest(dataset, queryFromSpec);
   }
-  static _getMappingFieldName(mappingName, fieldName) {
+  static _getMappingFieldName (mappingName, fieldName) {
     return utils.getMappingFieldName(mappingName, fieldName);
   }
 }

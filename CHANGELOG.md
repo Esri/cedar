@@ -3,12 +3,28 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [0.8.2]
+### Support
+- getTokenValue now uses a for loop as it was previously erroneously using a for...in loop
+
+## [0.8.1]
+### Support
+- Tom didn't push the dist folder
+
+## [0.8.0]
+### Added
+- add transform property to modify query results before rendering
+### Support
+- better pie chart example w/ SQL query expression
+- update dependency urls and add jsfiddle to tutorial page
+
+## [0.7.0] - 2015-11-30
 ### Changed
 - source converted to ES2015 and compiled with rollup/buble
 - tooling updated to favor npm scripts instead of grunt
 - test pages and specs moved under test folder
 - clean up of unused grunt tasks, dependencies, and misc files
+- Semistandard for linting
 
 ## [0.6.1] - 2016-08-15
 ### Changed
@@ -104,6 +120,10 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.8.2]: https://github.com/Esri/cedar/compare/v0.8.1...v0.8.2
+[0.8.1]: https://github.com/Esri/cedar/compare/v0.8.0...v0.8.1
+[0.8.0]: https://github.com/Esri/cedar/compare/v0.7.0...v0.8.0
+[0.7.0]: https://github.com/Esri/cedar/compare/v0.6.1...v0.7.0
 [0.6.1]: https://github.com/Esri/cedar/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/Esri/cedar/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/Esri/cedar/compare/v0.4.4...v0.5.0

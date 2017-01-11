@@ -16,49 +16,59 @@ When starting with Cedar, we suggest that you begin by exploring the simple char
 
 ## Getting Started
 
+### Installing Cedar
+
+You can install Cedar and it's dependencies from npm:
+```bash
+npm install arcgis-cedar
+```
+
+Or from bower:
+```bash
+bower install arcgis-cedar
+```
+
+Alternatively, you can get Cedar from the [unpkg.com](https://unpkg.com/) CDN as shown below.
+
 ### Loading Cedar
 
-You can load Cedar and its dependencies by including script tags. This will make the `Cedar` global availabe to your application.
+You can load Cedar and its dependencies by including script tags that point to the CDN or your locally installed versions of these libraries. This will make the `Cedar` global available to your application.
 
 ```html
-<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript" src="http://vega.github.io/vega/vega.min.js"></script>
-<script type="text/javascript" src="https://rawgit.com/Esri/cedar/master/src/cedar.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vega/2.6.1/vega.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/arcgis-cedar@0.7.0/dist/cedar.min.js"></script>
 <script>
   var chart = new Cedar({"type": "bar"});
   ...
 </script>
 ```
 
-Altenatively, you can use Dojo loader that is bundled with the [ArcGIS API for JavaScript](developers.arcgis.com/javascript/), to load Cedar and its dependencies by declaring them as packages:
+If you're using Cedar with the [ArcGIS API for JavaScript](developers.arcgis.com/javascript/), you can declare packages for Cedar and its dependencies so that they can be loaded by Dojo's AMD loader:
 
 ```html
-<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+<link rel="stylesheet" href="https://js.arcgis.com/3.19/esri/css/esri.css">
 <script>
   window.dojoConfig = {
     async: true,
     packages: [
       {
         name: 'd3',
-        location: 'http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5',
+        location: 'https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6',
         main: 'd3.min'
       }, {
-        name: 'topojson',
-        location: 'http://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19',
-        main: 'topojson.min'
-      }, {
         name: 'vega',
-        location: 'http://vega.github.io/vega/',
+        location: 'https://cdnjs.cloudflare.com/ajax/libs/vega/2.6.1',
         main: 'vega.min'
       }, {
         name: 'cedar',
-        location: window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + '/../js',
-        main: 'cedar'
+        location: 'https://unpkg.com/arcgis-cedar@0.7.0/dist',
+        main: 'cedar.min'
       }
     ]
   };
 </script>
-<script src="http://js.arcgis.com/3.13/"></script>
+<script src="https://js.arcgis.com/3.19/"></script>
 <script>
   require('cedar', function(Cedar) {
     var chart = new Cedar({"type": "bar"});
@@ -66,6 +76,8 @@ Altenatively, you can use Dojo loader that is bundled with the [ArcGIS API for J
   });
 </script>
 ```
+
+If you're using the Dojo build tool, you may also need to install and configure a package for the vega dependency [topojson](https://github.com/topojson/topojson).
 
 ### Using Cedar
 
@@ -103,7 +115,7 @@ Once Cedar is loaded you can create and show the chart at a designated element a
   });
 ```
 
-See the [API documentation](http://esri.github.io/cedar/api) and [examples](http://esri.github.io/cedar/examples) for further details.
+See the [tutorial](http://esri.github.io/cedar/tutorial) to learn more.
 
 ## Demos
 
