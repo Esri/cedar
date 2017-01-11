@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Support
+- getTokenValue now uses a for loop as it was previously erroneously using a for...in loop
+
 ## [0.8.0]
 ### Added
 - add transform property to modify query results before rendering
