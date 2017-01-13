@@ -140,6 +140,7 @@ See the [API documentation](http://esri.github.io/cedar/api) for further details
 
 Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
+1. Fork this repository and download 'cedar' locally
 1. `cd` into the `cedar` folder
 1. Install the dependencies with `npm install`
 1. Run `npm start` from the command line. This will start the web server locally at [http://localhost:8082](http://localhost:8082) and start watching the source files and running linting and testing commands.
