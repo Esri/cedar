@@ -196,10 +196,12 @@ export default class Cedar {
     }
 
     // Allow a dataset to be passed in....
-    if (opts.dataset && typeof opts.dataset === 'object') {
-      opts.dataset.query = utils.mixin({}, specUtils.defaultQuery(), opts.dataset.query);
+    if (opts.datasets && Array.isArray(opts.datasets)) {
+      opts.datasets.forEach((dataset) => {
+        dataset.query = utils.mixin({}, specUtils.defaultQuery(), dataset.query);
+      });
       // Assign it
-      this._definition.dataset = opts.dataset;
+      this._definition.datasets = opts.datasets;
     }
 
     /**
@@ -240,11 +242,11 @@ export default class Cedar {
    * Properties
    */
   // Datasets
-  get dataset () {
-    return this._definition.dataset;
+  get datasets () {
+    return this._definition.datasets;
   }
-  set dataset (val) {
-    this._definition.dataset = val;
+  set datasets (val) {
+    this._definition.datasets = val;
   }
 
   // Specification
@@ -398,7 +400,29 @@ export default class Cedar {
    * chart.dataset.query.where = "POPULATION>30000";
    * chart.update();
    */
+   /**
+    * datasets: [
+    *   url: 'http',
+    *   query: {},
+    *   mappings: {
+    *     category: 'Type',
+    *     group: true // TODO implement
+    *     series: [
+    *       {
+    *         field: 'School',
+    *         label: 'Schools by type'
+    *       }
+    *     ]
+    *   }
+    * ]
+    */
   update (clb) {
+    // // just cut off everything else.
+    // if (this._definition.dataset) {
+    //   console.log('Balhhhhhhh');
+    //   throw new Error('Error will robinson');
+    // }
+
     if (this._view) {
       this.emit('update-start');
     }
@@ -418,66 +442,122 @@ export default class Cedar {
           this._createTooltip(this._definition.tooltip.id);
         }
 
+        // test things!
+        const datasets = this._definition.datasets;
+        const requests = [];
+        const joinKeys = [];
+
+        // For each dataset, query layer for data.
+
+        datasets.forEach((dataset) => {
+          if (dataset.mappings.category !== undefined && dataset.mappings.category !== null) {
+            joinKeys.push(dataset.mappings.category); // foreign key lookup
+          }
+          // const mappings = {
+          //   x: { name: dataset.mappings.category },
+          //   y: { name: dataset.mappings.series[0].field }
+          // };
+          //
+          // const compiledMappings = specUtils.applyDefaultsToMappings(mappings, this._definition.specification.inputs); // maybe not do here.
+          // console.log(compiledMappings);
+
+          const url = requestUtils.createFeatureServiceRequest(dataset, dataset.query);
+          requests.push(requestUtils.getData(url));
+        });
+
+        // Join everything:
+        Promise.all(requests).then((datasets) => {
+          console.log('Promise Fulfilled', datasets);
+          const data = requestUtils.flattenFeatures(joinKeys, datasets);
+          this._prepSpec(this._definition, data);
+        });
+
         // Ensure we have required inputs or defaults
-        let compiledMappings = specUtils.applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs);
-
-        let queryFromSpec = utils.mixin({}, this._definition.specification.query, this._definition.dataset.query);
-        queryFromSpec = JSON.parse(utils.supplant(JSON.stringify(queryFromSpec), compiledMappings));
-
-        // allow binding to query properties
-        compiledMappings.query = queryFromSpec;
-
-        // compile the template + mappings --> vega spec
-        let spec = JSON.parse(utils.supplant(JSON.stringify(this._definition.specification.template), compiledMappings));
-
-        // merge in user specified style overrides
-        spec = utils.mergeRecursive(spec, this._definition.override);
-
-        // if the spec has a url in the data node, delete it TODO: need to readress this.
-        if (spec.data[0].url) {
-          delete spec.data[0].url;
-        }
-
-        if (this._definition.dataset.data) {
-          // create the data node using the passed in data
-          spec.data[0].values = this._definition.dataset.data; // TODO: only works on first spec, need to address for multiple datasets.
-
-          // Send to vega
-          this._renderSpec(spec, clb);
-        } else {
-          // We need to fetch the data so....
-          const url = requestUtils.createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
-
-          // create a callback closure to carry the spec
-          const cb = (err, data) => {
-            // Normalize error response
-            if (!err && !!data.error) {
-              err = new Error(data.error.message || data.error.details[0]);
-            }
-            // if no errors then continue...
-            if (!err) {
-              if (this._transform && typeof this._transform === 'function') {
-                data = this._transform(data, this._definition.dataset);
-              }
-              // TODO add error handlers for xhr and AGS errors.
-              spec.data[0].values = data;
-              // send to vega
-              this._renderSpec(spec, clb);
-            } else {
-              // optional callback
-              if (!!clb && typeof clb === 'function') {
-                clb(err, data);
-              }
-            }
-          };
-
-          // fetch the data from the service
-          requestUtils.getJson(url, cb, this._timeout);
-        }
+        // let compiledMappings = specUtils.applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs); // Need to change things around because we don't have the input names anymore...
+        //
+        // let queryFromSpec = utils.mixin({}, this._definition.specification.query, this._definition.dataset.query); // this._definition.specification.query presumes the specification may have a query property.
+        // queryFromSpec = JSON.parse(utils.supplant(JSON.stringify(queryFromSpec), compiledMappings));
+        //
+        // // allow binding to query properties
+        // compiledMappings.query = queryFromSpec;
+        //
+        // // compile the template + mappings --> vega spec
+        // let spec = JSON.parse(utils.supplant(JSON.stringify(this._definition.specification.template), compiledMappings));
+        //
+        // // merge in user specified style overrides
+        // spec = utils.mergeRecursive(spec, this._definition.override);
+        //
+        // // if the spec has a url in the data node, delete it TODO: need to readress this.
+        // if (spec.data[0].url) {
+        //   delete spec.data[0].url;
+        // }
+        //
+        // if (this._definition.dataset.data) {
+        //   // create the data node using the passed in data
+        //   spec.data[0].values = this._definition.dataset.data; // TODO: only works on first spec, need to address for multiple datasets.
+        //
+        //   // Send to vega
+        //   this._renderSpec(spec, clb);
+        // } else {
+        //   // We need to fetch the data so....
+        //   const url = requestUtils.createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
+        //
+        //   // create a callback closure to carry the spec
+        //   const cb = (err, data) => {
+        //     // Normalize error response
+        //     if (!err && !!data.error) {
+        //       err = new Error(data.error.message || data.error.details[0]);
+        //     }
+        //     // if no errors then continue...
+        //     if (!err) {
+        //       if (this._transform && typeof this._transform === 'function') {
+        //         data = this._transform(data, this._definition.dataset);
+        //       }
+        //       // TODO add error handlers for xhr and AGS errors.
+        //       spec.data[0].values = data;
+        //       // send to vega
+        //       this._renderSpec(spec, clb);
+        //     } else {
+        //       // optional callback
+        //       if (!!clb && typeof clb === 'function') {
+        //         clb(err, data);
+        //       }
+        //     }
+        //   };
+        //
+        //   // fetch the data from the service
+        //   requestUtils.getJson(url, cb, this._timeout);
+        // }
       } catch (ex) {
         throw (ex);
       }
     }
+  }
+
+  /**
+   * New stuff starts
+   */
+
+  _prepSpec (def, data) {
+    console.log('prepSpec data is', data);
+    const datasets = def.datasets;
+    const mappings = {};
+
+    datasets.forEach((dataset, i) => {
+      mappings.x = {
+        field: `${dataset.mappings.category}_${i}`
+      };
+      mappings.y = {
+        field: `${dataset.mappings.series[0].field}_${i}`
+      };
+    });
+    const compiledMappings = specUtils.applyDefaultsToMappings(mappings, def.specification.inputs);
+    console.log('compMappings', compiledMappings);
+
+    const spec = JSON.parse(utils.supplant(JSON.stringify(def.specification.template), compiledMappings));
+
+    spec.data[0].values = data;
+    this._renderSpec(spec);
   }
 
   /**
@@ -488,10 +568,10 @@ export default class Cedar {
    */
 
   _renderSpec (spec, clb) {
-    if (this.autolabels === true) {
-      spec = this._placeLabels(spec);
-      spec = this._placeaAxisTicks(spec);
-    }
+    // if (this.autolabels === true) {
+    //   spec = this._placeLabels(spec);
+    //   spec = this._placeaAxisTicks(spec);
+    // }
     // Use vega to parse the spec
     // It will handle the spec as an object or url
     vg.parse.spec(spec, (err, chartCtor) => {
