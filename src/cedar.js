@@ -466,9 +466,10 @@ export default class Cedar {
         });
 
         // Join everything:
-        Promise.all(requests).then((datasets) => {
-          console.log('Promise Fulfilled', datasets);
-          const data = requestUtils.flattenFeatures(joinKeys, datasets);
+        Promise.all(requests).then((response) => {
+          console.log('Promise Fulfilled', response);
+          const data = requestUtils.flattenFeatures(joinKeys, response);
+          console.log('flattend data', data);
           this._prepSpec(this._definition, data);
         });
 
@@ -544,13 +545,36 @@ export default class Cedar {
     const mappings = {};
 
     datasets.forEach((dataset, i) => {
-      mappings.x = {
-        field: `${dataset.mappings.category}_${i}`
-      };
-      mappings.y = {
-        field: `${dataset.mappings.series[0].field}_${i}`
-      };
+      // TODO: this is a toal hack
+      // should check for group before entering the loop
+      // and only build mapppings.x.field array in the loop
+      if (dataset.mappings.group) {
+        if (!mappings.group) {
+          mappings.group = {
+            field: 'categoryField',
+            label: dataset.mappings.category
+          };
+        }
+        if (!mappings.x) {
+          mappings.x = {
+            field: [],
+            label: dataset.mappings.category
+          };
+        }
+        // TODO: always series 0?
+        // TODO: how to label for the legend?
+        mappings.x.field.push(`${dataset.mappings.series[0].field}_${i}`);
+      } else {
+        mappings.x = {
+          field: `${dataset.mappings.category}_${i}`
+        };
+        mappings.y = {
+          // TODO: always series 0?
+          field: `${dataset.mappings.series[0].field}_${i}`
+        };
+      }
     });
+    console.log('mappings', mappings);
     const compiledMappings = specUtils.applyDefaultsToMappings(mappings, def.specification.inputs);
     console.log('compMappings', compiledMappings);
 
