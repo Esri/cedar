@@ -166,6 +166,7 @@ export default class Cedar {
      */
 
     // first, check for pre-defined chart type passed in as 'type'
+    this._chartType = opts.type;
     spec = this._getSpecificationUrl(opts.type);
 
     // If url or object passed use that...
@@ -239,12 +240,20 @@ export default class Cedar {
   /**
    * Properties
    */
-  // Datasets
+  // Dataset - old api
   get dataset () {
     return this._definition.dataset;
   }
   set dataset (val) {
     this._definition.dataset = val;
+  }
+
+  // Datasets - new api
+  get datasets () {
+    return this._definition.datasets;
+  }
+  set datasets (val) {
+    this._definition.datasets = val;
   }
 
   // Specification
@@ -418,6 +427,9 @@ export default class Cedar {
           this._createTooltip(this._definition.tooltip.id);
         }
 
+        if (this._definition.datasets) {
+          this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.dataset, this._chartType);
+        }
         // Ensure we have required inputs or defaults
         let compiledMappings = specUtils.applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs);
 
