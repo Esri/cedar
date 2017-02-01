@@ -290,6 +290,56 @@ describe('Cedar', function () {
           expect(actual).to.deep.equal(expected);
         });
       });
+      describe('for horizontal bar charts', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+              "query": {
+                "groupByFieldsForStatistics": "Zip",
+                "outStatistics": [{
+                  "statisticType": "sum",
+                  "onStatisticField": "Number_of",
+                  "outStatisticFieldName": "Number_of_SUM"
+                }]
+              },
+              "mappings":{
+                "category": { "field": "Zip", "label": "ZIP Code" },
+                "series": [
+                  { "field":"Number_of_SUM","label":"Total Students" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+            "query": {
+              "groupByFieldsForStatistics": "Zip",
+              "outStatistics": [{
+                "statisticType": "sum",
+                "onStatisticField": "Number_of",
+                "outStatisticFieldName": "Number_of_SUM"
+              }]
+            },
+            "mappings":{
+              "y": {"field":"Zip","label":"ZIP Code"},
+              "x": {"field":"Number_of_SUM","label":"Total Students"}
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'bar-horizontal');
+          expect(actual).to.deep.equal(expected);
+        });
+        it('should handle category string', function () {
+          datasets[0].mappings.category = 'Zip';
+          expected.mappings.y.label = 'Zip';
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'bar-horizontal');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
     });
   });
 });

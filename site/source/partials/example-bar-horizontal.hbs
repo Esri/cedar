@@ -1,0 +1,52 @@
+<script>
+  //create a cedar chart
+  var chart = new Cedar({"type": "bar-horizontal"});
+
+  //create the dataset w/ mappings
+  var datasets = [
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "query": {
+        "groupByFieldsForStatistics": "Zip",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      },
+      "mappings":{
+        "category": { "field": "Zip", "label": "ZIP Code" },
+        "series": [
+          { "field":"Number_of_SUM","label":"Total Students" }
+        ]
+      }
+    }
+  ];
+
+  //assign to the chart
+  chart.datasets = datasets;
+
+  // fix placement of axes labels
+  chart.override = {
+    "axes": [
+      {
+        "titleOffset": 25,
+        "title": "Total Number of Students"
+      },
+      {
+        "titleOffset": 50
+      }
+    ]
+  };
+
+  chart.tooltip = {
+    "id": "cedar-tooltip",
+    "title": "{Zip}",
+    "content": "{Number_of_SUM} students in the {Zip} zipcode."
+  };
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+</script>

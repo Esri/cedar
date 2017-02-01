@@ -78,6 +78,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
   datasets.forEach((dtst) => {
     const category = dtst.mappings.category;
     const categoryObj = (typeof category === 'string') ? { field: category, label: category } : category;
+    const series = dtst.mappings.series;
 
     // Push queries and urls first
     queries.push(dtst.query);
@@ -91,7 +92,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
       if (!mappings.x) {
         mappings.x = {
           field: [],
-          label: dtst.mappings.category
+          label: categoryObj.label
         };
       }
       // TODO figure out labels
@@ -100,34 +101,28 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
       // Bubble Chart starts here
     } else if (chartType === 'bubble') {
       mappings.x = categoryObj;
-      mappings.y = {
-        field: dtst.mappings.series[0].field,
-        label: dtst.mappings.series[0].label
-      };
-      mappings.size = {
-        field: dtst.mappings.series[0].field,
-        label: dtst.mappings.series[0].label
-      };
+      mappings.y = series[0];
+      mappings.size = series[0];
 
       // Pie Chart starts here
     } else if (chartType === 'pie') {
       mappings.label = categoryObj;
-      mappings.y = {
-        field: dtst.mappings.series[0].field,
-        label: dtst.mappings.series[0].label
-      };
+      mappings.y = series[0];
+    } else if (chartType === 'bar-horizontal') {
+      mappings.y = categoryObj;
+      mappings.x = series[0];
 
-      // X Y only charts here
+    // X Y only charts here
     } else {
       mappings.x = categoryObj;
-      mappings.y = {
-        field: dtst.mappings.series[0].field,
-        label: dtst.mappings.series[0].label
-      };
+      mappings.y = series[0];
     }
 
     // sort
-    mappings.sort = dtst.mappings.sort;
+    // TODO: handle multiple sorts?
+    if (dtst.mappings.sort) {
+      mappings.sort = dtst.mappings.sort;
+    }
   });
 
   return {
