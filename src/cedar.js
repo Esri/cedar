@@ -878,4 +878,8 @@ export default class Cedar {
   static _getMappingFieldName (mappingName, fieldName) {
     return utils.getMappingFieldName(mappingName, fieldName);
   }
+  // TODO: remove once we have a better way to unit test
+  static _convertDatasetsToDataset (datasets, dataset, chartType) {
+    return specUtils.convertDatasetsToDataset(datasets, dataset, chartType);
+  }
 }

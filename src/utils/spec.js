@@ -62,7 +62,12 @@ export function applyDefaultsToMappings (mappings, inputs) {
  * Convert datasets to dataset
  */
 export function convertDatasetsToDataset (datasets, dataset, chartType) {
-  console.log('Datasets and dataset are:', datasets, dataset);
+  // console.log('Datasets and dataset are:', datasets, dataset);
+  if (!dataset) {
+    dataset = {
+      query: this.defaultQuery()
+    };
+  }
   // Mappings held here
   const mappings = {};
   // Queries held here
@@ -71,6 +76,9 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
   const urls = [];
 
   datasets.forEach((dtst) => {
+    const category = dtst.mappings.category;
+    const categoryObj = (typeof category === 'string') ? { field: category, label: category } : category;
+
     // Push queries and urls first
     queries.push(dtst.query);
     urls.push(dtst.url);
@@ -78,10 +86,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
     // Grouped bar chart here
     if (chartType === 'grouped') {
       if (!mappings.group) {
-        mappings.group = {
-          field: dtst.mappings.category,
-          label: dtst.mappings.category
-        };
+        mappings.group = categoryObj;
       }
       if (!mappings.x) {
         mappings.x = {
@@ -94,10 +99,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
 
       // Bubble Chart starts here
     } else if (chartType === 'bubble') {
-      mappings.x = {
-        field: dtst.mappings.category,
-        label: dtst.mappings.category
-      };
+      mappings.x = categoryObj;
       mappings.y = {
         field: dtst.mappings.series[0].field,
         label: dtst.mappings.series[0].label
@@ -109,10 +111,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
 
       // Pie Chart starts here
     } else if (chartType === 'pie') {
-      mappings.label = {
-        field: dtst.mappings.category,
-        label: dtst.mappings.category
-      };
+      mappings.label = categoryObj;
       mappings.y = {
         field: dtst.mappings.series[0].field,
         label: dtst.mappings.series[0].label
@@ -120,15 +119,15 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
 
       // X Y only charts here
     } else {
-      mappings.x = {
-        field: dtst.mappings.category,
-        label: dtst.mappings.category
-      };
+      mappings.x = categoryObj;
       mappings.y = {
         field: dtst.mappings.series[0].field,
         label: dtst.mappings.series[0].label
       };
     }
+
+    // sort
+    mappings.sort = dtst.mappings.sort;
   });
 
   return {
