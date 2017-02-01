@@ -16,7 +16,7 @@ describe('Cedar', function () {
     requests = [];
   });
 
-  describe('constructor', function () {
+  describe('new', function () {
     var fakeDefinition, fakeSpec;
     beforeEach(function() {
       fakeDefinition = {
