@@ -340,6 +340,68 @@ describe('Cedar', function () {
           expect(actual).to.deep.equal(expected);
         });
       });
+      describe('for grouped bar charts', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+              "mappings":{
+                "category": { "field": "NAME", "label": "Name" },
+                "series": [
+                  { "field":"MED_AGE_M","label":"Age" }
+                ]
+              }
+            },
+            {
+              "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+              "mappings":{
+                "category": { "field": "NAME", "label": "Name" },
+                "series": [
+                  { "field":"MED_AGE_F","label":"Age" }
+                ]
+              }
+            },
+            {
+              "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+              "mappings":{
+                "category": { "field": "NAME", "label": "Name" },
+                "series": [
+                  { "field":"MED_AGE","label":"Age" }
+                ]
+              }
+            }
+          ];
+          expected = {
+        	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+        	  "mappings":{
+        	    "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+        	    "group":{"field":"NAME","label":"Name"}
+        	  },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+        	};
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
+          expect(actual).to.deep.equal(expected);
+        });
+        it('should handle category string', function () {
+          datasets[0].mappings.category = 'NAME';
+          expected.mappings.group.label = 'NAME';
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
     });
   });
 });

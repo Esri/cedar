@@ -203,6 +203,11 @@ export default class Cedar {
       this._definition.dataset = opts.dataset;
     }
 
+    // Allow datasets to be passed in
+    if (opts.datasets && Array.isArray(opts.datasets)) {
+      this._definition.datasets = opts.datasets;
+    }
+
     /**
      * Tooltip
      */

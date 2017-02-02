@@ -92,11 +92,11 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
       if (!mappings.x) {
         mappings.x = {
           field: [],
-          label: categoryObj.label
+          label: series[0].label
         };
       }
       // TODO figure out labels
-      mappings.x.field.push(`attributes.${dtst.mappings.series[0].field}`);
+      mappings.x.field.push(`attributes.${series[0].field}`);
 
       // Bubble Chart starts here
     } else if (chartType === 'bubble') {
