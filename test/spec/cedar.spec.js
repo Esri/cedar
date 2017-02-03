@@ -672,6 +672,84 @@ describe('Cedar', function () {
           expect(actual).to.deep.equal(expected);
         });
       });
+      describe('for line charts', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+              "mappings":{
+                "category": { "field": "Date", "label": "Date" },
+                "sort": "Date",
+                "series": [
+                  { "field":"Injuries","label":"Injuries" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+            "mappings":{
+              "time": { "field": "Date", "label": "Date" },
+              "value": { "field":"Injuries","label":"Injuries" },
+              "sort": "Date"
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'time');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+      describe('for time trendline charts', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
+              "query": {
+                "where": "year > 2000"
+              },
+              "mappings":{
+                "category": { "field": "year", "label": "Year" },
+                "sort": "year",
+                "series": [
+                  { "field":"annual","label":"Total Precipitation" },
+                  { "field": "trendline", "label": "" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url": "https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
+            "mappings":{
+              "time": { "field": "year", "label": "Year" },
+              "value": { "field":"annual","label":"Total Precipitation" },
+              "trendline": { "field": "trendline", "label": "" },
+              "sort": "year"
+            },
+            "query": {
+              "where": "year > 2000"
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'time-trendline');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
     });
   });
 });

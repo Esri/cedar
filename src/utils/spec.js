@@ -135,6 +135,17 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
       mappings.y = categoryObj;
       mappings.x = series[0];
 
+      // Timeline chart starts here
+    } else if (chartType === 'time') {
+      mappings.time = categoryObj;
+      mappings.value = series[0];
+
+      // time-trendline chart starts here
+    } else if (chartType === 'time-trendline') {
+      mappings.time = categoryObj;
+      mappings.value = series[0];
+      mappings.trendline = series[1];
+
     // X Y only charts here
     } else {
       mappings.x = categoryObj;
