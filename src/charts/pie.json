@@ -32,7 +32,7 @@
         "type": "ordinal",
         "domain": {
           "data": "table",
-          "field": "attributes.{y.field}"
+          "field": "attributes.{label.field}"
         },
         "range": "category10"
       }
@@ -51,10 +51,11 @@
             "stroke": {"value": "#fff"}
           },
           "update": {
-            "fill": {"value": "#0079c1"}
+            "fill": {"scale": "color", "field": "attributes.{label.field}"},
+            "fillOpacity": {"value": 1}
           },
           "hover": {
-            "fill": {"value": "#29b6ea"}
+            "fillOpacity": {"value": 0.8}
           }
         }
       },
