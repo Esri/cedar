@@ -74,15 +74,24 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
   const queries = [];
   // Urls held here
   const urls = [];
+  // Data held here
+  const data = [];
 
   datasets.forEach((dtst) => {
     const category = dtst.mappings.category;
     const categoryObj = (typeof category === 'string') ? { field: category, label: category } : category;
     const series = dtst.mappings.series;
 
-    // Push queries and urls first
-    queries.push(dtst.query);
-    urls.push(dtst.url);
+    // Push queries data and urls first
+    if (dtst.query) {
+      queries.push(dtst.query);
+    }
+    if (dtst.url) {
+      urls.push(dtst.url);
+    }
+    if (dtst.data) {
+      data.push(dtst.data);
+    }
     // Construct mappings
     // Grouped bar chart here
     if (chartType === 'grouped') {
@@ -107,7 +116,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
     } else if (chartType === 'bubble') {
       mappings.x = categoryObj;
       mappings.y = series[0];
-      mappings.size = series[0];
+      mappings.size = series[1];
 
       // Scatter plot starts here
     } else if (chartType === 'scatter') {
@@ -119,6 +128,9 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
     } else if (chartType === 'pie') {
       mappings.label = categoryObj;
       mappings.y = series[0];
+      mappings.radius = series[1].radius;
+
+      // Bar horizontal starts here
     } else if (chartType === 'bar-horizontal') {
       mappings.y = categoryObj;
       mappings.x = series[0];
@@ -136,11 +148,19 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
     }
   });
 
-  return {
-    url: convertUrls(urls),
+  const builtDataset = {
     query: convertQueries(queries, dataset.query),
     mappings
   };
+  if (data.length > 0) {
+    builtDataset.data = data[0];
+  }
+
+  if (urls.length > 0) {
+    builtDataset.url = convertUrls(urls);
+  }
+
+  return builtDataset;
 }
 
 /**

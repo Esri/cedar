@@ -290,6 +290,48 @@ describe('Cedar', function () {
           expect(actual).to.deep.equal(expected);
         });
       });
+      describe('for bar charts with inlined data', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "data": {
+                "features":[{"attributes":{"Zip":20005,"Number_of_SUM":327}},{"attributes":{"Zip":20024,"Number_of_SUM":517}},{"attributes":{"Zip":20017,"Number_of_SUM":597}},{"attributes":{"Zip":20015,"Number_of_SUM":707}},{"attributes":{"Zip":20037,"Number_of_SUM":760}},{"attributes":{"Zip":20018,"Number_of_SUM":1052}},{"attributes":{"Zip":20012,"Number_of_SUM":1184}},{"attributes":{"Zip":20007,"Number_of_SUM":1584}},{"attributes":{"Zip":20008,"Number_of_SUM":1625}},{"attributes":{"Zip":20003,"Number_of_SUM":1869}},{"attributes":{"Zip":20009,"Number_of_SUM":1945}},{"attributes":{"Zip":20001,"Number_of_SUM":2164}},{"attributes":{"Zip":20010,"Number_of_SUM":2282}},{"attributes":{"Zip":20019,"Number_of_SUM":3278}},{"attributes":{"Zip":20011,"Number_of_SUM":3817}},{"attributes":{"Zip":20020,"Number_of_SUM":3901}},{"attributes":{"Zip":20032,"Number_of_SUM":4360}},{"attributes":{"Zip":20016,"Number_of_SUM":4681}},{"attributes":{"Zip":20002,"Number_of_SUM":5590}}]
+              },
+              "mappings":{
+                "category": { "field": "Zip", "label": "Zip Code" },
+                "series": [
+                  { "field":"Number_of_SUM","label":"Total Students" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "data": {
+              "features":[{"attributes":{"Zip":20005,"Number_of_SUM":327}},{"attributes":{"Zip":20024,"Number_of_SUM":517}},{"attributes":{"Zip":20017,"Number_of_SUM":597}},{"attributes":{"Zip":20015,"Number_of_SUM":707}},{"attributes":{"Zip":20037,"Number_of_SUM":760}},{"attributes":{"Zip":20018,"Number_of_SUM":1052}},{"attributes":{"Zip":20012,"Number_of_SUM":1184}},{"attributes":{"Zip":20007,"Number_of_SUM":1584}},{"attributes":{"Zip":20008,"Number_of_SUM":1625}},{"attributes":{"Zip":20003,"Number_of_SUM":1869}},{"attributes":{"Zip":20009,"Number_of_SUM":1945}},{"attributes":{"Zip":20001,"Number_of_SUM":2164}},{"attributes":{"Zip":20010,"Number_of_SUM":2282}},{"attributes":{"Zip":20019,"Number_of_SUM":3278}},{"attributes":{"Zip":20011,"Number_of_SUM":3817}},{"attributes":{"Zip":20020,"Number_of_SUM":3901}},{"attributes":{"Zip":20032,"Number_of_SUM":4360}},{"attributes":{"Zip":20016,"Number_of_SUM":4681}},{"attributes":{"Zip":20002,"Number_of_SUM":5590}}]
+            },
+            "mappings":{
+              "x": { "field": "Zip", "label": "Zip Code" },
+              "y": {"field":"Number_of_SUM","label":"Total Students"}
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'bar');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
       describe('for horizontal bar charts', function () {
         // set up input and expected output
         var datasets, expected;
@@ -485,6 +527,148 @@ describe('Cedar', function () {
         });
         it('should handle category object', function () {
           var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'scatter');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+      describe('for bubble scatterplot chart', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+              "mappings":{
+                "category": { "field":"F_of_teach", "label": "Fraction of Teachers" },
+                "series": [
+                  { "field": "Number_of", "label": "Number_of" },
+                  { "field": "Number_of", "label": "Number of Students" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+            "mappings":{
+              "x": { "field":"F_of_teach", "label": "Fraction of Teachers" },
+              "y": { "field": "Number_of", "label": "Number_of" },
+              "size": { "field": "Number_of", "label": "Number of Students" },
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'bubble');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+      describe('for pie chart', function () {
+        // Set up group by expression because pie chart sucks
+        var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        var groupByExpression = "CASE ";
+        for (var i = 1, len = months.length; i <= len; i++) {
+          var month = months[i - 1];
+          groupByExpression = groupByExpression + "WHEN Month = " + i + " THEN '" + month + "'";
+        }
+        groupByExpression = groupByExpression + " END";
+
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+              "query": {
+                "orderByFields": "FID_Count DESC",
+                "groupByFieldsForStatistics": groupByExpression,
+                "outStatistics": [{
+                  "statisticType": "count",
+                  "onStatisticField": "FID",
+                  "outStatisticFieldName": "FID_Count"
+                }]
+              },
+              "mappings":{
+                "category": {"field":"EXPR_1","label":"Month"},
+                "series": [
+                  {"field":"FID_Count","label":"Number of Tornados"},
+                  { "radius": 270 }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+            "query": {
+              "orderByFields": "FID_Count DESC",
+              "groupByFieldsForStatistics": groupByExpression,
+              "outStatistics": [{
+                "statisticType": "count",
+                "onStatisticField": "FID",
+                "outStatisticFieldName": "FID_Count"
+              }]
+            },
+            "mappings":{
+              "label": {"field":"EXPR_1","label":"Month"},
+              "y": {"field":"FID_Count","label":"Number of Tornados"},
+              // the pie will be 540px tall/wide
+              "radius": 270
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'pie');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+      describe('for sparkline chart', function () {
+        // set up input and expected output
+        var datasets, expected, data;
+        beforeEach(function () {
+          data = [
+            {"attributes": {"date": "2000", "dc": 572046, "baltimore": 648654}},
+            {"attributes": {"date": "2010", "dc": 601767, "baltimore": 621317}},
+            {"attributes": {"date": "2013", "dc": 649111, "baltimore": 623404}},
+            {"attributes": {"date": "2014", "dc": 658893, "baltimore": 622793}}
+          ];
+          datasets = [
+            {
+              "data": data,
+              "mappings":{
+                "category": {"field":"date","label":"Date"},
+                "series": [
+                  {"field":"dc","label":"dc"}
+                ]
+              }
+            }
+          ];
+          expected = {
+            "data": data,
+            "mappings":{
+              "x": {"field":"date","label":"Date"},
+              "y": {"field":"dc","label":"dc"},
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'sparkline');
           expect(actual).to.deep.equal(expected);
         });
       });
