@@ -1,3 +1,4 @@
+/* global fetch */
 import * as d3 from 'd3';
 import { mixin } from './utils';
 import { defaultQuery } from './spec';
@@ -55,6 +56,73 @@ export function getJson (url, callback, timeout) {
       .get(cb);
   }
 }
+
+/**
+ * new starts here
+ */
+
+// TODO need to harden this for post/get
+export function getData (url) {
+  return fetch(url)
+    .then((response) => {
+      return response.json();
+    }, (err) => {
+      console.error(`Error fetching data`, err);
+    });
+}
+
+function buildIndex (joinKeys, datasets) {
+  const index = {};
+  datasets.forEach((dataset, di) => {
+    dataset.features.forEach((feature) => {
+      const idx = feature.attributes[joinKeys[di]];
+      if (index[idx] === undefined) {
+        index[idx] = [];
+      }
+      index[idx].push(feature.attributes);
+    });
+  });
+  return index;
+}
+
+// join multiple layers by common keys
+export function flattenFeatures (joinKeys, datasets) {
+  console.log('join keys', joinKeys);
+  console.log('datasets', datasets);
+  const features = [];
+
+  // No Join, just merge
+  if (joinKeys.length === 0) {
+    datasets.forEach((dataset) => {
+      dataset.features.forEach((feature) => {
+        features.push(feature.attributes);
+      });
+    });
+    return features;
+  }
+
+  // Instead join
+  const index = buildIndex(joinKeys, datasets);
+  const key = joinKeys[0];
+  const keys = Object.keys(index);
+  keys.forEach((k) => {
+    const idxArr = index[k];
+    const feature = { 'categoryField': idxArr[0][key] };
+    idxArr.forEach((attr, i) => {
+      const attrKeys = Object.keys(attr);
+      attrKeys.forEach((ak) => {
+        const atr = `${ak}_${i}`;
+        feature[atr] = idxArr[i][ak];
+      });
+    });
+    features.push(feature);
+  });
+  return features;
+}
+
+/**
+ * new ends here
+ */
 
 /**
  * Given a dataset hash create a feature service request
@@ -138,6 +206,8 @@ export function createFeatureServiceRequest (dataset, queryFromSpec) {
 
 const requestUtils = {
   getJson,
+  getData,
+  flattenFeatures,
   createFeatureServiceRequest
 };
 

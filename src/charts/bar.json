@@ -11,13 +11,13 @@
         "type": "x",
         "scale": "x",
         "titleOffset": 45,
-        "title": "{x.label}",          
+        "title": "{x.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "normal"}
-          },          
+          },
           "axis": {
              "stroke": {"value": "#dbdad9"},
              "strokeWidth": {"value": 1.5}
@@ -43,7 +43,7 @@
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "normal"}
-          },          
+          },
           "axis": {
              "stroke": {"value": "#dbdad9"},
              "strokeWidth": {"value": 1.5}
@@ -55,14 +55,13 @@
             "fill": {"value": "#999"}
           }
         }
-      }      
+      }
     ],
     "data": [
       {
-        "name": "table",
-        "format": {"property": "features"}
+        "name": "table"
       }
-    ],    
+    ],
     "marks": [
       {
         "from": {"data": "table"},
@@ -71,9 +70,9 @@
           },
           "update": {
             "width": {"band": true, "offset": -1, "scale": "x"},
-            "x": {"field": "attributes.{x.field}", "scale": "x"},
-            "y": {"field": "attributes.{y.field}", "scale": "y"},
-            "y2": {"scale": "y", "value": 0 },            
+            "x": {"field": "{x.field}", "scale": "x"},
+            "y": {"field": "{y.field}", "scale": "y"},
+            "y2": {"scale": "y", "value": 0 },
             "fill": {"value": "#0079c1"}
           },
           "hover": {
@@ -82,12 +81,12 @@
         },
         "type": "rect"
       }
-    ],    
+    ],
     "scales": [
       {
         "domain": {
           "data": "table",
-          "field": "attributes.{x.field}"
+          "field": "{x.field}"
         },
         "name": "x",
         "range": "width",
@@ -97,7 +96,7 @@
       {
         "domain": {
           "data": "table",
-          "field": "attributes.{y.field}"
+          "field": "{y.field}"
         },
         "name": "y",
         "nice": true,

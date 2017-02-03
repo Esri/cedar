@@ -8,6 +8,7 @@ cache:
 before_install:
   - npm install -g grunt-cli
 install:
+  - sudo apt-get update
   - sudo apt-get install libgif-dev
   - npm install
 script:

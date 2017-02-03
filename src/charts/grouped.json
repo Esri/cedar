@@ -105,9 +105,6 @@
         ],
         "data": [
             {
-                "format": {
-                    "property": "features"
-                },
                 "name": "table",
                 "transform": [
                     {
@@ -134,7 +131,7 @@
                     "transform": [
                         {
                             "groupby": [
-                                "attributes.{group.field}"
+                                "{group.field}"
                             ],
                             "type": "facet"
                         }
@@ -200,7 +197,7 @@
             {
                 "domain": {
                     "data": "table",
-                    "field": "attributes.{group.field}"
+                    "field": "{group.field}"
                 },
                 "name": "cat",
                 "padding": 0.2,
