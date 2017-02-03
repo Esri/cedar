@@ -54,18 +54,23 @@ chart.show({
 
 <pre class="prettyprint">
 var chart2 = new Cedar({
-	"type": "grouped",
-	"tooltip": {
-		"title": "{STATE_NAME}",
-		"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
-	},
-	"dataset":{
-	  "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
-	  "mappings":{
-	    "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
-	    "group":{"field":"STATE_NAME","label":"State"}
-	  }
-	}
+  "type": "grouped",
+  "tooltip": {
+  	"title": "{STATE_NAME}",
+  	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+  },
+  "datasets": [
+  	{
+      "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
+      "mappings": {
+  			"category": { "field":"STATE_NAME","label":"State" },
+        "series": [
+          { "field": "MaleVets2010", "label": "Veterans by Gender" },
+          { "field": "FemaleVets2010", "label": "Veterans by Gender" }
+        ]
+  		}
+  	}
+	]
 });
 
 chart2.show({
@@ -124,13 +129,18 @@ chart2.show({
     	"title": "{STATE_NAME}",
     	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
     },
-    "dataset":{
-	  "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
-      "mappings":{
-        "x": {"field":["attributes.MaleVets2010", "attributes.FemaleVets2010"],"label":"Veterans by Gender"},
-        "group":{"field":"STATE_NAME","label":"State"}
-      }
-    }
+    "datasets": [
+			{
+				"url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
+				"mappings": {
+					"category": { "field":"STATE_NAME","label":"State" },
+          "series": [
+            { "field": "MaleVets2010", "label": "Veterans by Gender" },
+            { "field": "FemaleVets2010", "label": "Veterans by Gender" }
+          ]
+				}
+			}
+		]
   });
 
   chart2.show({
