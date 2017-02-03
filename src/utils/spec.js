@@ -95,14 +95,25 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
           label: series[0].label
         };
       }
-      // TODO figure out labels
-      mappings.x.field.push(`attributes.${series[0].field}`);
+      if (series.length > 1) {
+        series.forEach((attr) => {
+          mappings.x.field.push(`attributes.${attr.field}`);
+        });
+      } else {
+        mappings.x.field.push(`attributes.${series[0].field}`);
+      }
 
       // Bubble Chart starts here
     } else if (chartType === 'bubble') {
       mappings.x = categoryObj;
       mappings.y = series[0];
       mappings.size = series[0];
+
+      // Scatter plot starts here
+    } else if (chartType === 'scatter') {
+      mappings.x = categoryObj;
+      mappings.y = series[0];
+      mappings.color = series[1];
 
       // Pie Chart starts here
     } else if (chartType === 'pie') {
@@ -140,7 +151,7 @@ function convertQueries (queries, defaultQuery) {
     console.warn('Warning, currently multiple queries is not supported. Reverting to default.', queries);
     return defaultQuery;
   }
-  return queries[0];
+  return queries[0] ? queries[0] : defaultQuery; // Might not have a query passed in so check and if it hasn't then return default query
 }
 
 /**

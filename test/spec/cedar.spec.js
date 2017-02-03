@@ -402,6 +402,92 @@ describe('Cedar', function () {
           expect(actual).to.deep.equal(expected);
         });
       });
+      describe('for grouped bar charts with multiple series and not multiple datasets', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+              "mappings":{
+                "category": { "field": "NAME", "label": "Name" },
+                "series": [
+                  { "field":"MED_AGE_M","label":"Age" },
+                  { "field":"MED_AGE_F","label":"Age" },
+                  { "field":"MED_AGE","label":"Age" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+            "mappings":{
+              "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+              "group":{"field":"NAME","label":"Name"}
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
+          expect(actual).to.deep.equal(expected);
+        });
+        it('should handle category string', function () {
+          datasets[0].mappings.category = 'NAME';
+          expected.mappings.group.label = 'NAME';
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
+      describe('for scatterplot chart', function () {
+        // set up input and expected output
+        var datasets, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+              "mappings":{
+                "category": { "field": "Number_of", "label": "Student Enrollment (2008)" },
+                "series": [
+                  { "field":"F_of_teach", "label": "Fraction of Teachers" },
+                  { "field":"Type", "label":"Facility Type" }
+                ]
+              }
+            }
+          ];
+          expected = {
+            "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+            "mappings":{
+              "x": {"field":"Number_of", "label":"Student Enrollment (2008)"},
+              "y": {"field":"F_of_teach", "label":"Fraction of Teachers"},
+              "color":{"field":"Type", "label":"Facility Type"},
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'scatter');
+          expect(actual).to.deep.equal(expected);
+        });
+      });
     });
   });
 });
