@@ -150,8 +150,8 @@ export function convertDatasetsToDataset (datasets, series, chartType, dataset) 
 
     // sort
     // TODO: handle multiple sorts?
-    if (dtst.sort) {
-      mappings.sort = dtst.mappings.sort;
+    if (series[0].sort) {
+      mappings.sort = `${series[0].sort.field} ${series[0].sort.order}`;
     }
   });
 
