@@ -6,6 +6,8 @@ Cedar is a library for crafting, sharing and data visualizations powered by ArcG
 
 At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
 
+![example chart](https://raw.github.com/Esri/cedar/master/example.png)
+
 **Currently Esri Cedar is in development and should be thought of as a beta or preview.**
 
 ## Types of Charts
