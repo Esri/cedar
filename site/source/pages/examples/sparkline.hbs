@@ -21,36 +21,45 @@ layout: example.hbs
 &lt;/style&gt;
 
 &lt;script type="text/javascript"&gt;
-  var data = [
-    {"attributes": {"date": "2000", "dc": 572046, "baltimore": 648654}},
-    {"attributes": {"date": "2010", "dc": 601767, "baltimore": 621317}},
-    {"attributes": {"date": "2013", "dc": 649111, "baltimore": 623404}},
-    {"attributes": {"date": "2014", "dc": 658893, "baltimore": 622793}}
-  ];
 
-  var chartdc = new Cedar({
-    "type": "sparkline",
-    "dataset":{
-      "data":data,
-      "mappings":{
-        "x": {"field":"date","label":"Date"},
-        "y": {"field":"dc","label":"dc"}
-      }
-    }
-  });
-  chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
+var data = [
+  {"attributes": {"date": "2000", "dc": 572046, "baltimore": 648654}},
+  {"attributes": {"date": "2010", "dc": 601767, "baltimore": 621317}},
+  {"attributes": {"date": "2013", "dc": 649111, "baltimore": 623404}},
+  {"attributes": {"date": "2014", "dc": 658893, "baltimore": 622793}}
+];
 
-  var chartbm = new Cedar({
-    "type": "sparkline",
-    "dataset":{
-      "data":data,
-      "mappings":{
-        "x": {"field":"date","label":"Date"},
-        "y": {"field":"baltimore","label":"population"}
-      }
+var chartdc = new Cedar({
+  "type": "sparkline",
+  "datasets": [
+    {
+      "data": data
     }
-  });
-  chartbm.show({elementId: "#pop-bm", autolabels: false, height: 10, width: 20, renderer: "svg" });
+  ],
+  "series": [
+    {
+      "category": { "field":"date", "label":"Date" },
+      "value": { "field":"dc", "label":"dc" }
+    }
+  ]
+});
+chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
+
+var chartbm = new Cedar({
+  "type": "sparkline",
+  "datasets": [
+    {
+      "data": data
+    }
+  ],
+  "series": [
+    {
+      "category": {"field":"date","label":"Date"},
+      "value": {"field":"baltimore","label":"baltimore"}
+    }
+  ]
+});
+chartbm.show({elementId: "#pop-bm", autolabels: false, height: 10, width: 20, renderer: "svg" });
 &lt;/script&gt;
 </pre>
 
@@ -65,25 +74,33 @@ layout: example.hbs
 
   var chartdc = new Cedar({
   	"type": "sparkline",
-    "dataset":{
-      "data":data,
-      "mappings":{
-        "x": {"field":"date","label":"Date"},
-        "y": {"field":"dc","label":"dc"}
+    "datasets": [
+      {
+        "data": data
       }
-    }
+    ],
+    "series": [
+      {
+        "category": { "field":"date", "label":"Date" },
+        "value": { "field":"dc", "label":"dc" }
+      }
+    ]
   });
   chartdc.show({elementId: "#pop-dc", autolabels: false, height: 10, width: 20, renderer: "svg" });
 
   var chartbm = new Cedar({
   	"type": "sparkline",
-    "dataset":{
-      "data":data,
-      "mappings":{
-        "x": {"field":"date","label":"Date"},
-        "y": {"field":"baltimore","label":"population"}
+    "datasets": [
+      {
+        "data": data
       }
-    }
+    ],
+    "series": [
+      {
+        "category": {"field":"date","label":"Date"},
+        "value": {"field":"baltimore","label":"baltimore"}
+      }
+    ]
   });
   chartbm.show({elementId: "#pop-bm", autolabels: false, height: 10, width: 20, renderer: "svg" });
 

@@ -13,23 +13,30 @@ layout: example.hbs
 
   var chart = new Cedar({"type":"time-trendline"});
 
-  var dataset = {
-    "url":"https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
-    "query" : {
-      "where" : "year > 2000"
-    },
-    "mappings":{
-      "time": {"field":"year", "label": "Year"},
-      "value": {"field":"annual", "label": "Total Precipitation"},
-      "trendline": {"field": "trendline", label: ""},
-      "sort": "year"
+  var datasets = [
+    {
+      "url": "https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
+      "query": {
+        "where": "year > 2000",
+        "orderByFields": "year"
+      }
     }
-  };
+  ];
 
-  chart.dataset = dataset;
+  var series = [
+    {
+      "category": { "field": "year", "label": "Year" },
+      "value": { "field":"annual","label":"Total Precipitation" },
+      "trendline": { "field": "trendline", "label": "" }
+    }
+  ];
+
+  chart.datasets = datasets;
+  chart.series = series;
+
   chart.show({
     elementId: "#chart"
-  }); 
+  });
 
   chart.override = {
     scales: [
@@ -72,7 +79,7 @@ layout: example.hbs
   chart.dataset = dataset;
   chart.show({
     elementId: "#chart"
-  }); 
+  });
 
   chart.override = {
     axes: [
@@ -126,26 +133,33 @@ layout: example.hbs
 </pre>
 
 <script>
-  
+
   var chart = new Cedar({"type":"time-trendline"});
 
-  var dataset = {
-    "url":"https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
-    "query" : {
-      "where" : "year > 2000"
-    },
-    "mappings":{
-      "time": {"field":"year", "label": "Year"},
-      "value": {"field":"annual", "label": "Total Precipitation"},
-      "trendline": {"field": "trendline", label: ""},
-      "sort": "year"
+  var datasets = [
+    {
+      "url": "https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
+      "query": {
+        "where": "year > 2000",
+        "orderByFields": "year"
+      }
     }
-  };
+  ];
 
-  chart.dataset = dataset;
+  var series = [
+    {
+      "category": { "field": "year", "label": "Year" },
+      "value": { "field":"annual","label":"Total Precipitation" },
+      "trendline": { "field": "trendline", "label": "" }
+    }
+  ];
+
+  chart.datasets = datasets;
+  chart.series = series;
+
   chart.show({
     elementId: "#chart"
-  }); 
+  });
 
   chart.override = {
     scales: [
@@ -179,7 +193,7 @@ layout: example.hbs
   chart_override.dataset = dataset;
   chart_override.show({
     elementId: "#chart-override"
-  }); 
+  });
 
   chart_override.override = {
     axes: [

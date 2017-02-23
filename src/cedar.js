@@ -166,6 +166,7 @@ export default class Cedar {
      */
 
     // first, check for pre-defined chart type passed in as 'type'
+    this._chartType = opts.type;
     spec = this._getSpecificationUrl(opts.type);
 
     // If url or object passed use that...
@@ -200,6 +201,16 @@ export default class Cedar {
       opts.dataset.query = utils.mixin({}, specUtils.defaultQuery(), opts.dataset.query);
       // Assign it
       this._definition.dataset = opts.dataset;
+    }
+
+    // Allow datasets to be passed in
+    if (opts.datasets && Array.isArray(opts.datasets)) {
+      this._definition.datasets = opts.datasets;
+    }
+
+    // Allow series to be passed in
+    if (opts.series && Array.isArray(opts.series)) {
+      this._definition.series = opts.series;
     }
 
     /**
@@ -239,12 +250,28 @@ export default class Cedar {
   /**
    * Properties
    */
-  // Datasets
+  // Dataset - old api
   get dataset () {
     return this._definition.dataset;
   }
   set dataset (val) {
     this._definition.dataset = val;
+  }
+
+  // Datasets - new api
+  get datasets () {
+    return this._definition.datasets;
+  }
+  set datasets (val) {
+    this._definition.datasets = val;
+  }
+
+  // Series - new api
+  get series () {
+    return this._definition.series;
+  }
+  set series (val) {
+    this._definition.series = val;
   }
 
   // Specification
@@ -418,6 +445,9 @@ export default class Cedar {
           this._createTooltip(this._definition.tooltip.id);
         }
 
+        if (this._definition.datasets && this._definition.series) {
+          this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.series, this._chartType, this._definition.dataset);
+        }
         // Ensure we have required inputs or defaults
         let compiledMappings = specUtils.applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs);
 
@@ -865,5 +895,9 @@ export default class Cedar {
   }
   static _getMappingFieldName (mappingName, fieldName) {
     return utils.getMappingFieldName(mappingName, fieldName);
+  }
+  // TODO: remove once we have a better way to unit test
+  static _convertDatasetsToDataset (datasets, dataset, chartType) {
+    return specUtils.convertDatasetsToDataset(datasets, dataset, chartType);
   }
 }

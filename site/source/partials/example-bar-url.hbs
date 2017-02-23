@@ -10,22 +10,28 @@
   // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
   var chart = new Cedar({"type": "bar"});
   //create the dataset w/ mappings
-  var dataset = {
-    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-    "query": {
-      "groupByFieldsForStatistics": "Type",
-      "outStatistics": [{
-        "statisticType": "sum",
-        "onStatisticField": "Number_of",
-        "outStatisticFieldName": "Number_of_SUM"
-      }]
-    },
-    "mappings":{
-      "sort": "Number_of_SUM DESC",
-      "x": {"field":"Type","label":"Facility Use"},
-      "y": {"field":"Number_of_SUM","label":"Total Students"}
+  var datasets = [
+    {
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "query": {
+        "groupByFieldsForStatistics": "Type",
+        "orderByFields": "Number_of_SUM DESC",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      }
     }
-  };
+  ];
+
+  var series = [
+    {
+      "category": { "field": "Type", "label": "Facility Use" },
+      "value": { "field":"Number_of_SUM","label":"Total Students" }
+    }
+  ];
+
 
   chart.tooltip = {
     "title": "{Type}",
@@ -33,7 +39,8 @@
   }
 
   //assign to the chart
-  chart.dataset = dataset;
+  chart.datasets = datasets;
+  chart.series = series;
 
   //show the chart
   chart.show({

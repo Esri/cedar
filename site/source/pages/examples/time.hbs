@@ -11,54 +11,68 @@ layout: example.hbs
 
 <pre class="prettyprint">var chart = new Cedar({"type":"time"});
 
-var dataset = {
-  "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
-  "mappings":{
-    "x": {"field":"Date", "label": "Date"},
-    "y": {"field":"Injuries", "label": "Injuries"},
-    "sort":"Date"
-
-  }
-};
-
-chart.tooltip = {
-  "title": "{Year}",
-  "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
-};
-
-chart.dataset = dataset;
-//chart.dataset.mappings.sort = "DATE";
-chart.show({
-  elementId: "#chart",
-  autolabels: true
-}); 
-</pre>
-
-<script>
-  
-  var chart = new Cedar({"type":"time"});
-
-  var dataset = {
-    "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
-    "mappings":{
-      "time": {"field":"Date", "label": "Date"},
-      "value": {"field":"Injuries", "label": "Injuries"},
-      "sort":"Date"
-
+  var datasets = [
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {
+        "orderByFields": "Date"
+      }
     }
-  };
+  ];
+
+  var series = [
+    {
+      "category": { "field": "Date", "label": "Date" },
+      "value": { "field":"Injuries","label":"Injuries" }
+    }
+  ];
 
   chart.tooltip = {
     "title": "{Year}",
     "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
   };
 
-  chart.dataset = dataset;
+  chart.datasets = datasets;
+  chart.series = series;
+//chart.dataset.mappings.sort = "DATE";
+chart.show({
+  elementId: "#chart",
+  autolabels: true
+});
+</pre>
+
+<script>
+
+  var chart = new Cedar({"type":"time"});
+
+  var datasets = [
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {
+        "orderByFields": "Date"
+      }
+    }
+  ];
+
+  var series = [
+    {
+      "category": { "field": "Date", "label": "Date" },
+      "value": { "field":"Injuries","label":"Injuries" }
+    }
+  ];
+
+  chart.tooltip = {
+    "title": "{Year}",
+    "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
+  };
+
+  chart.datasets = datasets;
+  chart.series = series;
   //chart.dataset.mappings.sort = "DATE";
   chart.show({
     elementId: "#chart",
     autolabels: true
-  }); 
+  });
 
 
 </script>
