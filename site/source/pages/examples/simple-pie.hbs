@@ -39,18 +39,18 @@ layout: example.hbs
           "onStatisticField": "FID",
           "outStatisticFieldName": "FID_Count"
         }]
-      },
-      "mappings":{
-        "category": {"field":"EXPR_1","label":"Month"},
-        "series": [
-          {"field":"FID_Count","label":"Number of Tornados"},
-          // the pie will be 540 px tall/wide
-          { "radius": 270 }
-        ]
       }
     }
   ];
+  var series = [
+    {
+      "category": {"field":"EXPR_1","label":"Month"},
+      "value": { "field":"FID_Count","label":"Number of Tornados" },
+      "radius": 270
+    }
+  ];
   chart.datasets = datasets;
+  chart.series = series;
 
 
   chart.tooltip = {
@@ -97,18 +97,18 @@ layout: example.hbs
           "onStatisticField": "FID",
           "outStatisticFieldName": "FID_Count"
         }]
-      },
-      "mappings":{
-        "category": {"field":"EXPR_1","label":"Month"},
-        "series": [
-          {"field":"FID_Count","label":"Number of Tornados"},
-          // the pie will be 540 px tall/wide
-          { "radius": 270 }
-        ]
       }
     }
   ];
+  var series = [
+    {
+      "category": {"field":"EXPR_1","label":"Month"},
+      "value": { "field":"FID_Count","label":"Number of Tornados" },
+      "radius": 270
+    }
+  ];
   chart.datasets = datasets;
+  chart.series = series;
 
   chart.tooltip = {
     // this is the month abbreviation returned from the expresssion above

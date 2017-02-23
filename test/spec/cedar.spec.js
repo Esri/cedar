@@ -385,9 +385,11 @@ describe('Cedar', function () {
               "value": { "field":"MED_AGE_M","label":"Age" }
             },
             {
+              "category": { "field": "NAME", "label": "Name" },
               "value": { "field":"MED_AGE_F","label":"Age" }
             },
             {
+              "category": { "field": "NAME", "label": "Name" },
               "value": { "field":"MED_AGE","label":"Age" }
             }
           ];

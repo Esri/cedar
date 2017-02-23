@@ -13,18 +13,20 @@
           "onStatisticField": "Number_of",
           "outStatisticFieldName": "Number_of_SUM"
         }]
-      },
-      "mappings":{
-        "category": { "field": "Zip", "label": "ZIP Code" },
-        "series": [
-          { "field":"Number_of_SUM","label":"Total Students" }
-        ]
       }
+    }
+  ];
+
+  var series = [
+    {
+      "category": { "field": "Zip", "label": "ZIP Code" },
+      "value": { "field":"Number_of_SUM","label":"Total Students" }
     }
   ];
 
   //assign to the chart
   chart.datasets = datasets;
+  chart.series = series;
 
   // fix placement of axes labels
   chart.override = {

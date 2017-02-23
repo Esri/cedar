@@ -1,15 +1,21 @@
 <script>
-  var features = {"features":[{"attributes":{"Zip":20005,"Number_of_SUM":327}},{"attributes":{"Zip":20024,"Number_of_SUM":517}},{"attributes":{"Zip":20017,"Number_of_SUM":597}},{"attributes":{"Zip":20015,"Number_of_SUM":707}},{"attributes":{"Zip":20037,"Number_of_SUM":760}},{"attributes":{"Zip":20018,"Number_of_SUM":1052}},{"attributes":{"Zip":20012,"Number_of_SUM":1184}},{"attributes":{"Zip":20007,"Number_of_SUM":1584}},{"attributes":{"Zip":20008,"Number_of_SUM":1625}},{"attributes":{"Zip":20003,"Number_of_SUM":1869}},{"attributes":{"Zip":20009,"Number_of_SUM":1945}},{"attributes":{"Zip":20001,"Number_of_SUM":2164}},{"attributes":{"Zip":20010,"Number_of_SUM":2282}},{"attributes":{"Zip":20019,"Number_of_SUM":3278}},{"attributes":{"Zip":20011,"Number_of_SUM":3817}},{"attributes":{"Zip":20020,"Number_of_SUM":3901}},{"attributes":{"Zip":20032,"Number_of_SUM":4360}},{"attributes":{"Zip":20016,"Number_of_SUM":4681}},{"attributes":{"Zip":20002,"Number_of_SUM":5590}}]};
 
   var chart2 = new Cedar({"type": "bar"});
-  
-  var dataset2 = {
-    "data": features,
-    "mappings":{
-      "x": {"field":"Zip","label":"ZIP Code"},
-      "y": {"field":"Number_of_SUM","label":"Total Students"}
+
+  var datasets2 = [
+    {
+      "data": {
+        "features":[{"attributes":{"Zip":20005,"Number_of_SUM":327}},{"attributes":{"Zip":20024,"Number_of_SUM":517}},{"attributes":{"Zip":20017,"Number_of_SUM":597}},{"attributes":{"Zip":20015,"Number_of_SUM":707}},{"attributes":{"Zip":20037,"Number_of_SUM":760}},{"attributes":{"Zip":20018,"Number_of_SUM":1052}},{"attributes":{"Zip":20012,"Number_of_SUM":1184}},{"attributes":{"Zip":20007,"Number_of_SUM":1584}},{"attributes":{"Zip":20008,"Number_of_SUM":1625}},{"attributes":{"Zip":20003,"Number_of_SUM":1869}},{"attributes":{"Zip":20009,"Number_of_SUM":1945}},{"attributes":{"Zip":20001,"Number_of_SUM":2164}},{"attributes":{"Zip":20010,"Number_of_SUM":2282}},{"attributes":{"Zip":20019,"Number_of_SUM":3278}},{"attributes":{"Zip":20011,"Number_of_SUM":3817}},{"attributes":{"Zip":20020,"Number_of_SUM":3901}},{"attributes":{"Zip":20032,"Number_of_SUM":4360}},{"attributes":{"Zip":20016,"Number_of_SUM":4681}},{"attributes":{"Zip":20002,"Number_of_SUM":5590}}]
+      }
     }
-  };
+  ];
+
+  var series2 = [
+    {
+      "category": { "field": "Zip", "label": "Zip Code" },
+      "value": { "field":"Number_of_SUM","label":"Total Students" }
+    }
+  ];
 
   chart2.tooltip = {
     "title": "{Zip}",
@@ -17,8 +23,9 @@
   }
 
   //assign to the chart
-  chart2.dataset = dataset2;
-  
+  chart2.datasets = datasets2;
+  chart2.series = series2;
+
   //show the chart
   chart2.show({
     elementId: "#chart-data",

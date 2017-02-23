@@ -13,33 +13,23 @@ var chart = new Cedar({
 		"title": "{NAME}",
 		"content": "{POP2012} population in 2012"
 	},
-	"datasets":[
+  "datasets":[
     {
-      "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      "mappings":{
-        "category": { "field": "NAME", "label": "Name" },
-        "series": [
-          { "field":"MED_AGE_M","label":"Age" }
-        ]
-      }
+      "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0"
+    }
+  ],
+  "series": [
+    {
+      "category": { "field": "NAME", "label": "Name" },
+      "value": { "field":"MED_AGE_M","label":"Age" }
     },
     {
-      "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      "mappings":{
-        "category": { "field": "NAME", "label": "Name" },
-        "series": [
-          { "field":"MED_AGE_F","label":"Age" }
-        ]
-      }
+      "category": { "field": "NAME", "label": "Name" },
+      "value": { "field":"MED_AGE_F","label":"Age" }
     },
     {
-      "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      "mappings":{
-        "category": { "field": "NAME", "label": "Name" },
-        "series": [
-          { "field":"MED_AGE","label":"Age" }
-        ]
-      }
+      "category": { "field": "NAME", "label": "Name" },
+      "value": { "field":"MED_AGE","label":"Age" }
     }
   ]
 });
@@ -60,17 +50,20 @@ var chart2 = new Cedar({
   	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
   },
   "datasets": [
-  	{
-      "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
-      "mappings": {
-  			"category": { "field":"STATE_NAME","label":"State" },
-        "series": [
-          { "field": "MaleVets2010", "label": "Veterans by Gender" },
-          { "field": "FemaleVets2010", "label": "Veterans by Gender" }
-        ]
-  		}
-  	}
-	]
+    {
+      "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1"
+    }
+  ],
+  "series": [
+    {
+      "category": { "field":"STATE_NAME","label":"State" },
+      "value": { "field": "MaleVets2010", "label": "Veterans by Gender" }
+    },
+    {
+      "category": { "field":"STATE_NAME","label":"State" },
+      "value": { "field": "FemaleVets2010", "label": "Veterans by Gender" }
+    }
+  ]
 });
 
 chart2.show({
@@ -88,33 +81,23 @@ chart2.show({
     },
     "datasets":[
       {
-        "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-        "mappings":{
-          "category": { "field": "NAME", "label": "Name" },
-          "series": [
-            { "field":"MED_AGE_M","label":"Age" }
-          ]
-        }
-      },
-      {
-        "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-        "mappings":{
-          "category": { "field": "NAME", "label": "Name" },
-          "series": [
-            { "field":"MED_AGE_F","label":"Age" }
-          ]
-        }
-      },
-      {
-        "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-        "mappings":{
-          "category": { "field": "NAME", "label": "Name" },
-          "series": [
-            { "field":"MED_AGE","label":"Age" }
-          ]
-        }
+        "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0"
       }
-    ]
+    ],
+		"series": [
+      {
+        "category": { "field": "NAME", "label": "Name" },
+        "value": { "field":"MED_AGE_M","label":"Age" }
+      },
+      {
+        "category": { "field": "NAME", "label": "Name" },
+        "value": { "field":"MED_AGE_F","label":"Age" }
+      },
+      {
+        "category": { "field": "NAME", "label": "Name" },
+        "value": { "field":"MED_AGE","label":"Age" }
+      }
+		]
   });
 
   chart.show({
@@ -131,16 +114,19 @@ chart2.show({
     },
     "datasets": [
 			{
-				"url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1",
-				"mappings": {
-					"category": { "field":"STATE_NAME","label":"State" },
-          "series": [
-            { "field": "MaleVets2010", "label": "Veterans by Gender" },
-            { "field": "FemaleVets2010", "label": "Veterans by Gender" }
-          ]
-				}
+				"url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1"
 			}
-		]
+		],
+    "series": [
+      {
+        "category": { "field":"STATE_NAME","label":"State" },
+        "value": { "field": "MaleVets2010", "label": "Veterans by Gender" }
+      },
+      {
+        "category": { "field":"STATE_NAME","label":"State" },
+        "value": { "field": "FemaleVets2010", "label": "Veterans by Gender" }
+      }
+    ]
   });
 
   chart2.show({

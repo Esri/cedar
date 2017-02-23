@@ -151,7 +151,12 @@ export function convertDatasetsToDataset (datasets, series, chartType, dataset) 
     // sort
     // TODO: handle multiple sorts?
     if (series[0].sort) {
-      mappings.sort = `${series[0].sort.field} ${series[0].sort.order}`;
+      var sort = series[0].sort;
+      if (sort.field && sort.order) {
+        mappings.sort = `${sort.field} ${sort.order}`;
+      } else {
+        mappings.sort = sort.field;
+      }
     }
   });
 

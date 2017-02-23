@@ -20,14 +20,15 @@
           "onStatisticField": "Number_of",
           "outStatisticFieldName": "Number_of_SUM"
         }]
-      },
-      "mappings":{
-        "sort": "Number_of_SUM DESC",
-        "category": { "field": "Type", "label": "Facility Use" },
-        "series": [
-          { "field":"Number_of_SUM","label":"Total Students" }
-        ]
       }
+    }
+  ];
+
+  var series = [
+    {
+      "category": { "field": "Type", "label": "Facility Use" },
+      "value": { "field":"Number_of_SUM","label":"Total Students" },
+      "sort": { "field": "Number_of_SUM", "order": "DESC" }
     }
   ];
 
@@ -39,6 +40,7 @@
 
   //assign to the chart
   chart.datasets = datasets;
+  chart.series = series;
 
   //show the chart
   chart.show({
