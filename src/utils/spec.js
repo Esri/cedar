@@ -61,7 +61,7 @@ export function applyDefaultsToMappings (mappings, inputs) {
 /**
  * Convert datasets to dataset
  */
-export function convertDatasetsToDataset (datasets, dataset, chartType) {
+export function convertDatasetsToDataset (datasets, series, dataset, chartType) {
   // console.log('Datasets and dataset are:', datasets, dataset);
   if (!dataset) {
     dataset = {
@@ -78,9 +78,6 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
   const data = [];
 
   datasets.forEach((dtst) => {
-    const category = dtst.mappings.category;
-    const categoryObj = (typeof category === 'string') ? { field: category, label: category } : category;
-    const series = dtst.mappings.series;
 
     // Push queries data and urls first
     if (dtst.query) {
@@ -96,7 +93,7 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
     // Grouped bar chart here
     if (chartType === 'grouped') {
       if (!mappings.group) {
-        mappings.group = categoryObj;
+        mappings.group = series[0].category;
       }
       if (!mappings.x) {
         mappings.x = {
@@ -114,47 +111,47 @@ export function convertDatasetsToDataset (datasets, dataset, chartType) {
 
       // Bubble Chart starts here
     } else if (chartType === 'bubble') {
-      mappings.x = categoryObj;
-      mappings.y = series[0];
-      mappings.size = series[1];
+      mappings.x = series[0].category;
+      mappings.y = series[0].value;
+      mappings.size = series[0].size;
 
       // Scatter plot starts here
     } else if (chartType === 'scatter') {
-      mappings.x = categoryObj;
-      mappings.y = series[0];
-      mappings.color = series[1];
+      mappings.x = series[0].category;
+      mappings.y = series[0].value;
+      mappings.color = series[0].color;
 
       // Pie Chart starts here
     } else if (chartType === 'pie') {
-      mappings.label = categoryObj;
-      mappings.y = series[0];
-      mappings.radius = series[1].radius;
+      mappings.label = series[0].category;
+      mappings.y = series[0].value;
+      mappings.radius = series[0].radius;
 
       // Bar horizontal starts here
     } else if (chartType === 'bar-horizontal') {
-      mappings.y = categoryObj;
-      mappings.x = series[0];
+      mappings.y = series[0].category;
+      mappings.x = series[0].value;
 
       // Timeline chart starts here
     } else if (chartType === 'time') {
-      mappings.time = categoryObj;
-      mappings.value = series[0];
+      mappings.time = series[0].category;
+      mappings.value = series[0].value;
 
       // time-trendline chart starts here
     } else if (chartType === 'time-trendline') {
-      mappings.time = categoryObj;
-      mappings.value = series[0];
-      mappings.trendline = series[1];
+      mappings.time = series[0].category;
+      mappings.value = series[0].value;
+      mappings.trendline = series[0].trendline;
 
     // X Y only charts here
     } else {
-      mappings.x = categoryObj;
-      mappings.y = series[0];
+      mappings.x = series[0].category;
+      mappings.y = series[0].value;
     }
 
     // sort
     // TODO: handle multiple sorts?
-    if (dtst.mappings.sort) {
+    if (dtst.sort) {
       mappings.sort = dtst.mappings.sort;
     }
   });

@@ -208,6 +208,11 @@ export default class Cedar {
       this._definition.datasets = opts.datasets;
     }
 
+    // Allow series to be passed in
+    if (opts.series && Array.isArray(opts.series)) {
+      this._definition.series = opts.series;
+    }
+
     /**
      * Tooltip
      */
@@ -259,6 +264,14 @@ export default class Cedar {
   }
   set datasets (val) {
     this._definition.datasets = val;
+  }
+
+  // Series - new api
+  get series () {
+    return this._definition.series;
+  }
+  set series (val) {
+    this._definition.series = val;
   }
 
   // Specification
@@ -432,8 +445,8 @@ export default class Cedar {
           this._createTooltip(this._definition.tooltip.id);
         }
 
-        if (this._definition.datasets) {
-          this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.dataset, this._chartType);
+        if (this._definition.datasets && this._definition.series) {
+          this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.series, this._definition.dataset, this._chartType);
         }
         // Ensure we have required inputs or defaults
         let compiledMappings = specUtils.applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs);
