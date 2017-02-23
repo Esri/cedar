@@ -14,20 +14,19 @@ layout: example.hbs
 var dataset = {
   "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
   "mappings":{
-    "x": {"field":"Date", "label": "Date"},
-    "y": {"field":"Injuries", "label": "Injuries"},
+    "time": {"field":"Date", "label": "Date"},
+    "value": {"field":"Injuries", "label": "Injuries"},
     "sort":"Date"
-
   }
 };
 
 chart.tooltip = {
   "title": "{Year}",
-  "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
+  "content": "{Injuries} injuries / {Fatalities} fatalities"
 };
 
 chart.dataset = dataset;
-//chart.dataset.mappings.sort = "DATE";
+// chart.dataset.mappings.sort = "DATE";
 chart.show({
   elementId: "#chart",
   autolabels: true
@@ -50,15 +49,13 @@ chart.show({
 
   chart.tooltip = {
     "title": "{Year}",
-    "content": "{Injuries} injuries<br/>{Fatalities} fatalities"
+    "content": "{Injuries} injuries / {Fatalities} fatalities"
   };
 
   chart.dataset = dataset;
-  //chart.dataset.mappings.sort = "DATE";
+  // chart.dataset.mappings.sort = "DATE";
   chart.show({
     elementId: "#chart",
     autolabels: true
   }); 
-
-
 </script>
