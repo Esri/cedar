@@ -280,7 +280,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'bar');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'bar', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -322,7 +322,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'bar');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'bar', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -366,124 +366,54 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'bar-horizontal');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'bar-horizontal', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
-      // describe('for grouped bar charts', function () {
-      //   // set up input and expected output
-      //   var datasets, series, expected;
-      //   beforeEach(function () {
-      //     datasets = [
-      //       {
-      //         "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      //         "mappings":{
-      //           "category": { "field": "NAME", "label": "Name" },
-      //           "series": [
-      //             { "field":"MED_AGE_M","label":"Age" }
-      //           ]
-      //         }
-      //       },
-      //       {
-      //         "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      //         "mappings":{
-      //           "category": { "field": "NAME", "label": "Name" },
-      //           "series": [
-      //             { "field":"MED_AGE_F","label":"Age" }
-      //           ]
-      //         }
-      //       },
-      //       {
-      //         "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      //         "mappings":{
-      //
-      //           "series": [
-      //
-      //           ]
-      //         }
-      //       }
-      //     ];
-      //     series = [
-      //       {
-      //         "category": { "field": "NAME", "label": "Name" },
-      //         "value": { "field":"MED_AGE","label":"Age" }
-      //       }
-      //     ]
-      //     expected = {
-      //   	  "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      //   	  "mappings":{
-      //   	    "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
-      //   	    "group":{"field":"NAME","label":"Name"}
-      //   	  },
-      //       "query": {
-      //         "where": '1=1',
-      //         "returnGeometry": false,
-      //         "returnDistinctValues": false,
-      //         "returnIdsOnly": false,
-      //         "returnCountOnly": false,
-      //         "outFields": '*',
-      //         "sqlFormat": 'standard',
-      //         "f": 'json'
-      //       }
-      //   	};
-      //   });
-      //   it('should handle category object', function () {
-      //     var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
-      //     expect(actual).to.deep.equal(expected);
-      //   });
-      //   it('should handle category string', function () {
-      //     datasets[0].mappings.category = 'NAME';
-      //     expected.mappings.group.label = 'NAME';
-      //     var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
-      //     expect(actual).to.deep.equal(expected);
-      //   });
-      // });
-      // describe('for grouped bar charts with multiple series and not multiple datasets', function () {
-      //   // set up input and expected output
-      //   var datasets, expected;
-      //   beforeEach(function () {
-      //     datasets = [
-      //       {
-      //         "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      //         "mappings":{
-      //           "category": { "field": "NAME", "label": "Name" },
-      //           "series": [
-      //             { "field":"MED_AGE_M","label":"Age" },
-      //             { "field":"MED_AGE_F","label":"Age" },
-      //             { "field":"MED_AGE","label":"Age" }
-      //           ]
-      //         }
-      //       }
-      //     ];
-      //     expected = {
-      //       "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
-      //       "mappings":{
-      //         "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
-      //         "group":{"field":"NAME","label":"Name"}
-      //       },
-      //       "query": {
-      //         "where": '1=1',
-      //         "returnGeometry": false,
-      //         "returnDistinctValues": false,
-      //         "returnIdsOnly": false,
-      //         "returnCountOnly": false,
-      //         "outFields": '*',
-      //         "sqlFormat": 'standard',
-      //         "f": 'json'
-      //       }
-      //     };
-      //   });
-      //   it('should handle category object', function () {
-      //     var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
-      //     expect(actual).to.deep.equal(expected);
-      //   });
-      //   it('should handle category string', function () {
-      //     datasets[0].mappings.category = 'NAME';
-      //     expected.mappings.group.label = 'NAME';
-      //     var actual = Cedar._convertDatasetsToDataset(datasets, undefined, 'grouped');
-      //     expect(actual).to.deep.equal(expected);
-      //   });
-      // });
+      describe('for grouped bar charts', function () {
+        // set up input and expected output
+        var datasets, series, expected;
+        beforeEach(function () {
+          datasets = [
+            {
+              "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0"
+            }
+          ];
+          series = [
+            {
+              "category": { "field": "NAME", "label": "Name" },
+              "value": { "field":"MED_AGE_M","label":"Age" }
+            },
+            {
+              "value": { "field":"MED_AGE_F","label":"Age" }
+            },
+            {
+              "value": { "field":"MED_AGE","label":"Age" }
+            }
+          ];
+          expected = {
+            "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0",
+            "mappings":{
+              "x": {"field":["attributes.MED_AGE_M", "attributes.MED_AGE_F", "attributes.MED_AGE"],"label":"Age"},
+              "group":{"field":"NAME","label":"Name"}
+            },
+            "query": {
+              "where": '1=1',
+              "returnGeometry": false,
+              "returnDistinctValues": false,
+              "returnIdsOnly": false,
+              "returnCountOnly": false,
+              "outFields": '*',
+              "sqlFormat": 'standard',
+              "f": 'json'
+            }
+          };
+        });
+        it('should handle category object', function () {
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'grouped', undefined);
+          expect(actual).to.deep.equal(expected);
+        });
+      });
       describe('for scatterplot chart', function () {
         // set up input and expected output
         var datasets, series, expected;
@@ -520,7 +450,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'scatter');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'scatter', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -560,7 +490,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'bubble');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'bubble', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -618,7 +548,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'pie');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'pie', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -662,7 +592,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'sparkline');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'sparkline', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -696,7 +626,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'time');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'time', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });
@@ -734,7 +664,7 @@ describe('Cedar', function () {
           };
         });
         it('should handle category object', function () {
-          var actual = Cedar._convertDatasetsToDataset(datasets, series, undefined, 'time-trendline');
+          var actual = Cedar._convertDatasetsToDataset(datasets, series, 'time-trendline', undefined);
           expect(actual).to.deep.equal(expected);
         });
       });

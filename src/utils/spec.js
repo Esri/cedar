@@ -61,7 +61,7 @@ export function applyDefaultsToMappings (mappings, inputs) {
 /**
  * Convert datasets to dataset
  */
-export function convertDatasetsToDataset (datasets, series, dataset, chartType) {
+export function convertDatasetsToDataset (datasets, series, chartType, dataset) {
   // console.log('Datasets and dataset are:', datasets, dataset);
   if (!dataset) {
     dataset = {
@@ -78,7 +78,6 @@ export function convertDatasetsToDataset (datasets, series, dataset, chartType) 
   const data = [];
 
   datasets.forEach((dtst) => {
-
     // Push queries data and urls first
     if (dtst.query) {
       queries.push(dtst.query);
@@ -98,15 +97,15 @@ export function convertDatasetsToDataset (datasets, series, dataset, chartType) 
       if (!mappings.x) {
         mappings.x = {
           field: [],
-          label: series[0].label
+          label: series[0].value.label
         };
       }
       if (series.length > 1) {
         series.forEach((attr) => {
-          mappings.x.field.push(`attributes.${attr.field}`);
+          mappings.x.field.push(`attributes.${attr.value.field}`);
         });
       } else {
-        mappings.x.field.push(`attributes.${series[0].field}`);
+        mappings.x.field.push(`attributes.${series[0].value.field}`);
       }
 
       // Bubble Chart starts here
