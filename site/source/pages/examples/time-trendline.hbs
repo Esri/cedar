@@ -17,7 +17,8 @@ layout: example.hbs
     {
       "url": "https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
       "query": {
-        "where": "year > 2000"
+        "where": "year > 2000",
+        "orderByFields": "year"
       }
     }
   ];
@@ -26,14 +27,13 @@ layout: example.hbs
     {
       "category": { "field": "year", "label": "Year" },
       "value": { "field":"annual","label":"Total Precipitation" },
-      "trendline": { "field": "trendline", "label": "" },
-      "sort": { "field": "year" }
+      "trendline": { "field": "trendline", "label": "" }
     }
   ];
 
   chart.datasets = datasets;
   chart.series = series;
-  
+
   chart.show({
     elementId: "#chart"
   });
@@ -140,7 +140,8 @@ layout: example.hbs
     {
       "url": "https://services6.arcgis.com/Y3k193RFrcECJ8xA/arcgis/rest/services/Observed_Precipitation/FeatureServer/0",
       "query": {
-        "where": "year > 2000"
+        "where": "year > 2000",
+        "orderByFields": "year"
       }
     }
   ];
@@ -149,8 +150,7 @@ layout: example.hbs
     {
       "category": { "field": "year", "label": "Year" },
       "value": { "field":"annual","label":"Total Precipitation" },
-      "trendline": { "field": "trendline", "label": "" },
-      "sort": { "field": "year" }
+      "trendline": { "field": "trendline", "label": "" }
     }
   ];
 

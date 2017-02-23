@@ -246,6 +246,7 @@ describe('Cedar', function () {
             {
               "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
               "query": {
+                "orderByFields": "Number_of_SUM DESC",
                 "groupByFieldsForStatistics": "Type",
                 "outStatistics": [{
                   "statisticType": "sum",
@@ -258,13 +259,13 @@ describe('Cedar', function () {
           series = [
             {
               "category": { "field": "Type", "label": "Facility Use" },
-              "value": { "field":"Number_of_SUM","label":"Total Students" },
-              "sort": { "field": "Number_of_SUM", "order": "DESC" }
+              "value": { "field":"Number_of_SUM","label":"Total Students" }
             }
           ];
           expected = {
             "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
             "query": {
+              "orderByFields": "Number_of_SUM DESC",
               "groupByFieldsForStatistics": "Type",
               "outStatistics": [{
                 "statisticType": "sum",
@@ -274,8 +275,7 @@ describe('Cedar', function () {
             },
             "mappings":{
               "x": {"field":"Type","label":"Facility Use"},
-              "y": {"field":"Number_of_SUM","label":"Total Students"},
-              "sort": "Number_of_SUM DESC"
+              "y": {"field":"Number_of_SUM","label":"Total Students"}
             }
           };
         });

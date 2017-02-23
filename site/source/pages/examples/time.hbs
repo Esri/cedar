@@ -13,15 +13,17 @@ layout: example.hbs
 
   var datasets = [
     {
-      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0"
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {
+        "orderByFields": "Date"
+      }
     }
   ];
 
   var series = [
     {
       "category": { "field": "Date", "label": "Date" },
-      "value": { "field":"Injuries","label":"Injuries" },
-      "sort": { "field": "Date" }
+      "value": { "field":"Injuries","label":"Injuries" }
     }
   ];
 
@@ -45,15 +47,17 @@ chart.show({
 
   var datasets = [
     {
-      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0"
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {
+        "orderByFields": "Date"
+      }
     }
   ];
 
   var series = [
     {
       "category": { "field": "Date", "label": "Date" },
-      "value": { "field":"Injuries","label":"Injuries" },
-      "sort": { "field": "Date" }
+      "value": { "field":"Injuries","label":"Injuries" }
     }
   ];
 

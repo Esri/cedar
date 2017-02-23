@@ -147,17 +147,6 @@ export function convertDatasetsToDataset (datasets, series, chartType, dataset) 
       mappings.x = series[0].category;
       mappings.y = series[0].value;
     }
-
-    // sort
-    // TODO: handle multiple sorts?
-    if (series[0].sort) {
-      var sort = series[0].sort;
-      if (sort.field && sort.order) {
-        mappings.sort = `${sort.field} ${sort.order}`;
-      } else {
-        mappings.sort = sort.field;
-      }
-    }
   });
 
   const builtDataset = {
