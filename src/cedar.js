@@ -442,11 +442,13 @@ export default class Cedar {
       try {
         if (this._definition.datasets && this._definition.series) {
           this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.series, this._chartType, this._definition.dataset);
-          this._definition.tooltip = {
-            'title': `{${this._definition.series[0].category.field}}`,
-            'content': `{${this._definition.series[0].value.field}}`,
-            'id': `cedar-${Date.now()}`
-          };
+          if (!this._definition.tooltip) {
+            this._definition.tooltip = {
+              'title': `{${this._definition.series[0].category.field}}`,
+              'content': `{${this._definition.series[0].value.field}}`,
+              'id': `cedar-${Date.now()}`
+            };
+          }
         }
 
         // Creates the HTML Div and styling if not already created
