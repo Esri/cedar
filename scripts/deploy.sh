@@ -2,7 +2,7 @@
 #
 set -o errexit -o nounset
 
-if [ "$TRAVIS_BRANCH" != "develop" ]
+if [ "$TRAVIS_BRANCH" != "master" ]
  then
 	 echo "This commit was made against the $TRAVIS_BRANCH. No deploy!"
 	 exit 0
