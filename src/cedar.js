@@ -474,6 +474,10 @@ export default class Cedar {
 
           // Send to vega
           this._renderSpec(spec, clb);
+          // Gen accessible chart if we are using the new spec
+          if (this._definition.series) {
+            this._accessibleCharts(spec.data[0].values, this._definition.series);
+          }
         } else {
           // We need to fetch the data so....
           const url = requestUtils.createFeatureServiceRequest(this._definition.dataset, queryFromSpec);
@@ -493,6 +497,10 @@ export default class Cedar {
               spec.data[0].values = data;
               // send to vega
               this._renderSpec(spec, clb);
+              // Gen accessible chart if we are using the new spec
+              if (this._definition.series) {
+                this._accessibleCharts(spec.data[0].values, this._definition.series);
+              }
             } else {
               // optional callback
               if (!!clb && typeof clb === 'function') {
@@ -549,6 +557,68 @@ export default class Cedar {
         clb(err, spec);
       }
     });
+  }
+
+  /**
+   * CREATE ACCESIBLE TABLE
+   *
+   * Create an accessible invisible table
+   * TODO:
+   *  - Head
+   *  - body
+   *  - invisible
+   *  - accessible order....
+   */
+
+  _accessibleCharts (data, series) {
+    // Grab element that the user passed in
+    const parentEl = document.getElementById(this._elementId.substring(1));
+    // Grab the vega created element
+    const vegaEl = parentEl.firstChild;
+    // Create table...
+    const tableEl = document.createElement('table');
+    const tableHead = this._tableHead(series);
+    const tableBody = this._tableBody(data, series);
+    // Put everything together
+    tableEl.appendChild(tableHead);
+    tableEl.appendChild(tableBody);
+    // Make table invisible
+    tableEl.setAttribute('style', 'display: none');
+    // Assign table
+    parentEl.insertBefore(tableEl, vegaEl);
+  }
+
+  _tableHead (series) {
+    const tableHead = document.createElement('thead');
+    const row = tableHead.insertRow(0);
+
+    series.forEach((se) => {
+      for (let attribute in se) {
+        if (attribute === 'category' || attribute === 'value') {
+          let th = document.createElement('th');
+          th.innerHTML = se[attribute].label;
+          row.appendChild(th);
+        }
+      }
+    });
+
+    return tableHead;
+  }
+
+  _tableBody (data, series) {
+    const tableBody = document.createElement('tbody');
+
+    data.features.forEach((row) => {
+      const tableRow = tableBody.insertRow(-1);
+      series.forEach((se) => {
+        for (let attr in se) {
+          let td = tableRow.insertCell(-1);
+          td.innerHTML = row.attributes[se[attr].field];
+        }
+      });
+    });
+
+    return tableBody;
   }
 
   /**
