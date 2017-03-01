@@ -440,13 +440,19 @@ export default class Cedar {
       }
 
       try {
+        if (this._definition.datasets && this._definition.series) {
+          this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.series, this._chartType, this._definition.dataset);
+          if (!this._definition.tooltip) {
+            this.tooltip = {
+              'title': `{${this._definition.series[0].category.field}}`,
+              'content': `{${this._definition.series[0].value.field}}`
+            };
+          }
+        }
+
         // Creates the HTML Div and styling if not already created
         if (this._definition.tooltip) {
           this._createTooltip(this._definition.tooltip.id);
-        }
-
-        if (this._definition.datasets && this._definition.series) {
-          this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.series, this._chartType, this._definition.dataset);
         }
         // Ensure we have required inputs or defaults
         let compiledMappings = specUtils.applyDefaultsToMappings(this._definition.dataset.mappings, this._definition.specification.inputs);
