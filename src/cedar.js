@@ -443,10 +443,9 @@ export default class Cedar {
         if (this._definition.datasets && this._definition.series) {
           this._definition.dataset = specUtils.convertDatasetsToDataset(this._definition.datasets, this._definition.series, this._chartType, this._definition.dataset);
           if (!this._definition.tooltip) {
-            this._definition.tooltip = {
+            this.tooltip = {
               'title': `{${this._definition.series[0].category.field}}`,
-              'content': `{${this._definition.series[0].value.field}}`,
-              'id': `cedar-${Date.now()}`
+              'content': `{${this._definition.series[0].value.field}}`
             };
           }
         }
