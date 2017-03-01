@@ -13,7 +13,7 @@ install:
 script:
   - npm test
 after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "develop" && bash ./scripts/deploy.sh
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash ./scripts/deploy.sh
 branches:
   except:
     -gh-release
