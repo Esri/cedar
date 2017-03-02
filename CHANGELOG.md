@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.1]
+### Added
+- Chart tooltips added for new json spec charts where tooltip is not specified.
+
 ## [0.9.0]
 ### Changed
 - Introduced new public JSON api as the first step towards multiple series
@@ -124,6 +128,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.9.1]: https://github.com/Esri/cedar/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/Esri/cedar/compare/v0.8.2...v0.9.0
 [0.8.2]: https://github.com/Esri/cedar/compare/v0.8.1...v0.8.2
 [0.8.1]: https://github.com/Esri/cedar/compare/v0.8.0...v0.8.1
