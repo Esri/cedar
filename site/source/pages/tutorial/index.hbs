@@ -18,18 +18,22 @@ First we create a new Cedar object and specify we want a bar chart. In this exam
 
 Now we need to define the data. We can either use an array of data that we have calculated in our code, or we can refer to an ArcGIS GeoServices layer. For the GeoServices Layer, Cedar will make the HTTP API calls to request data for us.
 
-<pre class="prettyprint">chart.dataset = {
-  "url":"https://server.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/4"
-};
+<pre class="prettyprint">chart.datasets = [{
+  "url":"https://server.arcgisonline.com/arcgis/rest/services/Demographics/USA_Population_Density/MapServer/4",
+  "query": {
+    "orderByFields": "TotPop DESC"
+  };
+}],
 </pre>
 
-Third, we now create a Mapping between the dataset and the chart type.
+Third, we now create a series to plot the dataset on the chart
 
-<pre class="prettyprint">chart.dataset.mappings = {
-  "x": {"field":"NAME","label":"US State"},
-  "y": {"field":"TOTPOP_CY","label":"Population"}
-}
-</pre>
+<pre class="prettyprint">chart.dataset.series = [
+  {
+    "category": {"field":"STATE_NAME","label":"US State"},
+    "value": {"field":"TotPop","label":"Population"}
+  }
+]</pre>
 
 Lastly, we now show the chart and bind it to an HTML DOM element.
 
@@ -50,16 +54,18 @@ We could also create the instance of the Cedar chart by passing those properties
 <pre class="prettyprint">
   var chart = new Cedar({
     "type": "bar",
-    "dataset": {
-      "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
+    "datasets": [{
+        "url":"https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_Proportion_From_Population/MapServer/0",
       "query": {
         "orderByFields": "TotPop DESC"
-      },
-      "mappings":{
-        "x": {"field":"STATE_NAME","label":"US State"},
-        "y": {"field":"TotPop","label":"Population"}
       }
-    }
+    }],
+    "series": [
+      {
+        "category": {"field":"STATE_NAME","label":"US State"},
+        "value": {"field":"TotPop","label":"Population"}
+      }
+    ]
   });
 
   // show the chart and bind it to the DOM
