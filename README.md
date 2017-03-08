@@ -37,7 +37,7 @@ You can load Cedar and its dependencies by including script tags that point to t
 ```html
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vega/2.6.1/vega.min.js"></script>
-<script type="text/javascript" src="https://unpkg.com/arcgis-cedar@0.7.0/dist/cedar.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/arcgis-cedar@0.9.1/dist/cedar.min.js"></script>
 <script>
   var chart = new Cedar({"type": "bar"});
   ...
