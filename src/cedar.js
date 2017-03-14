@@ -611,7 +611,7 @@ export default class Cedar {
           }
           if (this.maxLabelLength) {
             // Set max length of axes titles
-            spec.axes[index].properties.labels.text = {'template': `{{ datum.data | truncate:"${this.maxLabelLength}"}}`};
+            spec.axes[index].properties.labels.text = {'template': `{{ datum.data | truncate:${this.maxLabelLength}}}`};
           }
           // set title offset
           spec.axes[index].titleOffset = Math.abs(lengths[axis] * angle / 100 * 8) + 35;
