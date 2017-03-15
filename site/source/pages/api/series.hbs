@@ -1,0 +1,47 @@
+---
+title: .series property
+layout: documentation.hbs
+---
+
+## .series Property
+Getter/Setter for <a href="{{assets}}api/json/series-json.html">`series`</a>. Allows the developer to specify mappings between a dataset and specification inputs.
+
+### Getter Syntax
+`var series = chart.series;`
+
+
+### Setter Syntax
+`chart.series = mySeriesObject;`
+
+#### Example Code
+```
+<div id='chartDiv'></div>
+
+<script>
+var chart = new Cedar({'specification': 'https://example.org/url_to_specification.json'})
+
+//create dataset object
+var datasets = [
+  {
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
+  }
+];
+
+var series = [
+  {
+    "category": {"field":"District","label":"District"},
+    "value": {"field":"Number_of","label":"Student Number_of"}
+  }
+]
+
+//assign to chart
+chart.datasets = datasets;
+chart.series = series;
+
+//create and render a chart
+chart.show({
+  'elementId': '#chartDiv'
+});
+
+</script>
+```

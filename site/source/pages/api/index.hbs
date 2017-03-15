@@ -17,9 +17,19 @@ At a minimum, Cedar charts are defined by the following ingredients:
  - `inputs` that declare the variables of the chart such as category or value to be summarized
  - `template` is a declarative syntax for chart design using the [Vega](https://trifacta.github.io/vega/) visualization grammar.
 - a `dataset` is a JSON document which includes:
- - either `url` link to the ArcGIS Feature Layer;
+ - either `url` link to the ArcGIS Feature Layer
  - ...or `data` can be an inline [feature set](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Query_Feature_Service_Layer/02r3000000r1000000/#GUID-89AA241C-5358-4AAB-8814-398A5BAD04E5)
  - `mappings` bind the Feature Layer attributes to the `specification.inputs`
+
+Additionally this specification is being transitioned towards multi-series data. Because of this `dataset` will be deprecated and replaced with:
+
+- `datasets` is an array of JSON documents which each include:
+  - either `url` link to the ArcGIS Feature Layer
+  - ...or `data` can be an inline [feature set](http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Query_Feature_Service_Layer/02r3000000r1000000/#GUID-89AA241C-5358-4AAB-8814-398A5BAD04E5)
+  - `query` are optional query parameters to query against the ArcGIS FeatureLayer
+- `series` is an array of JSON documents which each include:
+  - `category` and `value` which are mapped to `x` and `y` axis respectively.
+  - Optional values depending on chart type, such as: `color` (scatterplot chart), `size` (bubble scatterplot chart), `radius` (pie chart)
 
 You may also supply the following ingredients:
 - `overrides` are specific modifications to the `specification.template`
