@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.9.2]
+### Support
+- Timeline charts now have x/y axis titles
+- Resolved issue with axis label truncation where it would truncate the entire label
+
 ## [0.9.1]
 ### Added
 - Chart tooltips added for new json spec charts where tooltip is not specified.
@@ -128,6 +133,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[0.9.2]: https://github.com/Esri/cedar/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/Esri/cedar/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/Esri/cedar/compare/v0.8.2...v0.9.0
 [0.8.2]: https://github.com/Esri/cedar/compare/v0.8.1...v0.8.2
