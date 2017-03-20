@@ -37,8 +37,10 @@
     ],
     "axes": [
       {
-        "type": "x", 
+        "type": "x",
         "scale": "x",
+        "titleOffset": 60,
+        "title": "{time.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
@@ -59,15 +61,17 @@
         }
       },
       {
-        "type": "y", 
+        "type": "y",
         "scale": "y",
         "ticks": 5,
+        "titleOffset": 45,
+        "title": "{value.label}",
         "properties": {
           "title": {
             "fontSize": {"value": 15},
             "fill": {"value": "#999"},
             "fontWeight": {"value": "normal"}
-          },          
+          },
           "ticks": {
              "stroke": {"value": "#dbdad9"}
           },
