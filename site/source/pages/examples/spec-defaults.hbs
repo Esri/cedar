@@ -11,7 +11,7 @@ layout: example.hbs
 The specification can provide default values for non-required inputs. In this example, the `color` input is optional and defaults to `steelblue`.
 In the dataset, we specify `color:orange`, thus the chart is orange.
 
-Clicking the Clear Color button will remote color from the mappings, and then the default of `steelblue` will be used. 
+Clicking the Clear Color button will remote color from the mappings, and then the default of `steelblue` will be used.
 
 You can also provide a color (name or #RRGGBB) in the input box and use the Add Color button, which will add it to the mappings and update the chart.
 
@@ -22,7 +22,7 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
   <div class="col-lg-4">
     <h3>Controls</h3>
     <form>
-     
+
       <div class="form-group">
         <label for="color">Color</label>
         <input type="text" id="color" value="green">
@@ -31,11 +31,11 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
       <button id="setColor" class="btn btn-default"  type="button">Add Color</button>
     </form>
   </div>
-  
+
   <div class="col-lg-8">
     <h3>Mappings</h3>
     <pre id="mappings">
-      
+
     </pre>
   </div>
 </div>
@@ -62,7 +62,22 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
       {
         "type": "x",
         "scale": "x",
-        "title": "X-Axis"
+        "title": "X-Axis",
+        "properties": {
+          "labels" : {
+            "angle": {
+              "value": 45
+            }
+          }
+        }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "title": "Y-Axis",
+        "properties": {
+          "labels" : {}
+        }
       }
     ],
     "data": [
@@ -150,8 +165,6 @@ You can also provide a color (name or #RRGGBB) in the input box and use the Add 
 
     }
   };
-
-
 
   //assign to the chart
   chart.dataset = dataset;
