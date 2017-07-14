@@ -1,0 +1,39 @@
+lerna(verbose) GitUtilities.isInitialized    ()
+lerna(verbose) GitUtilities.isInitialized    () => true
+lerna(verbose) GitUtilities.getTopLevelDirectory()
+lerna(verbose) GitUtilities.getTopLevelDirectory() => "."
+lerna(verbose) FileSystemUtilities.existsSync("./lerna.json")
+lerna(verbose) FileSystemUtilities.existsSync("./lerna.json") => true
+lerna(verbose) FileSystemUtilities.readFileSync("./lerna.json")
+lerna(verbose) FileSystemUtilities.readFileSync("./lerna.json") => "{\n  \"lerna\": \"2.0.0-beta.37\",\n  \"packages\": [\n    \"packages/*\"\n  ],\n  \"npmClient\": \"yarn\",\n  \"version\": \"0.0.0\"\n}"
+lerna(verbose) FileSystemUtilities.existsSync("./package.json")
+lerna(verbose) FileSystemUtilities.existsSync("./package.json") => true
+lerna(verbose) FileSystemUtilities.readFileSync("./package.json")
+lerna(verbose) FileSystemUtilities.readFileSync("./package.json") => "{\n  \"devDependencies\": {\n    \"lerna\": \"2.0.0-beta.37\"\n  }\n}"
+lerna(info)    Lerna v2.0.0-beta.37
+lerna(verbose) FileSystemUtilities.existsSync("./package.json")
+lerna(verbose) FileSystemUtilities.existsSync("./package.json") => true
+lerna(verbose) FileSystemUtilities.existsSync("./lerna.json")
+lerna(verbose) FileSystemUtilities.existsSync("./lerna.json") => true
+lerna(verbose) FileSystemUtilities.existsSync("./VERSION")
+lerna(verbose) FileSystemUtilities.existsSync("./VERSION") => false
+lerna(verbose) FileSystemUtilities.existsSync("./packages/cedar-utils/package.json")
+lerna(verbose) FileSystemUtilities.existsSync("./packages/cedar-utils/package.json") => true
+lerna(verbose) FileSystemUtilities.existsSync("./packages/cedar/package.json")
+lerna(verbose) FileSystemUtilities.existsSync("./packages/cedar/package.json") => true
+lerna(verbose) Attempting running BootstrapCommand.initialize
+lerna(verbose) Successfully ran BootstrapCommand.initialize
+lerna(verbose) Attempting running BootstrapCommand.execute
+lerna(info)    Bootstrapping 2 packages
+lerna(info)    Preinstalling packages
+lerna(info)    Installing external dependencies
+lerna(verbose) NpmUtilities.installInDir     ("./packages/cedar", ["cedar-utils@1.0.0-beta^"])
+lerna(verbose) FileSystemUtilities.rename    ("./packages/cedar/package.json", "./packages/cedar/package.json.lerna_backup")
+lerna(verbose) FileSystemUtilities.rename    ("./packages/cedar/package.json", "./packages/cedar/package.json.lerna_backup") => 
+lerna(verbose) FileSystemUtilities.writeFile ("./packages/cedar/package.json", "{\"dependencies\":{\"cedar-utils\":\"1.0.0-beta^\"}}")
+lerna(verbose) FileSystemUtilities.writeFile ("./packages/cedar/package.json", "{\"dependencies\":{\"cedar-utils\":\"1.0.0-beta^\"}}") => 
+lerna(verbose) FileSystemUtilities.renameSync("./packages/cedar/package.json.lerna_backup", "./packages/cedar/package.json")
+lerna(verbose) FileSystemUtilities.renameSync("./packages/cedar/package.json.lerna_backup", "./packages/cedar/package.json") => 
+lerna(error)   NpmUtilities.installInDir     ("./packages/cedar", ["cedar-utils@1.0.0-beta^"])
+    Command exited with status 1: npm install
+lerna(error)   Errored while running BootstrapCommand.execute

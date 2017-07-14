@@ -1,0 +1,64 @@
+{
+  "name": "cedar-utils",
+  "version": "1.0.0-beta",
+  "description": "Core code that makes up Cedar's data fetching and json specifications",
+  "main": "dist/cedar-utils.js",
+  "scripts": {
+    "clean:dist": "rimraf ./dist && mkdir dist",
+    "clean:compiled": "rimraf ./compiled && mkdir compiled",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint:fix": "tslint --fix",
+    "prebuild": "npm run clean:dist",
+    "build": "tsc && rollup -c profiles/dev.js & rollup -c profiles/prod.js",
+    "pretest": "npm run lint",
+    "test": "jest --coverage",
+    "test:watch": "npm run test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esri/cedar.git"
+  },
+  "keyword": [
+    "ArcGIS",
+    "Charting",
+    "Visualization",
+    "Vega",
+    "D3"
+  ],
+  "author": "Ben Stoltz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/esri/cedar/issues"
+  },
+  "homepage": "https://github.com/esri/cedar#readme",
+  "devDependencies": {
+    "@types/jest": "^19.2.4",
+    "@types/node": "^7.0.31",
+    "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.41.6",
+    "rollup-plugin-json": "^2.1.1",
+    "rollup-plugin-uglify": "^1.0.2",
+    "rollup-watch": "^3.2.2",
+    "semistandard": "^11.0.0",
+    "snazzy": "^7.0.0",
+    "ts-jest": "^20.0.6",
+    "tslint": "^5.4.3",
+    "typescript": "^2.3.2"
+  },
+  "jest": {
+    "transform": {
+      ".(ts)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.spec\\.ts?$",
+    "modulePaths": [
+      "<rootDir>/src/",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ]
+  }
+}
