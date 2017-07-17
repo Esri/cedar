@@ -32,9 +32,13 @@ export function flattenFeatures(data) {
 
   // If we aren't joining, but we are merging
   if (joinKeys.length === 0) {
-    return featureSets.reduce((flat, fsToFlatten) => {
-      return flat.concat(utils.query.fsToArr(fsToFlatten))
-    }, [])
+    featureSets.forEach((featureSet, i) => {
+      const transformFunc = getTransformFunc(transformFuncs[i])
+      featureSet.features.forEach((feature, j) => {
+        features.push(transformFunc(feature))
+      })
+    })
+    return features
   }
 
   // Otherwise join
