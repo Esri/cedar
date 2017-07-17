@@ -1,8 +1,20 @@
 import {} from 'jest'
-import {square} from '../src/index'
+import helpers from '../src/helpers/helpers'
+import * as chartUtils from '../src/index'
+import query from '../src/query/query'
+import url from '../src/query/url'
 
-describe('first tests', () => {
-  test('I expect 2 squared to be 4', () => {
-    expect(square(2)).toBe(4)
+describe('Ensure that chartUtils has all relevant props', () => {
+  test('chartUtils has helpers', () => {
+    expect(chartUtils).toHaveProperty('helpers')
+    expect(chartUtils.helpers).toEqual(helpers)
+  })
+  test('chartUtils has query', () => {
+    expect(chartUtils).toHaveProperty('query')
+    expect(chartUtils.query).toEqual(query)
+  })
+  test('chartUtils has url', () => {
+    expect(chartUtils).toHaveProperty('url')
+    expect(chartUtils.url).toEqual(url)
   })
 })

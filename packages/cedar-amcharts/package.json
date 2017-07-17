@@ -1,0 +1,67 @@
+{
+  "name": "cedar-amcharts",
+  "version": "1.0.0-beta",
+  "description": "Cedars amcharts engine",
+  "main": "dist/cedar-amcharts.js",
+  "scripts": {
+    "clean:dist": "rimraf ./dist && mkdir dist",
+    "clean:compiled": "rimraf ./compiled && mkdir compiled",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint:fix": "tslint --fix",
+    "prebuild": "npm run clean:dist",
+    "build": "tsc && rollup -c profiles/dev.js & rollup -c profiles/prod.js",
+    "pretest": "npm run lint",
+    "test": "jest --coverage",
+    "test:watch": "npm run test -- --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esri/cedar.git"
+  },
+  "author": "Ben Stoltz",
+  "license": "ISC",
+  "keyword": [
+    "ArcGIS",
+    "Charting",
+    "Visualization",
+    "Vega",
+    "D3"
+  ],
+  "bugs": {
+    "url": "https://github.com/esri/cedar/issues"
+  },
+  "homepage": "https://github.com/esri/cedar#readme",
+  "jest": {
+    "transform": {
+      ".(ts)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.spec\\.ts?$",
+    "modulePaths": [
+      "<rootDir>/src/",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^20.0.2",
+    "@types/node": "^8.0.13",
+    "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.45.2",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-watch": "^4.3.1",
+    "semistandard": "^11.0.0",
+    "snazzy": "^7.0.0",
+    "ts-jest": "^20.0.7",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.1"
+  },
+  "dependencies": {
+    "cedar-utils": "^1.0.0-beta"
+  }
+}

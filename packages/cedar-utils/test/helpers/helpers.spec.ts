@@ -1,6 +1,5 @@
 import {} from 'jest'
 import helpers from '../../src/helpers/helpers'
-import spec from '../data/specification'
 
 describe('deepMerge tests', () => {
   test ('_entries returns an array of objects of key val pairs', () => {

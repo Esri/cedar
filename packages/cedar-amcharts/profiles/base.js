@@ -10,11 +10,11 @@ const copyright = `/**
 
 export default {
   entry: 'compiled/index.js',
-  moduleName: 'cedarUtils',
+  moduleName: 'cedarAmcharts',
   format: 'umd',
   plugins: [json()],
   globals: {
-    'cedar-utils': 'cedarUtils'
+    'cedar-amcharts': 'cedarAmcharts'
   },
   banner: copyright
 };

@@ -33,13 +33,13 @@ function _arrOrObj(val: any) {
  * @return {array}     Array of key, val pairs.
  */
 function entries(obj: object) {
-  const ents = []
+  const pairs = []
   for (const key in obj) {
     if (key) {
-      ents.push({ key, value: obj[key] })
+      pairs.push({ key, value: obj[key] })
     }
   }
-  return ents
+  return pairs
 }
 
 const helpers = {
