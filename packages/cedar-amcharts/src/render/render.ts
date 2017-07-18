@@ -25,7 +25,6 @@ export function renderChart(elementId: string, config: any, data?: any) {
     spec = deepMerge({}, spec, config.overrides)
   }
 
-  console.log('THE SPEC IS', spec)
   const chart = AmCharts.makeChart(elementId, spec)
   return
 }

@@ -3,54 +3,14 @@ import 'amcharts3/amcharts/amcharts'
 import 'amcharts3/amcharts/serial'
 import {} from 'jest'
 import render from '../../src/render/render'
+import bar from '../../src/specs/bar'
 import barSpec from '../data/barSpec'
 import builtBarSpec from '../data/builtBarSpec'
 
 describe('Spec gets filled in properly', () => {
   test('fetch spec properly gets spec...', () => {
-    expect(render.fetchSpec('bar')).toEqual({
-      type: 'serial',
-      graphs: [{
-        fillAlphas: 0.2,
-        lineAlpha: 0.8,
-        type: 'column',
-        color: '#000000'
-      }],
-      theme: 'dark',
-      legend: {
-        horizontalGap: 10,
-        maxColumns: 1,
-        position: 'right',
-        useGraphSettings: true,
-        markerSize: 10
-      },
-      valueAxes: [ {
-        gridColor: '#FFFFFF',
-        gridAlpha: 0.2,
-        dashLength: 0,
-        stackType: 'regular'
-      } ],
-      gridAboveGraphs: true,
-      startDuration: 0.3,
-      startEffect: 'easeInSine',
-      chartCursor: {
-        categoryBalloonEnabled: false,
-        cursorAlpha: 0,
-        zoomable: false
-      },
-      categoryAxis: {
-        axisColor: '#DADADA',
-        gridAlpha: 0.07,
-        gridPosition: 'start',
-        // gridAlpha: 0,
-        tickPosition: 'start',
-        tickLength: 20,
-        guides: []
-      },
-      export: {
-        enabled: true
-      }
-    })
+    const grabbedSpec = render.fetchSpec('bar')
+    expect(grabbedSpec).toEqual(bar)
   })
 
   // test('templateGraph properly gets adlibbed', () => {
@@ -61,7 +21,9 @@ describe('Spec gets filled in properly', () => {
     const spec = render.fetchSpec('bar')
     spec.dataProvider = barSpec.realData
     spec.categoryField = 'categoryField'
-    expect(render.fillInSpec(spec, barSpec.spec)).toEqual(builtBarSpec)
+    const result = render.fillInSpec(spec, barSpec.spec)
+    expect(result.categoryAxis.gridAlpha).toBe(0.07)
+    expect(result).toEqual(builtBarSpec)
   })
 })
 

@@ -14,6 +14,5 @@ export class Cedar {
             autolabels: false
         }
         const opts = deepMerge({}, defaults, options)
-        console.log(opts)
     }
 }

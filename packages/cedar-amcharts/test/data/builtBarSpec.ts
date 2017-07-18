@@ -38,7 +38,7 @@ const builtBarSpec = {
   },
   categoryAxis: {
     axisColor: '#DADADA',
-    gridAlpha: 0,
+    gridAlpha: 0.07,
     gridPosition: 'start',
     tickPosition: 'start',
     tickLength: 20,

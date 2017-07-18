@@ -56,7 +56,6 @@ export function flattenFeatures(data: any) {
     features.push(feature)
   })
 
-  console.log('FEATURES ARE', features)
   return features
 }
 
