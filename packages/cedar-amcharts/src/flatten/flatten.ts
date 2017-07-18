@@ -1,14 +1,12 @@
-import * as utils from 'cedar-utils'
-
 function _defaultTransformFunc(feature: any) {
   return feature.attributes
 }
 
-export function getTransformFunc(transformFunc) {
+export function getTransformFunc(transformFunc: any) {
   return typeof transformFunc === 'function' ? transformFunc : _defaultTransformFunc
 }
 
-export function buildIndex(joinKeys, featureSets, transformFuncs) {
+export function buildIndex(joinKeys: string[], featureSets: any[], transformFuncs: any[]) {
   const index = {}
   featureSets.forEach((featureSet, i) => {
     const transformFunc = getTransformFunc(transformFuncs[i])
@@ -23,7 +21,7 @@ export function buildIndex(joinKeys, featureSets, transformFuncs) {
   return index
 }
 
-export function flattenFeatures(data) {
+export function flattenFeatures(data: any) {
   // TODO: Transform data
   const joinKeys: any[] = data.joinKeys
   const featureSets: any[] = data.featureSets

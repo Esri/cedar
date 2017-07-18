@@ -1,5 +1,6 @@
 import * as utils from 'cedar-utils'
 import flatten from './flatten/flatten'
+import render from './render/render'
 
 function cedarAmcharts(elementId: string, spec: any, data: any) {
   if ((!elementId || !spec || !data) && (spec.type && spec.type !== 'custom')) {
@@ -12,7 +13,7 @@ function cedarAmcharts(elementId: string, spec: any, data: any) {
   }
 
   const flattenedData = flatten(data)
-  return draw(elementId, spec, flattenedData)
+  return render(elementId, spec, flattenedData)
 }
 
 export default cedarAmcharts
