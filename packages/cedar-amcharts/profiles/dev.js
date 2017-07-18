@@ -1,6 +1,6 @@
 import config from './base';
 
-config.dest = 'dist/cedar-amcharts.js';
-config.sourceMap = 'dist/cedar-amcharts.js.map';
+config.dest = 'dist/cedarAmCharts.js';
+config.sourceMap = 'dist/cedarAmCharts.js.map';
 
 export default config;

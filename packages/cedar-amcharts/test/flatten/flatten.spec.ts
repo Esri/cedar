@@ -13,6 +13,7 @@ describe('Features should properly flatten', () => {
     const arr = [{Number_of_SUM: 13, Type: 'High School'}, {Number_of_SUM: 6, Type: 'Middle School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 8, Type: 'High School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 0, Type: 'Middle School'}]
 
     expect(flatten(data)).toEqual(arr)
+    expect(true).toBe(true)
   })
 
   test('BuildIndex should properly build an index...', () => {

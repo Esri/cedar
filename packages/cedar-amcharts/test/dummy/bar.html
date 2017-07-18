@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>AmCharts</title>
+
+  </head>
+  <body id="" onload="">
+    <!-- Styles -->
+    <style>
+    .chart {
+      width: 100%;
+      height: 400px;
+    }
+    </style>
+
+    <!-- Resources -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="../../../cedar-utils/dist/cedar-utils.js"></script>
+    <script src="../../dist/cedarAmCharts.js"></script>
+
+<!-- Chart code -->
+<script>
+var fs = [{"objectIdFieldName":"FID","globalIdFieldName":"","geometryType":"esriGeometryPoint","spatialReference":{"wkid":102100,"latestWkid":3857},"fields":[{"name":"Number_of_SUM","type":"esriFieldTypeDouble","alias":"Number_of_SUM","sqlType":"sqlTypeFloat","domain":null,"defaultValue":null},{"name":"Type","type":"esriFieldTypeString","alias":"Type","sqlType":"sqlTypeNVarchar","length":254,"domain":null,"defaultValue":null}],"features":[{"attributes":{"Number_of_SUM":261,"Type":"Middle School"}},{"attributes":{"Number_of_SUM":252,"Type":"Elementary School"}},{"attributes":{"Number_of_SUM":184,"Type":"High School"}},{"attributes":{"Number_of_SUM":159,"Type":"Middle School (7&8)"}},{"attributes":{"Number_of_SUM":98,"Type":"K-8"}},{"attributes":{"Number_of_SUM":31,"Type":"Junior/Senior High School"}},{"attributes":{"Number_of_SUM":22,"Type":"Junior High School"}},{"attributes":{"Number_of_SUM":3,"Type":"K-12"}},{"attributes":{"Number_of_SUM":1,"Type":"Intermediate School"}},{"attributes":{"Number_of_SUM":0,"Type":"Alternative School"}},{"attributes":{"Number_of_SUM":0,"Type":"High School Annex"}},{"attributes":{"Number_of_SUM":0,"Type":"Middle School High School"}},{"attributes":{"Number_of_SUM":0,"Type":"Pre-K"}}]}]
+var config = {
+  type: 'bar',
+  datasets: [
+    {
+      url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+      query: {
+        orderByFields: 'Number_of_SUM DESC',
+        groupByFieldsForStatistics: 'Type',
+        outStatistics: [
+          {
+            statisticType: 'sum',
+            onStatisticField: 'Number_of',
+            outStatisticFieldName: 'Number_of_SUM'
+          }
+        ]
+      }
+    }
+  ],
+  series: [
+    {
+      category: {field: 'Type', label: 'Type'},
+      value: {field: 'Number_of_SUM', label: 'Number of Students'}
+    }
+  ],
+  overrides: {
+    categoryAxis: {
+      labelRotation: -45
+    }
+  }
+}
+var data = {
+  joinKeys: ['Type'],
+  featureSets: fs,
+  transformFuncs: []
+}
+cedarAmCharts("chartdiv1", config, data);
+
+</script>
+
+<!-- HTML -->
+<a href="./">&lt; Back Home</a>
+<div id="chartdiv1" class="chart"></div>
+  </body>
+</html>

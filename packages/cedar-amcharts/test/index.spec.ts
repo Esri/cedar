@@ -1,10 +1,10 @@
 import {} from 'jest'
-import CedarAmcharts from '../src/index'
+import cedarAmCharts from '../src/index'
 
 describe('blablah', () => {
   test('blah', () => {
-    const blah = new CedarAmcharts({}, [])
-    console.log(blah)
+    // const blah = cedarAmCharts('', {}, {})
+    // console.log(blah)
     expect(true).toBe(true)
   })
 })
