@@ -25,7 +25,8 @@
     "Charting",
     "Visualization",
     "Vega",
-    "D3"
+    "D3",
+    "AmCharts"
   ],
   "bugs": {
     "url": "https://github.com/esri/cedar/issues"
