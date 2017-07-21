@@ -40,3 +40,6 @@ compiled
 
 # Test Build
 test/js
+
+# Package yarn lockfiles
+packages/*/yarn.lock
