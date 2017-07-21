@@ -48,6 +48,7 @@
     ]
   },
   "dependencies": {
+    "amcharts3": "amcharts/amcharts3",
     "cedar-utils": "^1.0.0-beta"
   },
   "devDependencies": {

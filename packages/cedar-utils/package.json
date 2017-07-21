@@ -1,6 +1,6 @@
 {
   "name": "cedar-utils",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
   "description": "Core code that makes up Cedar's data fetching and json specifications",
   "main": "dist/cedar-utils.js",
   "scripts": {
