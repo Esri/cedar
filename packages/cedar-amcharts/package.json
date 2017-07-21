@@ -12,7 +12,8 @@
     "build": "tsc && rollup -c profiles/dev.js & rollup -c profiles/prod.js",
     "pretest": "npm run lint",
     "test": "jest --coverage",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
