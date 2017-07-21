@@ -1,13 +1,13 @@
 import {} from 'jest'
 import flatten from '../../src/flatten/flatten'
 import { buildIndex } from '../../src/flatten/flatten'
-import featureServiceResponse from '../data/featureServiceResponse'
+import schoolResponse from '../data/schoolResponse'
 
 describe('Features should properly flatten', () => {
   test('flattenFeatures properly flattens features when no joinKeys are present', () => {
     const data = {
       joinKeys: [],
-      featureSets: featureServiceResponse,
+      featureSets: schoolResponse,
       transformFuncs: []
     }
     const arr = [{Number_of_SUM: 13, Type: 'High School'}, {Number_of_SUM: 6, Type: 'Middle School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 8, Type: 'High School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 0, Type: 'Middle School'}]
@@ -19,7 +19,7 @@ describe('Features should properly flatten', () => {
   test('BuildIndex should properly build an index...', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: featureServiceResponse,
+      featureSets: schoolResponse,
       transformFuncs: []
     }
     const result = {
@@ -41,7 +41,7 @@ describe('Features should properly flatten', () => {
   test('flattenFeatures properly flattens when provided join keys', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: featureServiceResponse,
+      featureSets: schoolResponse,
       transformFuncs: []
     }
 

@@ -66,7 +66,7 @@ export function createFeatureServiceRequest(dataset: any): string {
   return builtUrl
 }
 
-const url = {
+export const url = {
   defaultQuery,
   serializeQueryParams,
   createFeatureServiceRequest

@@ -1,5 +1,3 @@
-// import * as utils from 'cedar-utils'
-import flattenFeatures from './flatten/flatten'
 import render from './render/render'
 
 function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
@@ -12,8 +10,7 @@ function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
     return render.renderChart(elementId, spec)
   }
 
-  const flattenedData = flattenFeatures(data)
-  return render.renderChart(elementId, spec, flattenedData)
+  return render.renderChart(elementId, spec, data)
 }
 
 export default cedarAmCharts

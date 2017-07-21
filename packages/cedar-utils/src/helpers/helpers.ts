@@ -32,7 +32,7 @@ function _arrOrObj(val: any) {
  * @param  {object} obj Object to iterate over
  * @return {array}     Array of key, val pairs.
  */
-function entries(obj: object) {
+export function entries(obj: object) {
   const pairs = []
   for (const key in obj) {
     if (key) {
@@ -42,7 +42,7 @@ function entries(obj: object) {
   return pairs
 }
 
-const helpers = {
+export const helpers = {
   entries,
   deepMerge
 }

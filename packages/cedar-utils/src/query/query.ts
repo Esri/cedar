@@ -65,7 +65,7 @@ export function getData(url: string, options: any): Promise<any> {
     })
 }
 
-const query = {
+export const query = {
   fsToArr,
   arrToFs,
   getData
