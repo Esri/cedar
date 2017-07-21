@@ -49,10 +49,11 @@
   },
   "dependencies": {
     "amcharts3": "amcharts/amcharts3",
-    "cedar-utils": "^1.0.0-beta"
+    "cedar-amcharts": "^1.0.1-beta",
+    "cedar-utils": "^1.0.1-beta"
   },
   "devDependencies": {
-    "@types/jest": "^20.0.4",
+    "@types/jest": "20.0.2",
     "@types/node": "^8.0.14",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",

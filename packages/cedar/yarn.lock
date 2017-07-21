@@ -33,9 +33,9 @@
   dependencies:
     "@types/babel-types" "*"
 
-"@types/jest@^20.0.4":
-  version "20.0.4"
-  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.4.tgz#91e2c76fbe90b3a719b5d689958f0495f005beb9"
+"@types/jest@20.0.2":
+  version "20.0.2"
+  resolved "https://registry.yarnpkg.com/@types/jest/-/jest-20.0.2.tgz#86c751121fb53dbd39bb1a08c45083da13f2dc67"
 
 "@types/node@^8.0.14":
   version "8.0.14"
@@ -72,6 +72,10 @@ acorn@^4.0.4:
 acorn@^5.0.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.1.1.tgz#53fe161111f912ab999ee887a90a0bc52822fd75"
+
+adlib@^0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/adlib/-/adlib-0.0.7.tgz#45e52b485f45c3967e4bf600c6bc5b0e022585be"
 
 ajv-keywords@^1.0.0:
   version "1.5.1"
@@ -478,9 +482,21 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
+cedar-amcharts@^1.0.0-beta:
+  version "1.0.0-beta"
+  resolved "https://registry.yarnpkg.com/cedar-amcharts/-/cedar-amcharts-1.0.0-beta.tgz#a0be5bc9d7dc4b768272c6102238e8e0273a0a8f"
+  dependencies:
+    adlib "^0.0.7"
+    amcharts3 amcharts/amcharts3
+    cedar-utils "^1.0.0-beta"
+
 cedar-utils@^1.0.0-beta:
   version "1.0.0-beta"
   resolved "https://registry.yarnpkg.com/cedar-utils/-/cedar-utils-1.0.0-beta.tgz#6526ed2d83c997fdea8daf9c6374d55ff0edf1d2"
+
+cedar-utils@^1.0.1-beta:
+  version "1.0.1-beta"
+  resolved "https://registry.yarnpkg.com/cedar-utils/-/cedar-utils-1.0.1-beta.tgz#13c467ff770fbdee094d28c1da8f7472981bf5e6"
 
 center-align@^0.1.1:
   version "0.1.3"

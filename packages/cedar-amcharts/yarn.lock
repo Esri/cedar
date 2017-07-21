@@ -486,9 +486,9 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-cedar-utils@^1.0.0-beta:
-  version "1.0.0-beta"
-  resolved "https://registry.yarnpkg.com/cedar-utils/-/cedar-utils-1.0.0-beta.tgz#6526ed2d83c997fdea8daf9c6374d55ff0edf1d2"
+cedar-utils@^1.0.1-beta:
+  version "1.0.1-beta"
+  resolved "https://registry.yarnpkg.com/cedar-utils/-/cedar-utils-1.0.1-beta.tgz#13c467ff770fbdee094d28c1da8f7472981bf5e6"
 
 center-align@^0.1.1:
   version "0.1.3"

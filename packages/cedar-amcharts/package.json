@@ -1,8 +1,8 @@
 {
   "name": "cedar-amcharts",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
   "description": "Cedars amcharts engine",
-  "main": "dist/cedar-amcharts.js",
+  "main": "dist/cedarAmCharts.js",
   "scripts": {
     "clean:dist": "rimraf ./dist && mkdir dist",
     "clean:compiled": "rimraf ./compiled && mkdir compiled",
@@ -66,6 +66,6 @@
   "dependencies": {
     "adlib": "^0.0.7",
     "amcharts3": "amcharts/amcharts3",
-    "cedar-utils": "^1.0.0-beta"
+    "cedar-utils": "^1.0.1-beta"
   }
 }
