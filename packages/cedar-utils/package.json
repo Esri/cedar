@@ -4,12 +4,13 @@
   "description": "Core code that makes up Cedar's data fetching and json specifications",
   "main": "dist/cedar-utils.js",
   "scripts": {
+    "clean": "npm run clean:dist & npm run clean:compiled",
     "clean:dist": "rimraf ./dist && mkdir dist",
     "clean:compiled": "rimraf ./compiled && mkdir compiled",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:fix": "tslint --fix",
     "prebuild": "npm run clean:dist",
-    "build": "tsc && rollup -c profiles/dev.js & rollup -c profiles/prod.js",
+    "build": "tsc && rollup -c profiles/dev.js && rollup -c profiles/prod.js",
     "pretest": "npm run lint",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watch",
@@ -33,7 +34,7 @@
   },
   "homepage": "https://github.com/esri/cedar#readme",
   "devDependencies": {
-    "@types/jest": "^19.2.4",
+    "@types/jest": "20.0.2",
     "@types/node": "^7.0.31",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
