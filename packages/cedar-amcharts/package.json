@@ -4,15 +4,17 @@
   "description": "Cedars amcharts engine",
   "main": "dist/cedarAmCharts.js",
   "scripts": {
+    "clean": "npm run clean:dist & npm run clean:compiled",
     "clean:dist": "rimraf ./dist && mkdir dist",
     "clean:compiled": "rimraf ./compiled && mkdir compiled",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:fix": "tslint --fix",
     "prebuild": "npm run clean:dist",
-    "build": "tsc && rollup -c profiles/dev.js & rollup -c profiles/prod.js",
+    "build": "tsc && rollup -c profiles/dev.js && rollup -c profiles/prod.js",
     "pretest": "npm run lint",
     "test": "jest --coverage",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -49,7 +51,7 @@
   },
   "devDependencies": {
     "@types/amcharts": "^0.0.40",
-    "@types/jest": "^20.0.2",
+    "@types/jest": "20.0.2",
     "@types/node": "^8.0.13",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",

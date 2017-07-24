@@ -28,6 +28,7 @@ bower_components
 
 # Debugging Files
 working
+lerna-debug.log
 debug/*.html
 !debug/sample.html
 
@@ -40,3 +41,7 @@ compiled
 
 # Test Build
 test/js
+
+# Package yarn lockfiles
+packages/*/yarn.lock
+
