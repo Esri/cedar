@@ -1,5 +1,6 @@
 import area from './area'
 import bar from './bar'
+import donut from './donut'
 import line from './line'
 import pie from './pie'
 import radar from './radar'
@@ -8,6 +9,7 @@ import timeline from './timeline'
 
 const specs = {
   bar,
+  donut,
   line,
   area,
   pie,
