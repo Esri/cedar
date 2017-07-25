@@ -34,6 +34,5 @@ describe('Cedar initial test', () => {
       }
     }
     const cedar = new Cedar(opts)
-    cedar.show('bob')
   })
 })

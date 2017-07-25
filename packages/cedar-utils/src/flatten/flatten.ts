@@ -22,7 +22,6 @@ export function buildIndex(joinKeys: string[], featureSets: any[], transformFunc
 }
 
 export function flattenFeatures(featureSets: any[], joinKeys: any[], transformFuncs: any[]) {
-  console.log('JOIN KEYS ARE: ', joinKeys)
   // TODO: Transform data
   const features = []
 

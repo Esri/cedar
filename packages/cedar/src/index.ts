@@ -15,7 +15,6 @@ export default class Cedar {
   constructor(options: any) {
     // Clone options
     const opts: any = deepMerge({}, options) || {}
-    console.log(opts)
 
     // If there are datasets...
     if (!!opts.datasets) {
