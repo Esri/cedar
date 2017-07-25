@@ -37,42 +37,44 @@ export function fillInSpec(spec: any, config: any) {
   config.datasets.forEach((dataset, d) => {
     // For each dataset iterate over series
     config.series.forEach((series, s) => {
-      const graph = deepMerge({}, graphSpec)
+      if (dataset.id === series.datasetId) {
+        const graph = deepMerge({}, graphSpec)
 
-      // Set graph title
-      graph.title = series.value.label
+        // Set graph title
+        graph.title = series.value.label
 
-      // TODO: Look at all fields
-      graph.valueField = `${series.value.field}_${d}`
-      graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
-      graph.labelText = `[[${series.value.field}]]`
+        // TODO: Look at all fields
+        graph.valueField = `${series.value.field}_${d}`
+        graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
+        graph.labelText = `[[${series.value.field}]]`
 
-      spec.titleField = 'categoryField'
-      spec.valueField = graph.valueField
+        spec.titleField = 'categoryField'
+        spec.valueField = graph.valueField
 
-      // Group vs. stack
-      if (!!series.group) {
-        graph.newStack = true
+        // Group vs. stack
+        if (!!series.group) {
+          graph.newStack = true
+        }
+
+        // Only clone scatterplots
+        if (!!graphSpec.xField && !!series.category && !!series.value) {
+          graph.xField = series.category.field
+          graph.yField = series.value.field
+
+          graph.balloonText = `${series.name} [[${series.label}]] <br/>
+          ${series.category.label}: [[${series.category.field}]],
+          ${series.value.label}: [[${series.value.field}]]`
+
+          graph.labelText = ''
+        }
+
+        // Bubble charts
+        if (!!graphSpec.valueField && !!series.size) {
+          graphSpec.valueField = series.size.field
+          graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
+        }
+        spec.graphs.push(graph)
       }
-
-      // Only clone scatterplots
-      if (!!graphSpec.xField && !!series.category && !!series.value) {
-        graph.xField = series.category.field
-        graph.yField = series.value.field
-
-        graph.balloonText = `${series.name} [[${series.label}]] <br/>
-        ${series.category.label}: [[${series.category.field}]],
-        ${series.value.label}: [[${series.value.field}]]`
-
-        graph.labelText = ''
-      }
-
-      // Bubble charts
-      if (!!graphSpec.valueField && !!series.size) {
-        graphSpec.valueField = series.size.field
-        graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
-      }
-      spec.graphs.push(graph)
     })
   })
   return spec

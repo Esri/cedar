@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Cedar - multiple bars</title>
+
+  </head>
+  <body id="" onload="">
+    <!-- Styles -->
+    <style>
+    .chart {
+      width: 100%;
+      height: 300px;
+    }
+    </style>
+
+    <!-- Resources -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="../../../cedar-utils/dist/cedar-utils.js"></script>
+    <script src="../../../cedar-amcharts/dist/cedarAmCharts.js"></script>
+    <script src="../../dist/cedar.js"></script>
+
+<!-- Chart code -->
+<script>
+    var config1 = {
+      "type": "bar",
+      "datasets": [
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+          id: 1,
+          "query": {
+            "where": "City='Jordan'",
+            "orderByFields": "Number_of_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Number_of_SUM"
+            }]
+          }
+        },
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+          id: 2,
+          "query": {
+            "where": "City='Dewitt'",
+            "orderByFields": "Number_of_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Number_of_SUM"
+            }]
+          }
+        },
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+          id: 3,
+          "query": {
+            "where": "City='Fayetteville'",
+            "orderByFields": "Number_of_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Number_of_SUM"
+            }]
+          }
+        }
+      ],
+      series: [
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
+          datasetId: 1
+        },
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
+          datasetId: 2
+        },
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
+          datasetId: 3
+        }
+      ]
+    }
+
+const cedar = new Cedar(config1);
+cedar.show("chartdiv1")
+
+</script>
+
+<!-- HTML -->
+<a href="./">&lt; Back Home</a>
+
+<h3>Multiple Series</h3>
+<em>
+  whereby we illustrate a method for the graphing of multiple series of data utilizing queries of a Geoservice.
+</em>
+<div id="chartdiv1" class="chart"></div>
+<pre>
+  <code>
+    var config1 = {
+      "type": "bar",
+      "datasets": [
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+          "query": {
+            "where": "City='Jordan'",
+            "orderByFields": "Number_of_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Number_of_SUM"
+            }]
+          },
+          "mappings":{
+            "category": {"field": "Type", "label": "Type"},
+            "group": true,
+            "series": [
+              { "field": "Number_of_SUM", "label": "Jordan Students"}
+            ]
+          }
+        },
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+              "query": {
+                "where": "City='Dewitt'",
+                "orderByFields": "Number_of_SUM DESC",
+                "groupByFieldsForStatistics": "Type",
+                "outStatistics": [{
+                  "statisticType": "sum",
+                  "onStatisticField": "Number_of",
+                  "outStatisticFieldName": "Number_of_SUM"
+                }]
+              },
+          "mappings":{
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "series": [
+            { "field": "Number_of_SUM", "label": "Dewitt Students"}
+          ]
+          }
+        },
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+          "query": {
+            "where": "City='Fayetteville'",
+            "orderByFields": "Number_of_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Number_of_SUM"
+            }]
+          },
+          "mappings":{
+            "category": {"field": "Type", "label": "Type"},
+            "group": true,
+            "series": [
+              { "field": "Number_of_SUM", "label": "Fayetteville Students"}
+            ]
+          }
+        }
+      ]
+  }
+
+showChart("chartdiv1", config1);
+  </code>
+</pre>
+  </body>
+</html>

@@ -9,7 +9,8 @@
     "removeComments": false,
     "noImplicitAny": false,
     "outDir": "compiled",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "lib": ["es2017", "dom"]
   },
   "include": [
     "src/**/*.ts"

@@ -137,6 +137,42 @@ describe('deepMerge tests', () => {
     })
   })
 
+  test('deepMerge should be able to accept an array of objects...', () => {
+    const arr = [
+      {
+        url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+        query: {
+          orderByFields: 'Number_of_SUM DESC',
+          groupByFieldsForStatistics: 'Type',
+          outStatistics: [
+            {
+              statisticType: 'sum',
+              onStatisticField: 'Number_of',
+              outStatisticFieldName: 'Number_of_SUM'
+            }
+          ]
+        }
+      }
+    ]
+    const result = helpers.deepMerge([], arr)
+    expect(result).toEqual([
+      {
+        url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+        query: {
+          orderByFields: 'Number_of_SUM DESC',
+          groupByFieldsForStatistics: 'Type',
+          outStatistics: [
+            {
+              statisticType: 'sum',
+              onStatisticField: 'Number_of',
+              outStatisticFieldName: 'Number_of_SUM'
+            }
+          ]
+        }
+      }
+    ])
+  })
+
   test('deepMerge does not mutate origin objects', () => {
     const obj1 = {
       a: {

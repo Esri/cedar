@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Cedar - line Chart</title>
+
+  </head>
+  <body id="" onload="">
+    <!-- Styles -->
+    <style>
+    .chart {
+      width: 100%;
+      height: 300px;
+    }
+    </style>
+
+    <!-- Resources -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+    <script src="../../../cedar-utils/dist/cedar-utils.js"></script>
+    <script src="../../../cedar-amcharts/dist/cedarAmCharts.js"></script>
+    <script src="../../dist/cedar.js"></script>
+
+<!-- Chart code -->
+<script>
+var config1 = {
+  "type": "line",
+  "datasets": [
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/DC_Crashes/FeatureServer/0",
+      "query": {
+        "groupByFieldsForStatistics": "EXTRACT(YEAR from REPORTDATE)",
+        "outStatistics": [
+          {
+            "statisticType": "sum",
+            "onStatisticField": "MAJORINJURIES",
+            "outStatisticFieldName": "MAJORINJURIES_SUM"
+          },{
+            "statisticType": "sum",
+            "onStatisticField": "MINORINJURIES",
+            "outStatisticFieldName": "MINORINJURIES_SUM"
+          }
+        ],
+        "sqlFormat": "standard"
+      },
+    }
+],
+series: [
+  {
+    "category": {"field": "EXPR_1", "label": "Year"},
+    "group": true,
+    "value": {
+      "field": "MAJORINJURIES_SUM",
+      "label": "Major Injuries"
+    }
+  },
+  {
+    category: {field: 'EXPR_1', label: 'Year'},
+    value: {
+      "field": "MINORINJURIES_SUM",
+      "label": "Minor Injuries"
+    },
+    group: true
+  }
+],
+"overrides": {
+  "categoryAxis": {
+    "guides": [{
+      category: "2015",
+      lineColor: "#CC0000",
+      lineAlpha: 1,
+      dashLength: 2,
+      inside: true,
+      labelRotation: 90,
+      label: "VisionZero Started"
+    },{
+      category: "2024",
+      lineColor: "#CC0000",
+      lineAlpha: 1,
+      dashLength: 2,
+      inside: true,
+      labelRotation: 90,
+      label: "VisionZero Goal"
+    }]
+  }
+}
+};
+const line = new Cedar(config1)
+line.show("chartdivLine");
+const config2 = JSON.parse(JSON.stringify(config1));
+config2.type = "area";
+const area = new Cedar(config2);
+area.show("chartdivArea");
+</script>
+
+<!-- HTML -->
+<a href="./">&lt; Back Home</a>
+
+<h3>Line Chart</h3>
+<div id="chartdivLine" class="chart"></div>
+<h3>Area Chart</h3>
+<div id="chartdivArea" class="chart"></div>
+<pre>
+  <code>
+    var config1 = {
+      "type": "line",
+      "datasets": [
+        {
+          "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/DC_Crashes/FeatureServer/0",
+          "query": {
+            "groupByFieldsForStatistics": "EXTRACT(YEAR from REPORTDATE)",
+            "outStatistics": [
+              {
+                "statisticType": "sum",
+                "onStatisticField": "MAJORINJURIES",
+                "outStatisticFieldName": "MAJORINJURIES_SUM"
+              },{
+                "statisticType": "sum",
+                "onStatisticField": "MINORINJURIES",
+                "outStatisticFieldName": "MINORINJURIES_SUM"
+              }
+            ],
+            "sqlFormat": "standard"
+          },
+        }
+    ],
+    series: [
+      {
+        "category": {"field": "EXPR_1", "label": "Year"},
+        "group": true,
+        "value": {
+          "field": "MAJORINJURIES_SUM",
+          "label": "Major Injuries"
+        }
+      },
+      {
+        category: {field: 'EXPR_1', label: 'Year'},
+        value: {
+          "field": "MINORINJURIES_SUM",
+          "label": "Minor Injuries"
+        },
+        group: true
+      }
+    ],
+    "overrides": {
+      "categoryAxis": {
+        "guides": [{
+          category: "2015",
+          lineColor: "#CC0000",
+          lineAlpha: 1,
+          dashLength: 2,
+          inside: true,
+          labelRotation: 90,
+          label: "VisionZero Started"
+        },{
+          category: "2024",
+          lineColor: "#CC0000",
+          lineAlpha: 1,
+          dashLength: 2,
+          inside: true,
+          labelRotation: 90,
+          label: "VisionZero Goal"
+        }]
+      }
+    }
+    };
+    const line = new Cedar(config1)
+    line.show("chartdivLine");
+    const config2 = JSON.parse(JSON.stringify(config1));
+    config2.type = "area";
+    const area = new Cedar(config2);
+    area.show("chartdivArea");
+  </code>
+</pre>
+  </body>
+</html>

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>AmCharts</title>
+    <title>Cedar - bar chart</title>
 
   </head>
   <body id="" onload="">
@@ -31,6 +31,7 @@ var config = {
   datasets: [
     {
       url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+      id: 1,
       query: {
         orderByFields: 'Number_of_SUM DESC',
         groupByFieldsForStatistics: 'Type',
@@ -47,7 +48,8 @@ var config = {
   series: [
     {
       category: {field: 'Type', label: 'Type'},
-      value: {field: 'Number_of_SUM', label: 'Number of Students'}
+      value: {field: 'Number_of_SUM', label: 'Number of Students'},
+      datasetId: 1
     }
   ],
   overrides: {
@@ -57,6 +59,7 @@ var config = {
   }
 }
 const cedar = new Cedar(config);
+console.log(cedar)
 cedar.show("chartdiv1")
 
 </script>
@@ -64,5 +67,43 @@ cedar.show("chartdiv1")
 <!-- HTML -->
 <a href="./">&lt; Back Home</a>
 <div id="chartdiv1" class="chart"></div>
+
+<pre>
+  <code>
+    var config = {
+      type: 'bar',
+      datasets: [
+        {
+          url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+          query: {
+            orderByFields: 'Number_of_SUM DESC',
+            groupByFieldsForStatistics: 'Type',
+            outStatistics: [
+              {
+                statisticType: 'sum',
+                onStatisticField: 'Number_of',
+                outStatisticFieldName: 'Number_of_SUM'
+              }
+            ]
+          }
+        }
+      ],
+      series: [
+        {
+          category: {field: 'Type', label: 'Type'},
+          value: {field: 'Number_of_SUM', label: 'Number of Students'}
+        }
+      ],
+      overrides: {
+        categoryAxis: {
+          labelRotation: -45
+        }
+      }
+    }
+    const cedar = new Cedar(config);
+    console.log(cedar)
+    cedar.show("chartdiv1")
+  </code>
+</pre>
   </body>
 </html>

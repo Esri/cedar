@@ -21,11 +21,9 @@ export function buildIndex(joinKeys: string[], featureSets: any[], transformFunc
   return index
 }
 
-export function flattenFeatures(data: any) {
+export function flattenFeatures(featureSets: any[], joinKeys: any[], transformFuncs: any[]) {
+  console.log('JOIN KEYS ARE: ', joinKeys)
   // TODO: Transform data
-  const joinKeys: any[] = data.joinKeys
-  const featureSets: any[] = data.featureSets
-  const transformFuncs: any[] = data.transformFuncs
   const features = []
 
   // If we aren't joining, but we are merging

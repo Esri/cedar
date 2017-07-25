@@ -12,7 +12,7 @@ describe('Features should properly flatten', () => {
     }
     const arr = [{Number_of_SUM: 13, Type: 'High School'}, {Number_of_SUM: 6, Type: 'Middle School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 8, Type: 'High School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 0, Type: 'Middle School'}]
 
-    expect(flatten(data)).toEqual(arr)
+    expect(flatten(data.featureSets, data.joinKeys, data.transformFuncs)).toEqual(arr)
     expect(true).toBe(true)
   })
 
@@ -71,6 +71,6 @@ describe('Features should properly flatten', () => {
       }
     ]
 
-    expect(flatten(data)).toEqual(result)
+    expect(flatten(data.featureSets, data.joinKeys, data.transformFuncs)).toEqual(result)
   })
 })
