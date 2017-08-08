@@ -9,9 +9,9 @@ const response = [
     },
     fields: [
       {
-        name: 'Jordan_SUM',
+        name: 'Number_of_SUM',
         type: 'esriFieldTypeDouble',
-        alias: 'Jordan_SUM',
+        alias: 'Number_of_SUM',
         sqlType: 'sqlTypeFloat',
         domain: null,
         defaultValue: null
@@ -29,19 +29,19 @@ const response = [
     features: [
       {
         attributes: {
-          Jordan_SUM: 13,
+          Number_of_SUM: 13,
           Type: 'High School'
         }
       },
       {
         attributes: {
-          Jordan_SUM: 6,
+          Number_of_SUM: 6,
           Type: 'Middle School'
         }
       },
       {
         attributes: {
-          Jordan_SUM: 1,
+          Number_of_SUM: 1,
           Type: 'Elementary School'
         }
       }
@@ -57,9 +57,9 @@ const response = [
     },
     fields: [
       {
-        name: 'Fayetteville_SUM',
+        name: 'Number_of_SUM',
         type: 'esriFieldTypeDouble',
-        alias: 'Fayetteville_SUM',
+        alias: 'Number_of_SUM',
         sqlType: 'sqlTypeFloat',
         domain: null,
         defaultValue: null
@@ -77,7 +77,7 @@ const response = [
     features: [
       {
         attributes: {
-          Fayetteville_SUM: 1,
+          Number_of_SUM: 1,
           Type: 'Elementary School'
         }
       }
@@ -93,9 +93,9 @@ const response = [
     },
     fields: [
       {
-        name: 'Dewitt_SUM',
+        name: 'Number_of_SUM',
         type: 'esriFieldTypeDouble',
-        alias: 'Dewitt_SUM',
+        alias: 'Number_of_SUM',
         sqlType: 'sqlTypeFloat',
         domain: null,
         defaultValue: null
@@ -113,19 +113,19 @@ const response = [
     features: [
       {
         attributes: {
-          Dewitt_SUM: 8,
+          Number_of_SUM: 8,
           Type: 'High School'
         }
       },
       {
         attributes: {
-          Dewitt_SUM: 1,
+          Number_of_SUM: 1,
           Type: 'Elementary School'
         }
       },
       {
         attributes: {
-          Dewitt_SUM: 0,
+          Number_of_SUM: 0,
           Type: 'Middle School'
         }
       }
