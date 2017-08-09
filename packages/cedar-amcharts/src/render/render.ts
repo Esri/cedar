@@ -32,20 +32,23 @@ export function renderChart(elementId: string, config: any, data?: any) {
 }
 
 export function fillInSpec(spec: any, config: any) {
-  // Grab the graphSpec from the spec
-  const graphSpec = spec.graphs.pop()
+  // Grab the default graph from the spec
+  const defaultGraph = spec.graphs.pop()
 
   // create a graph for each series
   config.series.forEach((series, s) => {
-    const graph = deepMerge({}, graphSpec)
+    // clone the default graph
+    const graph = deepMerge({}, defaultGraph)
 
     // Set graph title
     graph.title = series.value.label
 
-    // TODO: Look at all fields ()
+    // TODO: populate other fields such as color, etc?
     graph.valueField = `${series.value.field}`
     graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
 
+    // these are used by pie/donut charts
+    // TODO: should these statements be gated to if spec.type === 'pie'
     spec.titleField = 'categoryField'
     spec.valueField = graph.valueField
 
@@ -54,8 +57,8 @@ export function fillInSpec(spec: any, config: any) {
       graph.newStack = true
     }
 
-    // Only clone scatterplots
-    if (!!graphSpec.xField && !!series.category && !!series.value) {
+    // scatterplots
+    if (!!defaultGraph.xField && !!series.category && !!series.value) {
       graph.xField = series.category.field
       graph.yField = series.value.field
 
@@ -63,14 +66,15 @@ export function fillInSpec(spec: any, config: any) {
       ${series.category.label}: [[${series.category.field}]],
       ${series.value.label}: [[${series.value.field}]]`
 
-      graph.labelText = ''
+      if (series.size) {
+        // bubble chart
+        graph.valueField = series.size.field
+        graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
+      } else {
+        delete graph.valueField
+      }
     }
 
-    // Bubble charts
-    if (!!graphSpec.valueField && !!series.size) {
-      graphSpec.valueField = series.size.field
-      graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
-    }
     spec.graphs.push(graph)
   })
   return spec
