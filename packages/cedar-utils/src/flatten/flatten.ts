@@ -38,15 +38,15 @@ export function flattenFeatures(featureSets: any[], joinKeys: any[], transformFu
 
   // Otherwise join
   const index = buildIndex(joinKeys, featureSets, transformFuncs)
-  const key = joinKeys[0] // TODO: support different `category` keys
+  const categoryKey = joinKeys[0] // TODO: support different `category` keys
   const keys = Object.keys(index)
   keys.forEach((indKey, i) => {
     const idxArr = index[indKey]
-    const feature = { categoryField: idxArr[0][key] }
+    const feature = { categoryField: idxArr[0][categoryKey] }
     idxArr.forEach((idx, k) => {
       const attrKeys = Object.keys(idx)
       attrKeys.forEach((ak, j) => {
-        const attr = `${ak}_${k}`
+        const attr = `${ak}`
         feature[attr] = idx[ak]
       })
     })

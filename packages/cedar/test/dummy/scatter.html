@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>AmCharts</title>
+    <title>Cedar - Scatterplot</title>
 
   </head>
   <body id="" onload="">
@@ -28,83 +28,75 @@
 <script>
 var config1 = {
   "type": "scatter",
-  "datasets": [ {
-    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-    merge: true
-  },{
-    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-    merge: true
+  // this is a contrived example that could be done in a single query, but
+  // it shows how you can merge the result of 2 queries
+  // as long as their results have the same schema
+  "datasets": [{
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year < 1960"
+    },
+    "merge": true
+  }, {
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year >= 1960"
+    },
+    "merge": true
   }],
   series: [
     {
-      "name": "Teachers",
-      "category": {"field": "Number_of", "label": "Number of Teachers"},
-      "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-      "label": "Name"
-    },
-    {
-      "name": "Free Lunches",
-      "category": {"field": "Number_of", "label": "Number of Teachers"},
-      "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-      "label": "Name"
-    },
-    {
-      "name": "Limited En?",
-      "category": {"field": "Number_of", "label": "Number of Teachers"},
-      "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-      "label": "Name"
+      "name": "Tornado Injuries",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"}
     }
   ]
 }
 
 const cedar = new Cedar(config1);
-cedar.show("chartdiv1")
+cedar.show("chartdiv1");
 
 </script>
 
 <!-- HTML -->
 <a href="./">&lt; Back Home</a>
-<h3>Multiple Scatterplot</h3>
+<h3>Scatterplot</h3>
 <em>
-  whereby we illustrate a method for the graphing of multiple scatterplots of data utilizing two queries of a Geoservice and two series of a query.
+  whereby we illustrate a method for the graphing of a scatterplot using the values of different fields to control the position of the circles plotted on the graph.
 </em>
 <div id="chartdiv1" class="chart"></div>
 
 <pre>
   <code>
-    var config1 = {
-      "type": "scatter",
-      "datasets": [ {
-        "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-        merge: true
-      },{
-        "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-        merge: true
-      }],
-      series: [
-        {
-          "name": "Teachers",
-          "category": {"field": "Number_of", "label": "Number of Teachers"},
-          "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-          "label": "Name"
-        },
-        {
-          "name": "Free Lunches",
-          "category": {"field": "Number_of", "label": "Number of Teachers"},
-          "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-          "label": "Name"
-        },
-        {
-          "name": "Limited En?",
-          "category": {"field": "Number_of", "label": "Number of Teachers"},
-          "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-          "label": "Name"
-        }
-      ]
+var config1 = {
+  "type": "scatter",
+  // this is a contrived example that could be done in a single query, but
+  // it shows how you can merge the result of 2 queries
+  // as long as their results have the same schema
+  "datasets": [{
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year < 1960"
+    },
+    "merge": true
+  }, {
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year >= 1960"
+    },
+    "merge": true
+  }],
+  series: [
+    {
+      "name": "Tornado Injuries",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"}
     }
+  ]
+}
 
-    const cedar = new Cedar(config1);
-    cedar.show("chartdiv1")
+const cedar = new Cedar(config1);
+cedar.show("chartdiv1");
   </code>
 </pre>
 

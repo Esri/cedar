@@ -27,9 +27,10 @@
 <!-- Chart code -->
 <script>
 const charts = {};
+const configText = '';
 var time_periods = ["Hour", "Day", "Month"];
 for(var p=0; p<time_periods.length; p++) {
-
+  var time_period = time_periods[p];
   var offense_types = ["THEFT/OTHER",
     "THEFT F/AUTO",
     "SEX ABUSE",
@@ -45,35 +46,35 @@ for(var p=0; p<time_periods.length; p++) {
     series: []
   };
   for(var i=0; i<offense_types.length; i++) {
+    var offense_type = offense_types[i];
+    var outStatisticFieldName = "OFFENSE_COUNT_" + i;
     const dataset = {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      id: i,
       "query": {
-        "where": "OFFENSE='" + offense_types[i] + "'",
-        "groupByFieldsForStatistics": "EXTRACT(" + time_periods[p] + " from REPORTDATETIME)",
+        "where": "OFFENSE='" + offense_type + "'",
+        "groupByFieldsForStatistics": "EXTRACT(" + time_period + " from REPORTDATETIME)",
         "outStatistics": [
           {
             "statisticType": "count",
             "onStatisticField": "OFFENSE",
-            "outStatisticFieldName": "OFFENSE_COUNT"
+            "outStatisticFieldName": outStatisticFieldName
           }
         ],
         "sqlFormat": "standard"
       }
     }
     const series = {
-      "category": {"field": "EXPR_1", "label": time_periods[p]},
+      "category": {"field": "EXPR_1", "label": time_period},
       "value": {
-        "field": "OFFENSE_COUNT",
-        "label": offense_types[i]
-      },
-      datasetId: i
+        "field": outStatisticFieldName,
+        "label": offense_type
+      }
     }
     config1.datasets.push(dataset)
     config1.series.push(series)
   }
-  charts[`chart_${time_periods[p]}`] = new Cedar(config1)
-  charts[`chart_${time_periods[p]}`].show("chartdiv" + time_periods[p]);
+  charts[`chart_${time_period}`] = new Cedar(config1)
+  charts[`chart_${time_period}`].show("chartdiv" + time_period);
 }
 </script>
 
@@ -81,12 +82,13 @@ for(var p=0; p<time_periods.length; p++) {
 <a href="./">&lt; Back Home</a>
 <h2>Crime by Hour of Day</h2>
 <div id="chartdivHour" class="chart"></div>
-<h2>Crime by Day of Year</h2>
+<h2>Crime by Day of Month</h2>
 <div id="chartdivDay" class="chart"></div>
 <h2>Crime by Month</h2>
 <div id="chartdivMonth" class="chart"></div>
 
 <pre>
+  <!-- TODO: show code -->
   <code>
 
   </code>

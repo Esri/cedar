@@ -17,6 +17,7 @@
     <!-- Resources -->
     <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <!-- TODO: need to verify this works w/o export -->
     <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
@@ -31,7 +32,6 @@ var config = {
   datasets: [
     {
       url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
-      id: 1,
       query: {
         orderByFields: 'Number_of_SUM DESC',
         groupByFieldsForStatistics: 'Type',
@@ -48,8 +48,7 @@ var config = {
   series: [
     {
       category: {field: 'Type', label: 'Type'},
-      value: {field: 'Number_of_SUM', label: 'Number of Students'},
-      datasetId: 1
+      value: {field: 'Number_of_SUM', label: 'Number of Students'}
     }
   ],
   overrides: {
@@ -70,39 +69,39 @@ cedar.show("chartdiv1")
 
 <pre>
   <code>
-    var config = {
-      type: 'bar',
-      datasets: [
-        {
-          url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
-          query: {
-            orderByFields: 'Number_of_SUM DESC',
-            groupByFieldsForStatistics: 'Type',
-            outStatistics: [
-              {
-                statisticType: 'sum',
-                onStatisticField: 'Number_of',
-                outStatisticFieldName: 'Number_of_SUM'
-              }
-            ]
+var config = {
+  type: 'bar',
+  datasets: [
+    {
+      url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+      query: {
+        orderByFields: 'Number_of_SUM DESC',
+        groupByFieldsForStatistics: 'Type',
+        outStatistics: [
+          {
+            statisticType: 'sum',
+            onStatisticField: 'Number_of',
+            outStatisticFieldName: 'Number_of_SUM'
           }
-        }
-      ],
-      series: [
-        {
-          category: {field: 'Type', label: 'Type'},
-          value: {field: 'Number_of_SUM', label: 'Number of Students'}
-        }
-      ],
-      overrides: {
-        categoryAxis: {
-          labelRotation: -45
-        }
+        ]
       }
     }
-    const cedar = new Cedar(config);
-    console.log(cedar)
-    cedar.show("chartdiv1")
+  ],
+  series: [
+    {
+      category: {field: 'Type', label: 'Type'},
+      value: {field: 'Number_of_SUM', label: 'Number of Students'}
+    }
+  ],
+  overrides: {
+    categoryAxis: {
+      labelRotation: -45
+    }
+  }
+}
+const cedar = new Cedar(config);
+console.log(cedar)
+cedar.show("chartdiv1")
   </code>
 </pre>
   </body>

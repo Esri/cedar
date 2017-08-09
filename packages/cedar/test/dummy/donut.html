@@ -55,7 +55,6 @@ var config1 = {
   ]
 }
 const cedar = new Cedar(config1);
-console.log(cedar)
 cedar.show("chartdiv1");
 </script>
 
@@ -65,36 +64,36 @@ cedar.show("chartdiv1");
 
 <pre>
   <code>
-    var config1 = {
-      type: 'pie',
-      datasets: [
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "query": {
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [
-              {
-                "statisticType": "sum",
-                "onStatisticField": "Number_of",
-                "outStatisticFieldName": "Number_of_SUM"
-              }
-            ]
+var config1 = {
+  type: 'donut',
+  datasets: [
+    {
+      "url": "https://services7.arcgis.com/BBpPn9wZu2D6eTNY/arcgis/rest/services/smaller_collisions_indicator_data/FeatureServer/0",
+      "query": {
+        "orderByFields": "FIRSTHARMFULEVENTSPECIFICS DESC",
+        "groupByFieldsForStatistics": "FIRSTHARMFULEVENTSPECIFICS",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "FIRSTHARMFULEVENTSPECIFICS",
+            "outStatisticFieldName": "FIRSTHARMFULEVENTSPECIFICS_COUNT"
           }
-        }
-      ],
-      series: [
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "value": {
-            "field": "Number_of_SUM",
-            "label": "Number of Students"
-          }
-        }
-      ]
+        ]
+      }
     }
-    const cedar = new Cedar(config1);
-    cedar.show("chartdiv1");
+  ],
+  series: [
+    {
+      "category": {"field": "FIRSTHARMFULEVENTSPECIFICS", "label": "Type"},
+      "value": {
+        "field": "FIRSTHARMFULEVENTSPECIFICS_COUNT",
+        "label": "Number of Events"
+      }
+    }
+  ]
+}
+const cedar = new Cedar(config1);
+cedar.show("chartdiv1");
   </code>
 </pre>
   </body>

@@ -31,43 +31,40 @@
       "datasets": [
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          id: 1,
           "query": {
             "where": "City='Jordan'",
-            "orderByFields": "Number_of_SUM DESC",
+            "orderByFields": "Jordan_SUM DESC",
             "groupByFieldsForStatistics": "Type",
             "outStatistics": [{
               "statisticType": "sum",
               "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
+              "outStatisticFieldName": "Jordan_SUM"
             }]
           }
         },
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          id: 2,
           "query": {
             "where": "City='Dewitt'",
-            "orderByFields": "Number_of_SUM DESC",
+            "orderByFields": "Dewitt_SUM DESC",
             "groupByFieldsForStatistics": "Type",
             "outStatistics": [{
               "statisticType": "sum",
               "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
+              "outStatisticFieldName": "Dewitt_SUM"
             }]
           }
         },
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          id: 3,
           "query": {
             "where": "City='Fayetteville'",
-            "orderByFields": "Number_of_SUM DESC",
+            "orderByFields": "Fayetteville_SUM DESC",
             "groupByFieldsForStatistics": "Type",
             "outStatistics": [{
               "statisticType": "sum",
               "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
+              "outStatisticFieldName": "Fayetteville_SUM"
             }]
           }
         }
@@ -76,20 +73,17 @@
         {
           "category": {"field": "Type", "label": "Type"},
           "group": true,
-          "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
-          datasetId: 1
+          "value": { "field": "Jordan_SUM", "label": "Jordan Students"}
         },
         {
           "category": {"field": "Type", "label": "Type"},
           "group": true,
-          "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
-          datasetId: 2
+          "value": { "field": "Dewitt_SUM", "label": "Dewitt Students"}
         },
         {
           "category": {"field": "Type", "label": "Type"},
           "group": true,
-          "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
-          datasetId: 3
+          "value": { "field": "Fayetteville_SUM", "label": "Fayetteville Students"}
         }
       ]
     }
@@ -116,66 +110,63 @@ cedar.show("chartdiv1")
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
           "query": {
             "where": "City='Jordan'",
-            "orderByFields": "Number_of_SUM DESC",
+            "orderByFields": "Jordan_SUM DESC",
             "groupByFieldsForStatistics": "Type",
             "outStatistics": [{
               "statisticType": "sum",
               "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
+              "outStatisticFieldName": "Jordan_SUM"
             }]
-          },
-          "mappings":{
-            "category": {"field": "Type", "label": "Type"},
-            "group": true,
-            "series": [
-              { "field": "Number_of_SUM", "label": "Jordan Students"}
-            ]
           }
         },
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-              "query": {
-                "where": "City='Dewitt'",
-                "orderByFields": "Number_of_SUM DESC",
-                "groupByFieldsForStatistics": "Type",
-                "outStatistics": [{
-                  "statisticType": "sum",
-                  "onStatisticField": "Number_of",
-                  "outStatisticFieldName": "Number_of_SUM"
-                }]
-              },
-          "mappings":{
-          "category": {"field": "Type", "label": "Type"},
-          "group": true,
-          "series": [
-            { "field": "Number_of_SUM", "label": "Dewitt Students"}
-          ]
+          "query": {
+            "where": "City='Dewitt'",
+            "orderByFields": "Dewitt_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Dewitt_SUM"
+            }]
           }
         },
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
           "query": {
             "where": "City='Fayetteville'",
-            "orderByFields": "Number_of_SUM DESC",
+            "orderByFields": "Fayetteville_SUM DESC",
             "groupByFieldsForStatistics": "Type",
             "outStatistics": [{
               "statisticType": "sum",
               "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
+              "outStatisticFieldName": "Fayetteville_SUM"
             }]
-          },
-          "mappings":{
-            "category": {"field": "Type", "label": "Type"},
-            "group": true,
-            "series": [
-              { "field": "Number_of_SUM", "label": "Fayetteville Students"}
-            ]
           }
         }
+      ],
+      series: [
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "value": { "field": "Jordan_SUM", "label": "Jordan Students"}
+        },
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "value": { "field": "Dewitt_SUM", "label": "Dewitt Students"}
+        },
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "group": true,
+          "value": { "field": "Fayetteville_SUM", "label": "Fayetteville Students"}
+        }
       ]
-  }
+    }
 
-showChart("chartdiv1", config1);
+const cedar = new Cedar(config1);
+cedar.show("chartdiv1")
   </code>
 </pre>
   </body>

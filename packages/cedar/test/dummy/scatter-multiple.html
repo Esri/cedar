@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Cedar - Bubble Chart</title>
+    <title>AmCharts</title>
 
   </head>
   <body id="" onload="">
@@ -33,25 +33,33 @@ var config1 = {
   }],
   series: [
     {
-      "name": "Tornado Injuries & Fatalaties",
+      "name": "Fatalities",
       "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
-      "value": {"field": "Injuries", "label": "Injuries"},
-      // by including a size for the series, this becomes a bubble chart
-      "size": {"field": "Fatalities", "label": "Fatalities"}
+      "value": {"field": "Fatalities", "label": "Fatalities"}
+    },
+    {
+      "name": "Injuries",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"}
+    },
+    {
+      "name": "Damage",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Damage", "label": "Damage"}
     }
   ]
 }
 
 const cedar = new Cedar(config1);
-cedar.show("chartdiv1");
+cedar.show("chartdiv1")
 
 </script>
 
 <!-- HTML -->
 <a href="./">&lt; Back Home</a>
-<h3>Bubble Chart</h3>
+<h3>Multiple Scatterplot</h3>
 <em>
-  whereby we illustrate a method for the graphing of a bubble chart by using the values of different fields to control the position and size of the circles plotted on the graph.
+  whereby we illustrate a method for the graphing of multiple series of scatterplots from a single query of a Geoservice.
 </em>
 <div id="chartdiv1" class="chart"></div>
 
@@ -64,17 +72,25 @@ var config1 = {
   }],
   series: [
     {
-      "name": "Tornado Injuries & Fatalaties",
+      "name": "Fatalities",
       "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
-      "value": {"field": "Injuries", "label": "Injuries"},
-      // by including a size for the series, this becomes a bubble chart
-      "size": {"field": "Fatalities", "label": "Fatalities"}
+      "value": {"field": "Fatalities", "label": "Fatalities"}
+    },
+    {
+      "name": "Injuries",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"}
+    },
+    {
+      "name": "Damage",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Damage", "label": "Damage"}
     }
   ]
 }
 
 const cedar = new Cedar(config1);
-cedar.show("chartdiv1");
+cedar.show("chartdiv1")
   </code>
 </pre>
 
