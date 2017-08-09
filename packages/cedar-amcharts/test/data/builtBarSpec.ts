@@ -8,8 +8,7 @@ const builtBarSpec = {
       color: '#000000',
       title: 'Number of Students',
       valueField: 'Number_of_SUM',
-      balloonText: 'Number of Students [[categoryField]]: <b>[[Number_of_SUM]]</b>',
-      labelText: '[[Number_of_SUM]]'
+      balloonText: 'Number of Students [[categoryField]]: <b>[[Number_of_SUM]]</b>'
     }
   ],
   theme: 'dark',

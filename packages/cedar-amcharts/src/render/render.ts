@@ -45,7 +45,6 @@ export function fillInSpec(spec: any, config: any) {
     // TODO: Look at all fields ()
     graph.valueField = `${series.value.field}`
     graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
-    graph.labelText = `[[${series.value.field}]]`
 
     spec.titleField = 'categoryField'
     spec.valueField = graph.valueField
