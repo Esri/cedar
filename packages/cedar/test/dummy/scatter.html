@@ -28,8 +28,21 @@
 <script>
 var config1 = {
   "type": "scatter",
-  "datasets": [ {
+  // this is a contrived example that could be done in a single query, but
+  // it shows how you can merge the result of 2 queries
+  // as long as their results have the same schema
+  "datasets": [{
     "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year < 1960"
+    },
+    "merge": true
+  }, {
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year >= 1960"
+    },
+    "merge": true
   }],
   series: [
     {
@@ -57,21 +70,33 @@ cedar.show("chartdiv1");
   <code>
 var config1 = {
   "type": "scatter",
-  "datasets": [ {
-    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
+  // this is a contrived example that could be done in a single query, but
+  // it shows how you can merge the result of 2 queries
+  // as long as their results have the same schema
+  "datasets": [{
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year < 1960"
+    },
+    "merge": true
+  }, {
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "where": "Year >= 1960"
+    },
+    "merge": true
   }],
   series: [
     {
-        "name": "Teachers",
-        "category": {"field": "Number_of", "label": "Number of Teachers"},
-        "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-        "label": "Name"
-      }
+      "name": "Tornado Injuries",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"}
+    }
   ]
 }
 
 const cedar = new Cedar(config1);
-cedar.show("chartdiv1")
+cedar.show("chartdiv1");
   </code>
 </pre>
 
