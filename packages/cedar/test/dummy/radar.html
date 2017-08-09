@@ -47,7 +47,6 @@ for(var p=0; p<time_periods.length; p++) {
   for(var i=0; i<offense_types.length; i++) {
     const dataset = {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      id: i,
       "query": {
         "where": "OFFENSE='" + offense_types[i] + "'",
         "groupByFieldsForStatistics": "EXTRACT(" + time_periods[p] + " from REPORTDATETIME)",
@@ -66,8 +65,7 @@ for(var p=0; p<time_periods.length; p++) {
       "value": {
         "field": "OFFENSE_COUNT",
         "label": offense_types[i]
-      },
-      datasetId: i
+      }
     }
     config1.datasets.push(dataset)
     config1.series.push(series)
