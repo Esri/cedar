@@ -28,20 +28,17 @@
 <script>
 var config1 = {
   "type": "scatter",
-  "datasets": [
-    {
-      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
-    }
-  ],
+  "datasets": [ {
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+  }],
   series: [
     {
-        "name": "Teachers",
-        "category": {"field": "Number_of", "label": "Number of Teachers"},
-        "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-        // by including a series with a size, this becomes a bubble chart
-        "size": {"field": "Not_Taught", "label": "Number not Taught"},
-        "label": "Name"
-      }
+      "name": "Tornado Injuries & Fatalaties",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"},
+      // by including a size for the series, this becomes a bubble chart
+      "size": {"field": "Fatalities", "label": "Fatalities"}
+    }
   ]
 }
 
@@ -62,20 +59,17 @@ cedar.show("chartdiv1");
   <code>
 var config1 = {
   "type": "scatter",
-  "datasets": [
-    {
-      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
-    }
-  ],
+  "datasets": [ {
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+  }],
   series: [
     {
-        "name": "Teachers",
-        "category": {"field": "Number_of", "label": "Number of Teachers"},
-        "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-        // by including a series with a size, this becomes a bubble chart
-        "size": {"field": "Not_Taught", "label": "Number not Taught"},
-        "label": "Name"
-      }
+      "name": "Tornado Injuries & Fatalaties",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"},
+      // by including a size for the series, this becomes a bubble chart
+      "size": {"field": "Fatalities", "label": "Fatalities"}
+    }
   ]
 }
 

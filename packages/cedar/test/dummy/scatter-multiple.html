@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-    <title>Cedar - Scatterplot</title>
+    <title>AmCharts</title>
 
   </head>
   <body id="" onload="">
@@ -33,23 +33,33 @@ var config1 = {
   }],
   series: [
     {
-      "name": "Tornado Injuries",
+      "name": "Fatalities",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Fatalities", "label": "Fatalities"}
+    },
+    {
+      "name": "Injuries",
       "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
       "value": {"field": "Injuries", "label": "Injuries"}
+    },
+    {
+      "name": "Damage",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Damage", "label": "Damage"}
     }
   ]
 }
 
 const cedar = new Cedar(config1);
-cedar.show("chartdiv1");
+cedar.show("chartdiv1")
 
 </script>
 
 <!-- HTML -->
 <a href="./">&lt; Back Home</a>
-<h3>Scatterplot</h3>
+<h3>Multiple Scatterplot</h3>
 <em>
-  whereby we illustrate a method for the graphing of a scatterplot using the values of different fields to control the position of the circles plotted on the graph.
+  whereby we illustrate a method for the graphing of multiple series of scatterplots from a single query of a Geoservice.
 </em>
 <div id="chartdiv1" class="chart"></div>
 
@@ -58,15 +68,24 @@ cedar.show("chartdiv1");
 var config1 = {
   "type": "scatter",
   "datasets": [ {
-    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
   }],
   series: [
     {
-        "name": "Teachers",
-        "category": {"field": "Number_of", "label": "Number of Teachers"},
-        "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-        "label": "Name"
-      }
+      "name": "Fatalities",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Fatalities", "label": "Fatalities"}
+    },
+    {
+      "name": "Injuries",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Injuries", "label": "Injuries"}
+    },
+    {
+      "name": "Damage",
+      "category": {"field": "Lenth_of_Tornado", "label": "Lenth of Tornado"},
+      "value": {"field": "Damage", "label": "Damage"}
+    }
   ]
 }
 
