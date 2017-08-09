@@ -30,9 +30,7 @@ var config1 = {
   "type": "scatter",
   "datasets": [
     {
-      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-      "query":{},
-      merge: true
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
     }
   ],
   series: [
@@ -40,6 +38,7 @@ var config1 = {
         "name": "Teachers",
         "category": {"field": "Number_of", "label": "Number of Teachers"},
         "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
+        // by including a series with a size, this becomes a bubble chart
         "size": {"field": "Not_Taught", "label": "Number not Taught"},
         "label": "Name"
       }
@@ -53,36 +52,35 @@ cedar.show("chartdiv1");
 
 <!-- HTML -->
 <a href="./">&lt; Back Home</a>
-<h3>Multiple Scatterplot</h3>
+<h3>Bubble Chart</h3>
 <em>
-  whereby we illustrate a method for the graphing of multiple scatterplots of data utilizing two queries of a Geoservice and two series of a query.
+  whereby we illustrate a method for the graphing of a bubble chart by using the values of different fields to control the position and size of the circles plotted on the graph.
 </em>
 <div id="chartdiv1" class="chart"></div>
 
 <pre>
   <code>
-    var config1 = {
-      "type": "scatter",
-      "datasets": [
-        {
-          "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "query":{},
-          merge: true
-        }
-      ],
-      series: [
-        {
-            "name": "Teachers",
-            "category": {"field": "Number_of", "label": "Number of Teachers"},
-            "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
-            "size": {"field": "Not_Taught", "label": "Number not Taught"},
-            "label": "Name"
-          }
-      ]
+var config1 = {
+  "type": "scatter",
+  "datasets": [
+    {
+      "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
     }
+  ],
+  series: [
+    {
+        "name": "Teachers",
+        "category": {"field": "Number_of", "label": "Number of Teachers"},
+        "value": {"field": "F_of_teach", "label": "Fraction of Teachers"},
+        // by including a series with a size, this becomes a bubble chart
+        "size": {"field": "Not_Taught", "label": "Number not Taught"},
+        "label": "Name"
+      }
+  ]
+}
 
-    const cedar = new Cedar(config1);
-    cedar.show("chartdiv1");
+const cedar = new Cedar(config1);
+cedar.show("chartdiv1");
   </code>
 </pre>
 
