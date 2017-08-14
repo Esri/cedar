@@ -54,7 +54,7 @@ The inputs array specifies the parameters required by the template, in order to 
 
 
 ## Template
-The template is an extension of the [Vega](https://github.com/trifacta/vega/wiki) visualization grammar, and in most respects is identical. The primary differece it that the template has some properties specified as `{tokens}`.
+The template is an extension of the [Vega](https://github.com/trifacta/vega/wiki) visualization grammar, and in most respects is identical. The primary difference it that the template has some properties specified as `{tokens}`.
 
 The Cedar library takes the `dataset.mappings` object and uses that to interpolate the tokens in the template, to produce a valid vega specification, which is then used to generate the chart.
 
