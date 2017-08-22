@@ -2,7 +2,10 @@
 // so that we are pulling in built code, not source, something like:
 // import { deepMerge } from 'cedar-utils/helpers'
 import cedarAmCharts from 'cedar-amcharts'
-import { createFeatureServiceRequest, deepMerge, flattenFeatures, getData } from 'cedar-utils'
+import { deepMerge } from 'cedar-utils'
+import { flattenFeatures } from './flatten/flatten'
+import { getData } from './query/query'
+import { createFeatureServiceRequest } from './query/url'
 
 export default class Cedar {
   private _series: any[]

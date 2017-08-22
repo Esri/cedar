@@ -57,7 +57,7 @@ export function checkStatusAndParseJson(response: any): Promise<any> {
  * @param  {any}          options Potential options passed into fetch
  * @return {Promise<any>}         FS response as JSON
  */
-export function getData(url: string, options: any): Promise<any> {
+export function getData(url: string, options?: any): Promise<any> {
   const opts = options || {}
   return fetch(url, opts)
     .then((response) => {
