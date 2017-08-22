@@ -1,4 +1,4 @@
-import {deepMerge} from '../helpers/helpers'
+import { deepMerge } from 'cedar-utils'
 
 export function defaultQuery() {
   return {

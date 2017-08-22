@@ -3,7 +3,7 @@
  * @param  {object} source Empty object that other objects will be merged into
  * @return {object}        Merged objects
  */
-export function deepMerge( source: any, ...args ) {
+export function deepMerge(source: any, ...args) {
   const arrOfObjs = [...args]
   for (const i in arrOfObjs) {
     if (i) {
