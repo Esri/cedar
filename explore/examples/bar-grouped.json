@@ -1,0 +1,67 @@
+{
+  "type": "bar",
+  "datasets": [
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "id": 1,
+      "query": {
+        "where": "City='Jordan'",
+        "orderByFields": "Number_of_SUM DESC",
+        "groupByFieldsForStatistics": "Type",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "id": 2,
+      "query": {
+        "where": "City='Dewitt'",
+        "orderByFields": "Number_of_SUM DESC",
+        "groupByFieldsForStatistics": "Type",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "id": 3,
+      "query": {
+        "where": "City='Fayetteville'",
+        "orderByFields": "Number_of_SUM DESC",
+        "groupByFieldsForStatistics": "Type",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      }
+    }
+  ],
+  "series": [
+    {
+      "category": {"field": "Type", "label": "Type"},
+      "group": true,
+      "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
+      "datasetId": 1
+    },
+    {
+      "category": {"field": "Type", "label": "Type"},
+      "group": true,
+      "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
+      "datasetId": 2
+    },
+    {
+      "category": {"field": "Type", "label": "Type"},
+      "group": true,
+      "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
+      "datasetId": 3
+    }
+  ]
+}

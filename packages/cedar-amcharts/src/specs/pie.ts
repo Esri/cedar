@@ -8,8 +8,7 @@ const pie = {
      fixedPosition: true
     },
   legend: {
-    position: 'right',
-    marginRight: 100,
+    position: 'bottom',
     autoMargins: false
   },
 }

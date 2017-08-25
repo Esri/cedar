@@ -1,0 +1,250 @@
+{
+  "type": "radar",
+  "datasets": [
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 0,
+      "query": {
+        "where": "OFFENSE='THEFT/OTHER'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 1,
+      "query": {
+        "where": "OFFENSE='THEFT F/AUTO'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 2,
+      "query": {
+        "where": "OFFENSE='SEX ABUSE'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 3,
+      "query": {
+        "where": "OFFENSE='Robbery'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 4,
+      "query": {
+        "where": "OFFENSE='MOTOR VEHICLE THEFT'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 5,
+      "query": {
+        "where": "OFFENSE='HOMICIDE'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 6,
+      "query": {
+        "where": "OFFENSE='BURGLARY'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 7,
+      "query": {
+        "where": "OFFENSE='ASSAULT W/DANGEROUS WEAPON'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    },
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
+      "id": 8,
+      "query": {
+        "where": "OFFENSE='ARSON'",
+        "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
+        "outStatistics": [
+          {
+            "statisticType": "count",
+            "onStatisticField": "OFFENSE",
+            "outStatisticFieldName": "OFFENSE_COUNT"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    }
+  ],
+  "series": [
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "THEFT/OTHER"
+      },
+      "datasetId": 0
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "THEFT F/AUTO"
+      },
+      "datasetId": 1
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "SEX ABUSE"
+      },
+      "datasetId": 2
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "Robbery"
+      },
+      "datasetId": 3
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "MOTOR VEHICLE THEFT"
+      },
+      "datasetId": 4
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "HOMICIDE"
+      },
+      "datasetId": 5
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "BURGLARY"
+      },
+      "datasetId": 6
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "ASSAULT W/DANGEROUS WEAPON"
+      },
+      "datasetId": 7
+    },
+    {
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      },
+      "value": {
+        "field": "OFFENSE_COUNT",
+        "label": "ARSON"
+      },
+      "datasetId": 8
+    }
+  ]
+}
