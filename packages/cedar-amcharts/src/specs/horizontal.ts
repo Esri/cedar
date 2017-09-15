@@ -1,6 +1,6 @@
-export const bar = {
+export const horizontal = {
   type: 'serial',
-  rotate: false,
+  rotate: true,
   graphs: [{
     fillAlphas: 0.2,
     lineAlpha: 0.8,
@@ -44,4 +44,4 @@ export const bar = {
   }
 }
 
-export default bar
+export default horizontal
