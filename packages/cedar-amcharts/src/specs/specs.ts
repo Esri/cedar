@@ -5,7 +5,6 @@ import pie from './pie'
 import radar from './radar'
 import scatter from './scatter'
 import timeline from './timeline'
-import sparkline from './spark'
 
 const specs = {
   bar,
@@ -15,8 +14,7 @@ const specs = {
   pie,
   radar,
   scatter,
-  timeline,
-  sparkline
+  timeline
 }
 
 export default specs
