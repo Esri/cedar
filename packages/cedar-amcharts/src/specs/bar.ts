@@ -28,10 +28,10 @@ export const bar = {
     gridAlpha: 0.07,
     gridPosition: 'start',
     // gridAlpha: 0,
-    tickPosition: 'start',
-    tickLength: 0,
     guides: [],
-    position: 'bottom'
+    position: 'bottom',
+    tickPosition: 'start',
+    tickLength: 0
   },
   valueAxes: [ {
     gridColor: '#FFFFFF',
