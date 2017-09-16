@@ -29,7 +29,7 @@ const builtBarSpec = {
       stackType: 'regular'
     }
   ],
-  gridAboveGraphs: true,
+  gridAboveGraphs: false,
   startDuration: 0.3,
   startEffect: 'easeInSine',
   chartCursor: {
