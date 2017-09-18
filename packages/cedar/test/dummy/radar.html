@@ -72,6 +72,7 @@ for(var p=0; p<time_periods.length; p++) {
     config1.datasets.push(dataset)
     config1.series.push(series)
   }
+  console.log("config1", JSON.stringify(config1))
   charts[`chart_${time_periods[p]}`] = new Cedar(config1)
   charts[`chart_${time_periods[p]}`].show("chartdiv" + time_periods[p]);
 }

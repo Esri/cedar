@@ -1,0 +1,13 @@
+{
+  "type": "scatter",
+  "datasets": [ {
+    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+    "merge": true
+  }],
+  "series": [
+    {
+      "category": {"field": "Number_of", "label": "Number of Teachers"},
+      "value": {"field": "F_of_teach", "label": "Fraction of Teachers"}
+    }
+  ]
+}

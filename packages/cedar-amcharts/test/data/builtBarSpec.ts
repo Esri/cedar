@@ -1,5 +1,6 @@
 const builtBarSpec = {
   type: 'serial',
+  rotate: false,
   graphs: [
     {
       fillAlphas: 0.2,
@@ -12,7 +13,7 @@ const builtBarSpec = {
       labelText: '[[Number_of_SUM]]'
     }
   ],
-  theme: 'dark',
+  theme: 'light',
   legend: {
     horizontalGap: 10,
     maxColumns: 1,
@@ -28,7 +29,7 @@ const builtBarSpec = {
       stackType: 'regular'
     }
   ],
-  gridAboveGraphs: true,
+  gridAboveGraphs: false,
   startDuration: 0.3,
   startEffect: 'easeInSine',
   chartCursor: {
@@ -40,9 +41,10 @@ const builtBarSpec = {
     axisColor: '#DADADA',
     gridAlpha: 0.07,
     gridPosition: 'start',
+    guides: [],
+    position: 'bottom',
     tickPosition: 'start',
-    tickLength: 20,
-    guides: []
+    tickLength: 0
   },
   export: {
     enabled: true

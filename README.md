@@ -143,6 +143,11 @@ See the [API documentation](http://esri.github.io/cedar/api) for further details
 1. TODO: how to run docs site locally? for now cd into utils package and run `yarn test`
 1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
+
+### Tests
+
+`lerna run test`
+
 ### Dependencies
 
 TODO: amCharts

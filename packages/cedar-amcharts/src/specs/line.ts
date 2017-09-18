@@ -21,7 +21,7 @@ const line = {
   valueAxes: [ {
     gridColor: '#FFFFFF',
     gridAlpha: 0.2,
-    dashLength: 0,
+    dashLength: 0
   } ],
   gridAboveGraphs: true,
   startDuration: 0.1,

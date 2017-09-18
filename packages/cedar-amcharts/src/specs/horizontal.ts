@@ -1,6 +1,6 @@
-export const bar = {
+export const horizontal = {
   type: 'serial',
-  rotate: false,
+  rotate: true,
   graphs: [{
     fillAlphas: 0.2,
     lineAlpha: 0.8,
@@ -28,10 +28,10 @@ export const bar = {
     gridAlpha: 0.07,
     gridPosition: 'start',
     // gridAlpha: 0,
-    guides: [],
-    position: 'bottom',
     tickPosition: 'start',
-    tickLength: 0
+    tickLength: 0,
+    guides: [],
+    position: 'bottom'
   },
   valueAxes: [ {
     gridColor: '#FFFFFF',
@@ -44,4 +44,4 @@ export const bar = {
   }
 }
 
-export default bar
+export default horizontal
