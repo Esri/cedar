@@ -1,6 +1,3 @@
-// TODO: need to set up cedar-utils prepublish and .npmignore
-// so that we are pulling in built code, not source, something like:
-// import { deepMerge } from 'cedar-utils/helpers'
 import { cedarAmCharts, deepMerge } from 'cedar-amcharts'
 import { flattenFeatures } from './flatten/flatten'
 import { getData } from './query/query'
