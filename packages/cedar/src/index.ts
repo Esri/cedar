@@ -1,11 +1,11 @@
-// TODO: need to set up cedar-utils prepublish and .npmignore
-// so that we are pulling in built code, not source, something like:
-// import { deepMerge } from 'cedar-utils/helpers'
-import cedarAmCharts from 'cedar-amcharts'
-import { deepMerge } from 'cedar-utils'
+import { cedarAmCharts, deepMerge } from 'cedar-amcharts'
 import { flattenFeatures } from './flatten/flatten'
 import { getData } from './query/query'
 import { createFeatureServiceRequest } from './query/url'
+
+function clone(json) {
+  return JSON.parse(JSON.stringify(json))
+}
 
 export default class Cedar {
   private _series: any[]
@@ -17,7 +17,7 @@ export default class Cedar {
 
   constructor(options: any) {
     // Clone options
-    const opts: any = deepMerge({}, options) || {}
+    const opts: any = clone(options || {})
 
     // If there are datasets...
     if (!!opts.datasets) {
@@ -40,8 +40,9 @@ export default class Cedar {
     return this._datasets
   }
   public set datasets(val: any[]) {
+    // TODO: type any[] can't be a function, why is this code checking for that
     if (typeof val !== 'function' && (val instanceof Array)) {
-      this._datasets = deepMerge([], val)
+      this._datasets = clone(val)
     }
   }
 
@@ -50,6 +51,7 @@ export default class Cedar {
     return this._series
   }
   public set series(val: any[]) {
+    // TODO: type any[] can't be a function, why is this code checking for that
     if (typeof val !== 'function' && (val instanceof Array)) {
       this._series = deepMerge([], val)
     }
@@ -68,7 +70,7 @@ export default class Cedar {
     return this._chartSpecification
   }
   public set chartSpecification(chartSpec: any) {
-    this._chartSpecification = deepMerge({}, chartSpec)
+    this._chartSpecification = clone(chartSpec)
   }
 
   // Cedar Spec
@@ -76,12 +78,12 @@ export default class Cedar {
     return this._cedarSpecification
   }
   public set cedarSpecification(spec: any) {
-    this._cedarSpecification = deepMerge({}, spec)
+    // NOTE: we can only use clone here if spec is JSON
+    this._cedarSpecification = clone(spec)
   }
 
-  // NOTE: this is just psudo code to demonstrate we got the monorepo wired up
-  public show(domNode: string, options?: any) {
-    const opts = deepMerge({}, options)
+  public show(domNode: string, options: any = {}) {
+    const opts = clone(options)
     const requests = []
     const joinKeys = []
     const transformFunctions = []

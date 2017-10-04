@@ -1,4 +1,4 @@
-import { deepMerge } from 'cedar-utils'
+import { deepMerge } from '../helpers/helpers'
 import specs from '../specs/specs'
 
 export function renderChart(elementId: string, config: any, data?: any) {
@@ -9,7 +9,7 @@ export function renderChart(elementId: string, config: any, data?: any) {
 
   // Clone/copy spec and data
   let spec = fetchSpec(config.type)
-  const copyData = deepMerge([], data)
+  const copyData = clone(data)
 
   // Set the data and defaults
   spec.dataProvider = copyData
@@ -38,7 +38,7 @@ export function fillInSpec(spec: any, config: any) {
     // For each dataset iterate over series
     config.series.forEach((series, s) => {
       if (dataset.id === series.datasetId) {
-        const graph = deepMerge({}, graphSpec)
+        const graph = clone(graphSpec)
 
         // Set graph title
         graph.title = series.value.label
@@ -81,7 +81,11 @@ export function fillInSpec(spec: any, config: any) {
 }
 
 export function fetchSpec(type: string): any {
-  return deepMerge({}, specs[type])
+  return clone(specs[type])
+}
+
+function clone(json) {
+  return JSON.parse(JSON.stringify(json))
 }
 
 export function templateGraph(): any {

@@ -67,7 +67,6 @@
   },
   "dependencies": {
     "adlib": "^0.0.7",
-    "amcharts3": "amcharts/amcharts3",
-    "cedar-utils": "^1.0.1-beta"
+    "amcharts3": "amcharts/amcharts3"
   }
 }

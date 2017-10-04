@@ -12,10 +12,9 @@ export default {
   entry: 'compiled/index.js',
   moduleName: 'Cedar',
   format: 'umd',
-  external: ['cedar-utils', 'cedarAmCharts'],
+  external: ['cedarAmCharts'],
   plugins: [json()],
   globals: {
-    'cedar-utils': 'cedarUtils',
     'cedar-amcharts': 'cedarAmCharts',
     'cedar': 'Cedar'
   },

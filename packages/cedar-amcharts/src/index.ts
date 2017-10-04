@@ -1,6 +1,7 @@
 import render from './render/render'
+export { deepMerge } from './helpers/helpers'
 
-function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
+export function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
   if ((!elementId || !spec || !data) && (spec.type && spec.type !== 'custom')) {
     const err = new Error('Element Id, specification, and data are all required.')
     throw err
