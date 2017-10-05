@@ -56,8 +56,8 @@ export function fillInSpec(spec: any, config: any) {
           graph.newStack = true
         }
 
-        // Only clone scatterplots
-        if (!!graphSpec.xField && !!series.category && !!series.value) {
+        // x/y types (scatter, bubble)
+        if (spec.type === 'xy' && !!series.category && !!series.value) {
           graph.xField = series.category.field
           graph.yField = series.value.field
 
