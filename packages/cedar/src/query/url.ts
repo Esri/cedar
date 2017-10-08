@@ -1,4 +1,4 @@
-import { deepMerge } from 'cedar-amcharts'
+import { deepMerge } from '../helpers/helpers'
 
 export function defaultQuery() {
   return {

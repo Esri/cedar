@@ -53,6 +53,7 @@
     "@types/amcharts": "^0.0.40",
     "@types/jest": "20.0.2",
     "@types/node": "^8.0.13",
+    "cedar": "1.0.0-beta",    
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
     "rollup": "^0.45.2",
@@ -68,5 +69,8 @@
   "dependencies": {
     "adlib": "^0.0.7",
     "amcharts3": "amcharts/amcharts3"
+  },
+  "peerDependencies": {
+    "cedar": "1.0.0-beta"
   }
 }
