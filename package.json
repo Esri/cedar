@@ -2,6 +2,7 @@
   "license": "Apache-2.0",
   "scripts": {
     "build": "lerna run build --scope cedar-amcharts && lerna run build --scope cedar",
+    "build:prod": "lerna run build:prod --scope cedar-amcharts && lerna run build:prod --scope cedar",
     "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run build",
     "postinstall": "lerna bootstrap",
     "start": "npm run build && npm run build:watch",
