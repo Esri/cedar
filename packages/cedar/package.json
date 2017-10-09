@@ -60,6 +60,7 @@
     "rimraf": "^2.6.1",
     "rollup": "^0.45.2",
     "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
     "semistandard": "^11.0.0",

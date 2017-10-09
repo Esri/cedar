@@ -1,5 +1,5 @@
 import json from 'rollup-plugin-json';
-// import buble from 'rollup-plugin-buble';
+import resolve from 'rollup-plugin-node-resolve';
 
 const pkg = require('../package.json');
 const copyright = `/**
@@ -8,15 +8,11 @@ const copyright = `/**
 * ${pkg.license}
 */`;
 
+// TODO: treat AmCharts as an external and don't use the global
 export default {
   entry: 'compiled/index.js',
   moduleName: 'Cedar',
   format: 'umd',
-  external: ['cedarAmCharts'],
-  plugins: [json()],
-  globals: {
-    'cedar-amcharts': 'cedarAmCharts',
-    'cedar': 'Cedar'
-  },
+  plugins: [json(), resolve()],
   banner: copyright
 };
