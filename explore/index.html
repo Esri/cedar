@@ -133,10 +133,10 @@ function loadEditor() {
   displayChart(config);
 }
 
-let cedar;
+let chart;
 function displayChart(config) {
-    cedar = new Cedar(config);
-    cedar.show("chart")
+    chart = new cedar.Chart(config);
+    chart.show("chart")
 }
 
 function loadFile(style, cb) {
