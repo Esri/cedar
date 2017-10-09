@@ -10,7 +10,6 @@ export function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
   if (spec.type && spec.type === 'custom') {
     return render.renderChart(elementId, spec)
   }
-
   return render.renderChart(elementId, spec, data)
 }
 
