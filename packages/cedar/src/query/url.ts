@@ -1,4 +1,4 @@
-import { deepMerge } from 'cedar-amcharts'
+import { deepMerge } from '@esri/cedar-amcharts'
 
 export function defaultQuery() {
   return {
