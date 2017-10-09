@@ -1,5 +1,5 @@
 import {} from 'jest'
-import Cedar from '../src/index'
+import cedar from '../src/index'
 
 describe('Cedar initial test', () => {
   test('Cedar is present', () => {
@@ -33,6 +33,6 @@ describe('Cedar initial test', () => {
         }
       }
     }
-    const cedar = new Cedar(opts)
+    const chart = new cedar.Chart(opts)
   })
 })
