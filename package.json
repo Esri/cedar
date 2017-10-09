@@ -1,10 +1,15 @@
 {
   "license": "Apache-2.0",
   "scripts": {
+    "build": "lerna run build --scope cedar-amcharts && lerna run build --scope cedar",
+    "build:prod": "lerna run build:prod --scope cedar-amcharts && lerna run build:prod --scope cedar",
+    "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run build",
     "postinstall": "lerna bootstrap",
+    "start": "npm run build && npm run build:watch",
     "test": "lerna run test"
   },
   "devDependencies": {
-    "lerna": "2.0.0-beta.37"
+    "lerna": "2.0.0-beta.37",
+    "onchange": "^3.2.1"
   }
 }
