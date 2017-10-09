@@ -1,4 +1,4 @@
-// import adlib from 'adlib'
+// TODO: remove these and stub AmCharts.makeChart() instead
 import 'amcharts3/amcharts/amcharts'
 import 'amcharts3/amcharts/serial'
 import {} from 'jest'

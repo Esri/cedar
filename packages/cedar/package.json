@@ -49,10 +49,6 @@
       "json"
     ]
   },
-  "dependencies": {
-    "amcharts3": "amcharts/amcharts3",
-    "cedar-amcharts": "^1.0.1-beta"
-  },
   "devDependencies": {
     "@types/jest": "20.0.2",
     "@types/node": "^8.0.14",

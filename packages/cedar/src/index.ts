@@ -1,5 +1,5 @@
-import { cedarAmCharts, deepMerge } from 'cedar-amcharts'
 import { flattenFeatures } from './flatten/flatten'
+import { deepMerge } from './helpers/helpers'
 import { getData } from './query/query'
 import { createFeatureServiceRequest } from './query/url'
 
@@ -8,6 +8,13 @@ function clone(json) {
 }
 
 export default class Cedar {
+  // expose utility functions to dependencies (like engines)
+  // b/c we use the Cedar class constructor as a namespace
+  // the only way I can think to do this is via static props/fns
+  public static deepMerge(source, ...args) {
+    return deepMerge(source, ...args)
+  }
+
   private _series: any[]
   private _datasets: any[]
   private _chartSpecification: any
@@ -103,7 +110,10 @@ export default class Cedar {
     Promise.all(requests)
       .then((responses) => {
         this.data = flattenFeatures(responses, joinKeys, transformFunctions)
-        cedarAmCharts(domNode, this.cedarSpecification, this.data)
+        // TODO: check that cedar-amcharts has been loaded before attempting to call this
+        // also figure out how to get TS to let us call it directly like
+        // Cedar.cedarAmCharts(domNode, this.cedarSpecification, this.data)
+        Cedar['cedarAmCharts'](domNode, this.cedarSpecification, this.data)
       })
   }
 }

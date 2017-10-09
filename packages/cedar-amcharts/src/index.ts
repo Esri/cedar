@@ -1,7 +1,7 @@
+import Cedar from 'cedar'
 import render from './render/render'
-export { deepMerge } from './helpers/helpers'
 
-export function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
+function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
   if ((!elementId || !spec || !data) && (spec.type && spec.type !== 'custom')) {
     const err = new Error('Element Id, specification, and data are all required.')
     throw err
@@ -14,4 +14,6 @@ export function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
   return render.renderChart(elementId, spec, data)
 }
 
-export default cedarAmCharts
+// make this function available to cedar by appendting to cedar's global namespace
+// TODO: better name
+Cedar.cedarAmCharts = cedarAmCharts

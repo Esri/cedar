@@ -1,4 +1,8 @@
-import { deepMerge } from '../helpers/helpers'
+// TODO: this doesn't work in jest tests,
+// but we should be importing AmCharts (or { makeChart })
+// rather than using the global
+// import AmCharts from 'amcharts3'
+import { deepMerge } from 'cedar'
 import specs from '../specs/specs'
 
 export function renderChart(elementId: string, config: any, data?: any) {
