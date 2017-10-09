@@ -1,6 +1,6 @@
 {
-  "name": "cedar-amcharts",
-  "version": "1.0.1-beta",
+  "name": "@esri/cedar-amcharts",
+  "version": "1.0.0-beta",
   "description": "Cedars amcharts engine",
   "main": "dist/umd/cedar-amcharts.js",
   "browser": "dist/umd/cedar-amcharts.js",
@@ -8,6 +8,7 @@
   "js:next": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
   "scripts": {
+    "clean:deps": "rimraf node_modules",
     "clean:dist": "rimraf ./dist && mkdir dist",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "lint:fix": "tslint --fix",

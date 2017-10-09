@@ -1,9 +1,10 @@
 {
   "license": "Apache-2.0",
   "scripts": {
-    "build": "lerna run build --scope cedar-amcharts && lerna run build --scope cedar",
-    "build:prod": "lerna run build:prod --scope cedar-amcharts && lerna run build:prod --scope cedar",
+    "build": "lerna run build --scope @esri/cedar-amcharts && lerna run build --scope @esri/cedar",
+    "build:prod": "lerna run build:prod --scope @esri/cedar-amcharts && lerna run build:prod --@esri/scope cedar",
     "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run build",
+    "reset": "lerna run clean:deps && lerna bootstrap",
     "postinstall": "lerna bootstrap",
     "start": "npm run build && npm run build:watch",
     "test": "lerna run test"
