@@ -11,7 +11,8 @@ const copyright = `/**
 
 // TODO: treat AmCharts as an external and don't use the global
 export default {
-  entry: 'compiled/index.js',
+  entry: 'dist/esm/index.js',
+  // TODO: reconsider name after https://github.com/Esri/cedar/issues/279#issuecomment-335170913
   moduleName: 'cedarAmCharts',
   format: 'umd',
   plugins: [json()],

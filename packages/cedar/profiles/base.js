@@ -10,7 +10,7 @@ const copyright = `/**
 
 // TODO: treat AmCharts as an external and don't use the global
 export default {
-  entry: 'compiled/index.js',
+  entry: 'dist/esm/index.js',
   moduleName: 'Cedar',
   format: 'umd',
   plugins: [json(), resolve()],
