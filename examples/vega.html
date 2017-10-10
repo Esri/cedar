@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Example - Vega chart | Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="row">
+
+	<div class="col-lg-3">
+	  <aside class="sidebar">
+
+
+  <h5 class="page-header">Chart Types</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/bar.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
+      <li><a href="../../../cedar/examples/grouped.html">Grouped Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/sparkline.html">Sparkline</a></li>
+      <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
+      <li><a href="../../../cedar/examples/time-aggregation.html">Time Aggregation</a></li>
+      <!--li><a href="../../../cedar/examples/time-dots.html">Time facets</a></li-->
+      <li><a href="../../../cedar/examples/time-trendline.html">Time with Trendline</a></li>
+      <li><a href="../../../cedar/examples/map.html">Map Chart</a></li>
+    </ul>
+  </nav>
+
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/dynamic.html">Dynamic Data</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
+      <li><a href="../../../cedar/examples/events.html">Setting Events</a></li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/map-to-chart-interaction.html">Map Interaction</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-map-extent.html">Filter by Geometry</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-bbox.html">Filter by Extent</a></li>
+    </ul>
+  </nav>
+
+  <h5>Additional Examples</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/errorbars.html">Error bars</a></li>
+      <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/inlined-data.html">Local Inline Data</a></li>
+      <li><a href="../../../cedar/examples/sizes.html">Chart Size and Resizing</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
+      <li><a href="../../../cedar/examples/transform.html">Transform Query Results</a></li>
+    </ul>
+  </nav>
+
+  <h5>Using Specifications</h5>
+  <nav>
+    <ul>
+      <!--li><a href="../../../cedar/examples/spec-url.html">Specification URL</a></li-->
+      <li><a href="../../../cedar/examples/spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/vega.html">Vega Specification</a></li>
+      <li><a href="../../../cedar/examples/spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
+    </ul>
+  </nav>
+
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
+</aside>
+
+	</div>
+	<div class="col-lg-9">
+   	  <h2 class="page-header">Example - Vega chart</h2>
+	  
+
+
+<h1></h1>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <style>
+    #examples { height: 1800px; }
+    #resizable { width: 750px; height: 550px; padding: 0.5em; }
+    #resizable h3 { text-align: center; margin: 0; }
+  </style>
+
+  <div id="resizable" class="ui-widget-content">
+    <div id="chart" style="height: 100%"></div>
+    </div>
+
+
+<script>
+
+  //create the specification
+  var spec ={
+    "inputs": [],
+    "template": {
+      "padding": "strict",
+      "data": [
+        {
+          "name": "dummy",
+          "url": "https://example.org",
+          "format": {
+            "type": "json",
+            "property": "features"
+          }
+        },
+        {
+          "name": "data",
+          "url": "https://api.resourcewatch.org/query/3feaf26c-42c8-43ce-b1b5-07a02a773c36?sql=select * from index_3feaf26c42c843ceb1b507a02a773c36 order by date asc",
+          "format": {
+            "type": "json",
+            "property": "data"
+          }
+        },
+        {
+          "name": "hist",
+          "source": "data",
+          "transform": [
+            {
+                    "type": "filter",
+                    "test": "datum.date < 2010"
+                  }
+          ]
+        },
+        {
+          "name": "modeled",
+          "source": "data",
+          "transform": [
+            {
+                    "type": "filter",
+                    "test": "datum.date > 2009"
+                  }
+          ]
+        },
+        {
+          "name": "legend",
+          "values": [
+            {"cat": "Historic"},
+            {"cat": "PCM A2"},
+            {"cat": "Models amplitude"}
+
+          ]
+            },
+        {
+          "name": "tooltip",
+          "source": "data",
+          "transform": [
+            {
+              "test": "datum.date == indexDate.date",
+              "type": "filter"
+            },
+            {
+              "expr": "datum.date > 2060 ? indexDate.xRight : indexDate.xLeft",
+              "type": "formula",
+              "field": "xTooltip"
+            },
+            {
+              "expr": "datum.date < 2010 ? datum.HST : datum.PCM_A2",
+              "type": "formula",
+              "field": "value"
+            },
+            {
+              "expr": "indexDate.xLeft",
+              "type": "formula",
+              "field": "xData"
+            },
+            {"type": "sort", "by": "date"}
+          ]
+        }
+      ],
+      "signals": [
+        {
+          "init": {"xval": 0,"yval": 0},
+          "name": "indexDate",
+          "streams": [
+            {
+              "type": "mousemove",
+              "expr": "{xLeft: +iscale('x', eventX() + 10), xRight: +iscale('x', eventX() - 130), date: +iscale('x', eventX()), yval: +iscale('y', eventY())}"
+            }
+          ]
+        }
+      ],
+      "scales": [
+        {
+          "name": "x",
+          "type": "ordinal",
+          "range": "width",
+          "domain": {"fields": [{"data": "data","field": "date"}]},
+          "domainMin":1920,
+          "domainMax":2100
+        },
+        {
+          "name": "y",
+          "type": "linear",
+          "range": "height",
+          "zero": false,
+          "domain": {"fields": [{"data": "data","field": "max"}]},
+          "domainMin":25,
+          "domainMax":40
+        },
+        {
+          "name": "color",
+          "type": "ordinal",
+          "zero": false,
+          "points": true,
+          "range": [
+            "#efa600",
+            "#D2E2EC",
+            "#1a6d9e"
+          ],
+          "domain": {
+            "fields": [{"data": "legend","field": "cat"}],
+            "sort": true
+          }
+        }
+      ],
+      "axes": [
+        {
+          "type": "x",
+          "scale": "x",
+          "title": "years",
+          "ticks": 5,
+          "values":[1920,1940,1960,1980,2000,2020,2040,2060,2080,2099],
+          "properties": {
+            "title": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fontSize": {"value": 12},
+              "fill": {"value": "#9BA2AA"}
+            },
+            "ticks": {"stroke": {"value": "#9BA2AA"}},
+            "labels": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fill": {"value": "#9BA2AA"},
+              "fontSize": {"value": 10},
+              "align": {"value": "center"},
+              "baseline": {"value": "top"}
+            },
+            "axis": {
+              "stroke": {"value": "#E6E6E6"},
+              "opacity": {"value": 1},
+              "strokeWidth": {"value": 1.5}
+            }
+          }
+        },
+        {
+          "type": "y",
+          "scale": "y",
+          "title": "Summer max temperature ºC",
+          "titleOffset": 15,
+          "grid": false,
+          "ticks": 10,
+          "properties": {
+            "axis": {
+              "stroke": {"value": "#E6E6E6"},
+              "opacity": {"value": 1},
+              "strokeWidth": {"value": 1.5}
+            },
+            "ticks": {"stroke": {"value": "#9BA2AA"}},
+            "labels": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fill": {"value": "#9BA2AA"},
+              "fontSize": {"value": 10},
+              "align": {"value": "right"},
+              "baseline": {"value": "middle"}
+            },
+            "title": {
+              "font": {"value": "\"Montserrat\", sans-serif"},
+              "fontSize": {"value": 12},
+              "y": {"value": -20},
+              "x": {"value": 50},
+              "angle": 90,
+              "fill": {"value": "#9BA2AA"}
+            }
+          }
+        }
+      ],
+      "marks": [
+        {
+          "name": "datalines-hist",
+          "type": "group",
+          "marks": [
+            {
+              "type": "line",
+              "from": {
+                "data": "hist"
+              },
+              "properties": {
+                "enter": {
+                  "x": {"scale": "x","field": "date"},
+                  "y": {"scale": "y","field": "HST"},
+                  "height": {"scale": "y"},
+                  "stroke": {"value": "#efa600"},
+                  "strokeOpacity": {"value": 1},
+                  "strokeWidth": {"value": 1.5}
+                }
+              }
+            }
+
+          ]
+        },
+        {
+          "name": "datalines-modeled",
+          "type": "group",
+          "marks": [
+            {
+              "type": "area",
+              "from": {"data": "modeled"},
+              "properties": {
+                "enter": {
+                  "interpolate": {
+                    "value": "linear"
+                  },
+                  "x": {
+                    "field": "date",
+                    "scale": "x"
+                  },
+                  "y": {
+                    "field": "min",
+                    "scale": "y"
+                  },
+                  "y2": {
+                    "field": "max",
+                    "scale": "y"
+                  },
+                  "fill": {
+                    "value":"#1a6d9e"
+                  },
+                  "fillOpacity": {"value": 0.2}
+                }
+              }
+            },
+            {
+              "type": "line",
+              "from": {
+                "data": "modeled"
+              },
+              "properties": {
+                "enter": {
+                  "x": {"scale": "x","field": "date"},
+                  "y": {"scale": "y","field": "PCM_A2"},
+                  "height": {"scale": "y"},
+                  "stroke": {"value": "#1a6d9e"},
+                  "strokeOpacity": {"value": 1},
+                  "strokeWidth": {"value": 1.5}
+                }
+              }
+            }
+
+          ]
+        },
+        { "name":"90 perc",
+          "type": "rule",
+          "properties": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"scale": "y","value": 31.35},
+              "x2": {"field": {"group": "width"}},
+              "stroke": {"value": "#263e57"},
+              "strokeWidth": {"value": 1.5},
+              "strokeOpacity": {"value": 0.2}
+            }
+          }
+        },
+        { "name":"10 perc",
+          "type": "rule",
+          "properties": {
+            "enter": {
+              "x": {"value": 0},
+              "y": {"scale": "y","value": 29.3},
+              "x2": {"field": {"group": "width"}},
+              "stroke": {"value": "#263e57"},
+              "strokeWidth": {"value": 1.5},
+              "strokeOpacity": {"value": 0.2}
+            }
+          }
+        },
+        {
+          "name": "tooltip",
+          "type": "group",
+          "from": {"data": "tooltip"},
+          "marks": [
+            {
+              "type": "text",
+              "properties": {
+                "update": {
+                  "x": {"value": 10},
+                  "y": {"value": 17},
+                  "fill": {"value": "#3B4F63"},
+                  "font": {"value": "\"Montserrat\", sans-serif"},
+                  "text": {
+                    "template": ""
+                  },
+                  "opacity": {"value": 0.8},
+                  "fontSize": {"value": 11},
+                  "fontWeight": {"value": "bold"}
+                }
+              }
+            },
+            { "name":"mean",
+              "type": "text",
+              "properties": {
+                "update": {
+                  "x": {"value": 11},
+                  "y": {"value": 35},
+                  "fill": {"value": "#3B4F63"},
+                  "font": {"value": "\"Montserrat\", sans-serif"},
+                  "text": {
+                    "template": ""
+                  },
+                  "opacity": {"value": 0.8},
+                  "fontSize": {"value": 11}
+                }
+              }
+            }
+          ],
+          "properties": {
+            "update": {
+              "x": {
+                "scale": "x",
+                "field": "xTooltip",
+                "offset": 0
+              },
+              "y": {"scale": "y","signal": "indexDate.yval", "offset": -10},
+              "fill": {"value": "#fff"},
+              "width": {"value": 130},
+              "height": {"value": 55},
+              "fillOpacity": {"value": 0.85}
+            }
+          }
+        },
+        {
+          "from": {"data": "tooltip"},
+          "size": 4,
+          "ease":"in-out",
+          "type": "rule",
+          "properties": {
+            "update": {
+              "x": {"field": "date","scale": "x"},
+              "y": {"value": 0},
+              "y2":{"field": {"group": "height"}},
+              "stroke": {"value": "#000000"},
+
+              "strokeWidth": {"value": 2},
+              "opacity": {"value": 0.2}
+            }
+          }
+        },
+        {
+          "from": {"data": "tooltip"},
+          "size": 4,
+          "ease":"in-out",
+          "type": "symbol",
+          "properties": {
+            "update": {
+              "x": {"field": "date","scale": "x"},
+              "y": {"field": "value","scale": "y"},
+              "fill": {"value": "#c15467"},
+              "size": {"value": 20}
+            }
+          }
+        }
+      ],
+      "legends": [
+        {
+          "fill": "color",
+          "offset": 50,
+          "properties": {
+            "legend": {
+              "x": {
+                "field": {"group": "width"},
+                "mult": 0.05,
+                "offset": 0
+              },
+              "y": {
+                "field": {"group": "height"},
+                "mult": 0.05,
+                "offset": -10
+              }
+            },
+            "title": {
+              "fontSize": {"value": 12},
+              "dy": {"value": -2},
+              "dx": {"value": 0}
+            },
+            "labels": {
+              "fontSize": {"value": 10},
+              "fill": {"value": "#9BA2AA"},
+              "text": {"template": ""}
+            },
+            "symbols": {"shape": {"value": "square"},"size": {"value": 30},"strokeOpacity":{"value": 0}}
+          }
+        }
+      ]
+    }
+  }
+
+var chart = new Cedar({"specification":spec});
+
+
+  chart.dataset = {
+    "data": {
+      "features": []
+    },
+    "mappings": {
+      "query": {}
+    }
+  };
+
+  chart.show({
+    elementId: "#chart",
+    autolabels: true,
+    renderer: "svg"
+  });
+
+
+  $(function() {
+    $( "#resizable" ).resizable({
+      resize: function() { chart.update(); }
+    });
+  });
+</script>
+
+	  <div class="wrap">
+	    <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/examples/vega.hbs">Edit this page on GitHub</a></p>
+	  </div>
+	</div>
+
+</div>
+
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

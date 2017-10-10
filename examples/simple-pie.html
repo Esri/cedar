@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Pie Chart | Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="row">
+
+	<div class="col-lg-3">
+	  <aside class="sidebar">
+
+
+  <h5 class="page-header">Chart Types</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/bar.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
+      <li><a href="../../../cedar/examples/grouped.html">Grouped Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/sparkline.html">Sparkline</a></li>
+      <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
+      <li><a href="../../../cedar/examples/time-aggregation.html">Time Aggregation</a></li>
+      <!--li><a href="../../../cedar/examples/time-dots.html">Time facets</a></li-->
+      <li><a href="../../../cedar/examples/time-trendline.html">Time with Trendline</a></li>
+      <li><a href="../../../cedar/examples/map.html">Map Chart</a></li>
+    </ul>
+  </nav>
+
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/dynamic.html">Dynamic Data</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
+      <li><a href="../../../cedar/examples/events.html">Setting Events</a></li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/map-to-chart-interaction.html">Map Interaction</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-map-extent.html">Filter by Geometry</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-bbox.html">Filter by Extent</a></li>
+    </ul>
+  </nav>
+
+  <h5>Additional Examples</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/errorbars.html">Error bars</a></li>
+      <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/inlined-data.html">Local Inline Data</a></li>
+      <li><a href="../../../cedar/examples/sizes.html">Chart Size and Resizing</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
+      <li><a href="../../../cedar/examples/transform.html">Transform Query Results</a></li>
+    </ul>
+  </nav>
+
+  <h5>Using Specifications</h5>
+  <nav>
+    <ul>
+      <!--li><a href="../../../cedar/examples/spec-url.html">Specification URL</a></li-->
+      <li><a href="../../../cedar/examples/spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/vega.html">Vega Specification</a></li>
+      <li><a href="../../../cedar/examples/spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
+    </ul>
+  </nav>
+
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
+</aside>
+
+	</div>
+	<div class="col-lg-9">
+   	  <h2 class="page-header">Pie Chart</h2>
+	  
+
+<div id="chart"></div>
+
+<p>This example uses the built in "pie" chart type and
+  also demonstrates how to use a SQL expression in your query
+  and include the output in your chart.</p>
+
+<pre><code class="language-js">  <span class="keyword">var</span> chart = <span class="keyword">new</span> Cedar({<span class="string">"type"</span>:<span class="string">"pie"</span>});
+
+  <span class="comment">// build a SQL case when expression that</span>
+  <span class="comment">// converts month numbers to abbreviations</span>
+  <span class="keyword">var</span> months = [<span class="string">"Jan"</span>, <span class="string">"Feb"</span>, <span class="string">"Mar"</span>, <span class="string">"Apr"</span>, <span class="string">"May"</span>, <span class="string">"Jun"</span>, <span class="string">"Jul"</span>, <span class="string">"Aug"</span>, <span class="string">"Sep"</span>, <span class="string">"Oct"</span>, <span class="string">"Nov"</span>, <span class="string">"Dec"</span>];
+  <span class="keyword">var</span> groupByExpression = <span class="string">"CASE "</span>;
+  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">1</span>, len = months.length; i &lt;= len; i++) {
+    <span class="keyword">var</span> month = months[i - <span class="number">1</span>];
+    groupByExpression = groupByExpression + <span class="string">"WHEN Month = "</span> + i + <span class="string">" THEN '"</span> + month + <span class="string">"'"</span>;
+  }
+  groupByExpression = groupByExpression + <span class="string">" END"</span>;
+
+  <span class="keyword">var</span> datasets = [
+    {
+      <span class="string">"url"</span>:<span class="string">"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0"</span>,
+      <span class="string">"query"</span>: {
+        <span class="string">"orderByFields"</span>: <span class="string">"FID_Count DESC"</span>,
+        <span class="comment">// because we're using an expression here</span>
+        <span class="comment">// this will be named EXPR_1 in the JSON response's attributes</span>
+        <span class="string">"groupByFieldsForStatistics"</span>: groupByExpression,
+        <span class="string">"outStatistics"</span>: [{
+          <span class="string">"statisticType"</span>: <span class="string">"count"</span>,
+          <span class="comment">// when counting records (not summing values)</span>
+          <span class="comment">// it's best to use the id field because</span>
+          <span class="comment">// it is guaranteed to have a value for every record</span>
+          <span class="string">"onStatisticField"</span>: <span class="string">"FID"</span>,
+          <span class="string">"outStatisticFieldName"</span>: <span class="string">"FID_Count"</span>
+        }]
+      }
+    }
+  ];
+  <span class="keyword">var</span> series = [
+    {
+      <span class="string">"category"</span>: {<span class="string">"field"</span>:<span class="string">"EXPR_1"</span>,<span class="string">"label"</span>:<span class="string">"Month"</span>},
+      <span class="string">"value"</span>: { <span class="string">"field"</span>:<span class="string">"FID_Count"</span>,<span class="string">"label"</span>:<span class="string">"Number of Tornados"</span> },
+      <span class="string">"radius"</span>: <span class="number">270</span>
+    }
+  ];
+  chart.datasets = datasets;
+  chart.series = series;
+
+
+  chart.tooltip = {
+    <span class="comment">// this is the month abbreviation returned from the expresssion above</span>
+    <span class="string">"title"</span>: <span class="string">"{EXPR_1}"</span>,
+    <span class="string">"content"</span>: <span class="string">"{FID_Count} tornados"</span>
+  }
+  chart.show({
+    elementId: <span class="string">"#chart"</span>,
+    width: <span class="number">600</span>,
+    height: <span class="number">600</span>,
+    autolabels: <span class="literal">false</span>
+  });</code></pre>
+
+
+
+<script>
+  var chart = new Cedar({"type":"pie"});
+
+  // build a SQL case when expression that
+  // converts month numbers to abbreviations
+  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  var groupByExpression = "CASE ";
+  for (var i = 1, len = months.length; i <= len; i++) {
+    var month = months[i - 1];
+    groupByExpression = groupByExpression + "WHEN Month = " + i + " THEN '" + month + "'";
+  }
+  groupByExpression = groupByExpression + " END";
+
+  var datasets = [
+    {
+      "url":"https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+      "query": {
+        "orderByFields": "FID_Count DESC",
+        // because we're using an expression here
+        // this will be named EXPR_1 in the JSON response's attributes
+        "groupByFieldsForStatistics": groupByExpression,
+        "outStatistics": [{
+          "statisticType": "count",
+          // when counting records (not summing values)
+          // it's best to use the id field because
+          // it is guaranteed to have a value for every record
+          "onStatisticField": "FID",
+          "outStatisticFieldName": "FID_Count"
+        }]
+      }
+    }
+  ];
+  var series = [
+    {
+      "category": {"field":"EXPR_1","label":"Month"},
+      "value": { "field":"FID_Count","label":"Number of Tornados" },
+      "radius": 270
+    }
+  ];
+  chart.datasets = datasets;
+  chart.series = series;
+
+  chart.tooltip = {
+    // this is the month abbreviation returned from the expresssion above
+    "title": "{EXPR_1}",
+    "content": "{FID_Count} tornados"
+  }
+  chart.show({
+    elementId: "#chart",
+    width: 600,
+    height: 600,
+    autolabels: false
+  });
+</script>
+
+	  <div class="wrap">
+	    <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/examples/simple-pie.hbs">Edit this page on GitHub</a></p>
+	  </div>
+	</div>
+
+</div>
+
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

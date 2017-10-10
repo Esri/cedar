@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="row">
+
+	<div class="col-lg-3">
+	  <aside class="sidebar">
+
+
+  <h5 class="page-header">Chart Types</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/bar.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
+      <li><a href="../../../cedar/examples/grouped.html">Grouped Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/sparkline.html">Sparkline</a></li>
+      <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
+      <li><a href="../../../cedar/examples/time-aggregation.html">Time Aggregation</a></li>
+      <!--li><a href="../../../cedar/examples/time-dots.html">Time facets</a></li-->
+      <li><a href="../../../cedar/examples/time-trendline.html">Time with Trendline</a></li>
+      <li><a href="../../../cedar/examples/map.html">Map Chart</a></li>
+    </ul>
+  </nav>
+
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/dynamic.html">Dynamic Data</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
+      <li><a href="../../../cedar/examples/events.html">Setting Events</a></li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/map-to-chart-interaction.html">Map Interaction</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-map-extent.html">Filter by Geometry</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-bbox.html">Filter by Extent</a></li>
+    </ul>
+  </nav>
+
+  <h5>Additional Examples</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/errorbars.html">Error bars</a></li>
+      <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/inlined-data.html">Local Inline Data</a></li>
+      <li><a href="../../../cedar/examples/sizes.html">Chart Size and Resizing</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
+      <li><a href="../../../cedar/examples/transform.html">Transform Query Results</a></li>
+    </ul>
+  </nav>
+
+  <h5>Using Specifications</h5>
+  <nav>
+    <ul>
+      <!--li><a href="../../../cedar/examples/spec-url.html">Specification URL</a></li-->
+      <li><a href="../../../cedar/examples/spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/vega.html">Vega Specification</a></li>
+      <li><a href="../../../cedar/examples/spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
+    </ul>
+  </nav>
+
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
+</aside>
+
+	</div>
+	<div class="col-lg-9">
+   	  <h2 class="page-header"></h2>
+	  
+<style>
+  #mappings:{min-height:150px;}
+</style>
+
+<h1 id="optional-inputs-with-defaults">Optional Inputs with Defaults</h1>
+<p>The specification can provide default values for non-required inputs. In this example, the <code>color</code> input is optional and defaults to <code>steelblue</code>.
+In the dataset, we specify <code>color:orange</code>, thus the chart is orange.</p>
+<p>Clicking the Clear Color button will remote color from the mappings, and then the default of <code>steelblue</code> will be used.</p>
+<p>You can also provide a color (name or #RRGGBB) in the input box and use the Add Color button, which will add it to the mappings and update the chart.</p>
+
+
+<div id="chart"></div>
+<div class="row">
+  <div class="col-lg-4">
+    <h3>Controls</h3>
+    <form>
+
+      <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" id="color" value="green">
+      </div>
+      <button id="removeColor" class="btn btn-default" type="button">Clear Color</button>
+      <button id="setColor" class="btn btn-default"  type="button">Add Color</button>
+    </form>
+  </div>
+
+  <div class="col-lg-8">
+    <h3>Mappings</h3>
+    <pre id="mappings">
+
+    </pre>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  //create a cedar chart
+  var chart = new Cedar();
+
+  //create the specification
+  var spec = {
+  "inputs": [
+    {"name": "count", "type": ["numeric","string"], "required": true},
+    {"name": "group", "type": ["string"], "required": false},
+    {"name": "color", "type":["string"], "required":false, "default":"steelblue"},
+    {"name": "hoverColor", "type":["string"], "required":false, "default":"#FF00FF"},
+  ],
+  "template":{
+    "padding": "strict",
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "title": "X-Axis",
+        "properties": {
+          "labels" : {
+            "angle": {
+              "value": 45
+            }
+          }
+        }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "title": "Y-Axis",
+        "properties": {
+          "labels" : {}
+        }
+      }
+    ],
+    "data": [
+      {
+        "name": "table",
+        "url": "{data}",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "marks": [
+      {
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "width": {
+              "band": true,
+              "offset": -1,
+              "scale": "x"
+            },
+            "x": {
+              "field": "attributes.{group.field}",
+              "scale": "x"
+            },
+            "y": {
+              "field": "attributes.{count.field}_SUM",
+              "scale": "y"
+            },
+            "y2": {
+              "scale": "y",
+              "value": 0
+            }
+          },
+          "hover": {
+            "fill": {
+              "value": "{hoverColor}"
+            }
+          },
+          "update": {
+            "fill": {
+              "value": "{color}"
+            }
+          }
+        },
+        "type": "rect"
+      }
+    ],
+    "scales": [
+      {
+        "domain": {
+          "data": "table",
+          "field": "attributes.{group.field}"
+        },
+        "name": "x",
+        "range": "width",
+        "type": "ordinal"
+      },
+      {
+        "domain": {
+          "data": "table",
+          "field": "attributes.{count.field}_SUM"
+        },
+        "name": "y",
+        "nice": true,
+        "range": "height"
+      }
+    ]
+  }
+};
+
+  //assign to chart
+  chart.specification = spec;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+    "mappings":{
+      "group": {"field":"Zip","label":"ZIP Code"},
+      "count": {"field":"Number_of","label":"Total Students"},
+      "color": "orange",
+      "hoverColor":"#CCCCCC"
+
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
+
+  showMapping();
+
+  document.getElementById("removeColor").addEventListener("click", function( event ) {
+    delete chart.dataset.mappings.color
+    showMapping();
+    chart.update();
+
+  });
+
+  document.getElementById("setColor").addEventListener("click", function( event ) {
+    //get the value from the text input
+    chart.dataset.mappings.color = document.getElementById('color').value;
+    showMapping();
+    chart.update();
+  });
+
+  function showMapping(){
+    document.querySelector('#mappings').innerHTML =JSON.stringify(chart.dataset.mappings, null, ' ');
+  }
+
+</script>
+	  <div class="wrap">
+	    <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/examples/spec-defaults.hbs">Edit this page on GitHub</a></p>
+	  </div>
+	</div>
+
+</div>
+
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

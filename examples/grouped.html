@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Grouped Bar Chart | Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="row">
+
+	<div class="col-lg-3">
+	  <aside class="sidebar">
+
+
+  <h5 class="page-header">Chart Types</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/bar.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
+      <li><a href="../../../cedar/examples/grouped.html">Grouped Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/sparkline.html">Sparkline</a></li>
+      <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
+      <li><a href="../../../cedar/examples/time-aggregation.html">Time Aggregation</a></li>
+      <!--li><a href="../../../cedar/examples/time-dots.html">Time facets</a></li-->
+      <li><a href="../../../cedar/examples/time-trendline.html">Time with Trendline</a></li>
+      <li><a href="../../../cedar/examples/map.html">Map Chart</a></li>
+    </ul>
+  </nav>
+
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/dynamic.html">Dynamic Data</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
+      <li><a href="../../../cedar/examples/events.html">Setting Events</a></li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/map-to-chart-interaction.html">Map Interaction</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-map-extent.html">Filter by Geometry</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-bbox.html">Filter by Extent</a></li>
+    </ul>
+  </nav>
+
+  <h5>Additional Examples</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/errorbars.html">Error bars</a></li>
+      <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/inlined-data.html">Local Inline Data</a></li>
+      <li><a href="../../../cedar/examples/sizes.html">Chart Size and Resizing</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
+      <li><a href="../../../cedar/examples/transform.html">Transform Query Results</a></li>
+    </ul>
+  </nav>
+
+  <h5>Using Specifications</h5>
+  <nav>
+    <ul>
+      <!--li><a href="../../../cedar/examples/spec-url.html">Specification URL</a></li-->
+      <li><a href="../../../cedar/examples/spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/vega.html">Vega Specification</a></li>
+      <li><a href="../../../cedar/examples/spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
+    </ul>
+  </nav>
+
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
+</aside>
+
+	</div>
+	<div class="col-lg-9">
+   	  <h2 class="page-header">Grouped Bar Chart</h2>
+	  
+
+
+<div id="chart"></div>
+
+<pre class="prettyprint">
+var chart = new Cedar({
+	"type": "grouped",
+	"tooltip": {
+		"title": "{NAME}",
+		"content": "{POP2012} population in 2012"
+	},
+  "datasets":[
+    {
+      "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0"
+    }
+  ],
+  "series": [
+    {
+      "category": { "field": "NAME", "label": "Name" },
+      "value": { "field":"MED_AGE_M","label":"Age" }
+    },
+    {
+      "category": { "field": "NAME", "label": "Name" },
+      "value": { "field":"MED_AGE_F","label":"Age" }
+    },
+    {
+      "category": { "field": "NAME", "label": "Name" },
+      "value": { "field":"MED_AGE","label":"Age" }
+    }
+  ]
+});
+
+chart.show({
+	elementId: "#chart",
+	height: 300
+});
+</pre>
+
+<div id="chart2"></div>
+
+<pre class="prettyprint">
+var chart2 = new Cedar({
+  "type": "grouped",
+  "tooltip": {
+  	"title": "{STATE_NAME}",
+  	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+  },
+  "datasets": [
+    {
+      "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1"
+    }
+  ],
+  "series": [
+    {
+      "category": { "field":"STATE_NAME","label":"State" },
+      "value": { "field": "MaleVets2010", "label": "Veterans by Gender" }
+    },
+    {
+      "category": { "field":"STATE_NAME","label":"State" },
+      "value": { "field": "FemaleVets2010", "label": "Veterans by Gender" }
+    }
+  ]
+});
+
+chart2.show({
+	elementId: "#chart2",
+	height: 300
+});
+</pre>
+<script>
+
+  var chart = new Cedar({
+    "type": "grouped",
+    "tooltip": {
+    	"title": "{NAME}",
+    	"content": "{POP2012} population in 2012"
+    },
+    "datasets":[
+      {
+        "url": "https://services2.arcgis.com/cPVqgcKAQtE6xCja/arcgis/rest/services/SCCntyBirths2003_2012/FeatureServer/0"
+      }
+    ],
+		"series": [
+      {
+        "category": { "field": "NAME", "label": "Name" },
+        "value": { "field":"MED_AGE_M","label":"Age" }
+      },
+      {
+        "category": { "field": "NAME", "label": "Name" },
+        "value": { "field":"MED_AGE_F","label":"Age" }
+      },
+      {
+        "category": { "field": "NAME", "label": "Name" },
+        "value": { "field":"MED_AGE","label":"Age" }
+      }
+		]
+  });
+
+  chart.show({
+    elementId: "#chart",
+    height: 300
+  });
+
+
+  var chart2 = new Cedar({
+    "type": "grouped",
+    "tooltip": {
+    	"title": "{STATE_NAME}",
+    	"content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+    },
+    "datasets": [
+			{
+				"url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1"
+			}
+		],
+    "series": [
+      {
+        "category": { "field":"STATE_NAME","label":"State" },
+        "value": { "field": "MaleVets2010", "label": "Veterans by Gender" }
+      },
+      {
+        "category": { "field":"STATE_NAME","label":"State" },
+        "value": { "field": "FemaleVets2010", "label": "Veterans by Gender" }
+      }
+    ]
+  });
+
+  chart2.show({
+    elementId: "#chart2",
+    height: 300
+  });
+
+
+</script>
+
+	  <div class="wrap">
+	    <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/examples/grouped.hbs">Edit this page on GitHub</a></p>
+	  </div>
+	</div>
+
+</div>
+
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

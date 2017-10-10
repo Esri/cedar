@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>API | Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="col-lg-10">
+  <h1 id="about-cedar">About Cedar</h1>
+<p>Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.</p>
+<p>At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.</p>
+<h2 id="components-of-a-cedar-chart">Components of a Cedar Chart</h2>
+<p>At a minimum, Cedar charts are defined by the following ingredients:</p>
+<ul>
+<li>a <code>specification</code> is a JSON document which includes:<ul>
+<li><code>inputs</code> that declare the variables of the chart such as category or value to be summarized</li>
+<li><code>template</code> is a declarative syntax for chart design using the <a href="https://trifacta.github.io/vega/">Vega</a> visualization grammar.</li>
+</ul>
+</li>
+<li>a <code>dataset</code> is a JSON document which includes:<ul>
+<li>either <code>url</code> link to the ArcGIS Feature Layer</li>
+<li>...or <code>data</code> can be an inline <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Query_Feature_Service_Layer/02r3000000r1000000/#GUID-89AA241C-5358-4AAB-8814-398A5BAD04E5">feature set</a></li>
+<li><code>mappings</code> bind the Feature Layer attributes to the <code>specification.inputs</code></li>
+</ul>
+</li>
+</ul>
+<p>Additionally this specification is being transitioned towards multi-series data. Because of this <code>dataset</code> will be deprecated and replaced with:</p>
+<ul>
+<li><code>datasets</code> is an array of JSON documents which each include:<ul>
+<li>either <code>url</code> link to the ArcGIS Feature Layer</li>
+<li>...or <code>data</code> can be an inline <a href="http://resources.arcgis.com/en/help/arcgis-rest-api/index.html#/Query_Feature_Service_Layer/02r3000000r1000000/#GUID-89AA241C-5358-4AAB-8814-398A5BAD04E5">feature set</a></li>
+<li><code>query</code> are optional query parameters to query against the ArcGIS FeatureLayer</li>
+</ul>
+</li>
+<li><code>series</code> is an array of JSON documents which each include:<ul>
+<li><code>category</code> and <code>value</code> which are mapped to <code>x</code> and <code>y</code> axis respectively.</li>
+<li>Optional values depending on chart type, such as: <code>color</code> (scatterplot chart), <code>size</code> (bubble scatterplot chart), <code>radius</code> (pie chart)</li>
+</ul>
+</li>
+</ul>
+<p>You may also supply the following ingredients:</p>
+<ul>
+<li><code>overrides</code> are specific modifications to the <code>specification.template</code></li>
+<li><code>timeout</code> is the maximum length of time to wait for asynchronous operations to complete</li>
+<li><code>tooltip</code> defines the format of the tooltip shown when users hover over the chart</li>
+<li><code>transform</code> is a function that will be applied to query responses before the chart is rendered</li>
+</ul>
+<h2 id="types-of-charts">Types of Charts</h2>
+<p>While Cedar provides a set of commonly used chart types including <code>bar</code>, <code>line</code>, <code>scatterplot</code>, and <code>pie</code>, through use of the Vega grammar it is possible for developers to create unique and custom charts that can be used by other developers with new data sources.</p>
+<p>When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.</p>
+
+  <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/api/index.hbs">Edit this page on GitHub</a></p>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5><a href="../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <ul>
+    <li><a href="../../../cedar/api/create.html">new Cedar( opt )</a></li>
+  </ul>
+  <h5>Properties</h5>
+  <ul>
+    <li><a href="../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../cedar/api/specification.html">.specification</a></li>
+    <li style="list-style:none;">
+      New!
+    </li>
+    <li><a href="../../../cedar/api/datasets.html">.datasets</a></li>
+    <li><a href="../../../cedar/api/series.html">.series</a></li>
+  </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../cedar/api/off.html">.off( evt )</a></li>
+    <li><a href="../../../cedar/api/select.html">.select( opt )</a></li>
+    <li><a href="../../../cedar/api/clearselection.html">.clearSelection( opt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../cedar/api/json/definition-json.html">Definition</a></li>
+    <li style="list-style:none;">
+      New!
+    </li>
+    <li><a href="../../../cedar/api/json/datasets-json.html">Datasets </a></li>
+    <li><a href="../../../cedar/api/json/series-json.html">Series </a></li>
+
+  </ul>
+
+</aside>
+
+</div>
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

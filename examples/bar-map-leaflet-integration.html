@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="row">
+
+	<div class="col-lg-3">
+	  <aside class="sidebar">
+
+
+  <h5 class="page-header">Chart Types</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/bar.html">Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/horizontal.html">Horizontal Chart</a></li>
+      <li><a href="../../../cedar/examples/grouped.html">Grouped Bar Chart</a></li>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/bubble.html">Bubble Scatterplot</a></li>
+      <li><a href="../../../cedar/examples/simple-pie.html">Pie Chart</a></li>
+      <li><a href="../../../cedar/examples/multiple.html">Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/sparkline.html">Sparkline</a></li>
+      <li><a href="../../../cedar/examples/time.html">Timeline</a></li>
+      <li><a href="../../../cedar/examples/time-aggregation.html">Time Aggregation</a></li>
+      <!--li><a href="../../../cedar/examples/time-dots.html">Time facets</a></li-->
+      <li><a href="../../../cedar/examples/time-trendline.html">Time with Trendline</a></li>
+      <li><a href="../../../cedar/examples/map.html">Map Chart</a></li>
+    </ul>
+  </nav>
+
+  <h5>Events</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/dynamic.html">Dynamic Data</a></li>
+      <li><a href="../../../cedar/examples/scatter-events.html">Scatter Plot Events</a></li>
+      <li><a href="../../../cedar/examples/drill-down.html">Drill Down</a></li>
+      <li><a href="../../../cedar/examples/events.html">Setting Events</a></li>
+    </ul>
+  </nav>
+  <h5>Map Integration</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/map-to-chart-interaction.html">Map Interaction</a></li>
+      <li><a href="../../../cedar/examples/bar-map-leaflet-integration.html">With Leaflet Map</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-map-extent.html">Filter by Geometry</a></li>
+      <li><a href="../../../cedar/examples/filter-chart-by-bbox.html">Filter by Extent</a></li>
+    </ul>
+  </nav>
+
+  <h5>Additional Examples</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/errorbars.html">Error bars</a></li>
+      <li><a href="../../../cedar/examples/complex-map-multiple-chart.html">Map and Multiple Charts</a></li>
+      <li><a href="../../../cedar/examples/inlined-data.html">Local Inline Data</a></li>
+      <li><a href="../../../cedar/examples/sizes.html">Chart Size and Resizing</a></li>
+      <li><a href="../../../cedar/examples/responsive-example.html">Responsive Charts</a></li>
+      <li><a href="../../../cedar/examples/transform.html">Transform Query Results</a></li>
+    </ul>
+  </nav>
+
+  <h5>Using Specifications</h5>
+  <nav>
+    <ul>
+      <!--li><a href="../../../cedar/examples/spec-url.html">Specification URL</a></li-->
+      <li><a href="../../../cedar/examples/spec-inlined.html">Inline Specification</a></li>
+      <li><a href="../../../cedar/examples/vega.html">Vega Specification</a></li>
+      <li><a href="../../../cedar/examples/spec-defaults.html">Defaults</a></li>
+      <li><a href="../../../cedar/examples/style-overrides.html">Style Overrides</a></li>
+    </ul>
+  </nav>
+
+<!--  <h5>Using Definitions</h5>
+  <nav>
+    <ul>
+      <li><a href="../../../cedar/examples/scatter-def-url.html">Load from URL</a></li>
+      <li>In-lined</li>
+    </ul>
+  </nav>
+  -->
+</aside>
+
+	</div>
+	<div class="col-lg-9">
+   	  <h2 class="page-header"></h2>
+	  
+
+<!-- Load Leaflet from CDN-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@0.7.7/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@0.7.7"></script>
+
+<!-- Load Esri Leaflet from CDN -->
+<script src="https://unpkg.com/esri-leaflet@1.0.4"></script>
+
+<style>
+  #map {width:100%;height:400px;}
+  #chart {height: 300px;}
+</style>
+
+<h1>Bar Chart + Esri Leaflet Map Interaction</h1>
+
+<div id="chart"></div>
+<div id="map"></div>
+
+
+
+<pre><code class="language-js">
+  <span class="comment">//create a cedar chart</span>
+  <span class="keyword">var</span> chart = <span class="keyword">new</span> Cedar({<span class="string">"type"</span>: <span class="string">"bar"</span>});
+  <span class="keyword">var</span> style = {
+      <span class="string">"height"</span>: <span class="number">400</span>,
+      <span class="string">"width"</span>: <span class="number">850</span>,
+      <span class="string">"marks"</span>: [{<span class="string">"properties"</span>: {
+        <span class="string">"hover"</span>: {<span class="string">"fill"</span>: {<span class="string">"value"</span>: <span class="string">"#c15000"</span>}},
+        <span class="string">"update"</span>: {<span class="string">"fill"</span>: {<span class="string">"value"</span>: <span class="string">"#0079c1"</span>}}}}]};
+
+  chart.override = style;
+
+  <span class="comment">//create the dataset w/ mappings</span>
+  <span class="keyword">var</span> dataset = {
+    <span class="string">"url"</span>:<span class="string">"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"</span>,
+      <span class="string">"query"</span>: {
+        <span class="string">"groupByFieldsForStatistics"</span>: <span class="string">"Zip"</span>,
+        <span class="string">"outStatistics"</span>: [{
+          <span class="string">"statisticType"</span>: <span class="string">"sum"</span>, 
+          <span class="string">"onStatisticField"</span>: <span class="string">"Number_of"</span>, 
+          <span class="string">"outStatisticFieldName"</span>: <span class="string">"Number_of_SUM"</span>
+        }]
+      },  
+    <span class="string">"mappings"</span>:{
+      <span class="string">"x"</span>: {<span class="string">"field"</span>:<span class="string">"Zip"</span>,<span class="string">"label"</span>:<span class="string">"ZIP Code"</span>},
+      <span class="string">"y"</span>: {<span class="string">"field"</span>:<span class="string">"Number_of_SUM"</span>,<span class="string">"label"</span>:<span class="string">"Total Students"</span>}
+    }
+  };
+
+  <span class="comment">//assign to the chart</span>
+  chart.dataset = dataset;
+
+  <span class="comment">//show the chart</span>
+  chart.show({
+    elementId: <span class="string">"#chart"</span>
+  });
+
+
+  <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">38.9</span>,-<span class="number">77</span>], <span class="number">11</span>);
+
+  <span class="keyword">var</span> geojsonMarkerOptions = {
+    radius: <span class="number">8</span>,
+    fillColor: style.marks[<span class="number">0</span>].properties.update.fill.value,
+    color: <span class="string">"#000"</span>,
+    weight: <span class="number">1</span>,
+    opacity: <span class="number">1</span>,
+    fillOpacity: <span class="number">0.8</span>
+  };
+
+  L.esri.basemapLayer(<span class="string">'Streets'</span>).addTo(map);
+  <span class="keyword">var</span> featureLayer = L.esri.featureLayer({
+    url: <span class="string">'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0'</span>,
+    pointToLayer: <span class="function"><span class="keyword">function</span> <span class="params">(geojson, latlng)</span> {</span>
+      <span class="keyword">return</span> L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+  });
+
+  featureLayer.addTo(map);
+
+
+  <span class="comment">//CHART EVENTS</span>
+  chart.on(<span class="string">'mouseover'</span>, onChartHover);
+
+  <span class="function"><span class="keyword">function</span> <span class="title">onChartHover</span><span class="params">(e,d)</span> {</span>
+
+    <span class="comment">//get selected value for attribute in chart marker</span>
+    <span class="keyword">var</span> selected = d[dataset.mappings.x.field];
+
+    <span class="keyword">var</span> hoverStyle = {
+      radius: <span class="number">8</span>,
+      fillColor: style.marks[<span class="number">0</span>].properties.hover.fill.value,
+      color: <span class="string">"#000"</span>,
+      weight: <span class="number">1</span>,
+      opacity: <span class="number">1</span>,
+      fillOpacity: <span class="number">0.8</span>
+    };
+
+    featureLayer.setStyle(<span class="function"><span class="keyword">function</span><span class="params">(point)</span> {</span>
+      <span class="keyword">if</span> (point.properties[dataset.mappings.x.field] === selected ) {
+        <span class="keyword">return</span> hoverStyle;
+      } <span class="keyword">else</span> {
+        <span class="keyword">return</span> geojsonMarkerOptions;
+      }
+    });
+
+  }</code></pre>
+
+
+
+<script>
+  
+  //create a cedar chart
+  var chart = new Cedar({"type": "bar"});
+  var style = {
+      "height": 400,
+      "width": 850,
+      "marks": [{"properties": {
+        "hover": {"fill": {"value": "#c15000"}},
+        "update": {"fill": {"value": "#0079c1"}}}}]};
+
+  chart.override = style;
+
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "query": {
+        "groupByFieldsForStatistics": "Zip",
+        "outStatistics": [{
+          "statisticType": "sum", 
+          "onStatisticField": "Number_of", 
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      },  
+    "mappings":{
+      "x": {"field":"Zip","label":"ZIP Code"},
+      "y": {"field":"Number_of_SUM","label":"Total Students"}
+    }
+  };
+
+  //assign to the chart
+  chart.dataset = dataset;
+
+  //show the chart
+  chart.show({
+    elementId: "#chart",
+    renderer: "svg"
+  });
+  
+
+  var map = L.map('map').setView([43.04812, -76.1474], 11);
+
+  var geojsonMarkerOptions = {
+    radius: 8,
+    fillColor: style.marks[0].properties.update.fill.value,
+    color: "#000",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+  };
+
+  L.esri.basemapLayer('Streets').addTo(map);
+  var featureLayer = L.esri.featureLayer({
+    url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
+    pointToLayer: function (geojson, latlng) {
+      return L.circleMarker(latlng, geojsonMarkerOptions);
+    },
+  });
+
+  featureLayer.addTo(map);
+
+
+  //CHART EVENTS
+  chart.on('mouseover', onChartHover);
+
+  function onChartHover(e,d) {
+    if(d === undefined || d === null) {
+      chart.clearSelection();
+      return;
+    }
+
+    //get selected value for attribute in chart marker
+    var selected = d[dataset.mappings.x.field];
+
+    var hoverStyle = {
+      radius: 8,
+      fillColor: style.marks[0].properties.hover.fill.value,
+      color: "#000",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.8
+    };
+
+    featureLayer.setStyle(function(point) {
+      if (point.properties[dataset.mappings.x.field] === selected ) {
+        return hoverStyle;
+      } else {
+        return geojsonMarkerOptions;
+      }
+    });
+
+  } 
+
+</script>
+	  <div class="wrap">
+	    <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/examples/bar-map-leaflet-integration.hbs">Edit this page on GitHub</a></p>
+	  </div>
+	</div>
+
+</div>
+
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

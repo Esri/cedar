@@ -1,0 +1,152 @@
+{
+  "inputs":[
+    {"name":"x","type":["numeric"], "required":true},
+    {"name":"y","type":["numeric"], "required":true},
+    {"name":"color","type":["string"], "required":true}
+  ],
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "format": {
+          "property": "features"
+        }
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "nice": true,
+        "range": "width",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{x.field}"
+        }
+      },
+      {
+        "name": "y",
+        "nice": true,
+        "range": "height",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{y.field}"
+        }
+      },
+      {
+        "name": "c",
+        "type": "ordinal",
+        "domain": {
+          "data": "table",
+          "field": "attributes.{color.field}"
+        },
+        "range": [
+          "#00ffff", "#7de6ff", "#a8cbff", "#c6adff", "#dd8dff", "#ef63ff", "#ff00ff"
+        ]
+      }
+    ],
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "offset": 5,
+        "ticks": 5,
+        "title": "{x.label}",
+        "properties": {
+          "ticks": {
+             "stroke": {"value": "#444"}
+          },
+          "labels": {
+             "fill": {"value": "#444"}
+           },
+           "axis": {
+             "stroke": {"value": "#444"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "offset": 5,
+        "ticks": 5,
+        "title": "{y.label}",
+        "fill": "#FFF",
+        "stroke": {"value": "#333"},
+        "properties": {
+          "ticks": {
+             "stroke": {"value": "#444"}
+          },
+          "labels": {
+             "fill": {"value": "#444"}
+           },
+           "axis": {
+             "stroke": {"value": "#444"},
+             "strokeWidth": {"value": 1.5}
+          }
+        }
+      }
+    ],
+    "legends": [
+      {
+        "fill": "c",
+        "title": "{color.field} ",
+        "offset": 0,
+        "properties": {
+          "symbols": {
+            "fillOpacity": {
+              "value": 0.5
+            },
+            "stroke": {
+              "value": "transparent"
+            }
+          }
+        }
+      }
+    ],
+    "marks": [
+      {
+        "type": "symbol",
+        "from": {
+          "data": "table"
+        },
+        "properties": {
+          "enter": {
+            "x": {
+              "scale": "x",
+              "field": "attributes.{x.field}"
+            },
+            "y": {
+              "scale": "y",
+              "field": "attributes.{y.field}"
+            },
+            "fill": {
+              "scale": "c",
+              "field": "attributes.{color.field}"
+            },
+            "fillOpacity": {
+              "value": 0.5
+            }
+          },
+          "update": {
+            "size": {
+              "value": 100
+            },
+            "stroke": {
+              "value": "transparent"
+            }
+          },
+          "hover": {
+            "size": {
+              "value": 300
+            },
+            "stroke": {
+              "value": "white"
+            }
+          }
+        }
+      }
+    ]
+  }
+  
+}

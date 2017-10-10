@@ -1,0 +1,140 @@
+{
+  "dataset":{
+    "url":"https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    "query":{},
+    "mappings":{
+      "x": {"field":"POPULATION_ENROLLED_2008","label":"Enrolment 2008"},
+      "y": {"field":"SQUARE_FOOTAGE","label":"Square Footage"},
+      "color":{"field":"FACUSE","label":"Facility Type"}
+    }
+  },
+  "specification":{
+    "inputs":[
+      {"name":"x","type":["numeric"], "required":true},
+      {"name":"y","type":["numeric"], "required":true},
+      {"name":"color","type":["string"], "required":true}
+    ],
+    "template":{
+      "padding": "strict",
+      "data": [
+        {
+          "name": "iris",
+          "url": "{data}",
+          "format": {
+            "property": "features"
+          }
+        }
+      ],
+      "scales": [
+        {
+          "name": "x",
+          "nice": true,
+          "range": "width",
+          "domain": {
+            "data": "iris",
+            "field": "attributes.{x.field}"
+          }
+        },
+        {
+          "name": "y",
+          "nice": true,
+          "range": "height",
+          "domain": {
+            "data": "iris",
+            "field": "attributes.{y.field}"
+          }
+        },
+        {
+          "name": "c",
+          "type": "ordinal",
+          "domain": {
+            "data": "iris",
+            "field": "attributes.{color.field}"
+          },
+          "range": [
+            "#800",
+            "#080",
+            "#008"
+          ]
+        }
+      ],
+      "axes": [
+        {
+          "type": "x",
+          "scale": "x",
+          "offset": 5,
+          "ticks": 5,
+          "title": "{x.label}"
+        },
+        {
+          "type": "y",
+          "scale": "y",
+          "offset": 5,
+          "ticks": 5,
+          "title": "{y.label}",
+          "titleOffset": 60
+        }
+      ],
+      "legends": [
+        {
+          "fill": "c",
+          "title": "{color.label} ",
+          "offset": 0,
+          "properties": {
+            "symbols": {
+              "fillOpacity": {
+                "value": 0.5
+              },
+              "stroke": {
+                "value": "transparent"
+              }
+            }
+          }
+        }
+      ],
+      "marks": [
+        {
+          "type": "symbol",
+          "from": {
+            "data": "iris"
+          },
+          "properties": {
+            "enter": {
+              "x": {
+                "scale": "x",
+                "field": "attributes.{x.field}"
+              },
+              "y": {
+                "scale": "y",
+                "field": "attributes.{y.field}"
+              },
+              "fill": {
+                "scale": "c",
+                "field": "attributes.{color.field}"
+              },
+              "fillOpacity": {
+                "value": 0.5
+              }
+            },
+            "update": {
+              "size": {
+                "value": 100
+              },
+              "stroke": {
+                "value": "transparent"
+              }
+            },
+            "hover": {
+              "size": {
+                "value": 300
+              },
+              "stroke": {
+                "value": "white"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

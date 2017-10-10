@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="not-ie"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  
+    <title>Chart Dataset Json | Esri Cedar</title>
+  
+
+  
+
+  <meta name="description" content="Esri Cedar">
+  <meta name="viewport" content="width=device-width">
+
+  <!--[if lt IE 9]>
+    <script src="//cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+  <![endif]-->
+
+  <!-- stylesheet -->
+  <link rel="stylesheet" href="../../../../cedar/css/style.css">
+  <link rel="stylesheet" href="../../../../cedar/css/calcite-bootstrap.css">
+
+  <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+  <!-- Cedar and dependencies (d3, vega) -->
+  <!-- NOTE: the pie chart examle does not work w/ latest vega (v1.5+), so here we are pulling in an oldder version (v1.4.3) -->
+  
+    <script type="text/javascript" src="../../../../cedar/js/d3.min.js"></script>
+    <script type="text/javascript" src="../../../../cedar/js/vega.min.js"></script>
+    <script type="text/javascript" src="../../../../cedar/js/cedar.js"></script>
+  
+  <!-- NOTE: underscore is used by a few examples, but is not needed by Cedar -->
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+
+  <!-- NOTE: prism is used by the examples, but is not needed by Cedar -->
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/themes/prism.css">
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/prism/1.5.0/prism.min.js"></script>
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-47337822-8', 'auto');
+    ga('send', 'pageview');
+  </script>
+  <!-- End Google Analytics -->
+</head>
+<body>
+
+  <nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="../../../../cedar/">cedar.js</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        
+        <li><a href="../../../../cedar/tutorial/">Tutorial</a></li>
+        <li><a href="../../../../cedar/examples/">Examples</a></li>
+        <li><a href="../../../../cedar/api/">API</a></li>
+        <li><a href="https://github.com/esri/cedar">Github</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  
+
+<div class="container white">
+  
+
+<div class="col-lg-10">
+  <h1 id="dataset-json">Dataset Json</h1>
+<p>The dataset is the means of informing Cedar about the data to be charted.</p>
+<h2 id="dataset-format">Dataset Format</h2>
+<pre><code class="language-json">{
+  "<span class="attribute">url</span>":<span class="value"><span class="string">"&lt;url to geoservices end-point&gt;"</span></span>,
+  "<span class="attribute">query</span>":<span class="value">{}</span>,
+  "<span class="attribute">mappings</span>":<span class="value">{
+    "<span class="attribute">&lt;input.name&gt;</span>": <span class="value">{
+      "<span class="attribute">field</span>":<span class="value"><span class="string">"&lt;field name&gt;"</span></span>,
+      "<span class="attribute">label</span>":<span class="value"><span class="string">"&lt;label for chart&gt;"</span>
+    </span>}</span>,
+  }
+</span>}</code></pre>
+<h3 id="dataset-url">dataset.url</h3>
+<p>Url to a feature service or map service layer. 
+Can also be a url to a static json file, but it should be noted that the <code>query</code> property will have no effect in that case.</p>
+<h3 id="dataset-mappings">dataset.mappings</h3>
+<p>The mappings object contains properties that match up to the <code>specification.inputs</code> array. For example, for this inputs array</p>
+<pre><code>...
+  &quot;inputs&quot;: [
+    {&quot;name&quot;: &quot;count&quot;, &quot;type&quot;: [&quot;numeric&quot;,&quot;string&quot;], &quot;required&quot;: true},
+    {&quot;name&quot;: &quot;group&quot;, &quot;type&quot;: [&quot;string&quot;], &quot;required&quot;: false}
+  ]
+...</code></pre>
+<p>The mappings must contain a <code>count</code> property specifying the field name and label.</p>
+<pre><code>...
+ &quot;mappings&quot;:{
+    &quot;count&quot;: {&quot;field&quot;:&quot;POPULATION_ENROLLED_2008&quot;,&quot;label&quot;:&quot;Enrolment 2008&quot;}
+  }
+...</code></pre>
+<p>Since the inputs contain an optional parameter (<code>group</code>), the mappings can also contain an entry for that</p>
+<pre><code>...
+ &quot;mappings&quot;:{
+    &quot;count&quot;: {&quot;field&quot;:&quot;POPULATION_ENROLLED_2008&quot;,&quot;label&quot;:&quot;Enrolment 2008&quot;},
+    &quot;group&quot;:{&quot;field&quot;:&quot;FACUSE&quot;, &quot;label&quot;:&quot;School Type&quot;}
+  }
+...</code></pre>
+<h3 id="dataset-query">dataset.query</h3>
+<p>Query is optional, but it is also a very useful parameter, as it allows the developer to specify additional Geoservices query parameters, such as a where clause, or bounding box.</p>
+<p>All properties of the query object will be converted into query parameters in the calls to fetch the data from the service. Thus, most geoservices <a href="https://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/">query parameters</a> are supported. </p>
+<p>As a convenience, Cedar will add the correct <code>geometry</code> and <code>spatialRel</code>  parameters if a bbox is provided. Other geometric relations can be handled by manually configuring the parameters on the query object. </p>
+<p>Cedar also handles the necessary aggregation via outStatistics</p>
+<p>Example query</p>
+<pre><code>...
+  &quot;query&quot;:{
+    &quot;where&quot;:&quot;ZIP_CODE = 20007 AND YEAR_BUILT &gt; 1900&quot;
+  }
+...</code></pre>
+<h3 id="dataset-data">dataset.data</h3>
+<p><em>NOT IMPLEMENTED YET</em></p>
+<p>Optional array of data objects in format...</p>
+<pre><code>[
+  {
+    &quot;attributes&quot;:{
+      &quot;field_name&quot;:&quot;field_value&quot;,
+      &quot;field_name&quot;:&quot;field_value&quot;
+    },
+    &quot;geometry&quot;:{
+      //optional and ignored by cedar
+    } 
+  }
+]</code></pre>
+<h2 id="full-example">Full Example</h2>
+<pre><code>TODO: Add Example</code></pre>
+
+  <p><a href="https://github.com/esri/cedar/edit/master/site/source/pages/api/json/dataset-json.md">Edit this page on GitHub</a></p>
+</div>
+
+<div class="col-lg-2">
+  <aside class="sidebar">
+  <h5><a href="../../../../cedar/api/index.html">Cedar Javascript API</a></h5>
+  <ul>
+    <li><a href="../../../../cedar/api/create.html">new Cedar( opt )</a></li>
+  </ul>
+  <h5>Properties</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/dataset.html">.dataset</a></li>
+    <li><a href="../../../../cedar/api/specification.html">.specification</a></li>
+    <li style="list-style:none;">
+      New!
+    </li>
+    <li><a href="../../../../cedar/api/datasets.html">.datasets</a></li>
+    <li><a href="../../../../cedar/api/series.html">.series</a></li>
+  </ul>
+  <h5>Methods</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/show.html">.show( opt )</a></li>
+    <li><a href="../../../../cedar/api/update.html">.update( )</a></li>
+    <li><a href="../../../../cedar/api/on.html">.on( evt, fn )</a></li>
+    <li><a href="../../../../cedar/api/off.html">.off( evt )</a></li>
+    <li><a href="../../../../cedar/api/select.html">.select( opt )</a></li>
+    <li><a href="../../../../cedar/api/clearselection.html">.clearSelection( opt )</a></li>
+  </ul>
+
+  <h5>Json Objects</h5>
+  <ul>
+    <li><a href="../../../../cedar/api/json/specification-json.html">Specification</a></li>
+    <li><a href="../../../../cedar/api/json/dataset-json.html">Dataset </a></li>
+    <li><a href="../../../../cedar/api/json/definition-json.html">Definition</a></li>
+    <li style="list-style:none;">
+      New!
+    </li>
+    <li><a href="../../../../cedar/api/json/datasets-json.html">Datasets </a></li>
+    <li><a href="../../../../cedar/api/json/series-json.html">Series </a></li>
+
+  </ul>
+
+</aside>
+
+</div>
+</div>
+
+
+  <hr>
+  <div class="container centered-text">
+  <p class="copyright">Cedar is a project from the <a href="http://dc.esri.com">Esri DC R&amp;D Center</a> </p>
+</div>
+
+  <!-- <script src="../../../../cedar/js/script.js"></script>-->
+  </body>
+</html>

@@ -1,0 +1,201 @@
+/**
+ * Example of containing the template and configuration
+ * into a single json object that could be persisted
+ * rehydrated, and modified
+ */
+
+{
+
+
+  /**
+   * Data represents the source of the data for the chart
+   * as well as an optional set of query parameters
+   * The url should NOT include queries.
+   */
+  "dataset":{
+    /**
+     * Url to the geoservices rest end-point
+     */
+    "url":"https://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
+    /**
+     * Query is optional means to filter the dataset
+     * Params based on the ArGIS REST API
+     * https://resources.arcgis.com/en/help/arcgis-rest-api/#/Query_Feature_Service_Layer/02r3000000r1000000/
+     */
+    "query": {
+      "where": "1=1",
+      "geometry":{"xmin": -104, "ymin": 35.6, "xmax": -94.32, "ymax": 41},
+      //geometryType esriGeometryPoint | esriGeometryMultipoint | esriGeometryPolyline | esriGeometryPolygon | esriGeometryEnvelope
+      "geometryType": "esriGeometryEnvelope",
+      //spatilRel esriSpatialRelIntersects | esriSpatialRelContains | esriSpatialRelCrosses | esriSpatialRelEnvelopeIntersects | esriSpatialRelIndexIntersects | esriSpatialRelOverlaps | esriSpatialRelTouches | esriSpatialRelWithin
+      "spatialRel":"esriSpatialRelIntersects",
+      "inSR":4326,
+      "outFields": "*"
+    },
+    /**
+     * Data is an optional array of features. If present,
+     * then it will be passed into the compiled vega spec
+     * instead of the url + query params.
+     */
+    "data": [/*... optional array of features...*/],
+  
+    /**
+     * Mappings is the hash of values required by the
+     * template so it can compile it into a vega spec
+     * which is then used to generate the chart
+     */
+    "mappings": {
+      "x": {
+        "field": "POPULATION_ENROLLED_2008",
+        "label": "Enrollment 2008"
+      },
+      "y": {
+        "field": "SQUARE_FOOTAGE",
+        "label": "Square Footage"
+      },
+      "color": {
+        "field": "FACUSE",
+        "label": "Facility Usage"
+      }
+    },
+
+  /**
+   * Template for a vega spec.
+   */
+  "specification": {
+    /**
+     * Inputs are used by UI's that allow the
+     * mappings to be manipulated on the fly
+     */
+    "inputs": [
+      {"name": "x","type": ["numeric"],"required": true},
+      {"name": "y","type": ["numeric"],"required": true},
+      {"name": "color","type": ["string"],"required": true}
+    ],
+    "template":{
+      /**
+       * The rest of this is standard vega spec w/ tokens
+       */
+      "width": 650,
+      "height": 500,
+      "data": [
+        {
+          "name": "iris",
+          "url": "{dataUrl}",
+          "format": {
+            "property": "features"
+          }
+        }
+      ],
+      "scales": [
+        {
+          "name": "x",
+          "nice": true,
+          "range": "width",
+          "domain": {
+            "data": "iris",
+            "field": "attributes.{x.field}"
+          }
+        },
+        {
+          "name": "y",
+          "nice": true,
+          "range": "height",
+          "domain": {
+            "data": "iris",
+            "field": "attributes.{y.field}"
+          }
+        },
+        {
+          "name": "c",
+          "type": "ordinal",
+          "domain": {
+            "data": "iris",
+            "field": "attributes.{color.field}"
+          },
+          "range": [
+            "#800",
+            "#080",
+            "#008"
+          ]
+        }
+      ],
+      "axes": [
+        {
+          "type": "x",
+          "scale": "x",
+          "offset": 5,
+          "ticks": 5,
+          "title": "{x.label}"
+        },
+        {
+          "type": "y",
+          "scale": "y",
+          "offset": 5,
+          "ticks": 5,
+          "title": "{y.label}"
+        }
+      ],
+      "legends": [
+        {
+          "fill": "c",
+          "title": "{color.label}",
+          "offset": 0,
+          "properties": {
+            "symbols": {
+              "fillOpacity": {
+                "value": 0.5
+              },
+              "stroke": {
+                "value": "transparent"
+              }
+            }
+          }
+        }
+      ],
+      "marks": [
+        {
+          "type": "symbol",
+          "from": {
+            "data": "iris"
+          },
+          "properties": {
+            "enter": {
+              "x": {
+                "scale": "x",
+                "field": "attributes.{x.field}"
+              },
+              "y": {
+                "scale": "y",
+                "field": "attributes.{y.field}"
+              },
+              "fill": {
+                "scale": "c",
+                "field": "attributes.{color.field}"
+              },
+              "fillOpacity": {
+                "value": 0.5
+              }
+            },
+            "update": {
+              "size": {
+                "value": 100
+              },
+              "stroke": {
+                "value": "transparent"
+              }
+            },
+            "hover": {
+              "size": {
+                "value": 300
+              },
+              "stroke": {
+                "value": "white"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}
