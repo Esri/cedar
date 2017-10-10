@@ -3,14 +3,18 @@
   "scripts": {
     "build": "lerna run build --scope @esri/cedar-amcharts && lerna run build --scope @esri/cedar",
     "build:prod": "lerna run build:prod --scope @esri/cedar-amcharts && lerna run build:prod --@esri/scope cedar",
-    "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run build",
+    "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run predeploy",
+    "copy:docs": "mkdir -p docs/scripts && cp packages/cedar/dist/umd/*.js* docs/scripts",
     "copy:readme": "cp README.md packages/cedar/README.md",
+    "predeploy": "npm run build && npm run copy:docs",
+    "deploy": "gh-pages -d docs",
     "reset": "lerna run clean:deps && lerna bootstrap",
     "postinstall": "lerna bootstrap",
-    "start": "npm run build && npm run build:watch",
+    "start": "npm run predeploy && npm run build:watch",
     "test": "lerna run test"
   },
   "devDependencies": {
+    "gh-pages": "^1.0.0",
     "lerna": "2.0.0-beta.37",
     "onchange": "^3.2.1"
   }

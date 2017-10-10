@@ -47,3 +47,6 @@ packages/*/yarn.lock
 
 # cedar package README is copied from root
 packages/cedar/README.md
+
+# copy of build output used by docs
+docs/scripts
