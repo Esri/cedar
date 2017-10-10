@@ -71,10 +71,10 @@ export default class Chart {
   }
 
   // DOM element
-  public get container(): string {
+  private get container(): string {
     return this._container
   }
-  public set container(id: string) {
+  private set container(id: string) {
     this._container = id
   }
 
