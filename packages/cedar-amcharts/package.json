@@ -71,7 +71,6 @@
     "typescript": "^2.4.1"
   },
   "dependencies": {
-    "adlib": "^0.0.7",
     "amcharts3": "amcharts/amcharts3"
   }
 }

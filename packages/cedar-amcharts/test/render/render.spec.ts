@@ -1,4 +1,3 @@
-// import adlib from 'adlib'
 import 'amcharts3/amcharts/amcharts'
 import 'amcharts3/amcharts/serial'
 import {} from 'jest'
@@ -12,10 +11,6 @@ describe('Spec gets filled in properly', () => {
     const grabbedSpec = render.fetchSpec('bar')
     expect(grabbedSpec).toEqual(bar)
   })
-
-  // test('templateGraph properly gets adlibbed', () => {
-  //   console.log(adlib())
-  // })
 
   test('A simple spec gets filled in properly', () => {
     const spec = render.fetchSpec('bar')
