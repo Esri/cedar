@@ -14,10 +14,15 @@ export default class Chart {
   private _cedarSpecification: any
   private _data: any[]
   private _overrides: any
+  private _domNode: string
 
-  constructor(options: any) {
+  constructor(domNode: string, options: any) {
     // Clone options
     const opts: any = clone(options || {})
+
+    if (!!domNode) {
+      this.domNode = domNode
+    }
 
     // If there are datasets...
     if (!!opts.datasets) {
@@ -65,6 +70,14 @@ export default class Chart {
     this._data = deepMerge([], data)
   }
 
+  // DOM element
+  public get domNode(): string {
+    return this._domNode
+  }
+  public set domNode(id: string) {
+    this._domNode = id
+  }
+
   // Chart Specification
   public get chartSpecification(): any {
     return this._chartSpecification
@@ -82,7 +95,7 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  public show(domNode: string, options: any = {}) {
+  public show(options: any = {}) {
     const opts = clone(options)
     const requests = []
     const joinKeys = []
@@ -103,7 +116,7 @@ export default class Chart {
     Promise.all(requests)
       .then((responses) => {
         this.data = flattenFeatures(responses, joinKeys, transformFunctions)
-        cedarAmCharts(domNode, this.cedarSpecification, this.data)
+        cedarAmCharts(this.domNode, this.cedarSpecification, this.data)
       })
   }
 }
