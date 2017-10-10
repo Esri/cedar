@@ -45,3 +45,5 @@ test/js
 # Package yarn lockfiles
 packages/*/yarn.lock
 
+# cedar package README is copied from root
+packages/cedar/README.md
