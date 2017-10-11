@@ -118,7 +118,7 @@ Once cedar is loaded you can create and show the chart at a designated element a
   var series = [{
     "category": {"field": "Type", "label": "Type"},
     "value": {"field": "Number_of_SUM", "label": "Number of Students"},
-    "datasetId": 1
+    "source": 1
   }];
 
   // optinally override any of the cart type's default styles

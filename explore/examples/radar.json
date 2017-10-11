@@ -3,7 +3,7 @@
   "datasets": [
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 0,
+      "name": "THEFT/OTHER",
       "query": {
         "where": "OFFENSE='THEFT/OTHER'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -19,7 +19,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 1,
+      "name": "THEFT/AUTO",
       "query": {
         "where": "OFFENSE='THEFT F/AUTO'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -35,7 +35,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 2,
+      "name": "SEXABUSE",
       "query": {
         "where": "OFFENSE='SEX ABUSE'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -51,7 +51,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 3,
+      "name": "ROBBERY",
       "query": {
         "where": "OFFENSE='Robbery'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -67,7 +67,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 4,
+      "name": "MVT",
       "query": {
         "where": "OFFENSE='MOTOR VEHICLE THEFT'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -83,7 +83,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 5,
+      "name": "HOMICIDE",
       "query": {
         "where": "OFFENSE='HOMICIDE'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -99,7 +99,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 6,
+      "name": "BURGLARY",
       "query": {
         "where": "OFFENSE='BURGLARY'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -115,7 +115,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 7,
+      "name": "ASSW/DANGEROUSWEAPON",
       "query": {
         "where": "OFFENSE='ASSAULT W/DANGEROUS WEAPON'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -131,7 +131,7 @@
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
-      "id": 8,
+      "name": "ARSON",
       "query": {
         "where": "OFFENSE='ARSON'",
         "groupByFieldsForStatistics": "EXTRACT(Hour from REPORTDATETIME)",
@@ -156,7 +156,7 @@
         "field": "OFFENSE_COUNT",
         "label": "THEFT/OTHER"
       },
-      "datasetId": 0
+      "source": "THEFT/OTHER"
     },
     {
       "category": {
@@ -167,7 +167,7 @@
         "field": "OFFENSE_COUNT",
         "label": "THEFT F/AUTO"
       },
-      "datasetId": 1
+      "source": "THEFT/AUTO"
     },
     {
       "category": {
@@ -178,7 +178,7 @@
         "field": "OFFENSE_COUNT",
         "label": "SEX ABUSE"
       },
-      "datasetId": 2
+      "source": "SEXABUSE"
     },
     {
       "category": {
@@ -189,7 +189,7 @@
         "field": "OFFENSE_COUNT",
         "label": "Robbery"
       },
-      "datasetId": 3
+      "source": "ROBBERY"
     },
     {
       "category": {
@@ -200,7 +200,7 @@
         "field": "OFFENSE_COUNT",
         "label": "MOTOR VEHICLE THEFT"
       },
-      "datasetId": 4
+      "source": "MVT"
     },
     {
       "category": {
@@ -211,7 +211,7 @@
         "field": "OFFENSE_COUNT",
         "label": "HOMICIDE"
       },
-      "datasetId": 5
+      "source": "HOMICIDE"
     },
     {
       "category": {
@@ -222,7 +222,7 @@
         "field": "OFFENSE_COUNT",
         "label": "BURGLARY"
       },
-      "datasetId": 6
+      "source": "BURGLARY"
     },
     {
       "category": {
@@ -233,7 +233,7 @@
         "field": "OFFENSE_COUNT",
         "label": "ASSAULT W/DANGEROUS WEAPON"
       },
-      "datasetId": 7
+      "source": "ASSW/DANGEROUSWEAPON"
     },
     {
       "category": {
@@ -244,7 +244,7 @@
         "field": "OFFENSE_COUNT",
         "label": "ARSON"
       },
-      "datasetId": 8
+      "source": "ARSON"
     }
   ]
 }

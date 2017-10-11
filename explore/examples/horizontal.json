@@ -3,7 +3,7 @@
   "datasets": [
     {
       "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-      "id": 1,
+      "name": "Number_of_SUM",
       "query": {
         "orderByFields": "Number_of_SUM DESC",
         "groupByFieldsForStatistics": "Type",
@@ -21,7 +21,7 @@
     {
       "category": {"field": "Type", "label": "Type"},
       "value": {"field": "Number_of_SUM", "label": "Number of Students"},
-      "datasetId": 1
+      "source": "Number_of_SUM"
     }
   ],
   "overrides": {

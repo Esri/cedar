@@ -3,7 +3,7 @@
   "datasets": [
     {
       "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-      "id": 1,
+      "name": "Jordan",
       "query": {
         "where": "City='Jordan'",
         "orderByFields": "Number_of_SUM DESC",
@@ -17,7 +17,7 @@
     },
     {
       "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-      "id": 2,
+      "name": "Dewitt",
       "query": {
         "where": "City='Dewitt'",
         "orderByFields": "Number_of_SUM DESC",
@@ -31,7 +31,7 @@
     },
     {
       "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-      "id": 3,
+      "name": "Fayetteville",
       "query": {
         "where": "City='Fayetteville'",
         "orderByFields": "Number_of_SUM DESC",
@@ -49,19 +49,19 @@
       "category": {"field": "Type", "label": "Type"},
       "group": true,
       "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
-      "datasetId": 1
+      "source": "Jordan"
     },
     {
       "category": {"field": "Type", "label": "Type"},
       "group": true,
       "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
-      "datasetId": 2
+      "source": "Dewitt"
     },
     {
       "category": {"field": "Type", "label": "Type"},
       "group": true,
       "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
-      "datasetId": 3
+      "source": "Fayetteville"
     }
   ]
 }
