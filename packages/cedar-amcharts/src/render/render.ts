@@ -37,7 +37,7 @@ export function fillInSpec(spec: any, config: any) {
   config.datasets.forEach((dataset, d) => {
     // For each dataset iterate over series
     config.series.forEach((series, s) => {
-      if (dataset.id === series.datasetId) {
+      if (dataset.name === series.source) {
         const graph = clone(graphSpec)
 
         // Set graph title
