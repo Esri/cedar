@@ -64,9 +64,6 @@ export default class Chart {
   public get data(): any[] {
     return this._data
   }
-  public set data(data: any[]) {
-    this._data = deepMerge([], data)
-  }
 
   // Chart Specification
   public get chartSpecification(): any {
@@ -85,8 +82,7 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  // TODO: rename to queryData() or query()?
-  public getData() {
+  public queryData() {
     const names = []
     const requests = []
     const responseHash = {}
@@ -112,7 +108,7 @@ export default class Chart {
     })
   }
 
-  public render(datasetsData: {}) {
+  public updateData(datasetsData: {}) {
     const featureSets = []
     const joinKeys = []
     // TODO: remove transformFucntions here and from flattenFeatures
@@ -133,14 +129,20 @@ export default class Chart {
       }
     })
 
-    this.data = flattenFeatures(featureSets, joinKeys, transformFunctions)
+    this._data = flattenFeatures(featureSets, joinKeys, transformFunctions)
+    // TODO: what shoudl this return?
+  }
+
+  public render() {
     cedarAmCharts(this._container, this.cedarSpecification, this.data)
+    // TODO: what should this return?
   }
 
   public show() {
-    return this.getData()
+    return this.queryData()
     .then((response) => {
-      this.render(response)
+      this.updateData(response)
+      this.render()
     })
   }
 }
