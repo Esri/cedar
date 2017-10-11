@@ -8,7 +8,6 @@ function clone(json) {
 }
 
 export default class Chart {
-  // TODO: add Interfaces for dataset, series, etc
   private _series: any[]
   private _datasets: any[]
   private _chartSpecification: any
@@ -17,26 +16,23 @@ export default class Chart {
   private _overrides: any
   private _container: string
 
-  constructor(container, options: any) {
-    // Clone options
-    const opts: any = clone(options || {})
-
+  constructor(container, options: any = {}) {
     if (!container) {
-      throw new Error('An Html Element or element ID is required')
+      throw new Error('A container is required')
     }
     this._container = container
 
     // If there are datasets...
-    if (opts.datasets) {
-      this.datasets = opts.datasets
+    if (options.datasets) {
+      this.datasets = options.datasets
     }
     // If there are series...
-    if (opts.series) {
-      this.series = opts.series
+    if (options.series) {
+      this.series = options.series
     }
 
-    if (opts) {
-      this.cedarSpecification = opts
+    if (options) {
+      this.cedarSpecification = options
     }
   }
 
