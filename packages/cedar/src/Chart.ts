@@ -8,6 +8,7 @@ function clone(json) {
 }
 
 export default class Chart {
+  // TODO: add Interfaces for dataset, series, etc
   private _series: any[]
   private _datasets: any[]
   private _chartSpecification: any
@@ -16,15 +17,14 @@ export default class Chart {
   private _overrides: any
   private _container: string
 
-  constructor(container: string, options: any) {
+  constructor(container, options: any) {
     // Clone options
     const opts: any = clone(options || {})
 
     if (!container) {
       throw new Error('An Html Element or element ID is required')
     }
-
-    this.container = container
+    this._container = container
 
     // If there are datasets...
     if (opts.datasets) {
@@ -70,14 +70,6 @@ export default class Chart {
   }
   public set data(data: any[]) {
     this._data = deepMerge([], data)
-  }
-
-  // DOM element
-  private get container(): string {
-    return this._container
-  }
-  private set container(id: string) {
-    this._container = id
   }
 
   // Chart Specification
@@ -128,7 +120,7 @@ export default class Chart {
 
   public render(result: any) {
     this.data = flattenFeatures(result.responses, result.joinKeys, result.transformFunctions)
-    cedarAmCharts(this.container, this.cedarSpecification, this.data)
+    cedarAmCharts(this._container, this.cedarSpecification, this.data)
   }
 
   public show() {
