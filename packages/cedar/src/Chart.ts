@@ -16,27 +16,23 @@ export default class Chart {
   private _overrides: any
   private _container: string
 
-  constructor(container: string, options: any) {
-    // Clone options
-    const opts: any = clone(options || {})
-
+  constructor(container, options: any = {}) {
     if (!container) {
-      throw new Error('An Html Element or element ID is required')
+      throw new Error('A container is required')
     }
-
-    this.container = container
+    this._container = container
 
     // If there are datasets...
-    if (opts.datasets) {
-      this.datasets = opts.datasets
+    if (options.datasets) {
+      this.datasets = options.datasets
     }
     // If there are series...
-    if (opts.series) {
-      this.series = opts.series
+    if (options.series) {
+      this.series = options.series
     }
 
-    if (opts) {
-      this.cedarSpecification = opts
+    if (options) {
+      this.cedarSpecification = options
     }
   }
 
@@ -70,14 +66,6 @@ export default class Chart {
   }
   public set data(data: any[]) {
     this._data = deepMerge([], data)
-  }
-
-  // DOM element
-  private get container(): string {
-    return this._container
-  }
-  private set container(id: string) {
-    this._container = id
   }
 
   // Chart Specification
@@ -128,7 +116,7 @@ export default class Chart {
 
   public render(result: any) {
     this.data = flattenFeatures(result.responses, result.joinKeys, result.transformFunctions)
-    cedarAmCharts(this.container, this.cedarSpecification, this.data)
+    cedarAmCharts(this._container, this.cedarSpecification, this.data)
   }
 
   public show() {
