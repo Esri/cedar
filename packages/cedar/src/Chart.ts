@@ -95,8 +95,7 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  public show(options: any = {}) {
-    const opts = clone(options)
+  public getData(options: any = {}) {
     const requests = []
     const joinKeys = []
     const transformFunctions = []
@@ -113,10 +112,28 @@ export default class Chart {
       //   joinKeys.push(series.category.field)
       // }
     }
-    Promise.all(requests)
+    return Promise.all(requests)
       .then((responses) => {
-        this.data = flattenFeatures(responses, joinKeys, transformFunctions)
-        cedarAmCharts(this.container, this.cedarSpecification, this.data)
+        return Promise.resolve({
+          responses,
+          joinKeys,
+          transformFunctions
+        })
+      }, (err) => {
+        return Promise.reject(err)
+      })
+  }
+
+  public render(result: any) {
+    this.data = flattenFeatures(result.responses, result.joinKeys, result.transformFunctions)
+    cedarAmCharts(this.container, this.cedarSpecification, this.data)
+  }
+
+  public show(options: any = {}) {
+    const opts = clone(options)
+    return this.getData(opts)
+      .then((response) => {
+        this.render(response)
       })
   }
 }
