@@ -33,6 +33,6 @@ describe('Cedar initial test', () => {
         }
       }
     }
-    const chart = new cedar.Chart(opts)
+    const chart = new cedar.Chart('chart', opts)
   })
 })

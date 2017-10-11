@@ -14,21 +14,28 @@ export default class Chart {
   private _cedarSpecification: any
   private _data: any[]
   private _overrides: any
+  private _container: string
 
-  constructor(options: any) {
+  constructor(container: string, options: any) {
     // Clone options
     const opts: any = clone(options || {})
 
+    if (!container) {
+      throw new Error('An Html Element or element ID is required')
+    }
+
+    this.container = container
+
     // If there are datasets...
-    if (!!opts.datasets) {
+    if (opts.datasets) {
       this.datasets = opts.datasets
     }
     // If there are series...
-    if (!!opts.series) {
+    if (opts.series) {
       this.series = opts.series
     }
 
-    if (!!opts) {
+    if (opts) {
       this.cedarSpecification = opts
     }
   }
@@ -65,6 +72,14 @@ export default class Chart {
     this._data = deepMerge([], data)
   }
 
+  // DOM element
+  private get container(): string {
+    return this._container
+  }
+  private set container(id: string) {
+    this._container = id
+  }
+
   // Chart Specification
   public get chartSpecification(): any {
     return this._chartSpecification
@@ -82,8 +97,7 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  public show(domNode: string, options: any = {}) {
-    const opts = clone(options)
+  public getData() {
     const requests = []
     const joinKeys = []
     const transformFunctions = []
@@ -100,10 +114,27 @@ export default class Chart {
       //   joinKeys.push(series.category.field)
       // }
     }
-    Promise.all(requests)
+    return Promise.all(requests)
       .then((responses) => {
-        this.data = flattenFeatures(responses, joinKeys, transformFunctions)
-        cedarAmCharts(domNode, this.cedarSpecification, this.data)
+        return Promise.resolve({
+          responses,
+          joinKeys,
+          transformFunctions
+        })
+      }, (err) => {
+        return Promise.reject(err)
+      })
+  }
+
+  public render(result: any) {
+    this.data = flattenFeatures(result.responses, result.joinKeys, result.transformFunctions)
+    cedarAmCharts(this.container, this.cedarSpecification, this.data)
+  }
+
+  public show() {
+    return this.getData()
+      .then((response) => {
+        this.render(response)
       })
   }
 }
