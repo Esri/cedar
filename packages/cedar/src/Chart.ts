@@ -20,20 +20,22 @@ export default class Chart {
     // Clone options
     const opts: any = clone(options || {})
 
-    if (!!container) {
-      this.container = container
+    if (!container) {
+      throw new Error('An Html Element or element ID is required')
     }
 
+    this.container = container
+
     // If there are datasets...
-    if (!!opts.datasets) {
+    if (opts.datasets) {
       this.datasets = opts.datasets
     }
     // If there are series...
-    if (!!opts.series) {
+    if (opts.series) {
       this.series = opts.series
     }
 
-    if (!!opts) {
+    if (opts) {
       this.cedarSpecification = opts
     }
   }
@@ -95,7 +97,7 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  public getData(options: any = {}) {
+  public getData() {
     const requests = []
     const joinKeys = []
     const transformFunctions = []
@@ -129,9 +131,8 @@ export default class Chart {
     cedarAmCharts(this.container, this.cedarSpecification, this.data)
   }
 
-  public show(options: any = {}) {
-    const opts = clone(options)
-    return this.getData(opts)
+  public show() {
+    return this.getData()
       .then((response) => {
         this.render(response)
       })
