@@ -115,7 +115,7 @@ export default class Chart {
   }
 
   public render(result: any) {
-    this.data = flattenFeatures(result.responses, result.joinKeys, result.transformFunctions)
+    this.data = flattenFeatures(result.responses, result.joinKeys)
     cedarAmCharts(this._container, this.cedarSpecification, this.data)
   }
 

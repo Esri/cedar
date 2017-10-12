@@ -4,45 +4,44 @@ import { buildIndex } from '../../src/flatten/flatten'
 import schoolResponse from '../data/schoolResponse'
 
 describe('Features should properly flatten', () => {
-  test('flattenFeatures properly flattens features when no joinKeys are present', () => {
+  test('flattenFeatures appends features when no joinKeys are present', () => {
     const data = {
       joinKeys: [],
-      featureSets: schoolResponse,
-      transformFuncs: []
+      featureSets: schoolResponse
     }
     const arr = [{Number_of_SUM: 13, Type: 'High School'}, {Number_of_SUM: 6, Type: 'Middle School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 8, Type: 'High School'}, {Number_of_SUM: 1, Type: 'Elementary School'}, {Number_of_SUM: 0, Type: 'Middle School'}]
 
-    expect(flatten(data.featureSets, data.joinKeys, data.transformFuncs)).toEqual(arr)
-    expect(true).toBe(true)
+    expect(flatten(data.featureSets, data.joinKeys)).toEqual(arr)
   })
 
   test('BuildIndex should properly build an index...', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: schoolResponse,
-      transformFuncs: []
+      featureSets: schoolResponse
     }
     const result = {
-      'High School':
-         [ { Number_of_SUM: 13, Type: 'High School' },
-           { Number_of_SUM: 8, Type: 'High School' } ],
-      'Middle School':
-         [ { Number_of_SUM: 6, Type: 'Middle School' },
-           { Number_of_SUM: 0, Type: 'Middle School' } ],
-      'Elementary School':
-         [ { Number_of_SUM: 1, Type: 'Elementary School' },
-           { Number_of_SUM: 1, Type: 'Elementary School' },
-           { Number_of_SUM: 1, Type: 'Elementary School' } ]
-         }
+      'High School': [
+        { attributes: { Number_of_SUM: 13, Type: 'High School' } },
+        { attributes: { Number_of_SUM: 8, Type: 'High School' } }
+      ],
+      'Middle School': [
+        { attributes: { Number_of_SUM: 6, Type: 'Middle School' } },
+        { attributes: { Number_of_SUM: 0, Type: 'Middle School' } }
+      ],
+      'Elementary School': [
+        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
+        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
+        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } }
+      ]
+    }
 
-    expect(buildIndex(data.joinKeys, data.featureSets, [])).toEqual(result)
+    expect(buildIndex(data.joinKeys, data.featureSets)).toEqual(result)
   })
 
   test('flattenFeatures properly flattens when provided join keys', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: schoolResponse,
-      transformFuncs: []
+      featureSets: schoolResponse
     }
 
     const result = [
@@ -71,6 +70,6 @@ describe('Features should properly flatten', () => {
       }
     ]
 
-    expect(flatten(data.featureSets, data.joinKeys, data.transformFuncs)).toEqual(result)
+    expect(flatten(data.featureSets, data.joinKeys)).toEqual(result)
   })
 })
