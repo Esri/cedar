@@ -11,6 +11,8 @@
     "deploy": "surge ./explore cedar-v1.surge.sh",
     "reset": "lerna run clean:deps && lerna bootstrap",
     "postinstall": "lerna bootstrap",
+    "prerelease": "git add .",
+    "release": "lerna publish --cd-version=premajor --preid=alpha --skip-git --skip-npm",
     "start": "npm run copy:docs && npm run build:watch",
     "test": "lerna run test"
   },
