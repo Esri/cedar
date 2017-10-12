@@ -130,19 +130,18 @@ export default class Chart {
     })
 
     this._data = flattenFeatures(featureSets, joinKeys, transformFunctions)
-    // TODO: what shoudl this return?
+    return this
   }
 
   public render() {
     cedarAmCharts(this._container, this.cedarSpecification, this.data)
-    // TODO: what should this return?
+    return this
   }
 
   public show() {
     return this.queryData()
     .then((response) => {
-      this.updateData(response)
-      this.render()
+      return this.updateData(response).render()
     })
   }
 }
