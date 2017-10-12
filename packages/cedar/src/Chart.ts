@@ -85,62 +85,44 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  // TODO: rename to queryData() or query()?
   public getData() {
-    const names = []
     const requests = []
-    const responseHash = {}
-
-    if (this.datasets) {
-      this.datasets.forEach((dataset, i) => {
-        // only query datasets that don't have inline data
-        if (!dataset.data) {
-          // TODO: make name required on datasets, or required if > 1 dataset?
-          names.push(dataset.name || `dataset${i}`)
-          requests.push(getData(createFeatureServiceRequest(dataset)))
-        }
-      })
-    }
-    return Promise.all(requests)
-    .then((responses) => {
-      responses.forEach((response, i) => {
-        responseHash[names[i]] = responses[i]
-      })
-      return Promise.resolve(responseHash)
-    }, (err) => {
-      return Promise.reject(err)
-    })
-  }
-
-  public render(datasetsData: {}) {
-    const featureSets = []
     const joinKeys = []
-    // TODO: remove transformFucntions here and from flattenFeatures
     const transformFunctions = []
 
-    // get array of featureSets from datasets data or datasetsData
-    this.datasets.forEach((dataset, i) => {
-      // TODO: make name required on datasets, or required if > 1 dataset?
-      const name = dataset.name || `dataset${i}`
-      // if dataset doesn't have inline data use data that was passed in
-      const featureSet = dataset.data || datasetsData[name]
-      if (featureSet) {
-        featureSets.push(featureSet)
-      }
-      // TODO: this is broken, there is not a 1:1 relationship between datasets/series
-      if (!dataset.merge) {
-        joinKeys.push(this.series[i].category.field)
-      }
-    })
+    if (!!this.datasets && !!this.series) {
+      this.datasets.forEach((dataset, i) => {
+        requests.push(getData(createFeatureServiceRequest(dataset)))
+        if (!dataset.merge) {
+          joinKeys.push(this.series[i].category.field)
+        }
+      })
+      //
+      // for (const series of this.series) {
+      //   joinKeys.push(series.category.field)
+      // }
+    }
+    return Promise.all(requests)
+      .then((responses) => {
+        return Promise.resolve({
+          responses,
+          joinKeys,
+          transformFunctions
+        })
+      }, (err) => {
+        return Promise.reject(err)
+      })
+  }
 
-    this.data = flattenFeatures(featureSets, joinKeys, transformFunctions)
+  public render(result: any) {
+    this.data = flattenFeatures(result.responses, result.joinKeys)
     cedarAmCharts(this._container, this.cedarSpecification, this.data)
   }
 
   public show() {
     return this.getData()
-    .then((response) => {
-      this.render(response)
-    })
+      .then((response) => {
+        this.render(response)
+      })
   }
 }
