@@ -129,7 +129,7 @@ export default class Chart {
       }
     })
 
-    this._data = flattenFeatures(featureSets, joinKeys, transformFunctions)
+    this._data = flattenFeatures(featureSets, joinKeys)
     return this
   }
 

@@ -1,67 +1,52 @@
-# @esri/cedar
+# Cedar
 
 [![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=master)](https://travis-ci.org/Esri/cedar)
 
-Cedar is a library for crafting and sharing data visualizations powered by ArcGIS Services.
+> **NOTE:** You're looking at the documentation for v0.x, but v1.x is in alpha. For more info, see [the v1.x (alpha) documentation](./packages/cedar/README.md).
 
-<!--
+Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.
+
 At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
--->
 
 **Currently Esri Cedar is in development and should be thought of as a beta or preview.**
 
 ## Types of Charts
 
-Cedar currently provides a set of commonly used chart types including `bar`, `line`, `area`, and `pie`, `scatter`, and `bubble`. In the future it will be possible for developers to create unique and custom charts that can be used by other developers with new data sources.
-<!--
+While Cedar provides a set of commonly used chart types including `Bar`, `Line`, `Scatterplot`, and `Pie` through use of the Vega grammar it is possible for developers to create unique and custom charts that can be used by other developers with new data sources.
+
 When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
--->
 
 ## Getting Started
 
 ### Installing Cedar
 
-You can install cedar and it's [dependencies](#dependencies) from npm:
+You can install Cedar and it's dependencies from npm:
 ```bash
-npm install @esri/cedar
+npm install arcgis-cedar
 ```
 
-Alternatively, you can get cedar from the [unpkg.com](https://unpkg.com/) CDN as shown below.
+Or from bower:
+```bash
+bower install arcgis-cedar
+```
+
+Alternatively, you can get Cedar from the [unpkg.com](https://unpkg.com/) CDN as shown below.
 
 ### Loading Cedar
 
-You can load Cedar and its dependencies by including script tags that point to the CDN or your locally installed versions of these libraries. This will make the `cedar` global available to your application.
+You can load Cedar and its dependencies by including script tags that point to the CDN or your locally installed versions of these libraries. This will make the `Cedar` global available to your application.
 
 ```html
-<!-- load the amCharts base library -->
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<!-- optionally load an amcharts theme -->
-<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
-<!-- load cedar -->
-<script src="https://unpkg.com/@esri/cedar/dist/umd/cedar.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vega/2.6.1/vega.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/arcgis-cedar@0.9.1/dist/cedar.min.js"></script>
 <script>
-  var chart = new cedar.Chart({"type":"bar"});
+  var chart = new Cedar({"type": "bar"});
+  ...
 </script>
 ```
 
-If you need to use other chart types, or want to use amCharts plugins, load the appropriate amCharts scripts before loading cedar:
-
-```html
-<!-- for pie charts -->
-<script src="https://www.amcharts.com/lib/3/pie.js"></script>
-<!-- for scatter and bubble charts -->
-<script src="https://www.amcharts.com/lib/3/xy.js"></script>
-<!-- for radar charts -->
-<script src="https://www.amcharts.com/lib/3/radar.js"></script>
-<!-- optioinally load the amcharts plugin to export the chart as and image or table -->
-<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-```
-<!-- TODO: JSAPI example -->
-<!--
-If you're using cedar with the [ArcGIS API for JavaScript](developers.arcgis.com/javascript/), you can declare packages for Cedar and its dependencies so that they can be loaded by Dojo's AMD loader:
+If you're using Cedar with the [ArcGIS API for JavaScript](developers.arcgis.com/javascript/), you can declare packages for Cedar and its dependencies so that they can be loaded by Dojo's AMD loader:
 
 ```html
 <link rel="stylesheet" href="https://js.arcgis.com/3.19/esri/css/esri.css">
@@ -70,111 +55,104 @@ If you're using cedar with the [ArcGIS API for JavaScript](developers.arcgis.com
     async: true,
     packages: [
       {
-        name: 'amCharts',
-        location: 'https://www.amcharts.com/lib/3',
-        main: 'amcharts'
+        name: 'd3',
+        location: 'https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6',
+        main: 'd3.min'
+      }, {
+        name: 'vega',
+        location: 'https://cdnjs.cloudflare.com/ajax/libs/vega/2.6.1',
+        main: 'vega.min'
       }, {
         name: 'cedar',
-        location: 'https://unpkg.com/@esri/cedar/dist/umd/',
-        main: 'cedar'
+        location: 'https://unpkg.com/arcgis-cedar@0.7.0/dist',
+        main: 'cedar.min'
       }
     ]
   };
 </script>
-<script src="https://js.arcgis.com/3.22/"></script>
+<script src="https://js.arcgis.com/3.19/"></script>
 <script>
-  require(['amCharts', 'cedar', 'amCharts/serial'], function(AmCharts, cedar) {
-    var chart = new cedar.Chart({"type": "bar"});
+  require('cedar', function(Cedar) {
+    var chart = new Cedar({"type": "bar"});
     ...
   });
 </script>
 ```
--->
+
+If you're using the Dojo build tool, you may also need to install and configure a package for the vega dependency [topojson](https://github.com/topojson/topojson).
 
 ### Using Cedar
 
-Once cedar is loaded you can create and show the chart at a designated element as follows:
+Once Cedar is loaded you can create and show the chart at a designated element as follows:
 
 ```js
   //create a cedar chart using the known 'bar' type
-  var chart = new cedar.Chart({"type": "bar"});
+  // this is the same as passing {"specification": "path/to/cedar/charts/bar.json"}
+  var chart = new Cedar({"type": "bar"});
 
-  // connect to the data
-  var datasets = [{
-    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-    "id": 1,
+  //create the dataset w/ mappings
+  var dataset = {
+    "url":"http://maps2.dcgis.dc.gov/dcgis/rest/services/DCGIS_DATA/Education_WebMercator/MapServer/5",
     "query": {
-      "orderByFields": "Number_of_SUM DESC",
-      "groupByFieldsForStatistics": "Type",
+      "groupByFieldsForStatistics": "ZIP_CODE",
       "outStatistics": [{
         "statisticType": "sum",
-        "onStatisticField": "Number_of",
-        "outStatisticFieldName": "Number_of_SUM"
+        "onStatisticField": "TOTAL_STUD",
+        "outStatisticFieldName": "TOTAL_STUD_SUM"
       }]
+    },
+    "mappings":{
+      "sort": "TOTAL_STUD_SUM DESC",
+      "x": {"field":"ZIP_CODE","label":"ZIP Code"},
+      "y": {"field":"TOTAL_STUD_SUM","label":"Total Students"}
     }
-  }];
+  };
 
-  // designate a one or more series to show the data on the chart
-  var series = [{
-    "category": {"field": "Type", "label": "Type"},
-    "value": {"field": "Number_of_SUM", "label": "Number of Students"},
-    "source": 1
-  }];
+  //assign to the chart
+  chart.dataset = dataset;
 
-  // optinally override any of the cart type's default styles
-  var overrides = {
-    "categoryAxis": {
-      "labelRotation": -45
-    }
-  }
-
-  // render the chart
-  var elementId = 'chart';
-  chart.show(elementId);
+  //show the chart
+  chart.show({
+    elementId: "#chart"
+  });
 ```
 
-<!-- See the [tutorial](http://esri.github.io/cedar/tutorial) to learn more. -->
+See the [tutorial](http://esri.github.io/cedar/tutorial) to learn more.
 
-<!-- TODO: demos -->
-<!--
 ## Demos
 
 Here is are [an extensive set of demos](http://esri.github.io/cedar/examples) showing the concepts of Cedar.
--->
 
 ## Components of a Cedar Chart
 
 Cedar charts are defined by the following ingredients:
 
-- an array of `datasets`, each has, either:
- - a `url` to an ArcGIS Feature Layer along with optional `query` parameters;
- - ...or `data` can be an array of inline features
-- an array of `series` that bind the Feature Layer attributes to bars, lines, points, etc on the chart
-- and `overrides` are specific modifications to the cart type's default styles
+- a `Specification` is a JSON document which includes,
+ - `inputs` that declare the variables of the chart such as category or value to be summarized
+ - `template` is a declarative syntax for chart design using the [Vega](http://trifacta.github.io/vega/) visualization grammar.
+- a `dataset`
+ - either `url` link to the ArcGIS Feature Layer;
+ - ...or `values` can be an array of inline features
+ - `mappings` bind the Feature Layer attributes to the `Specification inputs`
+- and `overrides` are specific modifications to the `Specification template`
 
-<!-- TODO: API docs -->
-<!-- See the [API documentation](http://esri.github.io/cedar/api) for further details. -->
+See the [API documentation](http://esri.github.io/cedar/api) for further details.
 
 ### Development Instructions
 
-This repository is a monoreop managed using [lerna](https://github.com/lerna/lerna)
+Make sure you have the [Grunt CLI](http://gruntjs.com/getting-started) installed.
 
-1. Fork this repository and clone 'cedar' locally
+1. Fork this repository and download 'cedar' locally
 1. `cd` into the `cedar` folder
 1. Install the dependencies with `npm install`
-1. to run the docs site locally, start a web server at the root folder and visit `/explore`
-1. to rebuild the script files used by the docs page whenver the source code is updated, run `npm start`
-1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request)
-
-### Tests
-
-To run tests one time for all packages, run `npm test` from the monorepo root.
-
-To run tests continually for any package as you update it's soruce code, `cd` into that package and run `npm run:watch` to continually run that package's tests as you update the source code
+1. Run `npm start` from the command line. This will start the web server locally at [http://localhost:8082](http://localhost:8082) and start watching the source files and running linting and testing commands.
+1. Deploy your changes using `grunt docs:deploy` which pushes to your `origin/gh-pages`
+1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request) to `esri/cedar/develop`
 
 ### Dependencies
 
-Cedar currently uses the [amCharts JavaScripts Charts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. You will need to include this along with cedar in your application.
+* [D3](http://d3js.org/) version 3 or higher is required but the latest version is recommended.
+* [Vega](http://vega.github.io/vega/)
 
 ### Versioning
 
@@ -194,7 +172,7 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 
 ### Licensing
-Copyright 2017 Esri
+Copyright 2015 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -209,3 +187,6 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
+
+[](Esri Tags: Visualization)
+[](Esri Language: JavaScript)
