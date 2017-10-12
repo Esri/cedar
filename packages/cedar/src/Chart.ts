@@ -64,9 +64,6 @@ export default class Chart {
   public get data(): any[] {
     return this._data
   }
-  public set data(data: any[]) {
-    this._data = deepMerge([], data)
-  }
 
   // Chart Specification
   public get chartSpecification(): any {
@@ -85,44 +82,66 @@ export default class Chart {
     this._cedarSpecification = clone(spec)
   }
 
-  public getData() {
+  public queryData() {
+    const names = []
     const requests = []
-    const joinKeys = []
-    const transformFunctions = []
+    const responseHash = {}
 
-    if (!!this.datasets && !!this.series) {
+    if (this.datasets) {
       this.datasets.forEach((dataset, i) => {
-        requests.push(getData(createFeatureServiceRequest(dataset)))
-        if (!dataset.merge) {
-          joinKeys.push(this.series[i].category.field)
+        // only query datasets that don't have inline data
+        if (!dataset.data) {
+          // TODO: make name required on datasets, or required if > 1 dataset?
+          names.push(dataset.name || `dataset${i}`)
+          requests.push(getData(createFeatureServiceRequest(dataset)))
         }
       })
-      //
-      // for (const series of this.series) {
-      //   joinKeys.push(series.category.field)
-      // }
     }
     return Promise.all(requests)
-      .then((responses) => {
-        return Promise.resolve({
-          responses,
-          joinKeys,
-          transformFunctions
-        })
-      }, (err) => {
-        return Promise.reject(err)
+    .then((responses) => {
+      responses.forEach((response, i) => {
+        responseHash[names[i]] = responses[i]
       })
+      return Promise.resolve(responseHash)
+    }, (err) => {
+      return Promise.reject(err)
+    })
   }
 
-  public render(result: any) {
-    this.data = flattenFeatures(result.responses, result.joinKeys)
+  public updateData(datasetsData: {}) {
+    const featureSets = []
+    const joinKeys = []
+    // TODO: remove transformFucntions here and from flattenFeatures
+    const transformFunctions = []
+
+    // get array of featureSets from datasets data or datasetsData
+    this.datasets.forEach((dataset, i) => {
+      // TODO: make name required on datasets, or required if > 1 dataset?
+      const name = dataset.name || `dataset${i}`
+      // if dataset doesn't have inline data use data that was passed in
+      const featureSet = dataset.data || datasetsData[name]
+      if (featureSet) {
+        featureSets.push(featureSet)
+      }
+      // TODO: this is broken, there is not a 1:1 relationship between datasets/series
+      if (!dataset.merge) {
+        joinKeys.push(this.series[i].category.field)
+      }
+    })
+
+    this._data = flattenFeatures(featureSets, joinKeys)
+    return this
+  }
+
+  public render() {
     cedarAmCharts(this._container, this.cedarSpecification, this.data)
+    return this
   }
 
   public show() {
-    return this.getData()
-      .then((response) => {
-        this.render(response)
-      })
+    return this.queryData()
+    .then((response) => {
+      return this.updateData(response).render()
+    })
   }
 }
