@@ -1,6 +1,6 @@
 {
   "name": "@esri/cedar-amcharts",
-  "version": "1.0.0-beta",
+  "version": "0.0.0",
   "description": "amCharts engine for @esri/cedar",
   "files": ["dist"],
   "main": "dist/umd/cedar-amcharts.js",

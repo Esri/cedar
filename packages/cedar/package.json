@@ -1,6 +1,6 @@
 {
   "name": "@esri/cedar",
-  "version": "1.0.0-beta",
+  "version": "0.0.0",
   "description": "Visualization framework for the ArcGIS Platform",
   "files": ["dist"],
   "main": "dist/umd/cedar.js",
