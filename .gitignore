@@ -49,3 +49,6 @@ packages/*/yarn.lock
 # while v1 is still in alpha, we'll still show the v0 README at the root
 # TODO: once we're out of alpha, un comment this line
 # packages/cedar/README.md
+
+# umd build is copied from dist to docs site
+explore/scripts/
