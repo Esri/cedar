@@ -1,6 +1,5 @@
 import { cedarAmCharts, deepMerge } from '@esri/cedar-amcharts'
-// import { append, flatten, join } from './flatten/flatten'
-import flattenFeatures from './flatten/flatten'
+import { flattenFeatures } from './flatten/flatten'
 import { getData } from './query/query'
 import { createFeatureServiceRequest } from './query/url'
 
@@ -12,8 +11,6 @@ function clone(json) {
 function getChartData(datasets: IDataset[], series: ISeries[], datasetsData?: {}) {
   const featureSets = []
   const joinKeys = []
-  // TODO: remove transformFucntions here and from flattenFeatures
-  const transformFunctions = []
 
   // get array of featureSets from datasets data or datasetsData
   datasets.forEach((dataset, i) => {
@@ -24,11 +21,8 @@ function getChartData(datasets: IDataset[], series: ISeries[], datasetsData?: {}
     if (featureSet) {
       featureSets.push(featureSet)
     }
-    // TOOD: later support append, but for now, always do join
-    // assuming a 1:1 relationship between datasets and series
-    if (!dataset.append) {
-      joinKeys.push(series[i].category.field)
-    }
+    // TODO: this should not assume a 1:1 relationship between datasets and series
+    joinKeys.push(series[i].category.field)
   })
 
   // flatten data from all datasets into a single table

@@ -1,14 +1,15 @@
 import { deepMerge } from '../helpers/helpers'
 import specs from '../specs/specs'
 
-export function renderChart(elementId: string, config: any, data?: any) {
-  if (config.type === 'custom') {
-    const chart = AmCharts.makeChart(elementId, config.specification)
+// TODO: how to have access to IDefinition
+export function renderChart(elementId: string, definition: any, data?: any) {
+  if (definition.type === 'custom') {
+    const chart = AmCharts.makeChart(elementId, definition.specification)
     return
   }
 
   // Clone/copy spec and data
-  let spec = fetchSpec(config.type)
+  let spec = fetchSpec(definition.type)
   const copyData = clone(data)
 
   // Set the data and defaults
@@ -16,35 +17,46 @@ export function renderChart(elementId: string, config: any, data?: any) {
   spec.categoryField = 'categoryField'
 
   // Apply the series
-  if (!!config.datasets) {
-    spec = fillInSpec(spec, config)
+  if (!!definition.datasets) {
+    spec = fillInSpec(spec, definition)
   }
 
   // Apply overrides
-  if (!!config.overrides) {
-    spec = deepMerge({}, spec, config.overrides)
+  if (!!definition.overrides) {
+    spec = deepMerge({}, spec, definition.overrides)
   }
 
   const chart = AmCharts.makeChart(elementId, spec)
   return
 }
 
-export function fillInSpec(spec: any, config: any) {
+export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
 
   // Iterate over datasets
-  config.datasets.forEach((dataset, d) => {
+  definition.datasets.forEach((dataset, d) => {
     // For each dataset iterate over series
-    config.series.forEach((series, s) => {
+    definition.series.forEach((series, s) => {
       if (dataset.name === series.source) {
         const graph = clone(graphSpec)
 
         // Set graph title
         graph.title = series.value.label
 
-        // TODO: Look at all fields
-        graph.valueField = `${series.value.field}_${d}`
+        /* tslint:disable prefer-conditional-expression */
+        if (definition.datasets.length > 1) {
+          // data has been joined use dataset index to look up the value
+          // TODO: should this be dataset name?
+          // that would mean the names are required and unique
+          // why aren't we using a hash for datasets?
+          graph.valueField = `${series.value.field}_${d}`
+        } else {
+          graph.valueField = series.value.field
+        }
+        /* tslint:enable */
+        // TODO: map other fields besides value like color, size, etc
+
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
         graph.labelText = `[[${series.value.field}]]`
 
@@ -56,7 +68,7 @@ export function fillInSpec(spec: any, config: any) {
           graph.newStack = true
         }
 
-        // x/y types (scatter, bubble)
+        // x/y types, scatter, bubble
         if (spec.type === 'xy' && !!series.category && !!series.value) {
           graph.xField = series.category.field
           graph.yField = series.value.field
@@ -66,13 +78,16 @@ export function fillInSpec(spec: any, config: any) {
           ${series.value.label}: [[${series.value.field}]]`
 
           graph.labelText = ''
+
+          // bubble
+          if (spec.type === 'xy' && series.size) {
+            graph.valueField = series.size.field
+            graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
+          } else {
+            delete graph.valueField
+          }
         }
 
-        // Bubble charts
-        if (!!graphSpec.valueField && !!series.size) {
-          graphSpec.valueField = series.size.field
-          graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
-        }
         spec.graphs.push(graph)
       }
     })
