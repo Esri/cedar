@@ -1,3 +1,27 @@
+export interface IFeature {
+  attributes: {}
+}
+
+export interface IFeatureSet {
+  features: IFeature[]
+}
+
+function flattenFeature(feature: IFeature, categoryField?: string) {
+  const attributes = feature.attributes
+  if (categoryField) {
+    // render function expects a property named 'categoryField'
+    // TODO: what if attributes already has a 'categoryField' property
+    attributes['categoryField'] = attributes[categoryField]
+  }
+  return feature.attributes
+}
+
+// just return an array of flattened features
+export function flatten(featureSet: IFeatureSet, categoryField?) {
+  return featureSet.features.map((feature) => (flattenFeature(feature, categoryField)))
+}
+
+// TODO: don't export this once we're sure we've got the logic right
 export function buildIndex(joinKeys: string[], featureSets: any[]) {
   const index = {}
   featureSets.forEach((featureSet, i) => {
@@ -17,22 +41,17 @@ export function buildIndex(joinKeys: string[], featureSets: any[]) {
 export function flattenFeatures(featureSets: any[], joinKeys: any[]) {
   const rows = []
 
-  // If we aren't joining, but we are appending
-  if (joinKeys.length === 0) {
-    featureSets.forEach((featureSet, i) => {
-      // const transformFunc = getTransformFunc(transformFuncs[i])
-      featureSet.features.forEach((feature) => {
-        rows.push(feature.attributes)
-      })
-    })
-    return rows
+  // for now we need joinKeys to be 1:1 w/ featureSets
+  if (joinKeys.length !== featureSets.length) {
+    throw new Error('Must have a joinKey for each featureSet')
   }
 
-  // TODO: if there's only 1 featureSet, do we need to build an index?
-  // couldn't we just return featureSet.features.map(feature => feature.attributes)
+  if (featureSets.length === 1) {
+    // no need to join, just the flattened features
+    return flatten(featureSets[0], joinKeys[0])
+  }
 
   // Otherwise join
-  // TODO: does joinKeys have to be 1:1 to featureSets? I think so
   const index = buildIndex(joinKeys, featureSets)
   const key = joinKeys[0] // TODO: support different `category` keys
   const uniqueValues = Object.keys(index)
@@ -53,5 +72,3 @@ export function flattenFeatures(featureSets: any[], joinKeys: any[]) {
 
   return rows
 }
-
-export default flattenFeatures

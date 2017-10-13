@@ -43,8 +43,19 @@ export function fillInSpec(spec: any, config: any) {
         // Set graph title
         graph.title = series.value.label
 
-        // TODO: Look at all fields
-        graph.valueField = `${series.value.field}_${d}`
+        /* tslint:disable prefer-conditional-expression */
+        if (config.datasets.length > 1) {
+          // data has been joined use dataset index to look up the value
+          // TODO: should this be dataset name?
+          // that would mean the names are required and unique
+          // why aren't we using a hash for datasets?
+          graph.valueField = `${series.value.field}_${d}`
+        } else {
+          graph.valueField = series.value.field
+        }
+        /* tslint:enable */
+        // TODO: map other fields besides value like color, size, etc
+
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
         graph.labelText = `[[${series.value.field}]]`
 

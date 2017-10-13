@@ -8,8 +8,8 @@ const builtBarSpec = {
       type: 'column',
       color: '#000000',
       title: 'Number of Students',
-      valueField: 'Number_of_SUM_0',
-      balloonText: 'Number of Students [[categoryField]]: <b>[[Number_of_SUM_0]]</b>',
+      valueField: 'Number_of_SUM',
+      balloonText: 'Number of Students [[categoryField]]: <b>[[Number_of_SUM]]</b>',
       labelText: '[[Number_of_SUM]]'
     }
   ],
@@ -118,7 +118,7 @@ const builtBarSpec = {
   ],
   categoryField: 'categoryField',
   titleField: 'categoryField',
-  valueField: 'Number_of_SUM_0'
+  valueField: 'Number_of_SUM'
 }
 
 export default builtBarSpec
