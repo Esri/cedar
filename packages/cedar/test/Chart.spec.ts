@@ -57,14 +57,14 @@ describe('new Chart w/o definition', () => {
   test('datasets should set the definition.dataset', () => {
     expect(chart.datasets(barDefinition.datasets).datasets()).toEqual(barDefinition.datasets)
   })
-  test('setSeries should set the definition.series', () => {
-    expect(chart.setSeries(barDefinition.series).getSeries()).toEqual(barDefinition.series)
+  test('series should set the definition.series', () => {
+    expect(chart.series(barDefinition.series).series()).toEqual(barDefinition.series)
   })
-  test('setType should set the definition.type', () => {
-    expect(chart.setType(barDefinition.type).getType()).toEqual(barDefinition.type)
+  test('type should set the definition.type', () => {
+    expect(chart.type(barDefinition.type).type()).toEqual(barDefinition.type)
   })
-  test('setOverrides should set the definition.overrides', () => {
-    expect(chart.setOverrides(barDefinition.overrides).getOverrides()).toEqual(barDefinition.overrides)
+  test('overrides should set the definition.overrides', () => {
+    expect(chart.overrides(barDefinition.overrides).overrides()).toEqual(barDefinition.overrides)
   })
 })
 
@@ -162,13 +162,13 @@ describe('new Chart w/ definition', () => {
   test('datasets should equal definition.datasets', () => {
     expect(chart.datasets()).toEqual(definition.datasets)
   })
-  test('getSeries should equal definition.series', () => {
-    expect(chart.getSeries()).toEqual(definition.series)
+  test('series should equal definition.series', () => {
+    expect(chart.series()).toEqual(definition.series)
   })
-  test('getType should equal definition.type', () => {
-    expect(chart.getType()).toEqual(definition.type)
+  test('type should equal definition.type', () => {
+    expect(chart.type()).toEqual(definition.type)
   })
-  test('getSpecification should equal definition.specification', () => {
-    expect(chart.getSpecification()).toEqual(definition.specification)
+  test('specification should equal definition.specification', () => {
+    expect(chart.specification()).toEqual(definition.specification)
   })
 })

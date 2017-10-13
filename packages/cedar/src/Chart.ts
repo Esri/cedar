@@ -112,63 +112,71 @@ export default class Chart {
     }
   }
 
-  // TODO: replace w/ series(), see datasets()
-  public getSeries() {
-    return this._definition ? this._definition.series : undefined
-  }
-  public setSeries(series) {
-    if (this._definition) {
-      this._definition.series = series
-      return this
+  public series(newSeries: ISeries[]): Chart
+  public series(): ISeries[]
+  public series(newSeries?: any): any {
+    if (newSeries === undefined) {
+      return this._definition ? this._definition.series : undefined
     } else {
-      return this.definition({
-        series
-      })
+      if (this._definition) {
+        this._definition.series = newSeries
+        return this
+      } else {
+        return this.definition({
+          series: newSeries
+        })
+      }
     }
   }
 
-  // TODO: replace w/ type(), see datasets()
-  public getType() {
-    return this._definition ? this._definition.type : undefined
-  }
-  public setType(type) {
-    if (this._definition) {
-      this._definition.type = type
-      return this
+  public type(newType: string): Chart
+  public type(): string
+  public type(newType?: any): any {
+    if (newType === undefined) {
+      return this._definition ? this._definition.type : undefined
     } else {
-      return this.definition({
-        type
-      })
+      if (this._definition) {
+        this._definition.type = newType
+        return this
+      } else {
+        return this.definition({
+          type: newType
+        })
+      }
     }
   }
 
-  // TODO: replace w/ spefication(), see datasets()
-  public getSpecification() {
-    return this._definition ? this._definition.specification : undefined
-  }
-  public setSpecification(specification) {
-    if (this._definition) {
-      this._definition.specification = specification
-      return this
+  public specification(newSpecification: {}): Chart
+  public specification(): {}
+  public specification(newSpecification?: any): any {
+    if (newSpecification === undefined) {
+      return this._definition ? this._definition.specification : undefined
     } else {
-      return this.definition({
-        specification
-      })
+      if (this._definition) {
+        this._definition.specification = newSpecification
+        return this
+      } else {
+        return this.definition({
+          specification: newSpecification
+        })
+      }
     }
   }
 
-  // TODO: replace w/ overrides(), see datasets()
-  public getOverrides() {
-    return this._definition ? this._definition.overrides : undefined
-  }
-  public setOverrides(overrides) {
-    if (this._definition) {
-      this._definition.overrides = overrides
-      return this
+  public overrides(newOverrides: {}): Chart
+  public overrides(): {}
+  public overrides(newOverrides?: any): any {
+    if (newOverrides === undefined) {
+      return this._definition ? this._definition.overrides : undefined
     } else {
-      return this.definition({
-        overrides
-      })
+      if (this._definition) {
+        this._definition.overrides = newOverrides
+        return this
+      } else {
+        return this.definition({
+          overrides: newOverrides
+        })
+      }
     }
   }
 
@@ -208,7 +216,8 @@ export default class Chart {
   // update chart from inline data and query responses
   public updateData(datasetsData) {
     const datasets = this.datasets()
-    this._data = datasets ? getChartData(datasets, this.getSeries(), datasetsData) : []
+    const series = this.series()
+    this._data = datasets ? getChartData(datasets, series, datasetsData) : []
     return this
   }
 
