@@ -1,5 +1,6 @@
 import { cedarAmCharts, deepMerge } from '@esri/cedar-amcharts'
-import { flattenFeatures } from './flatten/flatten'
+// import { append, flatten, join } from './flatten/flatten'
+import flattenFeatures from './flatten/flatten'
 import { getData } from './query/query'
 import { createFeatureServiceRequest } from './query/url'
 
@@ -7,90 +8,194 @@ function clone(json) {
   return JSON.parse(JSON.stringify(json))
 }
 
-export default class Chart {
-  private _series: any[]
-  private _datasets: any[]
-  private _chartSpecification: any
-  private _cedarSpecification: any
-  private _data: any[]
-  private _overrides: any
-  private _container: string
+// TODO: move this to flatten, or?
+function getChartData(datasets: IDataset[], series: ISeries[], datasetsData?: {}) {
+  const featureSets = []
+  const joinKeys = []
+  // TODO: remove transformFucntions here and from flattenFeatures
+  const transformFunctions = []
 
-  constructor(container, options: any = {}) {
+  // get array of featureSets from datasets data or datasetsData
+  datasets.forEach((dataset, i) => {
+    // TODO: make name required on datasets, or required if > 1 dataset?
+    const name = dataset.name || `dataset${i}`
+    // if dataset doesn't have inline data use data that was passed in
+    const featureSet = dataset.data || datasetsData[name]
+    if (featureSet) {
+      featureSets.push(featureSet)
+    }
+    // TOOD: later support append, but for now, always do join
+    // assuming a 1:1 relationship between datasets and series
+    if (!dataset.append) {
+      joinKeys.push(series[i].category.field)
+    }
+  })
+
+  // flatten data from all datasets into a single table
+  // if there's only one dataset, just flatten the features
+  // if more than one, need to join or append the feature sets
+  // return (featureSets.length === 1) ? flatten(featureSets[0]) : (joinKeys.length > 0) ? join(featureSets, joinKeys) : append(featureSets)
+  return flattenFeatures(featureSets, joinKeys)
+}
+
+// TODO: where should these interfaces live?
+export interface IDataset {
+  name: string,
+  url?: string,
+  data?: any[],
+  query: {},
+  append?: boolean
+}
+
+export interface IField {
+  field: string,
+  label?: string
+}
+
+export interface ISeries {
+  source: string,
+  category?: IField,
+  value?: IField
+}
+
+export interface IDefinition {
+  datasets?: IDataset[],
+  series?: ISeries[],
+  type?: string
+  specification?: {}
+  overrides?: {}
+}
+
+export default class Chart {
+  private _container: string
+  private _definition: IDefinition
+  private _data: any[]
+
+  constructor(container, definition?) {
     if (!container) {
       throw new Error('A container is required')
     }
     this._container = container
 
-    // If there are datasets...
-    if (options.datasets) {
-      this.datasets = options.datasets
-    }
-    // If there are series...
-    if (options.series) {
-      this.series = options.series
-    }
-
-    if (options) {
-      this.cedarSpecification = options
+    if (definition) {
+      // set the definition
+      this.definition(clone(definition))
     }
   }
 
   // Setters and getters
-
-  // Datasets
-  public get datasets(): any[] {
-    return this._datasets
-  }
-  public set datasets(val: any[]) {
-    // TODO: type any[] can't be a function, why is this code checking for that
-    if (typeof val !== 'function' && (val instanceof Array)) {
-      this._datasets = clone(val)
+  public definition(newDefinition: IDefinition): Chart
+  public definition(): IDefinition
+  public definition(newDefinition?: any): any {
+    if (newDefinition === undefined) {
+      return this._definition
+    } else {
+      this._definition = newDefinition
+      return this
     }
   }
 
-  // Series
-  public get series(): any[] {
-    return this._series
-  }
-  public set series(val: any[]) {
-    // TODO: type any[] can't be a function, why is this code checking for that
-    if (typeof val !== 'function' && (val instanceof Array)) {
-      this._series = deepMerge([], val)
+  public datasets(newDatasets: IDataset[]): Chart
+  public datasets(): IDataset[]
+  public datasets(newDatasets?: any): any {
+    if (newDatasets === undefined) {
+      return this._definition ? this._definition.datasets : undefined
+    } else {
+      if (this._definition) {
+        this._definition.datasets = newDatasets
+        return this
+      } else {
+        return this.definition({
+          datasets: newDatasets
+        })
+      }
     }
   }
 
-  // Data
-  public get data(): any[] {
+  public series(newSeries: ISeries[]): Chart
+  public series(): ISeries[]
+  public series(newSeries?: any): any {
+    if (newSeries === undefined) {
+      return this._definition ? this._definition.series : undefined
+    } else {
+      if (this._definition) {
+        this._definition.series = newSeries
+        return this
+      } else {
+        return this.definition({
+          series: newSeries
+        })
+      }
+    }
+  }
+
+  public type(newType: string): Chart
+  public type(): string
+  public type(newType?: any): any {
+    if (newType === undefined) {
+      return this._definition ? this._definition.type : undefined
+    } else {
+      if (this._definition) {
+        this._definition.type = newType
+        return this
+      } else {
+        return this.definition({
+          type: newType
+        })
+      }
+    }
+  }
+
+  public specification(newSpecification: {}): Chart
+  public specification(): {}
+  public specification(newSpecification?: any): any {
+    if (newSpecification === undefined) {
+      return this._definition ? this._definition.specification : undefined
+    } else {
+      if (this._definition) {
+        this._definition.specification = newSpecification
+        return this
+      } else {
+        return this.definition({
+          specification: newSpecification
+        })
+      }
+    }
+  }
+
+  public overrides(newOverrides: {}): Chart
+  public overrides(): {}
+  public overrides(newOverrides?: any): any {
+    if (newOverrides === undefined) {
+      return this._definition ? this._definition.overrides : undefined
+    } else {
+      if (this._definition) {
+        this._definition.overrides = newOverrides
+        return this
+      } else {
+        return this.definition({
+          overrides: newOverrides
+        })
+      }
+    }
+  }
+
+  // chart data
+  public data() {
     return this._data
   }
 
-  // Chart Specification
-  public get chartSpecification(): any {
-    return this._chartSpecification
-  }
-  public set chartSpecification(chartSpec: any) {
-    this._chartSpecification = clone(chartSpec)
-  }
-
-  // Cedar Spec
-  public get cedarSpecification(): any {
-    return this._cedarSpecification
-  }
-  public set cedarSpecification(spec: any) {
-    // NOTE: we can only use clone here if spec is JSON
-    this._cedarSpecification = clone(spec)
-  }
-
-  public queryData() {
+  // query non-inline datasets
+  public query() {
     const names = []
     const requests = []
     const responseHash = {}
+    const datasets = this.datasets()
 
-    if (this.datasets) {
-      this.datasets.forEach((dataset, i) => {
+    if (datasets) {
+      datasets.forEach((dataset, i) => {
         // only query datasets that don't have inline data
-        if (!dataset.data) {
+        if (dataset.url) {
           // TODO: make name required on datasets, or required if > 1 dataset?
           names.push(dataset.name || `dataset${i}`)
           requests.push(getData(createFeatureServiceRequest(dataset)))
@@ -108,38 +213,24 @@ export default class Chart {
     })
   }
 
-  public updateData(datasetsData: {}) {
-    const featureSets = []
-    const joinKeys = []
-    // TODO: remove transformFucntions here and from flattenFeatures
-    const transformFunctions = []
-
-    // get array of featureSets from datasets data or datasetsData
-    this.datasets.forEach((dataset, i) => {
-      // TODO: make name required on datasets, or required if > 1 dataset?
-      const name = dataset.name || `dataset${i}`
-      // if dataset doesn't have inline data use data that was passed in
-      const featureSet = dataset.data || datasetsData[name]
-      if (featureSet) {
-        featureSets.push(featureSet)
-      }
-      // TODO: this is broken, there is not a 1:1 relationship between datasets/series
-      if (!dataset.merge) {
-        joinKeys.push(this.series[i].category.field)
-      }
-    })
-
-    this._data = flattenFeatures(featureSets, joinKeys)
+  // update chart from inline data and query responses
+  public updateData(datasetsData) {
+    const datasets = this.datasets()
+    const series = this.series()
+    this._data = datasets ? getChartData(datasets, series, datasetsData) : []
     return this
   }
 
+  // re-draw the chart based on the current state
   public render() {
-    cedarAmCharts(this._container, this.cedarSpecification, this.data)
+    cedarAmCharts(this._container, this.definition(), this.data())
     return this
   }
 
+  // rollup the query, update, and render functions
+  // useful for showing the chart for the first time
   public show() {
-    return this.queryData()
+    return this.query()
     .then((response) => {
       return this.updateData(response).render()
     })
