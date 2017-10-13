@@ -1,7 +1,7 @@
 import { cedarAmCharts, deepMerge } from '@esri/cedar-amcharts'
 // import { append, flatten, join } from './flatten/flatten'
 import flattenFeatures from './flatten/flatten'
-import { getData } from './query/query'
+import { data } from './query/query'
 import { createFeatureServiceRequest } from './query/url'
 
 function clone(json) {
@@ -59,8 +59,8 @@ export interface ISeries {
 }
 
 export interface IDefinition {
-  datasets: IDataset[],
-  series: ISeries[],
+  datasets?: IDataset[],
+  series?: ISeries[],
   type?: string
   specification?: {}
   overrides?: {}
@@ -79,33 +79,40 @@ export default class Chart {
 
     if (definition) {
       // set the definition
-      this.setDefinition(clone(definition))
+      this.definition(clone(definition))
     }
   }
 
   // Setters and getters
-  public getDefinition() {
-    return this._definition
-  }
-  public setDefinition(definition) {
-    this._definition = definition
-    return this
-  }
-
-  public getDatasets() {
-    return this._definition ? this._definition.datasets : undefined
-  }
-  public setDatasets(datasets) {
-    if (this._definition) {
-      this._definition.datasets = datasets
-      return this
+  public definition(newDefinition: IDefinition): Chart
+  public definition(): IDefinition
+  public definition(newDefinition?: any): any {
+    if (newDefinition === undefined) {
+      return this._definition
     } else {
-      return this.setDefinition({
-        datasets
-      })
+      this._definition = newDefinition
+      return this
     }
   }
 
+  public datasets(newDatasets: IDataset[]): Chart
+  public datasets(): IDataset[]
+  public datasets(newDatasets?: any): any {
+    if (newDatasets === undefined) {
+      return this._definition ? this._definition.datasets : undefined
+    } else {
+      if (this._definition) {
+        this._definition.datasets = newDatasets
+        return this
+      } else {
+        return this.definition({
+          datasets: newDatasets
+        })
+      }
+    }
+  }
+
+  // TODO: replace w/ series(), see datasets()
   public getSeries() {
     return this._definition ? this._definition.series : undefined
   }
@@ -114,12 +121,13 @@ export default class Chart {
       this._definition.series = series
       return this
     } else {
-      return this.setDefinition({
+      return this.definition({
         series
       })
     }
   }
 
+  // TODO: replace w/ type(), see datasets()
   public getType() {
     return this._definition ? this._definition.type : undefined
   }
@@ -128,12 +136,13 @@ export default class Chart {
       this._definition.type = type
       return this
     } else {
-      return this.setDefinition({
+      return this.definition({
         type
       })
     }
   }
 
+  // TODO: replace w/ spefication(), see datasets()
   public getSpecification() {
     return this._definition ? this._definition.specification : undefined
   }
@@ -142,12 +151,13 @@ export default class Chart {
       this._definition.specification = specification
       return this
     } else {
-      return this.setDefinition({
+      return this.definition({
         specification
       })
     }
   }
 
+  // TODO: replace w/ overrides(), see datasets()
   public getOverrides() {
     return this._definition ? this._definition.overrides : undefined
   }
@@ -156,23 +166,23 @@ export default class Chart {
       this._definition.overrides = overrides
       return this
     } else {
-      return this.setDefinition({
+      return this.definition({
         overrides
       })
     }
   }
 
   // chart data
-  public getData() {
+  public data() {
     return this._data
   }
 
   // query non-inline datasets
-  public queryData() {
+  public query() {
     const names = []
     const requests = []
     const responseHash = {}
-    const datasets = this.getDatasets()
+    const datasets = this.datasets()
 
     if (datasets) {
       datasets.forEach((dataset, i) => {
@@ -180,7 +190,7 @@ export default class Chart {
         if (dataset.url) {
           // TODO: make name required on datasets, or required if > 1 dataset?
           names.push(dataset.name || `dataset${i}`)
-          requests.push(getData(createFeatureServiceRequest(dataset)))
+          requests.push(data(createFeatureServiceRequest(dataset)))
         }
       })
     }
@@ -197,21 +207,21 @@ export default class Chart {
 
   // update chart from inline data and query responses
   public updateData(datasetsData) {
-    const datasets = this.getDatasets()
+    const datasets = this.datasets()
     this._data = datasets ? getChartData(datasets, this.getSeries(), datasetsData) : []
     return this
   }
 
   // re-draw the chart based on the current state
   public render() {
-    cedarAmCharts(this._container, this.getDefinition(), this.getData())
+    cedarAmCharts(this._container, this.definition(), this.data())
     return this
   }
 
   // rollup the query, update, and render functions
   // useful for showing the chart for the first time
   public show() {
-    return this.queryData()
+    return this.query()
     .then((response) => {
       return this.updateData(response).render()
     })

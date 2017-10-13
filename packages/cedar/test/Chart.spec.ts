@@ -42,20 +42,20 @@ describe('new Chart w/o definition', () => {
   beforeEach(() => {
     chart = new Chart('chart')
   })
-  test('getDefinition should return undefined', () => {
-    expect(chart.getDefinition()).toBeUndefined()
+  test('definition should return undefined', () => {
+    expect(chart.definition()).toBeUndefined()
   })
-  test('getData should return undefined', () => {
-    expect(chart.getData()).toBeUndefined()
+  test('data should return undefined', () => {
+    expect(chart.data()).toBeUndefined()
   })
-  test('getData should return undefined', () => {
-    expect(chart.getData()).toBeUndefined()
+  test('data should return undefined', () => {
+    expect(chart.data()).toBeUndefined()
   })
-  test('setDefinition should set the definition', () => {
-    expect(chart.setDefinition(barDefinition).getDefinition()).toEqual(barDefinition)
+  test('definition should set the definition', () => {
+    expect(chart.definition(barDefinition).definition()).toEqual(barDefinition)
   })
-  test('setDatasets should set the definition.dataset', () => {
-    expect(chart.setDatasets(barDefinition.datasets).getDatasets()).toEqual(barDefinition.datasets)
+  test('datasets should set the definition.dataset', () => {
+    expect(chart.datasets(barDefinition.datasets).datasets()).toEqual(barDefinition.datasets)
   })
   test('setSeries should set the definition.series', () => {
     expect(chart.setSeries(barDefinition.series).getSeries()).toEqual(barDefinition.series)
@@ -77,7 +77,7 @@ describe('when updating data', () => {
     const queryDataResponse = {
       Number_of_SUM: featureServiceResponse
     }
-    expect(chart.updateData(queryDataResponse).getData()).toEqual(expectedChartData.barSingleDataset)
+    expect(chart.updateData(queryDataResponse).data()).toEqual(expectedChartData.barSingleDataset)
   })
 })
 
@@ -156,11 +156,11 @@ describe('new Chart w/ definition', () => {
     /* tslint:enable */
     chart = new Chart('chart', definition)
   })
-  test('getDefinition should return definition', () => {
-    expect(chart.getDefinition()).toEqual(definition)
+  test('definition should return definition', () => {
+    expect(chart.definition()).toEqual(definition)
   })
-  test('getDatasets should equal definition.datasets', () => {
-    expect(chart.getDatasets()).toEqual(definition.datasets)
+  test('datasets should equal definition.datasets', () => {
+    expect(chart.datasets()).toEqual(definition.datasets)
   })
   test('getSeries should equal definition.series', () => {
     expect(chart.getSeries()).toEqual(definition.series)
