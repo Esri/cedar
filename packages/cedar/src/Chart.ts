@@ -1,7 +1,7 @@
 import { cedarAmCharts, deepMerge } from '@esri/cedar-amcharts'
 // import { append, flatten, join } from './flatten/flatten'
 import flattenFeatures from './flatten/flatten'
-import { data } from './query/query'
+import { getData } from './query/query'
 import { createFeatureServiceRequest } from './query/url'
 
 function clone(json) {
@@ -190,7 +190,7 @@ export default class Chart {
         if (dataset.url) {
           // TODO: make name required on datasets, or required if > 1 dataset?
           names.push(dataset.name || `dataset${i}`)
-          requests.push(data(createFeatureServiceRequest(dataset)))
+          requests.push(getData(createFeatureServiceRequest(dataset)))
         }
       })
     }
