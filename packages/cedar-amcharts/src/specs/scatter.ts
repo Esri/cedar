@@ -25,7 +25,7 @@ const scatter = {
       cursorAlpha: 0.3,
       valueLineAlpha: 0.3,
       valueLineBalloonEnabled: true
-  },  
+  },
   graphs: [{
     fillAlphas: 0,
     lineAlpha: 0,

@@ -12,7 +12,7 @@
     "clean:deps": "rimraf node_modules",
     "clean:dist": "rimraf ./dist && mkdir dist",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "lint:fix": "tslint --fix",
+    "lint:fix": "npm run lint -- --fix",
     "prebuild": "npm run clean:dist",
     "build": "tsc && rollup -c profiles/dev.js",
     "prebuild:prod": "npm run build",

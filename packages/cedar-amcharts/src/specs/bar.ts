@@ -6,7 +6,7 @@ export const bar = {
     categoryBalloonEnabled: false,
     valueLineBalloonEnabled: true,
     valueLineEnabled: false
-  }, 
+  },
   graphs: [{
     type: 'column',
   }],
@@ -18,6 +18,5 @@ export const bar = {
     enabled: true
   }
 }
-
 
 export default bar
