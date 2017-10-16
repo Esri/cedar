@@ -5,7 +5,7 @@
     "build:prod": "lerna run build:prod --scope @esri/cedar-amcharts && lerna run build:prod --@esri/scope cedar",
     "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run copy:docs",
     "precopy:docs": "npm run build",
-    "copy:docs": "mkdir -p explore/scripts && cp packages/cedar/dist/umd/*.js* explore/scripts",
+    "copy:docs": "mkdir -p explore/scripts && cp -r packages/cedar/dist/umd/ explore/scripts/",
     "copy:readme": "cp README.md packages/cedar/README.md",
     "predeploy": "npm run copy:docs",
     "deploy": "surge ./explore cedar-v1.surge.sh",
