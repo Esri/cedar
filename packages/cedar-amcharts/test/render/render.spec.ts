@@ -17,7 +17,7 @@ describe('Spec gets filled in properly', () => {
     spec.dataProvider = barSpec.realData
     spec.categoryField = 'categoryField'
     const result = render.fillInSpec(spec, barSpec.spec)
-    expect(result.categoryAxis.gridAlpha).toBe(0.07)
+    expect(result.theme).toBe('calcite')
     expect(result).toEqual(builtBarSpec)
   })
 })

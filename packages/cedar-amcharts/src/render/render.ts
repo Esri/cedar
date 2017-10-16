@@ -1,3 +1,4 @@
+/* globals AmCharts:false */
 import { deepMerge } from '../helpers/helpers'
 import specs from '../specs/specs'
 
@@ -5,6 +6,7 @@ import specs from '../specs/specs'
 export function renderChart(elementId: string, definition: any, data?: any) {
   if (definition.type === 'custom') {
     const chart = AmCharts.makeChart(elementId, definition.specification)
+
     return
   }
 

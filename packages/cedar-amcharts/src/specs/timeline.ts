@@ -1,6 +1,6 @@
 const timeline = {
   type: 'serial',
-  theme: 'light',
+  theme: 'calcite',
   marginRight: 40,
   marginLeft: 40,
   autoMarginOffset: 20,

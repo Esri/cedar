@@ -1,6 +1,7 @@
 const pie = {
   type: 'pie',
-  innerRadius: '30%',
+  theme: 'calcite',
+  innerRadius: '70%',
   startDuration: 0,
   graphs: [{}],
   groupPercent: 5,
@@ -11,6 +12,9 @@ const pie = {
     position: 'bottom',
     autoMargins: false
   },
+  export: {
+    enabled: true
+  }
 }
 
 export default pie

@@ -23,10 +23,5 @@
       "value": {"field": "Number_of_SUM", "label": "Number of Students"},
       "source": "Number_of_SUM"
     }
-  ],
-  "overrides": {
-    "categoryAxis": {
-      "labelRotation": -45
-    }
-  }
+  ]
 }

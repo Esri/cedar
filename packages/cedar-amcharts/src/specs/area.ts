@@ -1,16 +1,18 @@
 const area = {
   type: 'serial',
-  theme: 'light',
+  theme: 'calcite',
+  chartCursor: {
+    categoryBalloonEnabled: false,
+    valueLineBalloonEnabled: true
+  },
   graphs: [{
-    fillAlphas: 0.6,
-    lineAlpha: 1,
-    dashLengthField: 'dashLengthLine',
-    useLineColorForBulletBorder: true,
-    bulletBorderThickness: 3,
     bullet: 'circle',
+    bulletAlpha: 1,
     bulletBorderAlpha: 0.8,
-    bulletAlpha: 0.8,
-    bulletColor: '#FFFFFF',
+    bulletBorderThickness: 0,
+    dashLengthField: 'dashLengthLine',
+    fillAlphas: 0.5,
+    useLineColorForBulletBorder: true
   }],
   legend: {
     horizontalGap: 10,
@@ -19,26 +21,8 @@ const area = {
     markerSize: 10
   },
   valueAxes: [ {
-    gridColor: '#FFFFFF',
-    gridAlpha: 0.2,
-    dashLength: 0,
     stackType: 'regular'
   } ],
-  gridAboveGraphs: true,
-  startDuration: 0.1,
-  startEffect: 'easeInSine',
-  chartCursor: {
-    categoryBalloonEnabled: false,
-    cursorAlpha: 0,
-    zoomable: false
-  },
-  categoryAxis: {
-    gridPosition: 'start',
-    gridAlpha: 0,
-    tickPosition: 'start',
-    tickLength: 20,
-    guides: []
-  },
   export: {
     enabled: true
   }

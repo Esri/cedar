@@ -1,5 +1,4 @@
 const radar = {
-  theme: 'light',
   type: 'radar',
   valueAxes: [{
     gridType: 'circles',
@@ -11,7 +10,7 @@ const radar = {
     step: 1
   },
   startDuration: 0,
-  graphs: [{}],
+  graphs: [{ graphFillAlpha: 0}],
   groupPercent: 5,
   balloon: {
      fixedPosition: true
