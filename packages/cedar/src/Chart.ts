@@ -89,19 +89,39 @@ export default class Chart {
     }
   }
 
-  public datasets(newDatasets: IDataset[]): Chart
+  public datasets(datasetsOrName: IDataset[]): Chart
+  public datasets(datasetsOrName: string): IDataset
   public datasets(): IDataset[]
-  public datasets(newDatasets?: any): any {
-    if (newDatasets === undefined) {
-      return this._definition ? this._definition.datasets : undefined
+  public datasets(datasetsOrName?: any): any {
+    const definition = this._definition
+    if (datasetsOrName === undefined) {
+      // get all definition datasets
+      return definition ? definition.datasets : undefined
     } else {
-      if (this._definition) {
-        this._definition.datasets = newDatasets
-        return this
+      if (typeof datasetsOrName === 'string') {
+        // get dataset by name
+        if (definition && definition.datasets) {
+          let match
+          definition.datasets.some((dataset) => {
+            if (dataset.name === datasetsOrName) {
+              match = dataset
+              return true
+            }
+          })
+          return match
+        } else {
+          return undefined
+        }
       } else {
-        return this.definition({
-          datasets: newDatasets
-        })
+        // set definition datasets
+        if (definition) {
+          definition.datasets = datasetsOrName
+          return this
+        } else {
+          return this.definition({
+            datasets: datasetsOrName
+          })
+        }
       }
     }
   }
@@ -210,8 +230,7 @@ export default class Chart {
   // update chart from inline data and query responses
   public updateData(datasetsData) {
     const datasets = this.datasets()
-    const series = this.series()
-    this._data = datasets ? getChartData(datasets, series, datasetsData) : []
+    this._data = datasets ? getChartData(datasets, this.series(), datasetsData) : []
     return this
   }
 
