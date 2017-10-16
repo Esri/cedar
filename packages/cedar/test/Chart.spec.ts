@@ -159,9 +159,6 @@ describe('new Chart w/ definition', () => {
   test('definition should return definition', () => {
     expect(chart.definition()).toEqual(definition)
   })
-  test('datasets should equal definition.datasets', () => {
-    expect(chart.datasets()).toEqual(definition.datasets)
-  })
   test('series should equal definition.series', () => {
     expect(chart.series()).toEqual(definition.series)
   })
@@ -170,5 +167,8 @@ describe('new Chart w/ definition', () => {
   })
   test('specification should equal definition.specification', () => {
     expect(chart.specification()).toEqual(definition.specification)
+  })
+  test('should return dataset by name', () => {
+    expect(chart.datasets('Dewitt')).toEqual(definition.datasets[1])
   })
 })
