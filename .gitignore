@@ -51,4 +51,4 @@ packages/*/yarn.lock
 # packages/cedar/README.md
 
 # umd build is copied from dist to docs site
-explore/scripts/
+docs/scripts/
