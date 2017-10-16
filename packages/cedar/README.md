@@ -166,7 +166,7 @@ This repository is a monoreop managed using [lerna](https://github.com/lerna/ler
 1. Fork this repository and clone 'cedar' locally
 1. `cd` into the `cedar` folder
 1. Install the dependencies with `npm install`
-1. to run the docs site locally, start a web server at the root folder and visit `/explore`
+1. to run the docs site locally, start a web server at the root folder and visit `/docs`
 1. to rebuild the script files used by the docs page whenver the source code is updated, run `npm start`
 1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
