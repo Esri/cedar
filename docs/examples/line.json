@@ -1,0 +1,63 @@
+{
+  "type": "line",
+  "datasets": [
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/DC_Crashes/FeatureServer/0",
+      "query": {
+        "where": "REPORTDATE > '2007-01-01' AND REPORTDATE < '2018-01-01'",
+        "groupByFieldsForStatistics": "EXTRACT(YEAR from REPORTDATE)",
+        "outStatistics": [
+          {
+            "statisticType": "sum",
+            "onStatisticField": "MAJORINJURIES",
+            "outStatisticFieldName": "MAJORINJURIES_SUM"
+          },{
+            "statisticType": "sum",
+            "onStatisticField": "MINORINJURIES",
+            "outStatisticFieldName": "MINORINJURIES_SUM"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    }
+],
+"series": [
+  {
+    "category": {"field": "EXPR_1", "label": "Year"},
+    "group": true,
+    "value": {
+      "field": "MAJORINJURIES_SUM",
+      "label": "Major Injuries"
+    }
+  },
+  {
+    "category": {"field": "EXPR_1", "label": "Year"},
+    "value": {
+      "field": "MINORINJURIES_SUM",
+      "label": "Minor Injuries"
+    },
+    "group": true
+  }
+],
+"overrides": {
+  "categoryAxis": {
+    "guides": [{
+      "category": "2015",
+      "lineColor": "#CC0000",
+      "lineAlpha": 1,
+      "dashLength": 2,
+      "inside": true,
+      "labelRotation": 90,
+      "label": "VisionZero Started"
+    },{
+      "category": "2024",
+      "lineColor": "#CC0000",
+      "lineAlpha": 1,
+      "dashLength": 2,
+      "inside": true,
+      "labelRotation": 90,
+      "label": "VisionZero Goal"
+    }]
+  }
+}
+}

@@ -1,0 +1,30 @@
+{
+  "extends": "tslint:latest",
+  "rules": {
+    "comment-format": [
+      true,
+      "check-space"
+    ],
+    "indent": [
+      true,
+      "spaces",
+      2
+    ],
+    "no-duplicate-variable": true,
+    "no-eval": true,
+    "no-string-literal": false,
+    "semicolon": [
+      true,
+      "never"
+    ],
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "object-literal-sort-keys": false,
+    "trailing-comma": false,
+    "max-line-length": false,
+    "no-shadowed-variable": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+  }
+}

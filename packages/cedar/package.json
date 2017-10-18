@@ -1,0 +1,80 @@
+{
+  "name": "@esri/cedar",
+  "version": "0.0.0",
+  "description": "Visualization framework for the ArcGIS Platform",
+  "files": ["dist"],
+  "main": "dist/umd/cedar.js",
+  "browser": "dist/umd/cedar.js",
+  "module": "dist/esm/index.js",
+  "js:next": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
+  "scripts": {
+    "clean:deps": "rimraf node_modules",
+    "clean:dist": "rimraf dist && mkdir dist",
+    "precopy:themes": "mkdir dist/esm/themes && mkdir dist/umd/themes",
+    "copy:themes": "cp -r ../cedar-amcharts/src/themes/ dist/esm/themes/amCharts/ && cp -r ../cedar-amcharts/src/themes dist/umd/themes/amCharts/",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint:fix": "tslint --fix",
+    "prebuild": "npm run clean:dist",
+    "build": "tsc && rollup -c profiles/dev.js && npm run copy:themes",
+    "prebuild:prod": "npm run build",
+    "build:prod": "rollup -c profiles/prod.js",
+    "pretest": "npm run lint",
+    "test": "jest --coverage",
+    "test:watch": "npm run test -- --watch",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/esri/cedar.git"
+  },
+  "author": "Ben Stoltz <bstoltz@esri.com>",
+  "license": "Apache-2.0",
+  "keyword": [
+    "ArcGIS",
+    "Charting",
+    "Visualization",
+    "Vega",
+    "D3",
+    "AmCharts"
+  ],
+  "bugs": {
+    "url": "https://github.com/esri/cedar/issues"
+  },
+  "homepage": "https://github.com/esri/cedar#readme",
+  "jest": {
+    "transform": {
+      ".(ts)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "\\.spec\\.ts?$",
+    "modulePaths": [
+      "<rootDir>/src/",
+      "<rootDir>/node_modules/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "js",
+      "json"
+    ]
+  },
+  "dependencies": {
+    "amcharts3": "amcharts/amcharts3",
+    "@esri/cedar-amcharts": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "20.0.2",
+    "@types/node": "^8.0.14",
+    "jest": "^20.0.4",
+    "rimraf": "^2.6.1",
+    "rollup": "^0.45.2",
+    "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "rollup-watch": "^4.3.1",
+    "semistandard": "^11.0.0",
+    "snazzy": "^7.0.0",
+    "ts-jest": "^20.0.7",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.1"
+  }
+}

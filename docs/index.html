@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <title>Cedar - bar chart</title>
+
+  </head>
+  <body id="" onload="">
+    <!-- Styles -->
+    <style>
+    .container {
+          width: 80%;
+          margin: auto;
+          display: flex;
+          height: 600px;
+      }
+      .panel {
+        flex: 1;
+        text-align: center;
+      }
+      .chart {
+          flex: 1;
+      }
+      #editor {
+        position: relative !important;
+        border: 1px solid lightgray;
+        margin: auto;
+        height: 600px;
+        width: 90%;
+      }
+    .chart {
+      border: 1px solid #444;
+    }
+    #styleList ul {
+      list-style-type: none;
+      padding:0;
+      margin: 0;
+    }
+    #styleList ul li {
+      cursor: pointer;
+      padding: 15px 10px;
+      border-bottom: 1px solid #CCC;
+    }
+    #styleList ul li:hover {
+      background-color: #440000;
+      color: #FFF;
+    }
+    button {
+      padding: 15px;
+      background-color: #000088;
+      color: white;
+      font-size: 1.1em;
+      cursor: pointer;
+    }
+    </style>
+
+    <!-- load the amCharts base library -->
+    <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <!-- for bar, line, and area charts -->
+    <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <!-- for pie charts -->
+    <script src="https://www.amcharts.com/lib/3/pie.js"></script>
+    <!-- for scatter and bubble charts -->
+    <script src="https://www.amcharts.com/lib/3/xy.js"></script>
+    <!-- for radar charts -->
+    <script src="https://www.amcharts.com/lib/3/radar.js"></script>
+    <!-- optioinally load the amcharts plugin to export the chart as and image or table -->
+    <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+    <!-- optionally load calcite theme -->
+    <script src="./scripts/themes/amCharts/calcite.js"></script>
+    <!-- load cedar -->
+    <script src="./scripts/cedar.js"></script>
+    
+
+<!-- HTML -->
+<h1>@esri/cedar</h1>
+<p>Select a chart type to see the chart and the JSON used to create it. Update the JSON and click "Update Chart".
+  Learn more at our <a href="https://github.com/esri/cedar">GitHub repository</a>, or see the <a href="http://esri.github.io/cedar/">v0.x documentation</a>.</p>
+<section class="container">
+  <div id="styleList">
+    <h3>Chart Type</h3>
+
+  </div>
+  <div class="panel">
+    <div id="editor" class="text" rows="40" cols="100"/> </div>
+    <button id="update" onclick="loadEditor()">Update Chart</buttonc
+    <br />
+  </div>
+  <div id="chart" class="chart"></div>
+</section>
+
+<!-- Chart code -->
+<script src="http://ajaxorg.github.io/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/xcode");
+    editor.getSession().setMode("ace/mode/json");
+
+var styles = ["bar", "bar-grouped", "bar-stacked", "horizontal", "radar", "bubble", "area", "line", "pie", "scatter"];
+buildMenu(styles);
+
+function buildMenu(styles) {
+  var ul = document.createElement('ul');
+  document.getElementById('styleList').appendChild(ul);
+
+  function buildOption(filename) {
+    var li = document.createElement('li');
+    li.setAttribute('class','style');
+    li.setAttribute('onclick','loadExample("' + filename + '")');
+    ul.appendChild(li);
+    t = document.createTextNode(filename);
+    li.innerHTML=li.innerHTML + filename;
+  }
+
+  styles.forEach(function(style, index, arr) {
+    buildOption(style);
+  });
+
+  // Custom option
+  buildOption("Custom")
+
+  return ul;
+}
+
+function loadExample(style) {
+  if(style.length == 0 || style == "Custom") {
+    editor.setValue();
+    return;
+  }
+  loadFile(style, function(configJson) {
+    editor.setValue(configJson); // document.getElementById("editor").value;
+    var config = JSON.parse(configJson);
+    displayChart(config);
+  });
+}
+function loadEditor() {
+  var configJson = editor.getValue(); // document.getElementById("editor").value;
+  var config = JSON.parse(configJson);
+  displayChart(config);
+}
+
+let chart;
+function displayChart(config) {
+    chart = new cedar.Chart("chart", config);
+    chart.show()
+}
+
+function loadFile(style, cb) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+         // Typical action to be performed when the document is ready:
+         cb(xhttp.responseText)
+      }
+  };
+  xhttp.open("GET", "./examples/" + style + ".json", true);
+  xhttp.send();
+}
+
+</script>
+
+<a href="https://github.com/Esri/cedar/issues/242">Example Goal</a>
+</body>
+</html>

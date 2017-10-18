@@ -1,0 +1,30 @@
+{
+  "type": "sparkline",
+  "datasets": [
+    {
+      "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/DC_Crashes/FeatureServer/0",
+      "where": "REPORTDATE > '2007-01-01' AND REPORTDATE < '2018-01-01'",
+      "query": {
+        "groupByFieldsForStatistics": "EXTRACT(YEAR from REPORTDATE)",
+        "outStatistics": [
+          {
+            "statisticType": "sum",
+            "onStatisticField": "MAJORINJURIES",
+            "outStatisticFieldName": "MAJORINJURIES_SUM"
+          }
+        ],
+        "sqlFormat": "standard"
+      }
+    }
+],
+"series": [
+  {
+    "category": {"field": "EXPR_1", "label": "Year"},
+    "group": true,
+    "value": {
+      "field": "MAJORINJURIES_SUM",
+      "label": "Major Injuries"
+    }
+  }
+]
+}
