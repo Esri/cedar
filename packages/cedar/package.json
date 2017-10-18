@@ -1,8 +1,10 @@
 {
   "name": "@esri/cedar",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha",
   "description": "Visualization framework for the ArcGIS Platform",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "main": "dist/umd/cedar.js",
   "browser": "dist/umd/cedar.js",
   "module": "dist/esm/index.js",
@@ -59,7 +61,7 @@
   },
   "dependencies": {
     "amcharts3": "amcharts/amcharts3",
-    "@esri/cedar-amcharts": "^0.0.0"
+    "@esri/cedar-amcharts": "^1.0.0-alpha"
   },
   "devDependencies": {
     "@types/jest": "20.0.2",
