@@ -89,114 +89,54 @@ export default class Chart {
     }
   }
 
-  public datasets(datasetsOrName: IDataset[]): Chart
-  public datasets(datasetsOrName: string): IDataset
+  public datasets(newDatasets: IDataset[]): Chart
   public datasets(): IDataset[]
-  public datasets(datasetsOrName?: any): any {
-    const definition = this._definition
-    if (datasetsOrName === undefined) {
-      // get all definition datasets
-      return definition ? definition.datasets : undefined
-    } else {
-      if (typeof datasetsOrName === 'string') {
-        // get dataset by name
-        if (definition && definition.datasets) {
-          let match
-          definition.datasets.some((dataset) => {
-            if (dataset.name === datasetsOrName) {
-              match = dataset
-              return true
-            }
-          })
-          return match
-        } else {
-          return undefined
-        }
-      } else {
-        // set definition datasets
-        if (definition) {
-          definition.datasets = datasetsOrName
-          return this
-        } else {
-          return this.definition({
-            datasets: datasetsOrName
-          })
-        }
-      }
-    }
+  public datasets(newDatasets?: any): any {
+    return this._definitionAccessor('datasets', newDatasets)
   }
 
   public series(newSeries: ISeries[]): Chart
   public series(): ISeries[]
   public series(newSeries?: any): any {
-    if (newSeries === undefined) {
-      return this._definition ? this._definition.series : undefined
-    } else {
-      if (this._definition) {
-        this._definition.series = newSeries
-        return this
-      } else {
-        return this.definition({
-          series: newSeries
-        })
-      }
-    }
+    return this._definitionAccessor('series', newSeries)
   }
 
   public type(newType: string): Chart
   public type(): string
   public type(newType?: any): any {
-    if (newType === undefined) {
-      return this._definition ? this._definition.type : undefined
-    } else {
-      if (this._definition) {
-        this._definition.type = newType
-        return this
-      } else {
-        return this.definition({
-          type: newType
-        })
-      }
-    }
+    return this._definitionAccessor('type', newType)
   }
 
   public specification(newSpecification: {}): Chart
   public specification(): {}
   public specification(newSpecification?: any): any {
-    if (newSpecification === undefined) {
-      return this._definition ? this._definition.specification : undefined
-    } else {
-      if (this._definition) {
-        this._definition.specification = newSpecification
-        return this
-      } else {
-        return this.definition({
-          specification: newSpecification
-        })
-      }
-    }
+    return this._definitionAccessor('specification', newSpecification)
   }
 
   public overrides(newOverrides: {}): Chart
   public overrides(): {}
   public overrides(newOverrides?: any): any {
-    if (newOverrides === undefined) {
-      return this._definition ? this._definition.overrides : undefined
-    } else {
-      if (this._definition) {
-        this._definition.overrides = newOverrides
-        return this
-      } else {
-        return this.definition({
-          overrides: newOverrides
-        })
-      }
-    }
+    return this._definitionAccessor('overrides', newOverrides)
   }
 
-  // chart data
+  // data is read only
   public data() {
     return this._data
+  }
+
+  // get dataset by name
+  public dataset(datasetName: string): IDataset {
+    const datasets = this.datasets()
+    let match
+    if (datasets) {
+      datasets.some((dataset) => {
+        if (dataset.name === datasetName) {
+          match = dataset
+          return true
+        }
+      })
+    }
+    return match
   }
 
   // query non-inline datasets
@@ -247,5 +187,22 @@ export default class Chart {
     .then((response) => {
       return this.updateData(response).render()
     })
+  }
+
+  // implementation for all setters/getters for definition properties
+  private _definitionAccessor(propertyName: string, newPropertyValue?: any): any {
+    const definition = this._definition
+    if (newPropertyValue === undefined) {
+      return definition ? definition[propertyName] : undefined
+    } else {
+      if (definition) {
+        definition[propertyName] = newPropertyValue
+        return this
+      } else {
+        const newDefinition = {}
+        newDefinition[propertyName] = newPropertyValue
+        return this.definition(newDefinition)
+      }
+    }
   }
 }
