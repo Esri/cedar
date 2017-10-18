@@ -172,6 +172,6 @@ describe('new Chart w/ definition', () => {
     expect(chart.specification()).toEqual(definition.specification)
   })
   test('should return dataset by name', () => {
-    expect(chart.datasets('Dewitt')).toEqual(definition.datasets[1])
+    expect(chart.dataset('Dewitt')).toEqual(definition.datasets[1])
   })
 })
