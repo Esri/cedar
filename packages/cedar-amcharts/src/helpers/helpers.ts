@@ -5,17 +5,15 @@
  */
 export function deepMerge(source: any, ...args) {
   const arrOfObjs = [...args]
-  for (const i in arrOfObjs) {
-    if (i) {
-      entries(arrOfObjs[i]).forEach((p) => {
-        if (Array.isArray(source)) {
-          source.push(_arrOrObj(p.value))
-        } else {
-          source[p.key] = _arrOrObj(p.value)
-        }
-      })
-    }
-  }
+  arrOfObjs.forEach((obj) => {
+    entries(obj).forEach((p) => {
+      if (Array.isArray(source)) {
+        source.push(_arrOrObj(p.value))
+      } else {
+        source[p.key] = _arrOrObj(p.value)
+      }
+    })
+  })
   return source
 }
 
@@ -35,7 +33,7 @@ function _arrOrObj(val: any) {
 export function entries(obj: object) {
   const pairs = []
   for (const key in obj) {
-    if (key) {
+    if (obj.hasOwnProperty(key)) {
       pairs.push({ key, value: obj[key] })
     }
   }
