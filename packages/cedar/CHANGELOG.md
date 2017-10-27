@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-alpha.1]
+### Fixed
+- Fixed issue with deepMerge where it would iterate over ember specific props
+
 ## [1.0.0-alpha]
 ### BREAKING CHANGES
 - use [amCharts](https://www.amcharts.com/javascript-charts/) as the charting library
@@ -144,6 +148,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[1.0.0-alpha.1]: https://github.com/Esri/cedar/compare/v1.0.0-alpha...v1.0.0-alpha.1
 [1.0.0-alpha]: https://github.com/Esri/cedar/compare/v0.9.2...v1.0.0-alpha
 [0.9.2]: https://github.com/Esri/cedar/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/Esri/cedar/compare/v0.9.0...v0.9.1
