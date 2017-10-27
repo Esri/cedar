@@ -10,6 +10,7 @@
       "spaces",
       2
     ],
+    "forin": true,
     "no-duplicate-variable": true,
     "no-eval": true,
     "no-string-literal": false,
