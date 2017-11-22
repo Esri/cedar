@@ -23,7 +23,8 @@ const response = {
     {attributes: {Number_of_SUM: 0, Type: 'Alternative School'}},
     {attributes: {Number_of_SUM: 0, Type: 'High School Annex'}},
     {attributes: {Number_of_SUM: 0, Type: 'Middle School High School'}},
-    {attributes: {Number_of_SUM: 0, Type: 'Pre-K'}}
+    {attributes: {Number_of_SUM: 0, Type: 'Pre-K'}},
+    {attributes: {Number_of_SUM: 0, Type: null}}
   ]
 }
 

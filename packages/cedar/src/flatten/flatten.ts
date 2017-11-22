@@ -11,7 +11,7 @@ function flattenFeature(feature: IFeature, categoryField?: string) {
   if (categoryField) {
     // render function expects a property named 'categoryField'
     // TODO: what if attributes already has a 'categoryField' property
-    attributes['categoryField'] = attributes[categoryField]
+    attributes['categoryField'] = attributes[categoryField] + ''
   }
   return feature.attributes
 }
@@ -58,7 +58,7 @@ export function flattenFeatures(featureSets: any[], joinKeys: any[]) {
   uniqueValues.forEach((uniqueValue) => {
     // all the features whose join field was equal to this value
     const features = index[uniqueValue]
-    const row = { categoryField: features[0].attributes[key] }
+    const row = { categoryField: features[0].attributes[key]  + '' }
     features.forEach((feature, i) => {
       const attributes = feature.attributes
       Object.keys(attributes).forEach((attrKey) => {

@@ -4,9 +4,7 @@ const builtBarSpec = {
   "rotate": false,
   "theme": "calcite",
   "chartCursor": {
-    "categoryBalloonEnabled": false,
-    "valueLineBalloonEnabled": true,
-    "valueLineEnabled": false
+    "categoryBalloonEnabled": false
   },
   "graphs": [
     {
