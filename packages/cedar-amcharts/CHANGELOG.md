@@ -3,9 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 1.0.0-alpha.2
 ### Changed
 - bar chart doesn't show cursor (value) on x-axis by default
+- don't show labels by default on series
 
 ## 1.0.0-alpha.1
 ### Fixed
