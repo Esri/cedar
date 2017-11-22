@@ -60,7 +60,6 @@ export function fillInSpec(spec: any, definition: any) {
         // TODO: map other fields besides value like color, size, etc
 
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
-        graph.labelText = `[[${series.value.field}]]`
 
         spec.titleField = 'categoryField'
         spec.valueField = graph.valueField
@@ -78,8 +77,6 @@ export function fillInSpec(spec: any, definition: any) {
           graph.balloonText = `${series.name} [[${series.label}]] <br/>
           ${series.category.label}: [[${series.category.field}]],
           ${series.value.label}: [[${series.value.field}]]`
-
-          graph.labelText = ''
 
           // bubble
           if (spec.type === 'xy' && series.size) {
