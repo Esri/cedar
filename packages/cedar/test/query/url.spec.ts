@@ -1,8 +1,24 @@
 import {} from 'jest'
-import url from '../../src/query/url'
+import { createQueryParams, getQueryUrl } from '../../src/query/url'
 
-describe('defaultQuery should match a basic default query', () => {
-  test('default query is...', () => {
+describe('getQueryUrl', () => {
+  let dataset;
+  beforeEach(() => {
+    dataset = {
+      url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0'
+    }
+  })
+  test('it should append query', () => {
+    expect(getQueryUrl(dataset)).toEqual('https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?')
+  })
+  test('it should append query and token', () => {
+    dataset.token = 'notarealtoken';
+    expect(getQueryUrl(dataset)).toEqual('https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?token=notarealtoken')
+  })
+})
+
+describe('createQueryParams', () => {
+  test('should return default query params when no query is passed', () => {
     const defQuery = {
       where:  '1=1',
       returnGeometry:  false,
@@ -13,21 +29,10 @@ describe('defaultQuery should match a basic default query', () => {
       sqlFormat:  'standard',
       f:  'json'
     }
-    const q = url.defaultQuery()
-    expect(q).toEqual(defQuery)
-  })
-})
-
-describe('createFeatureServiceRequest creates a proper url string', () => {
-  test('A basic url is created', () => {
-    const dataset = {
-      url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0'
-    }
-    const result = 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&sqlFormat=standard&f=json'
-    expect(url.createFeatureServiceRequest(dataset)).toEqual(result)
+    expect(createQueryParams()).toEqual(defQuery)
   })
 
-  test('A query is properly constructed', () => {
+  test('should merge defaults into dataset query params and serialize outStatistics', () => {
     const dataset = {
       url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
       query: {
@@ -40,7 +45,19 @@ describe('createFeatureServiceRequest creates a proper url string', () => {
         }]
       }
     }
-    const result = 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?where=1%3D1&returnGeometry=false&returnDistinctValues=false&returnIdsOnly=false&returnCountOnly=false&outFields=*&sqlFormat=standard&f=json&groupByFieldsForStatistics=Type&orderByFields=Number_of_SUM%20DESC&outStatistics=%5B%7B%22statisticType%22%3A%22sum%22%2C%22onStatisticField%22%3A%22Number_of%22%2C%22outStatisticFieldName%22%3A%22Number_of_SUM%22%7D%5D'
-    expect(url.createFeatureServiceRequest(dataset)).toEqual(result)
+    const result = {
+      where:  '1=1',
+      returnGeometry:  false,
+      returnDistinctValues:  false,
+      returnIdsOnly:  false,
+      returnCountOnly:  false,
+      outFields:  '*',
+      sqlFormat:  'standard',
+      f:  'json',
+      groupByFieldsForStatistics: 'Type',
+      orderByFields: 'Number_of_SUM DESC',
+      outStatistics: '[{\"statisticType\":\"sum\",\"onStatisticField\":\"Number_of\",\"outStatisticFieldName\":\"Number_of_SUM\"}]'
+    }
+    expect(createQueryParams(dataset.query)).toEqual(result)
   })
 })
