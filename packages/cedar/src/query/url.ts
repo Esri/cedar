@@ -30,19 +30,16 @@ export function createQueryParams(query: any = {}): any {
     delete queryParams.bbox
 
     // cook it into a json string
-    queryParams.geometry = JSON.stringify({
-      xmin: bboxArr[0],
-      ymin: bboxArr[2],
-      xmax: bboxArr[1],
-      ymax: bboxArr[3]
-    })
+    queryParams.geometry = {
+      xmin: Number(bboxArr[0]),
+      ymin: Number(bboxArr[1]),
+      xmax: Number(bboxArr[2]),
+      ymax: Number(bboxArr[3])
+    }
     // set spatial ref as geographic
     queryParams.inSR = '4326'
   }
 
-  if (!!queryParams.outStatistics && typeof queryParams.outStatistics !== 'string') {
-    queryParams.outStatistics = JSON.stringify(queryParams.outStatistics)
-  }
   return queryParams
 }
 

@@ -32,21 +32,24 @@ describe('createQueryParams', () => {
     expect(createQueryParams()).toEqual(defQuery)
   })
 
-  test('should merge defaults into dataset query params and serialize outStatistics', () => {
+  test('should merge defaults into query params, convert bbox into geometry, and copy outStatistics', () => {
     const dataset = {
       url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
       query: {
+        // bbox W,S,E,N
+        bbox: '-104,35.6,-94.32,41',
         groupByFieldsForStatistics: 'Type',
         orderByFields: 'Number_of_SUM DESC',
         outStatistics: [{
           statisticType: 'sum',
           onStatisticField: 'Number_of',
           outStatisticFieldName: 'Number_of_SUM'
-        }]
+        }],
+        where:  'Type=\'High School\''
       }
     }
     const result = {
-      where:  '1=1',
+      where:  'Type=\'High School\'',
       returnGeometry:  false,
       returnDistinctValues:  false,
       returnIdsOnly:  false,
@@ -56,8 +59,19 @@ describe('createQueryParams', () => {
       f:  'json',
       groupByFieldsForStatistics: 'Type',
       orderByFields: 'Number_of_SUM DESC',
-      outStatistics: '[{\"statisticType\":\"sum\",\"onStatisticField\":\"Number_of\",\"outStatisticFieldName\":\"Number_of_SUM\"}]'
-    }
+      outStatistics: [{
+        statisticType: 'sum',
+        onStatisticField: 'Number_of',
+        outStatisticFieldName: 'Number_of_SUM'
+      }],
+      geometry: {
+        xmin: -104,
+        ymin: 35.6,
+        xmax: -94.32,
+        ymax: 41
+      },
+      inSR: '4326'
+  }
     expect(createQueryParams(dataset.query)).toEqual(result)
   })
 })
