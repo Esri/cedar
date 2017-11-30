@@ -13,63 +13,42 @@ export function defaultQuery() {
   }
 }
 
-export function serializeQueryParams(params: any): string {
-  const str: string[] = []
-  for (const param in params) {
-    if (params.hasOwnProperty(param)) {
-      let val = params[param]
-      if (typeof val !== 'string') {
-        val = JSON.stringify(val)
-      }
-      str.push(`${encodeURIComponent(param)}=${encodeURIComponent(val)}`)
-    }
-  }
-  return str.join('&')
-}
-
-export function createFeatureServiceRequest(dataset: any): string {
-  const query = deepMerge({}, defaultQuery(), dataset.query)
+export function createQueryParams(query: any = {}): any {
+  // merge in default query params
+  const queryParams = Object.assign(defaultQuery(), query)
 
   // Handle bbox
-  if (query.bbox) {
+  if (queryParams.bbox) {
     // make sure a geometry was not also passed in
-    if (query.geometry) {
+    if (queryParams.geometry) {
       throw new Error('Dataset.query can not have both a geometry and a bbox specified')
     }
     // Get the bbox (w,s,e,n)
-    const bboxArr = query.bbox.split(',')
+    const bboxArr = queryParams.bbox.split(',')
 
     // Remove it so it's not serialized as-is
-    delete query.bbox
+    delete queryParams.bbox
 
     // cook it into a json string
-    query.geometry = JSON.stringify({
-      xmin: bboxArr[0],
-      ymin: bboxArr[2],
-      xmax: bboxArr[1],
-      ymax: bboxArr[3]
-    })
+    queryParams.geometry = {
+      xmin: Number(bboxArr[0]),
+      ymin: Number(bboxArr[1]),
+      xmax: Number(bboxArr[2]),
+      ymax: Number(bboxArr[3])
+    }
     // set spatial ref as geographic
-    query.inSR = '4326'
+    queryParams.inSR = '4326'
   }
 
-  if (!!query.outStatistics && typeof query.outStatistics !== 'string') {
-    query.outStatistics = JSON.stringify(query.outStatistics)
-  }
+  return queryParams
+}
 
-  let builtUrl = `${dataset.url}/query?${serializeQueryParams(query)}`
+export function getQueryUrl(dataset: any): string {
+  let builtUrl = `${dataset.url}/query?`
 
   if (dataset.token) {
-    builtUrl = `${builtUrl}&token=${dataset.token}`
+    builtUrl = `${builtUrl}token=${dataset.token}`
   }
 
   return builtUrl
 }
-
-export const url = {
-  defaultQuery,
-  serializeQueryParams,
-  createFeatureServiceRequest
-}
-
-export default url

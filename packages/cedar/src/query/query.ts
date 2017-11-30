@@ -1,4 +1,7 @@
 
+import { request } from '@esri/arcgis-rest-request'
+
+// TODO: remove or at least rename fsToArr and arrToFs
 /**
  * Convert feature service response to an array
  * @param  {object}    fs Feature service response
@@ -26,32 +29,6 @@ export function arrToFs(arr: any[]): any {
 }
 
 /**
- * Handle FS errors && response
- * @param  {object}          response Response from a fetch
- * @return {Promise<any>}          Returns a promise that resolves as JSON
- */
-export function checkStatusAndParseJson(response: any): Promise<any> {
-  let err
-  if (response.status >= 200 && response.status < 300) {
-    // check if this is a 200, but really a 400 error
-    return response.json().then((json) => {
-      if (json.error) {
-        err = new Error(json.error.message)
-        err.code = json.error.code || 404
-        err.response = response
-        throw err
-      } else {
-        return json
-      }
-    })
-  } else {
-    // response has a non 200 http code
-    err = new Error(`Got ${response.status} ${response.statusText}`)
-    throw err
-  }
-}
-
-/**
  * Fetch data from a feature service
  * @param  {string}       url     URL to fetch against
  * @param  {any}          options Potential options passed into fetch
@@ -59,12 +36,10 @@ export function checkStatusAndParseJson(response: any): Promise<any> {
  */
 export function getData(url: string, options?: any): Promise<any> {
   const opts = options || {}
-  return fetch(url, opts)
-    .then((response) => {
-      return checkStatusAndParseJson(response)
-    })
+  return request(url, opts)
 }
 
+// TODO: remove default export
 export const query = {
   fsToArr,
   arrToFs,
