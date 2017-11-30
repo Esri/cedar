@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-alpha.3]
+### Changed
+- refactored to use arcgis-rest-request for queries (copied code until it is released)
+### Fixed
+- query bbox to geometry conversion and added tests
+
+
 ## [1.0.0-alpha.2]
 ### Fixed
 - if categoryField is null, amCharts shows [Object object] as label
@@ -152,7 +159,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.2...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.3...master
+[1.0.0-alpha.3]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.2...v1.0.0-alpha.3
 [1.0.0-alpha.2]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.1...v1.0.0-alpha.2
 [1.0.0-alpha.1]: https://github.com/Esri/cedar/compare/v1.0.0-alpha...v1.0.0-alpha.1
 [1.0.0-alpha]: https://github.com/Esri/cedar/compare/v0.9.2...v1.0.0-alpha

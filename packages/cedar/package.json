@@ -1,6 +1,6 @@
 {
   "name": "@esri/cedar",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Visualization framework for the ArcGIS Platform",
   "files": [
     "dist"
