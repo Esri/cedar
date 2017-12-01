@@ -1,6 +1,6 @@
 {
   "name": "@esri/cedar",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Visualization framework for the ArcGIS Platform",
   "files": [
     "dist"
@@ -62,7 +62,7 @@
   },
   "dependencies": {
     "amcharts3": "amcharts/amcharts3",
-    "@esri/cedar-amcharts": "^1.0.0-alpha.2",
+    "@esri/cedar-amcharts": "^1.0.0-alpha.4",
     "@esri/arcgis-rest-request": "^1.0.0-alpha.2"
   },
   "devDependencies": {
