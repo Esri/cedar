@@ -1,5 +1,3 @@
-import { deepMerge } from '@esri/cedar-amcharts'
-
 export function defaultQuery() {
   return {
     where: '1=1',

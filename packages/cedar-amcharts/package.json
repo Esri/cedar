@@ -21,6 +21,7 @@
     "prebuild:prod": "npm run build",
     "build:prod": "rollup -c profiles/prod.js",
     "pretest": "npm run lint",
+    "start": "npm run test:watch",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watch",
     "prepublish": "npm run build"
@@ -66,6 +67,7 @@
     "rimraf": "^2.6.1",
     "rollup": "^0.45.2",
     "rollup-plugin-json": "^2.3.0",
+    "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-uglify": "^2.0.1",
     "rollup-watch": "^4.3.1",
     "semistandard": "^11.0.0",
@@ -75,6 +77,7 @@
     "typescript": "^2.4.1"
   },
   "dependencies": {
-    "amcharts3": "amcharts/amcharts3"
+    "amcharts3": "amcharts/amcharts3",
+    "deepmerge": "^1.5.2"
   }
 }

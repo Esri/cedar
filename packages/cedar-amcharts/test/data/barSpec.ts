@@ -25,7 +25,10 @@ const spec = {
   overrides: {
     categoryAxis: {
       labelRotation: -45
-    }
+    },
+    graphs: [{
+      balloonText: `[[categoryField]]: <b>[[Number_of_SUM]]</b>`
+    }]
   }
 }
 

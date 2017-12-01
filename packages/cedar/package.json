@@ -22,6 +22,7 @@
     "prebuild:prod": "npm run build",
     "build:prod": "rollup -c profiles/prod.js",
     "pretest": "npm run lint",
+    "start": "npm run test:watch",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watch",
     "prepublish": "npm run build"
