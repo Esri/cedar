@@ -15,7 +15,7 @@
     "clean:dist": "rimraf dist && mkdir dist",
     "precopy:themes": "mkdir dist/esm/themes && mkdir dist/umd/themes",
     "copy:themes": "cp -r ../cedar-amcharts/src/themes/ dist/esm/themes/amCharts/ && cp -r ../cedar-amcharts/src/themes dist/umd/themes/amCharts/",
-    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' -e 'src/request/**/*.ts'",
     "lint:fix": "tslint --fix",
     "prebuild": "npm run clean:dist",
     "build": "tsc && rollup -c profiles/dev.js && npm run copy:themes",
@@ -62,8 +62,7 @@
   },
   "dependencies": {
     "amcharts3": "amcharts/amcharts3",
-    "@esri/cedar-amcharts": "^1.0.0-alpha.4",
-    "@esri/arcgis-rest-request": "^1.0.0-alpha.2"
+    "@esri/cedar-amcharts": "^1.0.0-alpha.4"
   },
   "devDependencies": {
     "@types/jest": "20.0.2",
