@@ -1,5 +1,6 @@
-
-import { request } from '@esri/arcgis-rest-request'
+import { request } from '../request/request'
+// TODO: once @esri/arcgis-rest-request is released, replace the above w/
+// import { request } from '@esri/arcgis-rest-request'
 
 // TODO: remove or at least rename fsToArr and arrToFs
 /**
