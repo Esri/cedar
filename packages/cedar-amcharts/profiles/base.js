@@ -1,6 +1,7 @@
 // NOTE: this standalone UMD build is still being run, but is not currently in use
 // since this package is now bundled with cedar's UMD build
 import json from 'rollup-plugin-json';
+import resolve from 'rollup-plugin-node-resolve';
 
 const pkg = require('../package.json');
 const copyright = `/**
@@ -15,6 +16,9 @@ export default {
   // TODO: reconsider name after https://github.com/Esri/cedar/issues/279#issuecomment-335170913
   moduleName: 'cedarAmCharts',
   format: 'umd',
-  plugins: [json()],
+  exports: 'named',
+  // NOTE: using node resolve to bundle an older version of deepmerge
+  // if we move to latest, we _may_ want to make that external instead
+  plugins: [json(), resolve()],
   banner: copyright
 };

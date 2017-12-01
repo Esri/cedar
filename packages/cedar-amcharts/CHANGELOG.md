@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.0-alpha.4
+### Fixed
+- allow overriding properties of graphs
+### Changed
+- bundling deepmerge instead of defining a deepMerge function
+
 ## 1.0.0-alpha.2
 ### Changed
 - bar chart doesn't show cursor (value) on x-axis by default

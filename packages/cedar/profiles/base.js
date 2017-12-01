@@ -13,6 +13,8 @@ export default {
   entry: 'dist/esm/index.js',
   moduleName: 'cedar',
   format: 'umd',
+  // NOTE: using node resolve to bundle an older version of deepmerge
+  // if we move to latest, we _may_ want to make that external instead
   plugins: [json(), resolve()],
   banner: copyright
 };

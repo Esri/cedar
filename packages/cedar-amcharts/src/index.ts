@@ -1,5 +1,4 @@
 import render from './render/render'
-export { deepMerge } from './helpers/helpers'
 
 export function cedarAmCharts(elementId: string, spec: any, data?: any[]) {
   if ((!elementId || !spec || !data) && (spec.type && spec.type !== 'custom')) {

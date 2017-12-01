@@ -1,5 +1,5 @@
 /* globals AmCharts:false */
-import { deepMerge } from '../helpers/helpers'
+import deepmerge from 'deepmerge'
 import specs from '../specs/specs'
 
 // TODO: how to have access to IDefinition
@@ -25,7 +25,9 @@ export function renderChart(elementId: string, definition: any, data?: any) {
 
   // Apply overrides
   if (!!definition.overrides) {
-    spec = deepMerge({}, spec, definition.overrides)
+    // NOTE: this counts on using deepmerge < 2.x
+    // see: https://github.com/KyleAMathews/deepmerge#arraymerge
+    spec = deepmerge(spec, definition.overrides, { clone: true })
   }
 
   const chart = AmCharts.makeChart(elementId, spec)
@@ -91,6 +93,7 @@ export function fillInSpec(spec: any, definition: any) {
       }
     })
   })
+
   return spec
 }
 
@@ -110,6 +113,7 @@ export function templateGraph(): any {
   }
 }
 
+// TODO: remove
 const render = {
   renderChart,
   fillInSpec,

@@ -1,4 +1,4 @@
-import { cedarAmCharts, deepMerge } from '@esri/cedar-amcharts'
+import { cedarAmCharts } from '@esri/cedar-amcharts'
 import { flattenFeatures } from './flatten/flatten'
 import { getData } from './query/query'
 import { createQueryParams, getQueryUrl } from './query/url'
