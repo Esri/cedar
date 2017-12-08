@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Fixed
+- dateTime field parse error resolved by not coercing all values to strings
+
 ## [1.0.0-alpha.5]
 ### Fixed
 - '@esri/arcgis-rest-request' is not in the npm registry error
