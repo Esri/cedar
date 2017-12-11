@@ -3,9 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.0-alpha.6]
 ### Fixed
 - dateTime field parse error resolved by not coercing all values to strings
+### Changed
+- Font color for axis and legend updated to match old cedar
 
 ## [1.0.0-alpha.5]
 ### Fixed
@@ -175,7 +177,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.5...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.6...master
+[1.0.0-alpha.6]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.5...v1.0.0-alpha.6
 [1.0.0-alpha.5]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.4...v1.0.0-alpha.5
 [1.0.0-alpha.4]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.3...v1.0.0-alpha.4
 [1.0.0-alpha.3]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.2...v1.0.0-alpha.3
