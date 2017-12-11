@@ -1,4 +1,4 @@
-export const horizontal = {
+export const barHorizontal = {
   type: 'serial',
   theme: 'calcite',
   rotate: true,
@@ -20,4 +20,4 @@ export const horizontal = {
   }
 }
 
-export default horizontal
+export default barHorizontal
