@@ -25,6 +25,7 @@
     "object-literal-sort-keys": false,
     "trailing-comma": false,
     "max-line-length": false,
-    "no-shadowed-variable": false
+    "no-shadowed-variable": false,
+    "no-console": [true, "log"]
   }
 }

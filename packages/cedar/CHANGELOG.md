@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## Unreleased
 ### Changed
 - Horizontal bar charts renamed from horizontal to bar-horizontal
+- Time and bubble types convert to line and scatter and prompt a console.warn
 
 ## [1.0.0-alpha.6]
 ### Fixed
