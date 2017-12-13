@@ -7,6 +7,7 @@ export const bar = {
   },
   graphs: [{
     type: 'column',
+    newStack: true
   }],
   legend: {},
   valueAxes: [ {

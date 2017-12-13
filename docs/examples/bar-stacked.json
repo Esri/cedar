@@ -48,17 +48,20 @@
     {
       "category": {"field": "Type", "label": "Type"},
       "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
-      "source": "Jordan"
+      "source": "Jordan",
+      "stack": true
     },
     {
       "category": {"field": "Type", "label": "Type"},
       "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
-      "source": "Dewitt"
+      "source": "Dewitt",
+      "stack": true
     },
     {
       "category": {"field": "Type", "label": "Type"},
       "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
-      "source": "Fayetteville"
+      "source": "Fayetteville",
+      "stack": true
     }
   ]
 }
