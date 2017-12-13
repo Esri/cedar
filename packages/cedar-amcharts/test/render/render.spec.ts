@@ -3,6 +3,7 @@ import 'amcharts3/amcharts/serial'
 import {} from 'jest'
 import render from '../../src/render/render'
 import bar from '../../src/specs/bar'
+import line from '../../src/specs/line'
 import barSpec from '../data/barSpec'
 import builtBarSpec from '../data/builtBarSpec'
 
@@ -10,6 +11,10 @@ describe('Spec gets fetched properly', () => {
   test('fetch spec properly gets spec...', () => {
     const grabbedSpec = render.fetchSpec('bar')
     expect(grabbedSpec).toEqual(bar)
+  })
+  test('time is properly converted to line', () => {
+    const convertedSpec = render.fetchSpec('time')
+    expect(convertedSpec).toEqual(line)
   })
 })
 
