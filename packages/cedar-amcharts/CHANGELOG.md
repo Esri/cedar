@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.0.0-alpha.5
+### Changed
+- Font color for axis and legend updated to match old cedar
+
 ## 1.0.0-alpha.4
 ### Fixed
 - allow overriding properties of graphs

@@ -3,7 +3,7 @@ AmCharts.themes.calcite = {
   themeName: 'calcite',
 
   AmChart: {
-    color: '#000000', backgroundColor: '#FFFFFF'
+    color: '#999999', backgroundColor: '#FFFFFF'
   },
 
   AmCoordinateChart: {
@@ -62,7 +62,7 @@ AmCharts.themes.calcite = {
   },
 
   AmLegend: {
-    color: '#000000',
+    color: '#999999',
   },
 
   AmGraph: {

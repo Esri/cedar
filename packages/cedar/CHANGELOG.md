@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0-alpha.6]
 ### Fixed
 - dateTime field parse error resolved by not coercing all values to strings
+### Changed
+- Font color for axis and legend updated to match old cedar
 
 ## [1.0.0-alpha.5]
 ### Fixed
