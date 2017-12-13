@@ -9,7 +9,7 @@ import timeline from './timeline'
 
 const specs = {
   bar,
-  barHorizontal,
+  'bar-horizontal': barHorizontal,
   line,
   area,
   pie,
