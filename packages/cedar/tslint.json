@@ -26,6 +26,7 @@
     "trailing-comma": false,
     "max-line-length": false,
     "no-shadowed-variable": false,
-    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+    "no-console": [true, "log"]
   }
 }
