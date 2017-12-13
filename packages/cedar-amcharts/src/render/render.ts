@@ -98,14 +98,15 @@ export function fillInSpec(spec: any, definition: any) {
 }
 
 export function fetchSpec(type: string): any {
-  if (type === 'time') {
-    console.warn(`'Time' is no longer a supported type. Please use 'line' instead`)
-    return clone(specs['line'])
-  } else if (type === 'bubble') {
-    console.warn(`'Bubble' is no longer a supported type. Please use 'scatter' instead`)
-    return clone(specs['scatter'])
+  let spec = type
+  if (spec === 'time') {
+    console.warn(`'time' is no longer a supported type. Please use 'line' instead`)
+    spec = 'line'
+  } else if (spec === 'bubble') {
+    console.warn(`'bubble' is no longer a supported type. Please use 'scatter' instead`)
+    spec = 'scatter'
   }
-  return clone(specs[type])
+  return clone(specs[spec])
 }
 
 function clone(json) {
