@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- Horizontal bar charts renamed from horizontal to bar-horizontal
+
 ## [1.0.0-alpha.6]
 ### Fixed
 - dateTime field parse error resolved by not coercing all values to strings
