@@ -67,7 +67,7 @@ export function fillInSpec(spec: any, definition: any) {
         spec.valueField = graph.valueField
 
         // Group vs. stack
-        if (!!series.stack) {
+        if (!!series.stack && graph.newStack) {
           graph.newStack = false
         }
 
@@ -106,6 +106,7 @@ export function fetchSpec(type: string): any {
     console.warn(`'bubble' is no longer a supported type. Please use 'scatter' instead`)
     spec = 'scatter'
   } else if (spec === 'grouped') {
+    console.warn(`'grouped' is no longer a supported type. Please use 'bar' instead`)
     spec = 'bar'
   }
   return clone(specs[spec])
