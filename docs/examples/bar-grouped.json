@@ -47,19 +47,16 @@
   "series": [
     {
       "category": {"field": "Type", "label": "Type"},
-      "group": true,
       "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
       "source": "Jordan"
     },
     {
       "category": {"field": "Type", "label": "Type"},
-      "group": true,
       "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
       "source": "Dewitt"
     },
     {
       "category": {"field": "Type", "label": "Type"},
-      "group": true,
       "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
       "source": "Fayetteville"
     }
