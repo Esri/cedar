@@ -38,16 +38,35 @@ export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
 
-  if (definition.series.length === 1 && (definition.type !== 'pie' || definition.type !== 'radar')) {
-    if (!spec.valueAxes) { spec.valueAxes = [{}] }
-    spec.valueAxes[0].title = definition.series[0].value.label
-    spec.valueAxes[0].position = 'left'
+  // adjust legend and axis labels for single series charts
+  if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
 
+    // don't show legend by default for single series charts
     if (!spec.legend) { spec.legend = {} }
     spec.legend.enabled = false
 
-    if (!spec.categoryAxis) { spec.categoryAxis = {} }
-    spec.categoryAxis.title = definition.series[0].category.label
+    // get default axis labels from series
+    const categoryAxisTitle = definition.series[0].category.label
+    const valueAxisTitle = definition.series[0].value.label
+
+    if (spec.type === 'xy' && Array.isArray(spec.valueAxes)) {
+      // for xy charts we treat the x axis as the category axis
+      // and the y axis as the value axis
+      spec.valueAxes.forEach((axis) => {
+        if (axis.position === 'bottom') {
+          axis.title = categoryAxisTitle
+        } else if (axis.position === 'left') {
+          axis.title = valueAxisTitle
+        }
+      })
+    } else {
+      if (!spec.valueAxes) { spec.valueAxes = [{}] }
+      spec.valueAxes[0].title = definition.series[0].value.label
+      spec.valueAxes[0].position = 'left'
+
+      if (!spec.categoryAxis) { spec.categoryAxis = {} }
+      spec.categoryAxis.title = categoryAxisTitle
+    }
   }
 
   // Iterate over datasets
