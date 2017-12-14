@@ -1,77 +1,27 @@
 const timeline = {
   type: 'serial',
   theme: 'calcite',
-  marginRight: 40,
-  marginLeft: 40,
-  autoMarginOffset: 20,
-  mouseWheelZoomEnabled: true,
-  dataDateFormat: 'YYYY-MM-DD',
-  valueAxes: [
-    {
-      id: 'v1',
-      axisAlpha: 0,
-      position: 'left',
-      ignoreAxisWidth: true
-    }
-  ],
-  balloon: {
-    borderThickness: 1,
-    shadowAlpha: 0
-  },
-  graphs: [
-    {
-      id: 'g1',
-      balloon: {
-        drop: true,
-        adjustBorderColor: false,
-        color: '#ffffff'
-      },
-      bullet: 'round',
-      bulletBorderAlpha: 1,
-      bulletColor: '#FFFFFF',
-      bulletSize: 5,
-      hideBulletsCount: 50,
-      lineThickness: 2,
-      title: 'red line',
-      useLineColorForBulletBorder: true,
-      valueField: null
-    }
-  ],
-  chartScrollbar: {
-    graph: 'g1',
-    oppositeAxis: false,
-    offset: 30,
-    scrollbarHeight: 80,
-    backgroundAlpha: 0,
-    selectedBackgroundAlpha: 0.1,
-    selectedBackgroundColor: '#888888',
-    graphFillAlpha: 0,
-    graphLineAlpha: 0.5,
-    selectedGraphFillAlpha: 0,
-    selectedGraphLineAlpha: 1,
-    autoGridCount: true,
-    color: '#AAAAAA'
-  },
   chartCursor: {
-    pan: true,
-    valueLineEnabled: true,
-    valueLineBalloonEnabled: true,
-    cursorAlpha: 1,
-    cursorColor: '#258cbb',
-    limitToGraph: 'g1',
-    valueLineAlpha: 0.2,
-    valueZoomable: true
+    categoryBalloonEnabled: false,
+    valueLineBalloonEnabled: true
   },
-  valueScrollbar: {
-    oppositeAxis: false,
-    offset: 50,
-    scrollbarHeight: 10
+  graphs: [{
+    bullet: 'circle',
+    bulletAlpha: 1,
+    bulletBorderAlpha: 0.8,
+    bulletBorderThickness: 0,
+    // bulletColor: '#FFFFFF',
+    dashLengthField: 'dashLengthLine',
+    fillAlphas: 0,
+    useLineColorForBulletBorder: true
+  }],
+  legend: {
+    // horizontalGap: 10,
+    position: 'bottom',
+    useGraphSettings: true
   },
-  categoryField: 'date',
   categoryAxis: {
-    parseDates: true,
-    dashLength: 1,
-    minorGridEnabled: true
+    parseDates: true
   },
   export: {
     enabled: true
