@@ -39,16 +39,15 @@ export function fillInSpec(spec: any, definition: any) {
   const graphSpec = spec.graphs.pop()
 
   if (definition.series.length === 1 && (definition.type !== 'pie' || definition.type !== 'radar')) {
-    spec.valueAxes = [{
-      title: definition.series[0].value.label,
-      position: 'left'
-    }]
-    spec.legend = {
-      enabled: false
-    }
-    spec.categoryAxis = {
-      title: definition.series[0].category.label
-    }
+    if (!spec.valueAxes) { spec.valueAxes = [{}] }
+    spec.valueAxes[0].title = definition.series[0].value.label
+    spec.valueAxes[0].position = 'left'
+
+    if (!spec.legend) { spec.legend = {} }
+    spec.legend.enabled = false
+
+    if (!spec.categoryAxis) { spec.categoryAxis = {} }
+    spec.categoryAxis.title = definition.series[0].category.label
   }
 
   // Iterate over datasets

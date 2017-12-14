@@ -21,6 +21,7 @@ const builtBarSpec = {
   "valueAxes": [
     {
       "position": "left",
+      "stackType": "regular",
       "title": "Number of Students"
     }
   ],
