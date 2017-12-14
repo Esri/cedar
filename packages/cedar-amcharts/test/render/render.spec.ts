@@ -3,7 +3,7 @@ import 'amcharts3/amcharts/serial'
 import {} from 'jest'
 import render from '../../src/render/render'
 import bar from '../../src/specs/bar'
-import line from '../../src/specs/line'
+import timeline from '../../src/specs/timeline'
 import barSpec from '../data/barSpec'
 import builtBarSpec from '../data/builtBarSpec'
 
@@ -14,7 +14,7 @@ describe('Spec gets fetched properly', () => {
   })
   test('time is properly converted to line', () => {
     const convertedSpec = render.fetchSpec('time')
-    expect(convertedSpec).toEqual(line)
+    expect(convertedSpec).toEqual(timeline)
   })
 })
 

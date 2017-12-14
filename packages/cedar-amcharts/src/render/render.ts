@@ -112,8 +112,8 @@ export function fillInSpec(spec: any, definition: any) {
 export function fetchSpec(type: string): any {
   let spec = type
   if (spec === 'time') {
-    console.warn(`'time' is no longer a supported type. Please use 'line' instead`)
-    spec = 'line'
+    console.warn(`'time' is no longer a supported type. Please use 'timeline' instead`)
+    spec = 'timeline'
   } else if (spec === 'bubble') {
     console.warn(`'bubble' is no longer a supported type. Please use 'scatter' instead`)
     spec = 'scatter'
