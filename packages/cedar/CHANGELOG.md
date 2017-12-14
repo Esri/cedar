@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Time and bubble types convert to line and scatter and prompt a console.warn
 - Grouped type converts to bar
 - Multi series bar charts group by default instead of stack
+- Single series charts (excluding pie/radar) now have x,y axis titles turned on by default and legend turned off by default
 
 ## [1.0.0-alpha.6]
 ### Fixed

@@ -24,7 +24,7 @@ export function renderChart(elementId: string, definition: any, data?: any) {
   }
 
   // Apply overrides
-  if (!!definition.overrides) {
+  if (definition.overrides) {
     // NOTE: this counts on using deepmerge < 2.x
     // see: https://github.com/KyleAMathews/deepmerge#arraymerge
     spec = deepmerge(spec, definition.overrides, { clone: true })
@@ -37,6 +37,18 @@ export function renderChart(elementId: string, definition: any, data?: any) {
 export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
+
+  if (definition.series.length === 1 && (definition.type !== 'pie' || definition.type !== 'radar')) {
+    if (!spec.valueAxes) { spec.valueAxes = [{}] }
+    spec.valueAxes[0].title = definition.series[0].value.label
+    spec.valueAxes[0].position = 'left'
+
+    if (!spec.legend) { spec.legend = {} }
+    spec.legend.enabled = false
+
+    if (!spec.categoryAxis) { spec.categoryAxis = {} }
+    spec.categoryAxis.title = definition.series[0].category.label
+  }
 
   // Iterate over datasets
   definition.datasets.forEach((dataset, d) => {
