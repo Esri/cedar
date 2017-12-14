@@ -12,7 +12,6 @@ export function renderChart(elementId: string, definition: any, data?: any) {
 
   // Clone/copy spec and data
   let spec = fetchSpec(definition.type)
-  let overrides
   const copyData = clone(data)
 
   // Set the data and defaults
@@ -24,32 +23,11 @@ export function renderChart(elementId: string, definition: any, data?: any) {
     spec = fillInSpec(spec, definition)
   }
 
-  if (definition.series.length === 1 && (definition.type !== 'pie' || definition.type !== 'radar')) {
-    const baseDefaults = {
-      valueAxes: [{
-        title: definition.series[0].value.label
-     }],
-      legend: {
-       enabled: false
-     },
-      categoryAxis: [{
-       title: definition.series[0].category.label
-     }],
-      graphs: [{
-        balloonText: `[[categoryField]]: <b>[[${definition.series[0].value.field}]]`
-      }]
-    }
-    const copiedOverrides = definition.overrides || {}
-
-    overrides = deepmerge(copiedOverrides, baseDefaults, { clone: true })
-  }
-
   // Apply overrides
-  if (overrides || definition.overrides) {
+  if (definition.overrides) {
     // NOTE: this counts on using deepmerge < 2.x
     // see: https://github.com/KyleAMathews/deepmerge#arraymerge
-    const tempOverrides = overrides || definition.overrides
-    spec = deepmerge(spec, tempOverrides, { clone: true })
+    spec = deepmerge(spec, definition.overrides, { clone: true })
   }
 
   const chart = AmCharts.makeChart(elementId, spec)
@@ -59,6 +37,19 @@ export function renderChart(elementId: string, definition: any, data?: any) {
 export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
+
+  if (definition.series.length === 1 && (definition.type !== 'pie' || definition.type !== 'radar')) {
+    spec.valueAxes = [{
+      title: definition.series[0].value.label,
+      position: 'left'
+    }]
+    spec.legend = {
+      enabled: false
+    }
+    spec.categoryAxis = {
+      title: definition.series[0].category.label
+    }
+  }
 
   // Iterate over datasets
   definition.datasets.forEach((dataset, d) => {

@@ -15,12 +15,18 @@ const builtBarSpec = {
       "newStack": true
     }
   ],
-  "legend": {},
+  "legend": {
+    "enabled": false
+  },
   "valueAxes": [
     {
-      "stackType": "regular"
+      "position": "left",
+      "title": "Number of Students"
     }
   ],
+  "categoryAxis": {
+    "title": "Type"
+  },
   "export": {
     "enabled": true
   },
