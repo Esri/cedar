@@ -107,14 +107,12 @@ export function fillInSpec(spec: any, definition: any) {
           graph.xField = series.category.field
           graph.yField = series.value.field
 
-          graph.balloonText = `${series.name} [[${series.label}]] <br/>
-          ${series.category.label}: [[${series.category.field}]],
-          ${series.value.label}: [[${series.value.field}]]`
+          graph.balloonText = `<div>${series.category.label}: [[${series.category.field}]]</div><div>${series.value.label}: [[${series.value.field}]]</div>`
 
           // bubble
           if (spec.type === 'xy' && series.size) {
             graph.valueField = series.size.field
-            graph.balloonText = `${graph.balloonText} <br/> ${series.size.label}: [[${graph.valueField}]]`
+            graph.balloonText = `${graph.balloonText}<div>${series.size.label}: [[${graph.valueField}]]</div>`
           } else {
             delete graph.valueField
           }
@@ -145,14 +143,6 @@ export function fetchSpec(type: string): any {
 
 function clone(json) {
   return JSON.parse(JSON.stringify(json))
-}
-
-export function templateGraph(): any {
-  return {
-    title: '{{series.label}}',
-    valueField: '{{series.field}}',
-    balloonText: '{{graph.title}} [[{{spec.categoryField}}]]: <b>[[{{graph.valueField}}]]</b>'
-  }
 }
 
 // TODO: remove
