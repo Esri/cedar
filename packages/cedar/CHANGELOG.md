@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.0-alpha.7]
 ### Changed
 - Horizontal bar charts renamed from horizontal to bar-horizontal
 - Time and bubble types convert to timeline and scatter and prompt a console.warn
@@ -189,7 +189,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.6...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.7...master
+[1.0.0-alpha.7]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.6...v1.0.0-alpha.7
 [1.0.0-alpha.6]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.5...v1.0.0-alpha.6
 [1.0.0-alpha.5]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.4...v1.0.0-alpha.5
 [1.0.0-alpha.4]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.3...v1.0.0-alpha.4
