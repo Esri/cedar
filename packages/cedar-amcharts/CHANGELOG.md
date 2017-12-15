@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- Horizontal bar charts renamed from horizontal to bar-horizontal
+- Time and bubble types convert to timeline and scatter and prompt a console.warn
+- Grouped type converts to bar
+- Multi series bar charts group by default instead of stack
+- Single series charts (excluding pie/radar) now have x,y axis titles turned on by default and legend turned off by default
+- Timeline charts now look like line charts with parseDates
+### Fixed
+- scatter/bubble tooltips no longer show 'undefined' at the top
+
 ## 1.0.0-alpha.5
 ### Changed
 - Font color for axis and legend updated to match old cedar
