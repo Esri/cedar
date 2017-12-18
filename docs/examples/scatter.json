@@ -1,8 +1,7 @@
 {
   "type": "scatter",
   "datasets": [ {
-    "url": "https://services1.arcgis.com/bqfNVPUK3HOnCFmA/arcgis/rest/services/Demographics_(Median_Household_Income)/FeatureServer/0",
-    "append": true
+    "url": "https://services1.arcgis.com/bqfNVPUK3HOnCFmA/arcgis/rest/services/Demographics_(Median_Household_Income)/FeatureServer/0"
   }],
   "series": [
     {

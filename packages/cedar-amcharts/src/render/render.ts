@@ -14,9 +14,8 @@ export function renderChart(elementId: string, definition: any, data?: any) {
   let spec = fetchSpec(definition.type)
   const copyData = clone(data)
 
-  // Set the data and defaults
+  // Set the spec's data
   spec.dataProvider = copyData
-  spec.categoryField = 'categoryField'
 
   // Apply the series
   if (!!definition.datasets) {
@@ -37,6 +36,11 @@ export function renderChart(elementId: string, definition: any, data?: any) {
 export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
+  const isJoined = definition.datasets.length > 1
+
+  // category field will be 'categoryField' in the case of joined datasets
+  // otherwise get it from the first series
+  spec.categoryField = isJoined ? 'categoryField' : definition.series[0].category.field
 
   // adjust legend and axis labels for single series charts
   if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
@@ -80,8 +84,8 @@ export function fillInSpec(spec: any, definition: any) {
         graph.title = series.value.label
 
         /* tslint:disable prefer-conditional-expression */
-        if (definition.datasets.length > 1) {
-          // data has been joined use dataset index to look up the value
+        if (isJoined) {
+          // use dataset index to look up the value
           // TODO: should this be dataset name?
           // that would mean the names are required and unique
           // why aren't we using a hash for datasets?
@@ -94,15 +98,18 @@ export function fillInSpec(spec: any, definition: any) {
 
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
 
-        spec.titleField = 'categoryField'
-        spec.valueField = graph.valueField
-
         // Group vs. stack
         if (!!series.stack && graph.newStack) {
           graph.newStack = false
         }
 
-        // x/y types, scatter, bubble
+        // special props for pie charts
+        if (definition.type === 'pie') {
+          spec.titleField = spec.categoryField
+          spec.valueField = graph.valueField
+        }
+
+        // special props for x/y types (scatter, bubble)
         if (spec.type === 'xy' && !!series.category && !!series.value) {
           graph.xField = series.category.field
           graph.yField = series.value.field
