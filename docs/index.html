@@ -145,6 +145,10 @@ let chart;
 function displayChart(config) {
     chart = new cedar.Chart("chart", config);
     chart.show()
+    .catch(err => {
+      console.error(err);
+      alert('There was an error when showing your chart. Please check the console for details.');
+    })
 }
 
 function loadFile(style, cb) {

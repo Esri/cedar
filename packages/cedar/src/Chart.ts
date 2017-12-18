@@ -32,7 +32,10 @@ function getChartData(datasets: IDataset[], datasetsData?: {}) {
     if (featureSet) {
       featureSets.push(featureSet)
     }
-    joinKeys.push(dataset.join)
+    if (!dataset.category) {
+      throw new Error('A category field is required to join multiple datasets')
+    }
+    joinKeys.push(dataset.category.field)
   })
   return flattenFeatureSets(featureSets, joinKeys)
 }
@@ -42,8 +45,8 @@ export interface IDataset {
   name: string,
   url?: string,
   data?: any[],
-  query: {},
-  join?: string
+  query?: {},
+  category?: IField
 }
 
 export interface IField {
@@ -53,6 +56,7 @@ export interface IField {
 
 export interface ISeries {
   source: string,
+  // TODO: remove category?
   category?: IField,
   value?: IField
 }

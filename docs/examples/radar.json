@@ -16,7 +16,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -33,7 +36,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -50,7 +56,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -67,7 +76,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -84,7 +96,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -101,7 +116,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -118,7 +136,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -135,7 +156,10 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     },
     {
       "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/ArcGIS/rest/services/DC_Crime_2016/FeatureServer/0",
@@ -152,15 +176,14 @@
         ],
         "sqlFormat": "standard"
       },
-      "join": "EXPR_1"
+      "category": {
+        "field": "EXPR_1",
+        "label": "Hour"
+      }
     }
   ],
   "series": [
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "THEFT/OTHER"
@@ -168,10 +191,6 @@
       "source": "THEFT/OTHER"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "THEFT F/AUTO"
@@ -179,10 +198,6 @@
       "source": "THEFT/AUTO"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "SEX ABUSE"
@@ -190,10 +205,6 @@
       "source": "SEXABUSE"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "Robbery"
@@ -201,10 +212,6 @@
       "source": "ROBBERY"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "MOTOR VEHICLE THEFT"
@@ -212,10 +219,6 @@
       "source": "MVT"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "HOMICIDE"
@@ -223,10 +226,6 @@
       "source": "HOMICIDE"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "BURGLARY"
@@ -234,10 +233,6 @@
       "source": "BURGLARY"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "ASSAULT W/DANGEROUS WEAPON"
@@ -245,10 +240,6 @@
       "source": "ASSW/DANGEROUSWEAPON"
     },
     {
-      "category": {
-        "field": "EXPR_1",
-        "label": "Hour"
-      },
       "value": {
         "field": "OFFENSE_COUNT",
         "label": "ARSON"
