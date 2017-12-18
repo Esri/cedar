@@ -22,7 +22,6 @@ describe('Spec gets filled in properly', () => {
   test('A simple spec gets filled in properly', () => {
     const spec = (bar as any)
     spec.dataProvider = barSpec.realData
-    spec.categoryField = 'categoryField'
     const result = render.fillInSpec(spec, barSpec.spec)
     expect(result.theme).toBe('calcite')
     expect(result).toEqual(builtBarSpec)

@@ -11,7 +11,7 @@ const builtBarSpec = {
       "type": "column",
       "title": "Number of Students",
       "valueField": "Number_of_SUM",
-      "balloonText": "Number of Students [[categoryField]]: <b>[[Number_of_SUM]]</b>",
+      "balloonText": "Number of Students [[Type]]: <b>[[Number_of_SUM]]</b>",
       "newStack": true
     }
   ],
@@ -98,9 +98,7 @@ const builtBarSpec = {
       "Type_0": "Pre-K"
     }
   ],
-  "categoryField": "categoryField",
-  "titleField": "categoryField",
-  "valueField": "Number_of_SUM"
+  "categoryField": "Type"
 }
 /* tslint:enable */
 

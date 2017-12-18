@@ -17,7 +17,7 @@ function flattenFeature(feature: IFeature, categoryField?: string) {
 }
 
 // just return an array of flattened features
-export function flatten(featureSet: IFeatureSet, categoryField?) {
+export function flattenFeatureSet(featureSet: IFeatureSet, categoryField?) {
   return featureSet.features.map((feature) => (flattenFeature(feature, categoryField)))
 }
 
@@ -38,7 +38,7 @@ export function buildIndex(joinKeys: string[], featureSets: any[]) {
   return index
 }
 
-export function flattenFeatures(featureSets: any[], joinKeys: any[]) {
+export function flattenFeatureSets(featureSets: any[], joinKeys: any[]) {
   const rows = []
 
   // for now we need joinKeys to be 1:1 w/ featureSets
@@ -48,7 +48,7 @@ export function flattenFeatures(featureSets: any[], joinKeys: any[]) {
 
   if (featureSets.length === 1) {
     // no need to join, just the flattened features
-    return flatten(featureSets[0], joinKeys[0])
+    return flattenFeatureSet(featureSets[0])
   }
 
   // Otherwise join
