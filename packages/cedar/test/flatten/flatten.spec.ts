@@ -1,16 +1,16 @@
 import {} from 'jest'
-import { buildIndex, flattenFeatures } from '../../src/flatten/flatten'
+import { buildIndex, flattenFeatureSets } from '../../src/flatten/flatten'
 import expectedChartData from '../data/chartData'
 import featureServiceResponse from '../data/featureServiceResponse'
 import schoolResponse from '../data/schoolResponse'
 
 describe('running when a single dataset', () => {
-  test('it shoudl flattenFeatures returns flattend features', () => {
+  test('it should return a single flattened featureSet', () => {
     const data = {
       joinKeys: ['Type'],
       featureSets: [featureServiceResponse]
     }
-    expect(flattenFeatures(data.featureSets, data.joinKeys)).toEqual(expectedChartData.barSingleDataset)
+    expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(expectedChartData.barSingleDataset)
   })
 
   test('BuildIndex should properly build an index...', () => {
@@ -37,7 +37,7 @@ describe('running when a single dataset', () => {
     expect(buildIndex(data.joinKeys, data.featureSets)).toEqual(result)
   })
 
-  test('flattenFeatures properly flattens when provided join keys', () => {
+  test('flattenFeatureSets properly flattens when provided join keys', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
       featureSets: schoolResponse
@@ -69,6 +69,6 @@ describe('running when a single dataset', () => {
       }
     ]
 
-    expect(flattenFeatures(data.featureSets, data.joinKeys)).toEqual(result)
+    expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(result)
   })
 })
