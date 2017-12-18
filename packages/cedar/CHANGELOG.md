@@ -3,8 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Undefined
+## Unreleased
+### Changed
 - added CORS support to docs site
+- install amcharts from npm instead of git
 
 ## [1.0.0-alpha.7]
 ### Changed
