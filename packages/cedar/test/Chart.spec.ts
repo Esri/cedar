@@ -101,7 +101,8 @@ describe('new Chart w/ definition', () => {
               "onStatisticField": "Number_of",
               "outStatisticFieldName": "Number_of_SUM"
             }]
-          }
+          },
+          "join": "Type"
         },
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -115,7 +116,8 @@ describe('new Chart w/ definition', () => {
               "onStatisticField": "Number_of",
               "outStatisticFieldName": "Number_of_SUM"
             }]
-          }
+          },
+          "join": "Type"
         },
         {
           "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -129,7 +131,8 @@ describe('new Chart w/ definition', () => {
               "onStatisticField": "Number_of",
               "outStatisticFieldName": "Number_of_SUM"
             }]
-          }
+          },
+          "join": "Type"
         }
       ],
       "series": [

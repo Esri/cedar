@@ -21,14 +21,16 @@ function getChartData(datasets: IDataset[], series: ISeries[], datasetsData?: {}
     if (featureSet) {
       featureSets.push(featureSet)
     }
-    // TODO: this should not assume a 1:1 relationship between datasets and series
-    joinKeys.push(series[i].category.field)
+    joinKeys.push(dataset.join)
   })
 
   // flatten data from all datasets into a single table
   // if there's only one dataset, just flatten the features
-  // if more than one, need to join or append the feature sets
-  // return (featureSets.length === 1) ? flatten(featureSets[0]) : (joinKeys.length > 0) ? join(featureSets, joinKeys) : append(featureSets)
+  // if more than one, need to join the feature sets
+  if (datasets.length === 1) {
+    // TODO: this should not assume a 1:1 relationship between datasets and series
+    joinKeys[0] = series[0].category.field
+  }
   return flattenFeatures(featureSets, joinKeys)
 }
 
@@ -38,7 +40,7 @@ export interface IDataset {
   url?: string,
   data?: any[],
   query: {},
-  append?: boolean
+  join?: string
 }
 
 export interface IField {
