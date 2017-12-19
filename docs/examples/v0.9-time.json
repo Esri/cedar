@@ -1,0 +1,19 @@
+{
+  "type": "time",
+  "datasets": [{
+    "url": "https://services.arcgis.com/bkrWlSKcjUDFDtgw/arcgis/rest/services/It's_a_Tornado_Map/FeatureServer/0",
+    "query": {
+      "orderByFields": "Date"
+    }
+  }],
+  "series": [{
+    "category": {
+      "field": "Date",
+      "label": "Date"
+    },
+    "value": {
+      "field": "Injuries",
+      "label": "Injuries"
+    }
+  }]
+}
