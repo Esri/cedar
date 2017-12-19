@@ -5,8 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 ### Changed
-- added CORS support to docs site
 - install amcharts from npm instead of git
+- added fillInSpec() tests for more chart types (including v0.9 definitions)
 
 ## 1.0.0-alpha.7
 ### Changed
