@@ -14,9 +14,8 @@ export function renderChart(elementId: string, definition: any, data?: any) {
   let spec = fetchSpec(definition.type)
   const copyData = clone(data)
 
-  // Set the data and defaults
+  // Set the spec's data
   spec.dataProvider = copyData
-  spec.categoryField = 'categoryField'
 
   // Apply the series
   if (!!definition.datasets) {
@@ -37,35 +36,50 @@ export function renderChart(elementId: string, definition: any, data?: any) {
 export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
+  const isJoined = definition.datasets.length > 1
+  const firstDataset = definition.datasets[0]
 
-  // adjust legend and axis labels for single series charts
-  if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
+  // category field
+  // will be hardcoded to 'categoryField' in the case of joined datasets
+  // otherwise try to get it from the dataset
+  spec.categoryField = isJoined ? 'categoryField' : firstDataset.category && firstDataset.category.field
 
-    // don't show legend by default for single series charts
-    if (!spec.legend) { spec.legend = {} }
-    spec.legend.enabled = false
+  // single series charts
+  if (definition.series.length === 1) {
+    const singleSeries = definition.series[0]
 
-    // get default axis labels from series
-    const categoryAxisTitle = definition.series[0].category.label
-    const valueAxisTitle = definition.series[0].value.label
+    if (!spec.categoryField) {
+      // probably the interim definition JSON format that spans cedar v0.x and v1.x
+      // try getting category from series instead of dataset
+      spec.categoryField = singleSeries.category && singleSeries.category.field
+    }
 
-    if (spec.type === 'xy' && Array.isArray(spec.valueAxes)) {
-      // for xy charts we treat the x axis as the category axis
-      // and the y axis as the value axis
-      spec.valueAxes.forEach((axis) => {
-        if (axis.position === 'bottom') {
-          axis.title = categoryAxisTitle
-        } else if (axis.position === 'left') {
-          axis.title = valueAxisTitle
-        }
-      })
-    } else {
-      if (!spec.valueAxes) { spec.valueAxes = [{}] }
-      spec.valueAxes[0].title = definition.series[0].value.label
-      spec.valueAxes[0].position = 'left'
+    if (definition.type !== 'pie' && definition.type !== 'radar') {
+      // don't show legend by default for single series charts
+      if (!spec.legend) { spec.legend = {} }
+      spec.legend.enabled = false
 
-      if (!spec.categoryAxis) { spec.categoryAxis = {} }
-      spec.categoryAxis.title = categoryAxisTitle
+      // get default axis labels from dataset/series
+      const categoryAxisTitle = firstDataset.category ? firstDataset.category.label : singleSeries.category && singleSeries.category.label
+      const valueAxisTitle = singleSeries.value.label
+      if (spec.type === 'xy' && Array.isArray(spec.valueAxes)) {
+        // for xy charts we treat the x axis as the category axis
+        // and the y axis as the value axis
+        spec.valueAxes.forEach((axis) => {
+          if (axis.position === 'bottom') {
+            axis.title = categoryAxisTitle
+          } else if (axis.position === 'left') {
+            axis.title = valueAxisTitle
+          }
+        })
+      } else {
+        if (!spec.valueAxes) { spec.valueAxes = [{}] }
+        spec.valueAxes[0].title = valueAxisTitle
+        spec.valueAxes[0].position = 'left'
+
+        if (!spec.categoryAxis) { spec.categoryAxis = {} }
+        spec.categoryAxis.title = categoryAxisTitle
+      }
     }
   }
 
@@ -80,8 +94,8 @@ export function fillInSpec(spec: any, definition: any) {
         graph.title = series.value.label
 
         /* tslint:disable prefer-conditional-expression */
-        if (definition.datasets.length > 1) {
-          // data has been joined use dataset index to look up the value
+        if (isJoined) {
+          // use dataset index to look up the value
           // TODO: should this be dataset name?
           // that would mean the names are required and unique
           // why aren't we using a hash for datasets?
@@ -94,20 +108,25 @@ export function fillInSpec(spec: any, definition: any) {
 
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
 
-        spec.titleField = 'categoryField'
-        spec.valueField = graph.valueField
-
         // Group vs. stack
         if (!!series.stack && graph.newStack) {
           graph.newStack = false
         }
 
-        // x/y types, scatter, bubble
-        if (spec.type === 'xy' && !!series.category && !!series.value) {
-          graph.xField = series.category.field
+        // special props for pie charts
+        if (definition.type === 'pie') {
+          spec.titleField = spec.categoryField
+          spec.valueField = graph.valueField
+        }
+
+        // special props for x/y types (scatter, bubble)
+        // if (spec.type === 'xy' && !!series.category && !!series.value) {
+        if (spec.type === 'xy') {
+          const category = firstDataset.category || series.category
+          graph.xField = category.field
           graph.yField = series.value.field
 
-          graph.balloonText = `<div>${series.category.label}: [[${series.category.field}]]</div><div>${series.value.label}: [[${series.value.field}]]</div>`
+          graph.balloonText = `<div>${category.label}: [[${category.field}]]</div><div>${series.value.label}: [[${series.value.field}]]</div>`
 
           // bubble
           if (spec.type === 'xy' && series.size) {

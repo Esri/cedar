@@ -13,7 +13,8 @@
           "onStatisticField": "Number_of",
           "outStatisticFieldName": "Number_of_SUM"
         }]
-      }
+      },
+      "category": {"field": "Type", "label": "Type"}
     },
     {
       "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -27,7 +28,8 @@
           "onStatisticField": "Number_of",
           "outStatisticFieldName": "Number_of_SUM"
         }]
-      }
+      },
+      "category": {"field": "Type", "label": "Type"}
     },
     {
       "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -41,24 +43,22 @@
           "onStatisticField": "Number_of",
           "outStatisticFieldName": "Number_of_SUM"
         }]
-      }
+      },
+      "category": {"field": "Type", "label": "Type"}
     }
   ],
   "series": [
     {
-      "category": {"field": "Type", "label": "Type"},
       "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
       "source": "Jordan",
       "stack": true
     },
     {
-      "category": {"field": "Type", "label": "Type"},
       "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
       "source": "Dewitt",
       "stack": true
     },
     {
-      "category": {"field": "Type", "label": "Type"},
       "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
       "source": "Fayetteville",
       "stack": true

@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Fixed
+- join based on dataset category instead of assuming 1:1 datasets:series
 ### Changed
 - added CORS support to docs site
 - install amcharts from npm instead of git
