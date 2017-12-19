@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 1.0.0-beta.0
 ### Changed
 - install amcharts from npm instead of git
 - added fillInSpec() tests for more chart types (including v0.9 definitions)

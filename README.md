@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=master)](https://travis-ci.org/Esri/cedar)
 
-> **NOTE:** You're looking at the documentation for v0.x, but v1.x is in alpha. For more info, see [the v1.x (alpha) documentation](./packages/cedar/README.md).
+> **NOTE:** You're looking at the documentation for v0.x, but v1.x is in beta. For more info, see [the v1.x (beta) documentation](./packages/cedar/README.md).
 
 Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.
 

@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.0-beta.0]
 ### Fixed
 - add dataset.join instead of assuming 1:1 datasets:series
 ### Changed
@@ -199,7 +199,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.7...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.0...master
+[1.0.0-beta.0]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.7...v1.0.0-beta.0
 [1.0.0-alpha.7]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.6...v1.0.0-alpha.7
 [1.0.0-alpha.6]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.5...v1.0.0-alpha.6
 [1.0.0-alpha.5]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.4...v1.0.0-alpha.5

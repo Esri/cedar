@@ -4,7 +4,7 @@
 
 Cedar is a library for crafting and sharing data visualizations powered by ArcGIS Services.
 
-> You are looking at the documentation for cedar v1.x, which is currently in alpha. You can also view the [v0.x documentation](../../README.md).
+> You are looking at the documentation for cedar v1.x, which is currently in beta. You can also view the [v0.x documentation](../../README.md).
 
 [View live examples of how to use cedar](http://cedar-v1.surge.sh/)
 
