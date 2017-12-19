@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - added CORS support to docs site
 - install amcharts from npm instead of git
+- get category field from dataset or series
 
 ## 1.0.0-alpha.7
 ### Changed

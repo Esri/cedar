@@ -37,39 +37,49 @@ export function fillInSpec(spec: any, definition: any) {
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
   const isJoined = definition.datasets.length > 1
+  const firstDataset = definition.datasets[0]
 
-  // category field will be 'categoryField' in the case of joined datasets
-  // otherwise get it from the first series
-  spec.categoryField = isJoined ? 'categoryField' : definition.series[0].category.field
+  // category field
+  // will be hardcoded to 'categoryField' in the case of joined datasets
+  // otherwise try to get it from the dataset
+  spec.categoryField = isJoined ? 'categoryField' : firstDataset.category && firstDataset.category.field
 
-  // adjust legend and axis labels for single series charts
-  if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
+  // single series charts
+  if (definition.series.length === 1) {
+    const singleSeries = definition.series[0]
 
-    // don't show legend by default for single series charts
-    if (!spec.legend) { spec.legend = {} }
-    spec.legend.enabled = false
+    if (!spec.categoryField) {
+      // probably the interim definition JSON format that spans cedar v0.x and v1.x
+      // try getting category from series instead of dataset
+      spec.categoryField = singleSeries.category && singleSeries.category.field
+    }
 
-    // get default axis labels from series
-    const categoryAxisTitle = definition.series[0].category.label
-    const valueAxisTitle = definition.series[0].value.label
+    if (definition.type !== 'pie' && definition.type !== 'radar') {
+      // don't show legend by default for single series charts
+      if (!spec.legend) { spec.legend = {} }
+      spec.legend.enabled = false
 
-    if (spec.type === 'xy' && Array.isArray(spec.valueAxes)) {
-      // for xy charts we treat the x axis as the category axis
-      // and the y axis as the value axis
-      spec.valueAxes.forEach((axis) => {
-        if (axis.position === 'bottom') {
-          axis.title = categoryAxisTitle
-        } else if (axis.position === 'left') {
-          axis.title = valueAxisTitle
-        }
-      })
-    } else {
-      if (!spec.valueAxes) { spec.valueAxes = [{}] }
-      spec.valueAxes[0].title = definition.series[0].value.label
-      spec.valueAxes[0].position = 'left'
+      // get default axis labels from dataset/series
+      const categoryAxisTitle = firstDataset.category ? firstDataset.category.label : singleSeries.category && singleSeries.category.label
+      const valueAxisTitle = singleSeries.value.label
+      if (spec.type === 'xy' && Array.isArray(spec.valueAxes)) {
+        // for xy charts we treat the x axis as the category axis
+        // and the y axis as the value axis
+        spec.valueAxes.forEach((axis) => {
+          if (axis.position === 'bottom') {
+            axis.title = categoryAxisTitle
+          } else if (axis.position === 'left') {
+            axis.title = valueAxisTitle
+          }
+        })
+      } else {
+        if (!spec.valueAxes) { spec.valueAxes = [{}] }
+        spec.valueAxes[0].title = valueAxisTitle
+        spec.valueAxes[0].position = 'left'
 
-      if (!spec.categoryAxis) { spec.categoryAxis = {} }
-      spec.categoryAxis.title = categoryAxisTitle
+        if (!spec.categoryAxis) { spec.categoryAxis = {} }
+        spec.categoryAxis.title = categoryAxisTitle
+      }
     }
   }
 
@@ -110,11 +120,13 @@ export function fillInSpec(spec: any, definition: any) {
         }
 
         // special props for x/y types (scatter, bubble)
-        if (spec.type === 'xy' && !!series.category && !!series.value) {
-          graph.xField = series.category.field
+        // if (spec.type === 'xy' && !!series.category && !!series.value) {
+        if (spec.type === 'xy') {
+          const category = firstDataset.category || series.category
+          graph.xField = category.field
           graph.yField = series.value.field
 
-          graph.balloonText = `<div>${series.category.label}: [[${series.category.field}]]</div><div>${series.value.label}: [[${series.value.field}]]</div>`
+          graph.balloonText = `<div>${category.label}: [[${category.field}]]</div><div>${series.value.label}: [[${series.value.field}]]</div>`
 
           // bubble
           if (spec.type === 'xy' && series.size) {

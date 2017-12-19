@@ -14,12 +14,12 @@
             "outStatisticFieldName": "Number_of_SUM"
           }
         ]
-      }
+      },
+      "category": {"field": "Type", "label": "Type"}
     }
   ],
   "series": [
     {
-      "category": {"field": "Type", "label": "Type"},
       "value": {"field": "Number_of_SUM", "label": "Number of Students"},
       "source": "Number_of_SUM"
     }

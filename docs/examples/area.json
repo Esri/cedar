@@ -18,13 +18,12 @@
           }
         ],
         "sqlFormat": "standard"
-      }
+      },
+      "category": {"field": "EXPR_1", "label": "Year"}
     }
 ],
 "series": [
   {
-    "category": {"field": "EXPR_1", "label": "Year"},
-    "group": true,
     "value": {
       "field": "MAJORINJURIES_SUM",
       "label": "Major Injuries"
@@ -35,8 +34,7 @@
     "value": {
       "field": "MINORINJURIES_SUM",
       "label": "Minor Injuries"
-    },
-    "group": true
+    }
   }
 ],
 "overrides": {
