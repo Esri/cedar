@@ -10,6 +10,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - added CORS support to docs site
 - install amcharts from npm instead of git
 - only inject categoryField into chart._data when joining
+- docs: fix line/area examples; sort by year
+- add v0.9 example JSON under docs (for now)
 
 ## [1.0.0-alpha.7]
 ### Changed
