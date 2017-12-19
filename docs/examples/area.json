@@ -17,6 +17,7 @@
             "outStatisticFieldName": "MINORINJURIES_SUM"
           }
         ],
+        "orderByFields": "EXTRACT(YEAR from REPORTDATE) ASC",
         "sqlFormat": "standard"
       }
     }
