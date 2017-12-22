@@ -117,11 +117,11 @@ Once Cedar is loaded you can create and show the chart at a designated element a
   });
 ```
 
-See the [tutorial](http://esri.github.io/cedar/tutorial) to learn more.
+See the [tutorial](http://cedar-v0.surge.sh/tutorial) to learn more.
 
 ## Demos
 
-Here is are [an extensive set of demos](http://esri.github.io/cedar/examples) showing the concepts of Cedar.
+Here is are [an extensive set of demos](http://cedar-v0.surge.sh/examples) showing the concepts of Cedar.
 
 ## Components of a Cedar Chart
 
@@ -136,7 +136,7 @@ Cedar charts are defined by the following ingredients:
  - `mappings` bind the Feature Layer attributes to the `Specification inputs`
 - and `overrides` are specific modifications to the `Specification template`
 
-See the [API documentation](http://esri.github.io/cedar/api) for further details.
+See the [API documentation](http://cedar-v0.surge.sh/api) for further details.
 
 ### Development Instructions
 
