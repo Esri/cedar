@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Support
+- Move v0.x docs from gh-pages to surge
+
 ## [0.9.2]
 ### Support
 - Timeline charts now have x/y axis titles
@@ -133,6 +137,7 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
+[Unreleased]: https://github.com/Esri/cedar/compare/v0.9.2...v0.x
 [0.9.2]: https://github.com/Esri/cedar/compare/v0.9.1...v0.9.2
 [0.9.1]: https://github.com/Esri/cedar/compare/v0.9.0...v0.9.1
 [0.9.0]: https://github.com/Esri/cedar/compare/v0.8.2...v0.9.0

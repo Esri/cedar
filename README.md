@@ -1,6 +1,8 @@
 # Cedar
 
-[![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=master)](https://travis-ci.org/Esri/cedar)
+[![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=v0.x)](https://travis-ci.org/Esri/cedar)
+
+> **NOTE:** You're looking at the documentation for v0.x, but v1.x is in beta. For more info, see [the v1.x (beta) documentation](https://github.com/Esri/cedar)
 
 Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.
 
@@ -115,11 +117,11 @@ Once Cedar is loaded you can create and show the chart at a designated element a
   });
 ```
 
-See the [tutorial](http://esri.github.io/cedar/tutorial) to learn more.
+See the [tutorial](http://cedar-v0.surge.sh/tutorial) to learn more.
 
 ## Demos
 
-Here is are [an extensive set of demos](http://esri.github.io/cedar/examples) showing the concepts of Cedar.
+Here is are [an extensive set of demos](http://cedar-v0.surge.sh/examples) showing the concepts of Cedar.
 
 ## Components of a Cedar Chart
 
@@ -134,7 +136,7 @@ Cedar charts are defined by the following ingredients:
  - `mappings` bind the Feature Layer attributes to the `Specification inputs`
 - and `overrides` are specific modifications to the `Specification template`
 
-See the [API documentation](http://esri.github.io/cedar/api) for further details.
+See the [API documentation](http://cedar-v0.surge.sh/api) for further details.
 
 ### Development Instructions
 

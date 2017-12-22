@@ -76,7 +76,7 @@ module.exports = function(grunt) {
       },
       build: {
         options: {
-          assets: 'cedar/'
+          assets: '/'
         },
         files: [{
           cwd: 'site/source/pages',
@@ -121,15 +121,17 @@ module.exports = function(grunt) {
         }
     },
 
-    'gh-pages': {
-      options: {
-
-        base: 'site/build'
-        //,repo: 'git@github.com:esri/cedar.git'
-
-      },
-      src: ['**']
+    surge: {
+      'cedar-v0': {
+        options: {
+          // The path or directory to your compiled project
+          project: 'site/build',
+          // The domain or subdomain to deploy to
+          domain: 'cedar-v0.surge.sh'
+        }
+      }
     }
+
   });
 
   // Development Tasks
@@ -142,7 +144,7 @@ module.exports = function(grunt) {
   grunt.registerTask('docs:build', ['assemble:build', 'sass','copy', 'imagemin']);
 
   // Push to GH Pages
-  grunt.registerTask('docs:deploy', ['assemble:build', 'sass','copy', 'imagemin', 'gh-pages']);
+  grunt.registerTask('docs:deploy', ['assemble:build', 'sass','copy', 'imagemin', 'surge']);
 
   // Require all grunt modules
   require('load-grunt-tasks')(grunt, {pattern: ['grunt-*', 'assemble']});
