@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- release script copies root README to packages/cedar before publishi
+ng
+
 ## [1.0.0-beta.0]
 ### Fixed
 - add dataset.join instead of assuming 1:1 datasets:series
