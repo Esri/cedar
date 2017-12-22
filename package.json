@@ -12,7 +12,7 @@
     "predeploy": "npm run copy:docs",
     "deploy": "surge ./docs cedar-v1.surge.sh",
     "postinstall": "lerna bootstrap",
-    "prerelease": "git add .",
+    "prerelease": "npm run copy:readme && git add .",
     "release": "lerna publish",
     "reset": "npm run clean:dist && npm run clean:deps && lerna bootstrap",
     "start": "npm run copy:docs && npm run build:watch",
