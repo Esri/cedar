@@ -100,9 +100,6 @@ If you're using cedar with the [ArcGIS API for JavaScript](developers.arcgis.com
 Once cedar is loaded you can create and show the chart at a designated element as follows:
 
 ```js
-  //create a cedar chart using the known 'bar' type
-  var chart = new cedar.Chart({"type": "bar"});
-
   // connect to the data
   var datasets = [{
     "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -131,6 +128,12 @@ Once cedar is loaded you can create and show the chart at a designated element a
       "labelRotation": -45
     }
   }
+
+  //create a cedar chart using the known 'bar' type
+  var chart = new cedar.Chart({"type": "bar"})
+    .datasets(datasets)
+    .series(series)
+    .overrides(overrides);
 
   // render the chart
   var elementId = 'chart';
