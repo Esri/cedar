@@ -7,6 +7,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - release script copies root README to packages/cedar before publishi
 ng
+- docs page doesn't look like it was beat by ugly stick
 
 ## [1.0.0-beta.0]
 ### Fixed
