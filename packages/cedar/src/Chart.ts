@@ -123,8 +123,8 @@ export default class Chart {
     return this._definitionAccessor('specification', newSpecification)
   }
 
-  public overrides(newOverrides: {}): Chart
-  public overrides(): {}
+  public overrides(newOverrides: ILegend): Chart
+  public overrides(): ILegend
   public overrides(newOverrides?: any): any {
     return this._definitionAccessor('overrides', newOverrides)
   }
