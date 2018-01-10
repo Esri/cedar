@@ -37,7 +37,7 @@ export function arrToFs(arr: any[]): any {
  */
 export function getData(url: string, options?: any): Promise<any> {
   const opts = options || {}
-  return request(url, opts)
+  return request(url, { params: opts })
 }
 
 // TODO: remove default export

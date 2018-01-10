@@ -159,7 +159,7 @@ export default class Chart {
           names.push(dataset.name || `dataset${i}`)
           const queryUrl = getQueryUrl(dataset)
           const queryParams = createQueryParams(dataset.query)
-          requests.push(getData(queryUrl, { params: queryParams }))
+          requests.push(getData(queryUrl, queryParams))
         }
       })
     }
