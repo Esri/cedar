@@ -61,8 +61,9 @@
     ]
   },
   "dependencies": {
-    "amcharts3": "amcharts/amcharts3",
-    "@esri/cedar-amcharts": "^1.0.0-beta.0"
+    "@esri/arcgis-rest-request": "^1.0.2",
+    "@esri/cedar-amcharts": "^1.0.0-beta.0",
+    "amcharts3": "amcharts/amcharts3"
   },
   "devDependencies": {
     "@types/jest": "20.0.2",

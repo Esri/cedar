@@ -1,4 +1,4 @@
-import { request } from '../request/request'
+import { request } from '@esri/arcgis-rest-request'
 // TODO: once @esri/arcgis-rest-request is released, replace the above w/
 // import { request } from '@esri/arcgis-rest-request'
 
