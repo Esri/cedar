@@ -123,14 +123,14 @@ export default class Chart {
     return this._definitionAccessor('specification', newSpecification)
   }
 
-  public overrides(newOverrides: ILegend): Chart
-  public overrides(): ILegend
+  public overrides(newOverrides: {}): Chart
+  public overrides(): {}
   public overrides(newOverrides?: any): any {
     return this._definitionAccessor('overrides', newOverrides)
   }
 
-  public legend(newLegend: {}): Chart
-  public legend(): {}
+  public legend(newLegend: ILegend): Chart
+  public legend(): ILegend
   public legend(newLegend?: any): any {
     return this._definitionAccessor('legend', newLegend)
   }
