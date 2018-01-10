@@ -1,4 +1,4 @@
-import { request } from '../request/request'
+import { request } from '@esri/arcgis-rest-request'
 // TODO: once @esri/arcgis-rest-request is released, replace the above w/
 // import { request } from '@esri/arcgis-rest-request'
 
@@ -37,7 +37,7 @@ export function arrToFs(arr: any[]): any {
  */
 export function getData(url: string, options?: any): Promise<any> {
   const opts = options || {}
-  return request(url, opts)
+  return request(url, { params: opts })
 }
 
 // TODO: remove default export

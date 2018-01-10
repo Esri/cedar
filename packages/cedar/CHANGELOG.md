@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - release script copies root README to packages/cedar before publishi
 ng
 - docs page doesn't look like it was beat by ugly stick
+- arcgis-rest-request is no longer included in Cedar, instead it is npm installed
 
 ## [1.0.0-beta.0]
 ### Fixed
