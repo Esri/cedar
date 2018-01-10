@@ -42,11 +42,13 @@ export function fillInSpec(spec: any, definition: any) {
   // otherwise get it from the first series
   spec.categoryField = isJoined ? 'categoryField' : definition.series[0].category.field
 
+  // Add a legend in case it's not on the spec
+  if (!spec.legend) { spec.legend = {} }
+
   // adjust legend and axis labels for single series charts
   if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
 
     // don't show legend by default for single series charts
-    if (!spec.legend) { spec.legend = {} }
     spec.legend.enabled = false
 
     // get default axis labels from series
@@ -71,6 +73,10 @@ export function fillInSpec(spec: any, definition: any) {
       if (!spec.categoryAxis) { spec.categoryAxis = {} }
       spec.categoryAxis.title = categoryAxisTitle
     }
+  }
+
+  if (definition.legend) {
+    spec.legend.enabled = definition.legend.enable
   }
 
   // Iterate over datasets

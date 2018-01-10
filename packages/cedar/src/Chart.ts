@@ -57,12 +57,17 @@ export interface ISeries {
   value?: IField
 }
 
+export interface ILegend {
+  enable: boolean
+}
+
 export interface IDefinition {
   datasets?: IDataset[],
   series?: ISeries[],
   type?: string
   specification?: {}
-  overrides?: {}
+  overrides?: {},
+  legend?: ILegend
 }
 
 export default class Chart {
@@ -122,6 +127,12 @@ export default class Chart {
   public overrides(): {}
   public overrides(newOverrides?: any): any {
     return this._definitionAccessor('overrides', newOverrides)
+  }
+
+  public legend(newLegend: {}): Chart
+  public legend(): {}
+  public legend(newLegend?: any): any {
+    return this._definitionAccessor('legend', newLegend)
   }
 
   // data is read only
