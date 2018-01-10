@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ng
 - docs page doesn't look like it was beat by ugly stick
 - arcgis-rest-request is no longer included in Cedar, instead it is npm installed
+- legend is now a prop that can be passed in through the definition or off of the chart object directly
 
 ## [1.0.0-beta.0]
 ### Fixed

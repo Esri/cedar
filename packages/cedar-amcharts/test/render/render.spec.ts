@@ -45,7 +45,7 @@ describe('when filling in a scatter spec', () => {
           "value": {"field": "MedianHHIncome2015", "label": "Median Median Household Income"}
         }
       ]
-    }    
+    }
     /* tslint:enable */
     result = render.fillInSpec(spec, definition)
   })
@@ -140,8 +140,11 @@ describe('when filling in a stacked bar spec', () => {
           "source": "Fayetteville",
           "stack": true
         }
-      ]
-    }    
+      ],
+      "legend": {
+        "enable": false
+      },
+    }
     /* tslint:enable */
     result = render.fillInSpec(spec, definition)
   })
@@ -154,6 +157,9 @@ describe('when filling in a stacked bar spec', () => {
       expect(graph.newStack).toBe(false)
       expect(graph.valueField).toEqual(`Number_of_SUM_${i}`)
     })
+  })
+  test('it should disable legend if passed in by definition', () => {
+    expect(result.legend.enabled).toBe(false)
   })
 })
 
@@ -280,8 +286,6 @@ describe('when passed an interim (v0.9.x) scatter definition', () => {
     expect(yAxis.title).toEqual('Fraction of Teachers')
   })
 })
-
-
 
 // NOTE: renderChart calls dependencies like amcharts and deepmerge
 // this suite used to run and presumeably actually rendered a chart somewhere
