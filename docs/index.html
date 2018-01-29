@@ -88,82 +88,112 @@
   <!-- example code for this page -->
   <script src="https://ajaxorg.github.io/ace-builds/src/ace.js" type="text/javascript" charset="utf-8"></script>
   <script>
-  // set up editor
-  var editor = ace.edit("editor");
+    function browserSupportsAllFeatures() {
+      return window.fetch;
+    }
+
+    function loadScript(src, done) {
+      var js = document.createElement('script');
+      js.src = src;
+      js.onload = function() {
+        done();
+      };
+      js.onerror = function() {
+        done(new Error('Failed to load script ' + src));
+      };
+      document.head.appendChild(js);
+    }
+    
+    function main(err) {
+      // Initiate all other code paths.
+      // If there's an error loading the polyfills, handle that
+      // case gracefully and track that the error occurred.
+      // set up editor
+      editor = ace.edit("editor");
       editor.setTheme("ace/theme/xcode");
       editor.getSession().setMode("ace/mode/json");
 
-  // build list off styles
-  var styles = ["bar", "bar-grouped", "bar-stacked", "bar-horizontal", "radar", "bubble", "area", "line", "pie", "scatter"];
-  buildMenu(styles);
+      // build list off styles
+      var styles = ["bar", "bar-grouped", "bar-stacked", "bar-horizontal", "radar", "bubble", "area", "line", "pie", "scatter"];
+      buildMenu(styles);
 
-  // initialize editor to default style
-  var initialStyle = parseStyleFromUrl() || styles[0];
-  loadExample(initialStyle);
-
-  function buildMenu(styles) {
-    var ul = document.createElement('ul');
-    document.getElementById('styleList').appendChild(ul);
-
-    function buildOption(filename) {
-      var li = document.createElement('li');
-      li.setAttribute('class','style');
-      li.setAttribute('onclick','loadExample("' + filename + '")');
-      ul.appendChild(li);
-      t = document.createTextNode(filename);
-      li.innerHTML=li.innerHTML + filename;
+      // initialize editor to default style
+      var initialStyle = parseStyleFromUrl() || styles[0];
+      loadExample(initialStyle);
     }
 
-    styles.forEach(function(style, index, arr) {
-      buildOption(style);
-    });
+    function buildMenu(styles) {
+      var ul = document.createElement('ul');
+      document.getElementById('styleList').appendChild(ul);
 
-    // Custom option
-    buildOption("Custom")
+      function buildOption(filename) {
+        var li = document.createElement('li');
+        li.setAttribute('class','style');
+        li.setAttribute('onclick','loadExample("' + filename + '")');
+        ul.appendChild(li);
+        t = document.createTextNode(filename);
+        li.innerHTML=li.innerHTML + filename;
+      }
 
-    return ul;
-  }
+      styles.forEach(function(style, index, arr) {
+        buildOption(style);
+      });
 
-  function parseStyleFromUrl () {
-    // Ex: ?type=bar
-    // for now return the first query string param (if any)
-    return location.search && location.search.split('=')[1];
-  }
+      // Custom option
+      buildOption("Custom")
 
-  function loadExample(style) {
-    if(style.length == 0 || style == "Custom") {
-      editor.setValue('');
-      return;
+      return ul;
     }
-    loadFile(style, function(configJson) {
-      editor.setValue(configJson); // document.getElementById("editor").value;
+
+    function parseStyleFromUrl () {
+      // Ex: ?type=bar
+      // for now return the first query string param (if any)
+      return location.search && location.search.split('=')[1];
+    }
+
+    function loadExample(style) {
+      if(style.length == 0 || style == "Custom") {
+        editor.setValue('');
+        return;
+      }
+      loadFile(style, function(configJson) {
+        editor.setValue(configJson); // document.getElementById("editor").value;
+        var config = JSON.parse(configJson);
+        displayChart(config);
+      });
+    }
+
+    function loadEditor() {
+      var configJson = editor.getValue(); // document.getElementById("editor").value;
       var config = JSON.parse(configJson);
       displayChart(config);
-    });
-  }
-  function loadEditor() {
-    var configJson = editor.getValue(); // document.getElementById("editor").value;
-    var config = JSON.parse(configJson);
-    displayChart(config);
-  }
+    }
 
-  let chart;
-  function displayChart(config) {
+    function displayChart(config) {
       chart = new cedar.Chart("chart", config);
       chart.show()
-  }
+    }
 
-  function loadFile(style, cb) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          // Typical action to be performed when the document is ready:
-          cb(xhttp.responseText)
-        }
-    };
-    xhttp.open("GET", "./examples/" + style + ".json", true);
-    xhttp.send();
-  }
+    function loadFile(style, cb) {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+            // Typical action to be performed when the document is ready:
+            cb(xhttp.responseText)
+          }
+      };
+      xhttp.open("GET", "./examples/" + style + ".json", true);
+      xhttp.send();
+    }
+
+    let editor, chart;
+    if (browserSupportsAllFeatures()) {
+      // Browsers that support all features run `main()` immediately.
+      main();
+    } else {
+      // All other browsers loads polyfills and then run `main()`.
+      loadScript('https://cdn.polyfill.io/v2/polyfill.min.js?features=fetch', main);
+    }
   </script>
 </body>
 </html>

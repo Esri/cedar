@@ -59,17 +59,17 @@ describe('createQueryParams', () => {
       f:  'json',
       groupByFieldsForStatistics: 'Type',
       orderByFields: 'Number_of_SUM DESC',
-      outStatistics: [{
+      outStatistics: JSON.stringify([{
         statisticType: 'sum',
         onStatisticField: 'Number_of',
         outStatisticFieldName: 'Number_of_SUM'
-      }],
-      geometry: {
+      }]),
+      geometry: JSON.stringify({
         xmin: -104,
         ymin: 35.6,
         xmax: -94.32,
         ymax: 41
-      },
+      }),
       inSR: '4326'
   }
     expect(createQueryParams(dataset.query)).toEqual(result)
