@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.0.0-beta.2]
 ### Fixed
 - fix fatal errors in IE11 [#386](https://github.com/Esri/cedar/issues/386)
 ### Changed
@@ -213,7 +213,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.1...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.2...master
+[1.0.0-beta.2]: https://github.com/Esri/cedar/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/Esri/cedar/compare/v1.0.0-beta.0...v1.0.0-beta.1
 [1.0.0-beta.0]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.7...v1.0.0-beta.0
 [1.0.0-alpha.7]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.6...v1.0.0-alpha.7
@@ -222,6 +223,7 @@ Baseline version.
 [1.0.0-alpha.4]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.3...v1.0.0-alpha.4
 [1.0.0-alpha.3]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.2...v1.0.0-alpha.3
 [1.0.0-alpha.2]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.1...v1.0.0-alpha.2
+[0.2]: https://github.com/Esri/cedar/compare/v0.1...v0.2
 [1.0.0-alpha.1]: https://github.com/Esri/cedar/compare/v1.0.0-alpha...v1.0.0-alpha.1
 [1.0.0-alpha]: https://github.com/Esri/cedar/compare/v0.9.2...v1.0.0-alpha
 [0.9.2]: https://github.com/Esri/cedar/compare/v0.9.1...v0.9.2
@@ -240,5 +242,4 @@ Baseline version.
 [0.4.1]: https://github.com/Esri/cedar/compare/v0.4.0...v0.4.1
 [0.4.0]: https://github.com/Esri/cedar/compare/v0.3...v0.4.0
 [0.3]: https://github.com/Esri/cedar/compare/v0.2...v0.3
-[0.2]: https://github.com/Esri/cedar/compare/v0.1...v0.2
 [0.1]: https://github.com/Esri/cedar/releases/tag/v0.1
