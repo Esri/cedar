@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Fixed
+- remove extraneous dependency on amcharts in @esri/cedar
+
 ## [1.0.0-beta.2]
 ### Fixed
 - fix fatal errors in IE11 [#386](https://github.com/Esri/cedar/issues/386)
