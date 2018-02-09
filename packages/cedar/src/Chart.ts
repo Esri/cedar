@@ -58,7 +58,14 @@ export interface ISeries {
 }
 
 export interface ILegend {
-  enable: boolean
+  enable?: boolean
+}
+
+export interface IStyles {
+  backgroundColor?: string,
+  backgroundAlpha?: number,
+  colors?: string[],
+  textColor?: string
 }
 
 export interface IDefinition {
@@ -67,7 +74,8 @@ export interface IDefinition {
   type?: string
   specification?: {}
   overrides?: {},
-  legend?: ILegend
+  legend?: ILegend,
+  styles?: IStyles
 }
 
 export default class Chart {
@@ -133,6 +141,12 @@ export default class Chart {
   public legend(): ILegend
   public legend(newLegend?: any): any {
     return this._definitionAccessor('legend', newLegend)
+  }
+
+  public styles(newStyles: IStyles): Chart
+  public styles(): IStyles
+  public styles(newStyles?: any): any {
+    return this._definitionAccessor('styles', newStyles)
   }
 
   // data is read only

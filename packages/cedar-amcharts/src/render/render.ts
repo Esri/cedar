@@ -78,6 +78,17 @@ export function fillInSpec(spec: any, definition: any) {
   if (definition.legend) {
     spec.legend.enabled = definition.legend.enable
   }
+  // If we have styles....
+  if (definition.styles) {
+    // Snag out styles for brevities sake
+    const styles = definition.styles
+    // If a backgroundColor..
+    if (styles.backgroundColor) { spec.backgroundColor = styles.backgroundColor }
+    // If a backgroundAlpha..
+    if (styles.backgroundAlpha) { spec.backgroundAlpha = styles.backgroundAlpha }
+    // If a textColor
+    if (styles.textColor) { spec.color = styles.textColor }
+  }
 
   // Iterate over datasets
   definition.datasets.forEach((dataset, d) => {
@@ -101,6 +112,11 @@ export function fillInSpec(spec: any, definition: any) {
         }
         /* tslint:enable */
         // TODO: map other fields besides value like color, size, etc
+
+        // handle le color
+        if (definition.styles && definition.styles.colors) {
+          graph.lineColor = definition.styles.colors[s]
+        }
 
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
 
