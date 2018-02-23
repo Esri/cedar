@@ -59,7 +59,7 @@ export interface ISeries {
 
 export interface ILegend {
   visible?: boolean,
-  position?: string
+  position?: 'top' | 'bottom' | 'left' | 'right'
 }
 
 export interface IDefinition {
