@@ -76,8 +76,15 @@ export function fillInSpec(spec: any, definition: any) {
     }
   }
 
+  // Handle Legend in case.
   if (definition.legend) {
-    spec.legend.enabled = definition.legend.visible
+    const legend = definition.legend
+    if (legend.hasOwnProperty('visible')) {
+      spec.legend.enabled = legend.visible
+    }
+    if (legend.position && (legend.position === 'top' || legend.position === 'bottom' || legend.position === 'left' || legend.position === 'right')) {
+      spec.legend.position = legend.position
+    }
   }
 
   // Iterate over datasets

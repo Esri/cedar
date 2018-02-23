@@ -58,7 +58,8 @@ export interface ISeries {
 }
 
 export interface ILegend {
-  visible: boolean
+  visible?: boolean,
+  position?: string
 }
 
 export interface IDefinition {
