@@ -44,6 +44,7 @@ export function fillInSpec(spec: any, definition: any) {
 
   // Add a legend in case it's not on the spec
   if (!spec.legend) { spec.legend = {} }
+  if (definition.legend && definition.legend.hasOwnProperty('enable')) { definition.legend.visible = definition.legend.enable }
 
   // adjust legend and axis labels for single series charts
   if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
@@ -76,7 +77,7 @@ export function fillInSpec(spec: any, definition: any) {
   }
 
   if (definition.legend) {
-    spec.legend.enabled = definition.legend.enable
+    spec.legend.enabled = definition.legend.visible
   }
 
   // Iterate over datasets

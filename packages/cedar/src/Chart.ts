@@ -58,7 +58,7 @@ export interface ISeries {
 }
 
 export interface ILegend {
-  enable: boolean
+  visible: boolean
 }
 
 export interface IDefinition {
