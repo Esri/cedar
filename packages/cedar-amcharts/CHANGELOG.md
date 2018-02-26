@@ -8,6 +8,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - legend.position determines the location (top, bottom, right, left) of a chart legend
 ### Changed
 - legend.enable is now legend.visible
+- Text colors have been changed to pass color contrast ratio on white backgrounds
 
 ## 1.0.0-beta.1
 ### Added
