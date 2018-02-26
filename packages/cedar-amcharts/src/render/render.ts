@@ -82,10 +82,11 @@ export function fillInSpec(spec: any, definition: any) {
   // Handle Legend in case.
   if (definition.legend) {
     const legend = definition.legend
+    const supportedLegendPositions: string[] = ['top', 'bottom', 'left', 'right']
     if (legend.hasOwnProperty('visible')) {
       spec.legend.enabled = legend.visible
     }
-    if (legend.position && (legend.position === 'top' || legend.position === 'bottom' || legend.position === 'left' || legend.position === 'right')) {
+    if (legend.position && supportedLegendPositions.indexOf(legend.position) > -1) {
       spec.legend.position = legend.position
     }
   }
