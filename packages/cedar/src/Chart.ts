@@ -58,7 +58,8 @@ export interface ISeries {
 }
 
 export interface ILegend {
-  enable: boolean
+  visible?: boolean,
+  position?: 'top' | 'bottom' | 'left' | 'right'
 }
 
 export interface IDefinition {

@@ -33,6 +33,10 @@ const barDefinition = {
     "categoryAxis": {
       "labelRotation": -45
     }
+  },
+  "legend": {
+    "visible": true,
+    "position": "right"
   }
 }
 /* tslint:enable */
@@ -65,6 +69,9 @@ describe('new Chart w/o definition', () => {
   })
   test('overrides should set the definition.overrides', () => {
     expect(chart.overrides(barDefinition.overrides).overrides()).toEqual(barDefinition.overrides)
+  })
+  test('legend should set the definition.legend', () => {
+    expect(chart.legend(barDefinition.legend).legend()).toEqual(barDefinition.legend)
   })
 })
 

@@ -142,7 +142,7 @@ describe('when filling in a stacked bar spec', () => {
         }
       ],
       "legend": {
-        "enable": false
+        "visible": false
       },
     }
     /* tslint:enable */
@@ -160,6 +160,54 @@ describe('when filling in a stacked bar spec', () => {
   })
   test('it should disable legend if passed in by definition', () => {
     expect(result.legend.enabled).toBe(false)
+  })
+})
+
+describe('Legend is properly effected by legend props', () => {
+  let result
+  beforeAll(() => {
+    const spec = (bar as any)
+    /* tslint:disable */
+    const definition = {
+      "type": "bar",
+      "datasets": [
+        {
+          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+          "name": "Jordan",
+          "query": {
+            "where": "City='Jordan'",
+            "orderByFields": "Number_of_SUM DESC",
+            "groupByFieldsForStatistics": "Type",
+            "outStatistics": [{
+              "statisticType": "sum",
+              "onStatisticField": "Number_of",
+              "outStatisticFieldName": "Number_of_SUM"
+            }]
+          },
+          "join": "Type"
+        }
+      ],
+      "series": [
+        {
+          "category": {"field": "Type", "label": "Type"},
+          "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
+          "source": "Jordan",
+          "stack": true
+        }
+      ],
+      "legend": {
+        "visible": true,
+        "position": "right"
+      },
+    }
+    /* tslint:enable */
+    result = render.fillInSpec(spec, definition)
+  })
+  test('Legend should be true if visible: true passed in', () => {
+    expect(result.legend.enabled).toBe(true)
+  })
+  test('Legend position should be right when position: right is passedin', () => {
+    expect(result.legend.position).toEqual('right')
   })
 })
 
@@ -233,7 +281,7 @@ describe('when passed an interim (v0.9.x) bar definition', () => {
   test('should use series category field ', () => {
     expect(result.categoryField).toEqual('Type')
   })
-  test('should disable legend', () => {
+  test('single series chart should be disabled by default', () => {
     expect(result.legend.enabled).toEqual(false)
   })
   test('should set x axis', () => {
@@ -272,7 +320,7 @@ describe('when passed an interim (v0.9.x) scatter definition', () => {
   test('should use series category field ', () => {
     expect(result.categoryField).toEqual('Number_of')
   })
-  test('should disable legend', () => {
+  test('single series chart should have legend disabled by default', () => {
     expect(result.legend.enabled).toEqual(false)
   })
   test('should set x axis', () => {

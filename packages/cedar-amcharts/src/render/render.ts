@@ -44,6 +44,10 @@ export function fillInSpec(spec: any, definition: any) {
 
   // Add a legend in case it's not on the spec
   if (!spec.legend) { spec.legend = {} }
+  // TODO This is needed as 'legend.enable' has been renamed 'legend.visible'. We are only introducing
+  // breaking changes on major releases.
+  // Remove the line below on next breaking change
+  if (definition.legend && definition.legend.hasOwnProperty('enable')) { definition.legend.visible = definition.legend.enable }
 
   // adjust legend and axis labels for single series charts
   if (definition.series.length === 1 && (definition.type !== 'pie' && definition.type !== 'radar')) {
@@ -75,8 +79,16 @@ export function fillInSpec(spec: any, definition: any) {
     }
   }
 
+  // Handle Legend in case.
   if (definition.legend) {
-    spec.legend.enabled = definition.legend.enable
+    const legend = definition.legend
+    const supportedLegendPositions: string[] = ['top', 'bottom', 'left', 'right']
+    if (legend.hasOwnProperty('visible')) {
+      spec.legend.enabled = legend.visible
+    }
+    if (legend.position && supportedLegendPositions.indexOf(legend.position) > -1) {
+      spec.legend.position = legend.position
+    }
   }
 
   // Iterate over datasets
