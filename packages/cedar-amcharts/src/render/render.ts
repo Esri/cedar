@@ -11,7 +11,11 @@ export function renderChart(elementId: string, definition: any, data?: any) {
   }
 
   // Clone/copy spec and data
-  let spec = fetchSpec(definition.type)
+  // Longer than normal conditional so setting as its own const
+  const hasSpecAndIsntString = definition.specification && typeof definition.specification !== 'string'
+  // ternary checking to see if there is a def.spec and that it is NOT a string (url)
+  // if true than return def.spec. If not true than fetch a premade spec
+  let spec = hasSpecAndIsntString ? clone(definition.specification) : fetchSpec(definition.type)
   const copyData = clone(data)
 
   // Set the spec's data
