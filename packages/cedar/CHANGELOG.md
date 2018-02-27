@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - remove extraneous dependency on amcharts in @esri/cedar
+- Specifications that are passed in are actually supported
 
 ## [1.0.0-beta.2]
 ### Fixed
