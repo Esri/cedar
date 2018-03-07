@@ -48,13 +48,3 @@ export function createQueryParams(query: any = {}): any {
 
   return queryParams
 }
-
-export function getQueryUrl(dataset: any): string {
-  let builtUrl = `${dataset.url}/query?`
-
-  if (dataset.token) {
-    builtUrl = `${builtUrl}token=${dataset.token}`
-  }
-
-  return builtUrl
-}

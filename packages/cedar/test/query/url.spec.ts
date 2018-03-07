@@ -1,21 +1,5 @@
 import {} from 'jest'
-import { createQueryParams, getQueryUrl } from '../../src/query/url'
-
-describe('getQueryUrl', () => {
-  let dataset;
-  beforeEach(() => {
-    dataset = {
-      url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0'
-    }
-  })
-  test('it should append query', () => {
-    expect(getQueryUrl(dataset)).toEqual('https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?')
-  })
-  test('it should append query and token', () => {
-    dataset.token = 'notarealtoken';
-    expect(getQueryUrl(dataset)).toEqual('https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0/query?token=notarealtoken')
-  })
-})
+import { createQueryParams } from '../../src/query/url'
 
 describe('createQueryParams', () => {
   test('should return default query params when no query is passed', () => {
