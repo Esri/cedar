@@ -1,5 +1,5 @@
 import {} from 'jest'
-import { buildIndex, flattenFeatureSets } from '../../src/flatten/flatten'
+import { buildIndex, flattenFeatureSets, handleArrOfData } from '../../src/flatten/flatten'
 import expectedChartData from '../data/chartData'
 import featureServiceResponse from '../data/featureServiceResponse'
 import schoolResponse from '../data/schoolResponse'
@@ -70,5 +70,69 @@ describe('running when a single dataset', () => {
     ]
 
     expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(result)
+  })
+
+  test('handleArrOfData properly handles featureResponse.features', () => {
+    const data = [
+      {
+        attributes: {
+          Number_of_SUM: 13,
+          Type: 'High School'
+        }
+      },
+      {
+        attributes: {
+          Number_of_SUM: 6,
+          Type: 'Middle School'
+        }
+      },
+      {
+        attributes: {
+          Number_of_SUM: 1,
+          Type: 'Elementary School'
+        }
+      }
+    ]
+
+    expect(handleArrOfData(data)).toEqual(data)
+  })
+
+  test('handleArrOfData properly handles array of non-attribute data', () => {
+    const data = [
+      {
+        Number_of_SUM: 13,
+        Type: 'High School'
+      },
+      {
+        Number_of_SUM: 6,
+        Type: 'Middle School'
+      },
+      {
+        Number_of_SUM: 1,
+        Type: 'Elementary School'
+      }
+    ]
+
+    const result = [
+      {
+        attributes: {
+          Number_of_SUM: 13,
+          Type: 'High School'
+        }
+      },
+      {
+        attributes: {
+          Number_of_SUM: 6,
+          Type: 'Middle School'
+        }
+      },
+      {
+        attributes: {
+          Number_of_SUM: 1,
+          Type: 'Elementary School'
+        }
+      }
+    ]
+    expect(handleArrOfData(data)).toEqual(result)
   })
 })

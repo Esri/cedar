@@ -6,6 +6,17 @@ export interface IFeatureSet {
   features: IFeature[]
 }
 
+export function handleArrOfData(data: any[]) {
+  return data.map((feat) => {
+    if (feat.attributes) { return feat }
+    if (feat !== null && typeof feat === 'object') {
+      return {
+        attributes: feat
+      }
+    }
+  })
+}
+
 function flattenFeature(feature: IFeature, categoryField?: string) {
   const attributes = feature.attributes
   if (categoryField) {

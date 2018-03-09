@@ -1,6 +1,6 @@
 import { queryFeatures } from '@esri/arcgis-rest-feature-service'
 import { cedarAmCharts } from '@esri/cedar-amcharts'
-import { flattenFeatureSet, flattenFeatureSets } from './flatten/flatten'
+import { flattenFeatureSet, flattenFeatureSets, handleArrOfData } from './flatten/flatten'
 import { createQueryParams } from './query/url'
 
 function clone(json) {
@@ -16,6 +16,7 @@ function getChartData(datasets: IDataset[], datasetsData?: {}) {
     const dataset = datasets[0]
     name = dataset.name || `dataset0`
     featureSet = dataset.data || datasetsData[name]
+    if (featureSet && Array.isArray(featureSet)) { featureSet = { features: handleArrOfData(featureSet) } }
     return flattenFeatureSet(featureSet)
   }
 
@@ -29,6 +30,7 @@ function getChartData(datasets: IDataset[], datasetsData?: {}) {
     name = dataset.name || `dataset${i}`
     // if dataset doesn't have inline data use data that was passed in
     featureSet = dataset.data || datasetsData[name]
+    if (featureSet && Array.isArray(featureSet)) { featureSet = { features: handleArrOfData(featureSet) } }
     if (featureSet) {
       featureSets.push(featureSet)
     }
