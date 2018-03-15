@@ -24,8 +24,7 @@ export function flattenFeatureSet(featureSet: IFeatureSet, categoryField?) {
   return featureSet.features.map((feature) => (flattenFeature(feature, categoryField)))
 }
 
-// TODO: don't export this once we're sure we've got the logic right
-export function buildIndex(joinKeys: string[], featureSets: any[]) {
+function buildIndex(joinKeys: string[], featureSets: any[]) {
   const index = {}
   featureSets.forEach((featureSet, i) => {
     if (featureSet && Array.isArray(featureSet)) { featureSet = { features: featureSet } }

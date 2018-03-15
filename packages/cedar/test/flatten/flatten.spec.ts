@@ -1,8 +1,8 @@
 import {} from 'jest'
 import { buildIndex, flattenFeatureSets } from '../../src/flatten/flatten'
 import expectedChartData from '../data/chartData'
+import exampleData from '../data/exampleData'
 import featureServiceResponse from '../data/featureServiceResponse'
-import schoolResponse from '../data/schoolResponse'
 
 describe('running when a single dataset', () => {
   test('it should return a single flattened featureSet', () => {
@@ -13,34 +13,10 @@ describe('running when a single dataset', () => {
     expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(expectedChartData.barSingleDataset)
   })
 
-  test('BuildIndex should properly build an index from both features and arrays with and without attributes...', () => {
-    const data = {
-      joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: schoolResponse
-    }
-    const result = {
-      'High School': [
-        { attributes: { Number_of_SUM: 13, Type: 'High School' } },
-        { attributes: { Number_of_SUM: 8, Type: 'High School' } }
-      ],
-      'Middle School': [
-        { attributes: { Number_of_SUM: 6, Type: 'Middle School' } },
-        { Number_of_SUM: 6, Type: 'Middle School' }
-      ],
-      'Elementary School': [
-        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
-        { Number_of_SUM: 1, Type: 'Elementary School' },
-        { Number_of_SUM: 1, Type: 'Elementary School' }
-      ]
-    }
-
-    expect(buildIndex(data.joinKeys, data.featureSets)).toEqual(result)
-  })
-
   test('flattenFeatureSets properly flattens when provided join keys', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: schoolResponse
+      featureSets: exampleData
     }
 
     const result = [
