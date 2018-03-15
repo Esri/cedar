@@ -13,7 +13,7 @@ describe('running when a single dataset', () => {
     expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(expectedChartData.barSingleDataset)
   })
 
-  test('BuildIndex should properly build an index...', () => {
+  test('BuildIndex should properly build an index from both features and arrays with and without attributes...', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
       featureSets: schoolResponse
@@ -25,15 +25,50 @@ describe('running when a single dataset', () => {
       ],
       'Middle School': [
         { attributes: { Number_of_SUM: 6, Type: 'Middle School' } },
-        { attributes: { Number_of_SUM: 0, Type: 'Middle School' } }
+        { Number_of_SUM: 6, Type: 'Middle School' }
       ],
       'Elementary School': [
         { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
-        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
-        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } }
+        { Number_of_SUM: 1, Type: 'Elementary School' },
+        { Number_of_SUM: 1, Type: 'Elementary School' }
       ]
     }
 
     expect(buildIndex(data.joinKeys, data.featureSets)).toEqual(result)
+  })
+
+  test('flattenFeatureSets properly flattens when provided join keys', () => {
+    const data = {
+      joinKeys: ['Type', 'Type', 'Type'],
+      featureSets: schoolResponse
+    }
+
+    const result = [
+      {
+        categoryField: 'High School',
+        Number_of_SUM_0: 13,
+        Type_0: 'High School',
+        Number_of_SUM_1: 8,
+        Type_1: 'High School'
+      },
+      {
+        categoryField: 'Middle School',
+        Number_of_SUM_0: 6,
+        Type_0: 'Middle School',
+        Number_of_SUM_1: 6,
+        Type_1: 'Middle School'
+      },
+      {
+        categoryField: 'Elementary School',
+        Number_of_SUM_0: 1,
+        Type_0: 'Elementary School',
+        Number_of_SUM_1: 1,
+        Type_1: 'Elementary School',
+        Number_of_SUM_2: 1,
+        Type_2: 'Elementary School'
+      }
+    ]
+
+    expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(result)
   })
 })
