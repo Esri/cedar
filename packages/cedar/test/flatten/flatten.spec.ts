@@ -1,8 +1,8 @@
 import {} from 'jest'
 import { buildIndex, flattenFeatureSets } from '../../src/flatten/flatten'
 import expectedChartData from '../data/chartData'
+import exampleData from '../data/exampleData'
 import featureServiceResponse from '../data/featureServiceResponse'
-import schoolResponse from '../data/schoolResponse'
 
 describe('running when a single dataset', () => {
   test('it should return a single flattened featureSet', () => {
@@ -13,34 +13,10 @@ describe('running when a single dataset', () => {
     expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(expectedChartData.barSingleDataset)
   })
 
-  test('BuildIndex should properly build an index...', () => {
-    const data = {
-      joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: schoolResponse
-    }
-    const result = {
-      'High School': [
-        { attributes: { Number_of_SUM: 13, Type: 'High School' } },
-        { attributes: { Number_of_SUM: 8, Type: 'High School' } }
-      ],
-      'Middle School': [
-        { attributes: { Number_of_SUM: 6, Type: 'Middle School' } },
-        { attributes: { Number_of_SUM: 0, Type: 'Middle School' } }
-      ],
-      'Elementary School': [
-        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
-        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } },
-        { attributes: { Number_of_SUM: 1, Type: 'Elementary School' } }
-      ]
-    }
-
-    expect(buildIndex(data.joinKeys, data.featureSets)).toEqual(result)
-  })
-
   test('flattenFeatureSets properly flattens when provided join keys', () => {
     const data = {
       joinKeys: ['Type', 'Type', 'Type'],
-      featureSets: schoolResponse
+      featureSets: exampleData
     }
 
     const result = [
@@ -55,7 +31,7 @@ describe('running when a single dataset', () => {
         categoryField: 'Middle School',
         Number_of_SUM_0: 6,
         Type_0: 'Middle School',
-        Number_of_SUM_1: 0,
+        Number_of_SUM_1: 6,
         Type_1: 'Middle School'
       },
       {
