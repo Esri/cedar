@@ -47,4 +47,69 @@ describe('running when a single dataset', () => {
 
     expect(flattenFeatureSets(data.featureSets, data.joinKeys)).toEqual(result)
   })
+
+  test('BuildIndex properly builds and fills in missing data', () => {
+    const data = {
+      joinKeys: ['Type', 'Type', 'Type'],
+      featureSets: exampleData
+    }
+
+    const result = {
+      'High School': [
+        {
+          attributes: {
+            Number_of_SUM: 13,
+            Type: 'High School'
+          }
+        },
+        {
+          attributes: {
+            Number_of_SUM: 8,
+            Type: 'High School'
+          }
+        },
+        {
+          attributes: {
+            Number_of_SUM: 0,
+            Type: 'High School'
+          }
+        }
+      ],
+      'Middle School': [
+        {
+          attributes: {
+            Number_of_SUM: 6,
+            Type: 'Middle School'
+          }
+        },
+        {
+          Number_of_SUM: 6,
+          Type: 'Middle School'
+        },
+        {
+          attributes: {
+            Number_of_SUM: 0,
+            Type: 'Middle School'
+          }
+        }
+      ],
+      'Elementary School': [
+        {
+          attributes: {
+            Number_of_SUM: 1,
+            Type: 'Elementary School'
+          }
+        },
+        {
+          Number_of_SUM: 1,
+          Type: 'Elementary School'
+        },
+        {
+          Number_of_SUM: 1,
+          Type: 'Elementary School'
+        }
+      ]
+    }
+    expect(buildIndex(data.joinKeys, data.featureSets)).toEqual(result)
+  })
 })
