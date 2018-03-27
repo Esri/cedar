@@ -97,27 +97,18 @@ export function fillInSpec(spec: any, definition: any) {
 
   // Iterate over datasets
   definition.datasets.forEach((dataset, d) => {
+    const datasetName = dataset.name
     // For each dataset iterate over series
     definition.series.forEach((series, s) => {
       if (dataset.name === series.source) {
         const graph = clone(graphSpec)
 
-        // Set graph title
+        // use the value field label for the graph's title
         graph.title = series.value.label
-
-        /* tslint:disable prefer-conditional-expression */
-        if (isJoined) {
-          // use dataset index to look up the value
-          // TODO: should this be dataset name?
-          // that would mean the names are required and unique
-          // why aren't we using a hash for datasets?
-          graph.valueField = `${series.value.field}_${d}`
-        } else {
-          graph.valueField = series.value.field
-        }
-        /* tslint:enable */
+        // value field will contain dataset name if joined
+        graph.valueField = isJoined ? `${datasetName}_${series.value.field}` : series.value.field
         // TODO: map other fields besides value like color, size, etc
-
+        // tooltip
         graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
 
         // Group vs. stack

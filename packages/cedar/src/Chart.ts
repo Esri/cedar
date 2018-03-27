@@ -1,62 +1,13 @@
 import { queryFeatures } from '@esri/arcgis-rest-feature-service'
 import { cedarAmCharts } from '@esri/cedar-amcharts'
-import { flattenFeatureSet, flattenFeatureSets } from './flatten/flatten'
+import { getChartData, IDataset, IField, ISeries } from './dataset'
 import { createQueryParams } from './query/url'
 
 function clone(json) {
   return JSON.parse(JSON.stringify(json))
 }
 
-// flatten data from all datasets into a single table
-function getChartData(datasets: IDataset[], datasetsData?: {}) {
-  let name
-  let featureSet
-  if (datasets.length === 1) {
-    // if there's only one dataset, just return the flattened features
-    const dataset = datasets[0]
-    name = dataset.name || `dataset0`
-    featureSet = dataset.data || datasetsData[name]
-    return flattenFeatureSet(featureSet)
-  }
-
-  // if more than one, need to join the feature sets
-  const featureSets = []
-  const joinKeys = []
-
-  // get array of featureSets from datasets data or datasetsData
-  datasets.forEach((dataset, i) => {
-    // TODO: make name required on datasets, or required if > 1 dataset?
-    name = dataset.name || `dataset${i}`
-    // if dataset doesn't have inline data use data that was passed in
-    featureSet = dataset.data || datasetsData[name]
-    if (featureSet) {
-      featureSets.push(featureSet)
-    }
-    joinKeys.push(dataset.join)
-  })
-  return flattenFeatureSets(featureSets, joinKeys)
-}
-
 // TODO: where should these interfaces live?
-export interface IDataset {
-  name: string,
-  url?: string,
-  data?: any[],
-  query: {},
-  join?: string
-}
-
-export interface IField {
-  field: string,
-  label?: string
-}
-
-export interface ISeries {
-  source: string,
-  category?: IField,
-  value?: IField
-}
-
 export interface ILegend {
   visible?: boolean,
   position?: 'top' | 'bottom' | 'left' | 'right'
@@ -157,6 +108,7 @@ export default class Chart {
   }
 
   // query non-inline datasets
+  // TODO: move most of this to query.ts and add tests
   public query() {
     const names = []
     const requests = []
@@ -191,7 +143,8 @@ export default class Chart {
   // update chart from inline data and query responses
   public updateData(datasetsData) {
     const datasets = this.datasets()
-    this._data = datasets ? getChartData(datasets, datasetsData) : []
+    const series = this.series()
+    this._data = datasets ? getChartData(datasets, datasetsData, series) : []
     return this
   }
 
