@@ -69,10 +69,11 @@ describe('when filling in a scatter spec', () => {
 
 describe('when filling in a stacked bar spec', () => {
   let result
+  let definition
   beforeAll(() => {
     const spec = (bar as any)
     /* tslint:disable */
-    const definition = {
+    definition = {
       "type": "bar",
       "datasets": [
         {
@@ -155,7 +156,7 @@ describe('when filling in a stacked bar spec', () => {
     expect(result.graphs.length).toEqual(3)
     result.graphs.forEach((graph, i) => {
       expect(graph.newStack).toBe(false)
-      expect(graph.valueField).toEqual(`Number_of_SUM_${i}`)
+      expect(graph.valueField).toEqual(`${definition.series[i].source}_Number_of_SUM`)
     })
   })
   test('it should disable legend if passed in by definition', () => {

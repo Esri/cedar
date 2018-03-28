@@ -50,3 +50,5 @@ packages/cedar/README.md
 
 # umd build is copied from dist to docs site
 docs/scripts/
+
+.vscode
