@@ -52,11 +52,25 @@ function getDatasetData(dataset, datasetsData, name?) {
   return dataset.data || datasetsData[datasetName]
 }
 
-// build a hash w/
-// keys for each unique value in the join columns of the datasets
-// and the value of each is a row with the joined values
-function buildJoinIndex(datasets: IDataset[], series: ISeries[], datasetsData?: {}) {
-  return datasets.reduce((index, dataset, i) => {
+// if data is a feature set or array of features
+// return only the attributes for each feature
+function flattenData(data) {
+  const features = getFeatures(data)
+  if ((features[0] as IFeature).attributes) {
+    // these really are features, flatten them before
+    return features.map(getAttributes)
+  } else {
+    // assume this is an array of objects and don't
+    return features
+  }
+}
+
+// join data from multiple datasets into a single table
+function joinData(datasets: IDataset[], series: ISeries[], datasetsData?: {}): any[] {
+  // first build a hash whose keys for each of the
+  // unique values in the join columns of the datasets
+  // and the value of each is a row with the joined values
+  const hashTable = datasets.reduce((index, dataset, i) => {
     // get the attribute that this dataset will be joined on
     const joinKey = dataset.join
     // if dataset doesn't have inline data use data that was passed in
@@ -84,25 +98,8 @@ function buildJoinIndex(datasets: IDataset[], series: ISeries[], datasetsData?: 
     })
     return index
   }, {})
-}
-
-// if data is a feature set or array of features
-// return only the attributes for each feature
-function flattenData(data) {
-  const features = getFeatures(data)
-  if ((features[0] as IFeature).attributes) {
-    // these really are features, flatten them before
-    return features.map(getAttributes)
-  } else {
-    // assume this is an array of objects and don't
-    return features
-  }
-}
-
-function joinData(datasets: IDataset[], series: ISeries[], datasetsData?: {}): any[] {
-  const joinHash = buildJoinIndex(datasets, series, datasetsData)
-  // the output rows are the hash values
-  return Object.values(joinHash)
+  // return the rows of joined values from the hash table
+  return Object.keys(hashTable).map((key) => hashTable[key])
 }
 
 // flatten data from all datasets into a single table
