@@ -1,7 +1,6 @@
-import { queryFeatures } from '@esri/arcgis-rest-feature-service'
 import { cedarAmCharts } from '@esri/cedar-amcharts'
 import { getChartData, IDataset, IField, ISeries } from './dataset'
-import { createQueryParams } from './query/url'
+import { queryDatasets } from './query/query'
 
 function clone(json) {
   return JSON.parse(JSON.stringify(json))
@@ -108,36 +107,8 @@ export default class Chart {
   }
 
   // query non-inline datasets
-  // TODO: move most of this to query.ts and add tests
   public query() {
-    const names = []
-    const requests = []
-    const responseHash = {}
-    const datasets = this.datasets()
-
-    if (datasets) {
-      datasets.forEach((dataset, i) => {
-        // only query datasets that don't have inline data
-        if (dataset.url) {
-          // TODO: make name required on datasets, or required if > 1 dataset?
-          names.push(dataset.name || `dataset${i}`)
-          const queryParams = createQueryParams(dataset.query)
-          requests.push(queryFeatures({
-            url: dataset.url,
-            params: queryParams
-          }))
-        }
-      })
-    }
-    return Promise.all(requests)
-    .then((responses) => {
-      responses.forEach((response, i) => {
-        responseHash[names[i]] = responses[i]
-      })
-      return Promise.resolve(responseHash)
-    }, (err) => {
-      return Promise.reject(err)
-    })
+    return queryDatasets(this.datasets())
   }
 
   // update chart from inline data and query responses
