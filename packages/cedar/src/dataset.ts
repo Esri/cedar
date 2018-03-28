@@ -20,6 +20,11 @@ export interface ISeries {
   value?: IField
 }
 
+export interface IGetChartDataOptions {
+  datasetsData?: {},
+  series?: ISeries[]
+}
+
 // if it's a feature set, return the array of features
 // otherwise just return the array of objects that was passed in
 function getFeatures(data: IFeatureSet | Array<{}>) {
@@ -44,6 +49,7 @@ function getDatasetValueFields(datasetName, series: ISeries[]) {
 
 // get a unique field (property) name for a dataset/value field
 function getDatasetValueFieldName(datasetName, valueField) {
+  // TODO: what if datasetName contains a space?
   return `${datasetName}_${valueField}`
 }
 
@@ -73,12 +79,14 @@ function joinData(datasets: IDataset[], series: ISeries[], datasetsData?: {}): a
   const hashTable = datasets.reduce((index, dataset, i) => {
     // get the attribute that this dataset will be joined on
     const joinKey = dataset.join
+    // TODO: what if no joinKey, throw error? skip this dataset?
     // if dataset doesn't have inline data use data that was passed in
-    const datasetName = dataset.name
     const datasetData = getDatasetData(dataset, datasetsData)
+    // TODO: what if no datasetData, throw error? skip this dataset?
     // get the value fields for this dataset from it's series
+    const datasetName = dataset.name
     const valueFields = getDatasetValueFields(datasetName, series)
-    // TODO: first check if datasetData && joinKey exist?
+    // TODO: what if no valueFields, throw error? skip this dataset?
     getFeatures(datasetData).forEach((feature) => {
       // get the value of the column that this dataset should be joined on
       const attrs = getAttributes(feature)
@@ -103,9 +111,12 @@ function joinData(datasets: IDataset[], series: ISeries[], datasetsData?: {}): a
 }
 
 // flatten data from all datasets into a single table
-export function getChartData(datasets: IDataset[], datasetsData?: {}, series?: ISeries[]) {
+export function getChartData(datasets: IDataset[], options?: IGetChartDataOptions) {
+  const datasetsData = options && options.datasetsData
   if (datasets.length > 1) {
-    // TODO: support other ways of merging (append, etc)
+    // TODO: what if no series? throw error?
+    const series = options && options.series
+    // TODO: support other ways of merging (append, etc), but for now just
     // join the feature sets into a single table
     return joinData(datasets, series, datasetsData)
   }

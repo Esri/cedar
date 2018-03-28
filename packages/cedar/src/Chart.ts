@@ -143,8 +143,11 @@ export default class Chart {
   // update chart from inline data and query responses
   public updateData(datasetsData) {
     const datasets = this.datasets()
-    const series = this.series()
-    this._data = datasets ? getChartData(datasets, datasetsData, series) : []
+    const options = {
+      datasetsData,
+      series: this.series()
+    }
+    this._data = datasets ? getChartData(datasets, options) : []
     return this
   }
 

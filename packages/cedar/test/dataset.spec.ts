@@ -41,13 +41,17 @@ describe('when getting chart data', () => {
     })
     describe('when data is passed in via datasetData', () => {
       test('it should flatten a feature set referenced by name', () => {
-        const datasetData = { dummy: featureSet }
-        expect(getChartData([dataset], datasetData)).toEqual(expected)
+        const options = {
+          datasetsData: { dummy: featureSet }
+        }
+        expect(getChartData([dataset], options)).toEqual(expected)
       })
       test('it should flatten a feature set using default name', () => {
         delete dataset.name
-        const datasetData = { dataset0: featureSet }
-        expect(getChartData([dataset], datasetData)).toEqual(expected)
+        const options = {
+          datasetsData: { dataset0: featureSet }
+        }
+        expect(getChartData([dataset], options)).toEqual(expected)
       })
     })
   })
@@ -58,7 +62,8 @@ describe('when getting chart data', () => {
         { categoryField: 'Middle School', Jordan_Number_of_SUM: 6, Fayetteville_Number_of_SUM: 0 },
         { categoryField: 'Elementary School', Jordan_Number_of_SUM: 1, Dewitt_Number_of_SUM: 1, Fayetteville_Number_of_SUM: 1 }
       ]
-      expect(getChartData(datasets, datasetsData, series)).toEqual(expected)
+      const options = { datasetsData, series }
+      expect(getChartData(datasets, options)).toEqual(expected)
     })
   })
 })
