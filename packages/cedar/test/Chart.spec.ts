@@ -101,4 +101,8 @@ describe('new Chart w/ definition', () => {
   test('should return undefined for dataset by invalid name', () => {
     expect(chart.dataset('invalidName')).toBeUndefined()
   })
+  test('should update the datasets', () => {
+    const barDefinition = definitions.bar
+    expect(chart.datasets(barDefinition.datasets).datasets()).toEqual(barDefinition.datasets)
+  })
 })
