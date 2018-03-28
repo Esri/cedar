@@ -38,13 +38,11 @@ export function createQueryParams(query: any = {}): any {
     query.inSR = '4326'
   }
 
-  // override w/ params that were passed in
-  for (const key in query) {
-    if (query.hasOwnProperty(key)) {
-      const param = query[key]
-      queryParams[key] = typeof param === 'object' ? JSON.stringify(param) : param
-    }
-  }
-
+  // override defaults w/ params that were passed in
+  Object.keys(query).reduce((params, key) => {
+    const param = query[key]
+    queryParams[key] = typeof param === 'object' ? JSON.stringify(param) : param
+    return params
+  }, queryParams)
   return queryParams
 }
