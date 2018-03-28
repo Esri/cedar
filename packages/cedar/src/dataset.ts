@@ -49,7 +49,6 @@ function getDatasetValueFields(datasetName, series: ISeries[]) {
 
 // get a unique field (property) name for a dataset/value field
 function getDatasetValueFieldName(datasetName, valueField) {
-  // TODO: what if datasetName contains a space?
   return `${datasetName}_${valueField}`
 }
 
