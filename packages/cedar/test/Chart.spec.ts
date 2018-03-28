@@ -2,6 +2,16 @@ import {} from 'jest'
 import Chart from '../src/Chart'
 import * as definitions from './data/definitions'
 
+describe('new Chart', () => {
+  describe('w/o a container', () => {
+    it('should throw an error', () => {
+      expect(() => {
+        const chart = new Chart(undefined)
+      }).toThrow('A container is required')
+    })
+  })
+})
+
 describe('new Chart w/o definition', () => {
   const barDefinition = definitions.bar
   let chart
@@ -16,6 +26,19 @@ describe('new Chart w/o definition', () => {
   })
   test('data should return undefined', () => {
     expect(chart.data()).toBeUndefined()
+  })
+  test('should return undefined when getting dataset by name', () => {
+    expect(chart.dataset('someName')).toBeUndefined()
+  })
+  test('query should return an empty hash', () => {
+    return chart.query().then((datasetsData) => {
+      expect(datasetsData).toEqual({})
+    })
+  })
+  test('show should return the cedar instance', () => {
+    return chart.show().then((cedarChart) => {
+      expect(cedarChart).toBe(chart)
+    })
   })
   test('definition should set the definition', () => {
     expect(chart.definition(barDefinition).definition()).toEqual(barDefinition)
@@ -74,5 +97,8 @@ describe('new Chart w/ definition', () => {
   })
   test('should return dataset by name', () => {
     expect(chart.dataset('Dewitt')).toEqual(definition.datasets[1])
+  })
+  test('should return undefined for dataset by invalid name', () => {
+    expect(chart.dataset('invalidName')).toBeUndefined()
   })
 })
