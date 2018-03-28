@@ -58,7 +58,8 @@
       "ts",
       "js",
       "json"
-    ]
+    ],
+    "mapCoverage": true
   },
   "dependencies": {
     "@esri/arcgis-rest-common-types": "^1.1.1",
