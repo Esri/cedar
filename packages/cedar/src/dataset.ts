@@ -111,6 +111,12 @@ function joinData(datasets: IDataset[], series: ISeries[], datasetsData?: {}): a
 
 // flatten data from all datasets into a single table
 export function getChartData(datasets: IDataset[], options?: IGetChartDataOptions) {
+  if (!datasets) {
+    return
+  }
+  if (datasets.length < 1) {
+    return []
+  }
   const datasetsData = options && options.datasetsData
   if (datasets.length > 1) {
     // TODO: what if no series? throw error?

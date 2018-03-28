@@ -147,7 +147,7 @@ export default class Chart {
       datasetsData,
       series: this.series()
     }
-    this._data = datasets ? getChartData(datasets, options) : []
+    this._data = getChartData(datasets, options)
     return this
   }
 

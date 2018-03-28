@@ -1,22 +1,25 @@
 import { IFeatureSet } from '@esri/arcgis-rest-common-types'
 import {} from 'jest'
 import { getChartData, IDataset } from '../src/dataset'
-import { datasets, datasetsData, series } from './data/joinData'
+import * as chartData from './data/chartData'
+import { barJoined } from './data/definitions'
+import {all, Dewitt, Fayetteville, Jordan } from './data/queryResponses'
 
 describe('when getting chart data', () => {
+  describe('when no datasets', () => {
+    test('it should return an empty array', () => {
+      expect(getChartData([])).toEqual([])
+    })
+  })
   describe('when only one dataset', () => {
     let dataset: IDataset
     let featureSet: IFeatureSet
     let expected
     beforeAll(() => {
-      // copy a feature set from the example data for the join test
-      featureSet = datasetsData.Jordan as IFeatureSet
+      // get the query response for all features
+      featureSet = all as IFeatureSet
       // set up the expected output
-      expected = [
-        { Number_of_SUM: 13, Type: 'High School' },
-        { Number_of_SUM: 6, Type: 'Middle School' },
-        { Number_of_SUM: 1, Type: 'Elementary School' }
-      ]
+      expected = chartData.bar
     })
     beforeEach(() => {
       // create a dummy dataset
@@ -57,12 +60,13 @@ describe('when getting chart data', () => {
   })
   describe('when joining data', () => {
     test('it should return an array of objects w/ categoryField and other props prefixed by dataset names', () => {
-      const expected = [
-        { categoryField: 'High School', Jordan_Number_of_SUM: 13, Fayetteville_Number_of_SUM: 8 },
-        { categoryField: 'Middle School', Jordan_Number_of_SUM: 6, Fayetteville_Number_of_SUM: 0 },
-        { categoryField: 'Elementary School', Jordan_Number_of_SUM: 1, Dewitt_Number_of_SUM: 1, Fayetteville_Number_of_SUM: 1 }
-      ]
+      // get the datasets and series from the example joined definition
+      const { datasets, series } = barJoined
+      // simulate a hash of query responses
+      const datasetsData = { Jordan, Dewitt, Fayetteville }
       const options = { datasetsData, series }
+      // expected join output
+      const expected = chartData.barJoined
       expect(getChartData(datasets, options)).toEqual(expected)
     })
   })
