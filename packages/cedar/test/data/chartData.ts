@@ -1,5 +1,5 @@
-/* tslint:disable */
-const barSingleDataset = [{
+/* tslint:disable quotemark object-literal-key-quotes */
+export const bar = [{
   "Number_of_SUM": 261,
   "Type": "Middle School"
 }, {
@@ -38,11 +38,10 @@ const barSingleDataset = [{
 }, {
   "Number_of_SUM": 0,
   "Type": "Pre-K"
-}, {
-  "Number_of_SUM": 0,
-  "Type": null
 }]
 
-export default {
-  barSingleDataset
-}
+export const barJoined = [
+  { categoryField: 'High School', Jordan_Number_of_SUM: 13, Fayetteville_Number_of_SUM: 8 },
+  { categoryField: 'Middle School', Jordan_Number_of_SUM: 6, Fayetteville_Number_of_SUM: 0 },
+  { categoryField: 'Elementary School', Jordan_Number_of_SUM: 1, Dewitt_Number_of_SUM: 1, Fayetteville_Number_of_SUM: 1 }
+]

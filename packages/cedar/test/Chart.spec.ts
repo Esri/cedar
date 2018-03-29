@@ -1,47 +1,19 @@
 import {} from 'jest'
 import Chart from '../src/Chart'
-import expectedChartData from './data/chartData'
-import featureServiceResponse from './data/featureServiceResponse'
-/* tslint:disable */
-const barDefinition = {
-  "type": "bar",
-  "datasets": [
-    {
-      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-      "name": "Number_of_SUM",
-      "query": {
-        "orderByFields": "Number_of_SUM DESC",
-        "groupByFieldsForStatistics": "Type",
-        "outStatistics": [
-          {
-            "statisticType": "sum",
-            "onStatisticField": "Number_of",
-            "outStatisticFieldName": "Number_of_SUM"
-          }
-        ]
-      }
-    }
-  ],
-  "series": [
-    {
-      "category": {"field": "Type", "label": "Type"},
-      "value": {"field": "Number_of_SUM", "label": "Number of Students"},
-      "source": "Number_of_SUM"
-    }
-  ],
-  "overrides": {
-    "categoryAxis": {
-      "labelRotation": -45
-    }
-  },
-  "legend": {
-    "visible": true,
-    "position": "right"
-  }
-}
-/* tslint:enable */
+import * as definitions from './data/definitions'
+
+describe('new Chart', () => {
+  describe('w/o a container', () => {
+    it('should throw an error', () => {
+      expect(() => {
+        const chart = new Chart(undefined)
+      }).toThrow('A container is required')
+    })
+  })
+})
 
 describe('new Chart w/o definition', () => {
+  const barDefinition = definitions.bar
   let chart
   beforeEach(() => {
     chart = new Chart('chart')
@@ -54,6 +26,19 @@ describe('new Chart w/o definition', () => {
   })
   test('data should return undefined', () => {
     expect(chart.data()).toBeUndefined()
+  })
+  test('should return undefined when getting dataset by name', () => {
+    expect(chart.dataset('someName')).toBeUndefined()
+  })
+  test('query should return an empty hash', () => {
+    return chart.query().then((datasetsData) => {
+      expect(datasetsData).toEqual({})
+    })
+  })
+  test('show should return the cedar instance', () => {
+    return chart.show().then((cedarChart) => {
+      expect(cedarChart).toBe(chart)
+    })
   })
   test('definition should set the definition', () => {
     expect(chart.definition(barDefinition).definition()).toEqual(barDefinition)
@@ -77,93 +62,20 @@ describe('new Chart w/o definition', () => {
 
 describe('when updating data', () => {
   let chart
-  beforeEach(() => {
-    chart = new Chart('chart', barDefinition)
-  })
-  test('it should update _data', () => {
-    const queryDataResponse = {
-      Number_of_SUM: featureServiceResponse
-    }
-    expect(chart.updateData(queryDataResponse).data()).toEqual(expectedChartData.barSingleDataset)
+  describe('when definition has not been set', () => {
+    beforeEach(() => {
+      chart = new Chart('chart')
+    })
+    test('it should set _data to undefined', () => {
+      expect(chart.updateData().data()).toBeUndefined()
+    })
   })
 })
 
 describe('new Chart w/ definition', () => {
+  const definition = definitions.barJoined
   let chart
-  let definition
   beforeAll(() => {
-    /* tslint:disable */
-    definition = {
-      "type": "bar",
-      "datasets": [
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Jordan",
-          "query": {
-            "where": "City='Jordan'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        },
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Dewitt",
-          "query": {
-            "where": "City='Dewitt'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        },
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Fayetteville",
-          "query": {
-            "where": "City='Fayetteville'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        }
-      ],
-      "series": [
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "group": true,
-          "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
-          "source": "Jordan"
-        },
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "group": true,
-          "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
-          "source": "Dewitt"
-        },
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "group": true,
-          "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
-          "source": "Fayetteville"
-        }
-      ]
-    }
-    /* tslint:enable */
     chart = new Chart('chart', definition)
   })
   test('definition should return definition', () => {
@@ -179,9 +91,18 @@ describe('new Chart w/ definition', () => {
     expect(chart.type()).toEqual(definition.type)
   })
   test('specification should equal definition.specification', () => {
-    expect(chart.specification()).toEqual(definition.specification)
+    // which in this case is undefined
+    // TODO: add a test where we set the specification
+    expect(chart.specification()).toBeUndefined()
   })
   test('should return dataset by name', () => {
     expect(chart.dataset('Dewitt')).toEqual(definition.datasets[1])
+  })
+  test('should return undefined for dataset by invalid name', () => {
+    expect(chart.dataset('invalidName')).toBeUndefined()
+  })
+  test('should update the datasets', () => {
+    const barDefinition = definitions.bar
+    expect(chart.datasets(barDefinition.datasets).datasets()).toEqual(barDefinition.datasets)
   })
 })

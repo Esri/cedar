@@ -34,7 +34,12 @@ function getFeatures(data: IFeatureSet | Array<{}>) {
 // if it's a feature, return the attributes
 // otherwise return the entire object that was passed in
 function getAttributes(row: IFeature | {}) {
-  return (row as IFeature).attributes ? (row as IFeature).attributes : row as {}
+  /* istanbul ignore else since that only happens when features are mixed with rows */
+  if ((row as IFeature).attributes) {
+    return (row as IFeature).attributes
+  } else {
+    return row
+  }
 }
 
 // get an array of value field names from a dataset's series
@@ -111,6 +116,12 @@ function joinData(datasets: IDataset[], series: ISeries[], datasetsData?: {}): a
 
 // flatten data from all datasets into a single table
 export function getChartData(datasets: IDataset[], options?: IGetChartDataOptions) {
+  if (!datasets) {
+    return
+  }
+  if (datasets.length < 1) {
+    return []
+  }
   const datasetsData = options && options.datasetsData
   if (datasets.length > 1) {
     // TODO: what if no series? throw error?
