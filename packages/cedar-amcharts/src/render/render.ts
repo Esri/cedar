@@ -1,12 +1,11 @@
 /* globals AmCharts:false */
-import deepmerge from 'deepmerge'
+import merge from 'deepmerge'
 import specs from '../specs/specs'
 
 // TODO: how to have access to IDefinition
 export function renderChart(elementId: string, definition: any, data?: any) {
   if (definition.type === 'custom') {
     const chart = AmCharts.makeChart(elementId, definition.specification)
-
     return
   }
 
@@ -30,7 +29,7 @@ export function renderChart(elementId: string, definition: any, data?: any) {
   if (definition.overrides) {
     // NOTE: this counts on using deepmerge < 2.x
     // see: https://github.com/KyleAMathews/deepmerge#arraymerge
-    spec = deepmerge(spec, definition.overrides, { clone: true })
+    spec = merge(spec, definition.overrides, { clone: true })
   }
 
   const chart = AmCharts.makeChart(elementId, spec)
@@ -51,6 +50,7 @@ export function fillInSpec(spec: any, definition: any) {
   // TODO This is needed as 'legend.enable' has been renamed 'legend.visible'. We are only introducing
   // breaking changes on major releases.
   // Remove the line below on next breaking change
+  /* istanbul ignore next since we're going to remove this */
   if (definition.legend && definition.legend.hasOwnProperty('enable')) { definition.legend.visible = definition.legend.enable }
 
   // adjust legend and axis labels for single series charts
@@ -67,6 +67,7 @@ export function fillInSpec(spec: any, definition: any) {
       // for xy charts we treat the x axis as the category axis
       // and the y axis as the value axis
       spec.valueAxes.forEach((axis) => {
+        /* istanbul ignore else since we can only be smart about bottom/left axis labels */
         if (axis.position === 'bottom') {
           axis.title = categoryAxisTitle
         } else if (axis.position === 'left') {
@@ -74,10 +75,12 @@ export function fillInSpec(spec: any, definition: any) {
         }
       })
     } else {
+      // line/area specs don't define axes
       if (!spec.valueAxes) { spec.valueAxes = [{}] }
       spec.valueAxes[0].title = definition.series[0].value.label
       spec.valueAxes[0].position = 'left'
 
+      /* istanbul ignore else until we have a test for a timeline definition/spec */
       if (!spec.categoryAxis) { spec.categoryAxis = {} }
       spec.categoryAxis.title = categoryAxisTitle
     }

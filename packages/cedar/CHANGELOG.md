@@ -8,9 +8,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - One can now inline data as an array of attributes or array of objects
 ### Changed
 - use @esri/arcgis-rest-feature-service and remove query functions
+- updated tests and added mocks for 100% code coverage
 ### Fixed
 - remove extraneous dependency on amcharts in @esri/cedar
 - Specifications that are passed in are actually supported
+- fixed join logic so that records weren't getting assigned to wrong category
 
 ## [1.0.0-beta.2]
 ### Fixed

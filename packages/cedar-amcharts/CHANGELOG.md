@@ -10,6 +10,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - legend.enable is now legend.visible
 - Text colors have been changed to pass color contrast ratio on white backgrounds
 - Pie charts default to legend off and inner radius 0
+- updated tests and added mocks for 100% code coverage
 ### Fixed
 - Specifications that are passed in are actually supported
 
