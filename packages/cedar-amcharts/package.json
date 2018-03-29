@@ -57,7 +57,8 @@
       "ts",
       "js",
       "json"
-    ]
+    ],
+    "mapCoverage": true
   },
   "devDependencies": {
     "@types/amcharts": "^0.0.40",

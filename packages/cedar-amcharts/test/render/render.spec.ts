@@ -1,30 +1,38 @@
-import 'amcharts3/amcharts/amcharts'
-import 'amcharts3/amcharts/serial'
+/* globals global:false */
 import { } from 'jest'
-import render from '../../src/render/render'
+import { fetchSpec, fillInSpec, renderChart } from '../../src/render/render'
 import bar from '../../src/specs/bar'
-import pie from '../../src/specs/pie'
 import scatter from '../../src/specs/scatter'
 import timeline from '../../src/specs/timeline'
-import barSpec from '../data/barSpec'
 import builtBarSpec from '../data/builtBarSpec'
+import * as definitions from '../data/definitions'
 
 describe('Spec gets fetched properly', () => {
   test('fetch spec properly gets spec...', () => {
-    const grabbedSpec = render.fetchSpec('bar')
+    const grabbedSpec = fetchSpec('bar')
     expect(grabbedSpec).toEqual(bar)
   })
-  test('time is properly converted to line', () => {
-    const convertedSpec = render.fetchSpec('time')
+  test('time is properly converted to timeline', () => {
+    const convertedSpec = fetchSpec('time')
     expect(convertedSpec).toEqual(timeline)
+  })
+  test('bubble is properly converted to scatter', () => {
+    const convertedSpec = fetchSpec('bubble')
+    expect(convertedSpec).toEqual(scatter)
+  })
+  test('grouped is properly converted to bar', () => {
+    const convertedSpec = fetchSpec('grouped')
+    expect(convertedSpec).toEqual(bar)
   })
 })
 
 describe('when filling in a bar spec', () => {
   test('it should get filled in properly', () => {
-    const spec = (bar as any)
-    spec.dataProvider = barSpec.realData
-    const result = render.fillInSpec(spec, barSpec.spec)
+    const definition = definitions.bar
+    const spec = fetchSpec(definition.type)
+    // we're not testing the data provider here
+    spec.dataProvider = builtBarSpec.dataProvider
+    const result = fillInSpec(spec, definition)
     expect(result).toEqual(builtBarSpec)
   })
 })
@@ -33,21 +41,7 @@ describe('when filling in a scatter spec', () => {
   let result
   beforeAll(() => {
     const spec = (scatter as any)
-    /* tslint:disable */
-    const definition = {
-      "type": "scatter",
-      "datasets": [ {
-        "url": "https://services1.arcgis.com/bqfNVPUK3HOnCFmA/arcgis/rest/services/Demographics_(Median_Household_Income)/FeatureServer/0"
-      }],
-      "series": [
-        {
-          "category": {"field": "TotalPop2015", "label": "Population"},
-          "value": {"field": "MedianHHIncome2015", "label": "Median Median Household Income"}
-        }
-      ]
-    }
-    /* tslint:enable */
-    result = render.fillInSpec(spec, definition)
+    result = fillInSpec(spec, definitions.scatter)
   })
   test('it should set the graph xField field', () => {
     expect(result.graphs[0].xField).toEqual('TotalPop2015')
@@ -67,87 +61,39 @@ describe('when filling in a scatter spec', () => {
   })
 })
 
+describe('when filling in a bubble spec', () => {
+  let result
+  let definition
+  beforeAll(() => {
+    const spec = (scatter as any)
+    definition = definitions.scatter
+    // turn this into a bubble
+    definition.series[0].size = { field: 'Not_Taught', label: 'Number not Taught' }
+    definition.legend = {
+      position: 'left'
+    }
+    result = fillInSpec(spec, definition)
+  })
+  test('it should set value field', () => {
+    expect(result.graphs[0].valueField = definition.series[0].size.field)
+  })
+  test('it should have only updated legend position, not visibility', () => {
+    expect(result.legend.enabled).toBe(false)
+  })
+  afterAll(() => {
+    // clean up
+    delete definition.series[0].size
+    delete definition.legend
+  })
+})
+
 describe('when filling in a stacked bar spec', () => {
   let result
   let definition
   beforeAll(() => {
-    const spec = (bar as any)
-    /* tslint:disable */
-    definition = {
-      "type": "bar",
-      "datasets": [
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Jordan",
-          "query": {
-            "where": "City='Jordan'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        },
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Dewitt",
-          "query": {
-            "where": "City='Dewitt'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        },
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Fayetteville",
-          "query": {
-            "where": "City='Fayetteville'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        }
-      ],
-      "series": [
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
-          "source": "Jordan",
-          "stack": true
-        },
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
-          "source": "Dewitt",
-          "stack": true
-        },
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
-          "source": "Fayetteville",
-          "stack": true
-        }
-      ],
-      "legend": {
-        "visible": false
-      },
-    }
-    /* tslint:enable */
-    result = render.fillInSpec(spec, definition)
+    definition = definitions.barJoined
+    const spec = fetchSpec(definition.type)
+    result = fillInSpec(spec, definition)
   })
   test('it should set category field', () => {
     expect(result.categoryField).toEqual('categoryField')
@@ -164,94 +110,59 @@ describe('when filling in a stacked bar spec', () => {
   })
 })
 
-describe('Legend is properly effected by legend props', () => {
+describe('when overriding legend defaults', () => {
   let result
+  let definition
   beforeAll(() => {
-    const spec = (bar as any)
-    /* tslint:disable */
-    const definition = {
-      "type": "bar",
-      "datasets": [
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "name": "Jordan",
-          "query": {
-            "where": "City='Jordan'",
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of",
-              "outStatisticFieldName": "Number_of_SUM"
-            }]
-          },
-          "join": "Type"
-        }
-      ],
-      "series": [
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
-          "source": "Jordan",
-          "stack": true
-        }
-      ],
-      "legend": {
-        "visible": true,
-        "position": "right"
-      },
+    definition = definitions.bar
+    definition.legend = {
+      visible: true,
+      position: 'right'
     }
-    /* tslint:enable */
-    result = render.fillInSpec(spec, definition)
+    const spec = fetchSpec(definition.type)
+    result = fillInSpec(spec, definition)
   })
   test('Legend should be true if visible: true passed in', () => {
     expect(result.legend.enabled).toBe(true)
   })
-  test('Legend position should be right when position: right is passedin', () => {
+  test('Legend position should be right when position: right is passed in', () => {
     expect(result.legend.position).toEqual('right')
+  })
+  afterAll(() => {
+    // clean up
+    delete definition.legend
+  })
+})
+
+describe('when filling in a line spec', () => {
+  let result
+  beforeAll(() => {
+    const definition = definitions.line
+    const spec = fetchSpec(definition.type)
+    result = fillInSpec(spec, definitions.line)
+  })
+  test('should have graphed the series', () => {
+    /* tslint:disable quotemark object-literal-key-quotes */
+    const expected = [{"balloonText": "Minor Injuries [[EXPR_1]]: <b>[[MINORINJURIES_SUM]]</b>", "bullet": "circle", "bulletAlpha": 1, "bulletBorderAlpha": 0.8, "bulletBorderThickness": 0, "dashLengthField": "dashLengthLine", "fillAlphas": 0, "title": "Minor Injuries", "useLineColorForBulletBorder": true, "valueField": "MINORINJURIES_SUM"}]
+    /* tslint:enable */
+    expect(result.graphs).toEqual(expected)
   })
 })
 
 describe('when filling in a pie spec', () => {
   let result
   beforeAll(() => {
-    const spec = (pie as any)
-    /* tslint:disable */
-    const definition = {
-      "type": "pie",
-      "datasets": [
-        {
-          "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-          "query": {
-            "orderByFields": "Number_of_SUM DESC",
-            "groupByFieldsForStatistics": "Type",
-            "outStatistics": [
-              {
-                "statisticType": "sum",
-                "onStatisticField": "Number_of",
-                "outStatisticFieldName": "Number_of_SUM"
-              }
-            ]
-          }
-        }
-      ],
-      "series": [
-        {
-          "category": {"field": "Type", "label": "Type"},
-          "value": {
-            "field": "Number_of_SUM",
-            "label": "Number of Students"
-          }
-        }
-      ]
-    }
-    /* tslint:enable */
-    result = render.fillInSpec(spec, definition)
+    const definition = definitions.pie
+    const spec = fetchSpec(definition.type)
+    result = fillInSpec(spec, definition)
+  })
+  test('it should set type', () => {
+    expect(result.type).toEqual('pie')
   })
   test('it should set title field', () => {
     expect(result.titleField).toEqual('Type')
   })
-  test('it should set title field', () => {
+  test('it should set value field', () => {
     expect(result.valueField).toEqual('Number_of_SUM')
   })
 })
@@ -259,25 +170,9 @@ describe('when filling in a pie spec', () => {
 describe('when passed an interim (v0.9.x) bar definition', () => {
   let result
   beforeAll(() => {
-    const spec = (bar as any)
-    /* tslint:disable */
-    const definition = {
-      "type": "bar", "datasets": [{
-        "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-        "query": {
-          "groupByFieldsForStatistics": "Type", "orderByFields":
-            "Number_of_SUM DESC", "outStatistics": [{
-              "statisticType": "sum",
-              "onStatisticField": "Number_of", "outStatisticFieldName": "Number_of_SUM"
-            }]
-        }
-      }], "series": [{
-        "category": { "field": "Type", "label": "Facility Use" },
-        "value": { "field": "Number_of_SUM", "label": "Total Students" }
-      }]
-    }
-    /* tslint:enable */
-    result = render.fillInSpec(spec, definition)
+    const definition = definitions.barInterim
+    const spec = fetchSpec(definition.type)
+    result = fillInSpec(spec, definition)
   })
   test('should use series category field ', () => {
     expect(result.categoryField).toEqual('Type')
@@ -299,24 +194,7 @@ describe('when passed an interim (v0.9.x) scatter definition', () => {
   let result
   beforeAll(() => {
     const spec = (scatter as any)
-    /* tslint:disable */
-    const definition = {
-      "type":"scatter",
-      "datasets": [
-        {
-          "url":"https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0"
-        }
-      ],
-      "series": [
-        {
-          "category": { "field": "Number_of", "label": "Student Enrollment (2008)" },
-          "value": { "field":"F_of_teach", "label": "Fraction of Teachers" },
-          "color": { "field":"Type", "label":"Facility Type" }
-        }
-      ]
-    }
-    /* tslint:enable */
-    result = render.fillInSpec(spec, definition)
+    result = fillInSpec(spec, definitions.scatterInterim)
   })
   test('should use series category field ', () => {
     expect(result.categoryField).toEqual('Number_of')
@@ -336,71 +214,65 @@ describe('when passed an interim (v0.9.x) scatter definition', () => {
   })
 })
 
-// NOTE: renderChart calls dependencies like amcharts and deepmerge
-// this suite used to run and presumeably actually rendered a chart somewhere
-// however, after introducing deepmerge, in order to run this in jest
-// I had to modify the deepmerge import statement to:
-// import * as deepmerge from 'deepmerge' - maybe due to ts-jest?
-// it _did_ run and pass once I did that, but that broke the rollup build
-// so skipping this suite until we can...
-// TODO: ...figure out how to stub deepmerge/amcharts dependencies
-xdescribe('Rnder properly renders charts...', () => {
-  test('Bar chart', () => {
-    const newSpec = {
-      type: 'bar',
-      datasets: [
-        {
-          url: 'https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0',
-          query: {
-            orderByFields: 'Number_of_SUM DESC',
-            groupByFieldsForStatistics: 'Type',
-            outStatistics: [
-              {
-                statisticType: 'sum',
-                onStatisticField: 'Number_of',
-                outStatisticFieldName: 'Number_of_SUM'
-              }
-            ]
-          }
-        }
-      ],
-      series: [
-        {
-          category: { field: 'Type', label: 'Type' },
-          value: { field: 'Number_of_SUM', label: 'Number of Students' }
-        }
-      ],
-      overrides: {
-        categoryAxis: {
-          labelRotation: -45
-        }
+describe('when rendering a chart', () => {
+  describe('bar chart', () => {
+    beforeEach(() => {
+      // @ts-ignore global
+      global.AmCharts = {
+        makeChart: jest.fn()
       }
-    }
-    const data = [
-      {
-        categoryField: 'High School',
-        Number_of_SUM_0: 13,
-        Type_0: 'High School',
-        Number_of_SUM_1: 8,
-        Type_1: 'High School'
-      },
-      {
-        categoryField: 'Middle School',
-        Number_of_SUM_0: 6,
-        Type_0: 'Middle School',
-        Number_of_SUM_1: 0,
-        Type_1: 'Middle School'
-      },
-      {
-        categoryField: 'Elementary School',
-        Number_of_SUM_0: 1,
-        Type_0: 'Elementary School',
-        Number_of_SUM_1: 1,
-        Type_1: 'Elementary School',
-        Number_of_SUM_2: 1,
-        Type_2: 'Elementary School'
-      }
-    ]
-    render.renderChart('blah', newSpec, data)
+    })
+    describe('when passing a definition w/ overrides', () => {
+      let expected
+      let tempBalloonText
+      beforeAll(() => {
+        // add expected overrides to built bar spec
+        expected = (builtBarSpec as any)
+        expected.categoryAxis.labelRotation = -45
+        tempBalloonText = expected.graphs[0].balloonText
+        expected.graphs[0].balloonText = '[[categoryField]]: <b>[[Number_of_SUM]]</b>'
+      })
+      test('it calls makeChart with the correct arguments', () => {
+        renderChart('blah', definitions.bar, builtBarSpec.dataProvider)
+        // @ts-ignore global
+        const makeChartArgs = global.AmCharts.makeChart.mock.calls[0]
+        expect(makeChartArgs[0]).toBe('blah')
+        expect(makeChartArgs[1]).toEqual(builtBarSpec)
+      })
+      afterAll(() => {
+        // clean up
+        delete expected.categoryAxis.labelRotation
+        expected.graphs[0].balloonText = tempBalloonText
+      })
+    })
+    describe('when passing a definition w/ a specification', () => {
+      test('it calls makeChart with the correct arguments', () => {
+        const definition = definitions.specification
+        const expected = {
+          dataProvider: [],
+          ...definition.specification
+        }
+        renderChart('blah', definition, [])
+        // @ts-ignore global
+        const makeChartArgs = global.AmCharts.makeChart.mock.calls[0]
+        expect(makeChartArgs[0]).toBe('blah')
+        expect(makeChartArgs[1]).toEqual(expected)
+      })
+    })
+    describe('when passing a custom definition w/ a specification', () => {
+      test('it calls makeChart with the correct arguments', () => {
+        const definition = definitions.custom
+        renderChart('blah', definition)
+        // @ts-ignore global
+        const makeChartArgs = global.AmCharts.makeChart.mock.calls[0]
+        expect(makeChartArgs[0]).toBe('blah')
+        expect(makeChartArgs[1]).toBe(definition.specification)
+      })
+    })
+    afterEach(() => {
+      // clean up
+      // @ts-ignore global
+      delete global.AmCharts
+    })
   })
 })
