@@ -1,7 +1,7 @@
 const pie = {
   type: 'pie',
   theme: 'calcite',
-  innerRadius: '70%',
+  innerRadius: '0%',
   startDuration: 0,
   graphs: [{}],
   groupPercent: 5,
@@ -9,8 +9,7 @@ const pie = {
      fixedPosition: true
     },
   legend: {
-    position: 'bottom',
-    autoMargins: false
+    enabled: false
   },
   export: {
     enabled: true
