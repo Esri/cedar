@@ -31,6 +31,7 @@ working
 lerna-debug.log
 debug/*.html
 !debug/sample.html
+yarn-error.log
 
 # Docs Build
 site/build

@@ -25,7 +25,8 @@
     "start": "npm run test:watch",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watch",
-    "prepublish": "npm run build"
+    "prepare": "npm run build:prod",
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",
@@ -47,7 +48,7 @@
   "homepage": "https://github.com/esri/cedar#readme",
   "jest": {
     "transform": {
-      ".(ts)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts)": "<rootDir>../../node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "\\.spec\\.ts?$",
     "modulePaths": [
