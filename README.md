@@ -168,16 +168,16 @@ This repository is a monoreop managed using [lerna](https://github.com/lerna/ler
 
 1. Fork this repository and clone 'cedar' locally
 1. `cd` into the `cedar` folder
-1. Install the dependencies with `npm install`
+1. Install the dependencies with `yarn`
 1. to run the docs site locally, start a web server at the root folder and visit `/docs`
-1. to rebuild the script files used by the docs page whenver the source code is updated, run `npm start`
+1. to rebuild the script files used by the docs page whenver the source code is updated, run `yarn`
 1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request)
 
 ### Tests
 
-To run tests one time for all packages, run `npm test` from the monorepo root.
+To run tests one time for all packages, run `yarn test` from the monorepo root.
 
-To run tests continually for any package as you update it's soruce code, `cd` into that package and run `npm run:watch` to continually run that package's tests as you update the source code
+To run tests continually for any package as you update it's soruce code, `cd` into that package and run `yarn run test:watch` to continually run that package's tests as you update the source code
 
 ### Dependencies
 

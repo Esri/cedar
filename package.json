@@ -1,5 +1,6 @@
 {
   "license": "Apache-2.0",
+  "private": true,
   "scripts": {
     "build": "lerna run build --scope @esri/cedar-amcharts && lerna run build --scope @esri/cedar",
     "build:prod": "lerna run build:prod --scope @esri/cedar-amcharts && lerna run build:prod --@esri/scope cedar",
@@ -11,7 +12,6 @@
     "copy:readme": "cp README.md packages/cedar/README.md",
     "predeploy": "npm run copy:docs",
     "deploy": "surge ./docs cedar-v1.surge.sh",
-    "postinstall": "lerna bootstrap",
     "prerelease": "npm run copy:readme && git add .",
     "release": "lerna publish",
     "reset": "npm run clean:dist && npm run clean:deps && lerna bootstrap",
@@ -19,7 +19,10 @@
     "test": "lerna run test"
   },
   "devDependencies": {
-    "lerna": "2.0.0-beta.37",
+    "lerna": "^2.8.0",
     "onchange": "^3.2.1"
-  }
+  },
+  "workspaces": [
+    "packages/*"
+  ]
 }
