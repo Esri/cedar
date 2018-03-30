@@ -41,6 +41,9 @@ You can load Cedar and its dependencies by including script tags that point to t
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<!-- load the arcgis-rest-js scripts -->
+<script src="https://unpkg.com/@esri/arcgis-rest-request@1.1.1/dist/umd/arcgis-rest-request.umd.js"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-feature-service@1.1.1/dist/umd/arcgis-rest-feature-service.umd.js"></script>
 <!-- optionally load an amcharts theme; cedar provides a calcite theme -->
 <script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
 <!-- load cedar -->
@@ -155,7 +158,7 @@ To run tests continually for any package as you update it's soruce code, `cd` in
 
 ### Dependencies
 
-Cedar currently uses the [amCharts JavaScripts Charts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. You will need to include this along with cedar in your application.
+Cedar is a very thin wrapper around other libraries that do the heavy lifting. Cedar uses the [amCharts JavaScripts Charts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. Cedar also uses [@esri/arcgis-rest-feature-service](https://esri.github.io/arcgis-rest-js/api/feature-service/) and [@esri/arcgis-rest-request](https://esri.github.io/arcgis-rest-js/api/request/) to query feature data. You will need to include these libraries along with cedar in your application. If you [install cedar using npm or yarn](#installing-cedar) these libraries will be installed for you, but you will have to make sure that your module bundler can resolve and include them in your application. If you are loading cedar from the CDN, please refer to the [loading cedar](#loading-cedar) section above for the `<script>` tags that you will need to include.
 
 Cedar supports the [same browsers as ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/reference/browsers.htm), however you may need to include polyfills for [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), if your application has to support browers that don't support [fetch](https://caniuse.com/#search=fetch) or [Promise](https://caniuse.com/#search=promise) (i.e. IE or older versions of Safari/Android).
 

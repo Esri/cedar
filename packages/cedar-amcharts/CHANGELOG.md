@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+### Changed
+- treat arcgis libraries as external
+
 ## [1.0.0-beta.3]
 ### Added
 - legend.position determines the location (top, bottom, right, left) of a chart legend
