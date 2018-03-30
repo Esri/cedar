@@ -41,13 +41,10 @@ You can load Cedar and its dependencies by including script tags that point to t
 <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<!-- optionally load an amcharts theme -->
-<script src="https://www.amcharts.com/lib/3/themes/light.js"></script>
+<!-- optionally load an amcharts theme; cedar provides a calcite theme -->
+<script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
 <!-- load cedar -->
 <script src="https://unpkg.com/@esri/cedar/dist/umd/cedar.js"></script>
-<script>
-  var chart = new cedar.Chart({"type":"bar"});
-</script>
 ```
 
 If you need to use other chart types, or want to use amCharts plugins, load the appropriate amCharts scripts before loading cedar:
@@ -63,43 +60,19 @@ If you need to use other chart types, or want to use amCharts plugins, load the 
 <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
 <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
 ```
-<!-- TODO: JSAPI example -->
-<!--
-If you're using cedar with the [ArcGIS API for JavaScript](developers.arcgis.com/javascript/), you can declare packages for Cedar and its dependencies so that they can be loaded by Dojo's AMD loader:
-
-```html
-<link rel="stylesheet" href="https://js.arcgis.com/3.19/esri/css/esri.css">
-<script>
-  window.dojoConfig = {
-    async: true,
-    packages: [
-      {
-        name: 'amCharts',
-        location: 'https://www.amcharts.com/lib/3',
-        main: 'amcharts'
-      }, {
-        name: 'cedar',
-        location: 'https://unpkg.com/@esri/cedar/dist/umd/',
-        main: 'cedar'
-      }
-    ]
-  };
-</script>
-<script src="https://js.arcgis.com/3.22/"></script>
-<script>
-  require(['amCharts', 'cedar', 'amCharts/serial'], function(AmCharts, cedar) {
-    var chart = new cedar.Chart({"type": "bar"});
-    ...
-  });
-</script>
-```
--->
 
 ### Using Cedar
 
-Once cedar is loaded you can create and show the chart at a designated element as follows:
+Once cedar is loaded you can create and show the chart at a designated element. First create the element:
 
-```js
+```html
+<div id="chart" style="height: 400px;"></div>
+```
+
+Then add a script that will configure cedar and render the chart:
+
+```html
+<script>
   // connect to the data
   var datasets = [{
     "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
@@ -122,7 +95,7 @@ Once cedar is loaded you can create and show the chart at a designated element a
     "source": "schools"
   }];
 
-  // optinally override any of the cart type's default styles
+  // optionally override any of the cart type's default styles
   var overrides = {
     "categoryAxis": {
       "labelRotation": -45
@@ -130,33 +103,35 @@ Once cedar is loaded you can create and show the chart at a designated element a
   }
 
   //create a cedar chart using the known 'bar' type
-  var chart = new cedar.Chart({"type": "bar"})
+  var elementId = 'chart';
+  var chart = new cedar.Chart(elementId, {"type": "bar"})
     .datasets(datasets)
     .series(series)
     .overrides(overrides);
 
   // render the chart
-  var elementId = 'chart';
-  chart.show(elementId);
+  chart.show();
+</script>
 ```
 
-<!-- See the [tutorial](http://esri.github.io/cedar/tutorial) to learn more. -->
-
-<!-- TODO: demos -->
-<!--
 ## Demos
 
-Here is are [an extensive set of demos](http://esri.github.io/cedar/examples) showing the concepts of Cedar.
--->
+See [this code pen](https://codepen.io/tomwayson/pen/paxgeO) to try creating a simple bar chart like the one above.
+
+You can then [see and modify the definitions for different types of charts](http://cedar-v1.surge.sh/).
+
+You can also see how to use cedar with an ArcGIS API for JavaScript map in these examples:
+- [A chart that aggregates map data](https://codepen.io/tomwayson/pen/YaKGjZ)
+- [A chart using layer features as inline data](https://codepen.io/tomwayson/pen/mxdVqO)
 
 ## Components of a Cedar Chart
 
 Cedar charts are defined by the following ingredients:
 
 - an array of `datasets`, each has, either:
- - a `url` to an ArcGIS Feature Layer along with optional `query` parameters;
- - ...or `data` can be an array of inline features
-- an array of `series` that bind the Feature Layer attributes to bars, lines, points, etc on the chart
+ - a `url` to an ArcGIS feature yayer along with optional `query` parameters;
+ - ...or inline `data`, which can be a [feature set](https://esri.github.io/arcgis-rest-js/api/common-types/IFeatureSet/), or an array of [features](https://esri.github.io/arcgis-rest-js/api/common-types/IFeature/) or [POJO](http://blog.dreasgrech.com/2012/02/creating-pojos-in-javascript.html)s
+- an array of `series` that bind the data to the bars, lines, points, etc on the chart
 - and `overrides` are specific modifications to the cart type's default styles
 
 <!-- TODO: API docs -->
@@ -164,14 +139,13 @@ Cedar charts are defined by the following ingredients:
 
 ### Development Instructions
 
-This repository is a monoreop managed using [lerna](https://github.com/lerna/lerna)
+This repository is a monorepo managed using [yarn workspaces](https://yarnpkg.com/lang/en/docs/workspaces/) and [lerna](https://github.com/lerna/lerna)
 
 1. Fork this repository and clone 'cedar' locally
 1. `cd` into the `cedar` folder
-1. Install the dependencies with `yarn`
+1. Install the dependencies and initialize the monorepo with `yarn`
 1. to run the docs site locally, start a web server at the root folder and visit `/docs`
-1. to rebuild the script files used by the docs page whenver the source code is updated, run `yarn`
-1. Create a [pull request](https://help.github.com/articles/creating-a-pull-request)
+1. to rebuild the script files used by the docs page whenever the source code is updated, run `yarn start`
 
 ### Tests
 
@@ -203,7 +177,7 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 
 ### Licensing
-Copyright 2017 Esri
+Copyright 2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

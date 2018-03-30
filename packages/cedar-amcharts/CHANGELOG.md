@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.0-beta.3]
 ### Added
 - legend.position determines the location (top, bottom, right, left) of a chart legend
 ### Changed
@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Text colors have been changed to pass color contrast ratio on white backgrounds
 - Pie charts default to legend off and inner radius 0
 - updated tests and added mocks for 100% code coverage
+- using yarn workspaces for monorepo
 ### Fixed
 - Specifications that are passed in are actually supported
 

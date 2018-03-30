@@ -3,16 +3,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.0.0-beta.3]
 ### Added
 - One can now inline data as an array of attributes or array of objects
 ### Changed
 - use @esri/arcgis-rest-feature-service and remove query functions
 - updated tests and added mocks for 100% code coverage
+- using yarn workspaces for monorepo
+- added links for codepens for working with maps, etc to README
 ### Fixed
 - remove extraneous dependency on amcharts in @esri/cedar
 - Specifications that are passed in are actually supported
 - fixed join logic so that records weren't getting assigned to wrong category
+- fixed Using Cedar instructions in the README
 
 ## [1.0.0-beta.2]
 ### Fixed
@@ -224,7 +227,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.2...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...master
+[1.0.0-beta.3]: https://github.com/Esri/cedar/compare/v1.0.0-beta.2...v1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/Esri/cedar/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/Esri/cedar/compare/v1.0.0-beta.0...v1.0.0-beta.1
 [1.0.0-beta.0]: https://github.com/Esri/cedar/compare/v1.0.0-alpha.7...v1.0.0-beta.0
