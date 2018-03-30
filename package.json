@@ -2,8 +2,8 @@
   "license": "Apache-2.0",
   "private": true,
   "scripts": {
-    "build": "lerna run build --scope @esri/cedar-amcharts && lerna run build --scope @esri/cedar",
-    "build:prod": "lerna run build:prod --scope @esri/cedar-amcharts && lerna run build:prod --@esri/scope cedar",
+    "build": "lerna run build",
+    "build:prod": "lerna run build:prod",
     "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run copy:docs",
     "precopy:docs": "npm run build",
     "clean:deps": "lerna run clean:deps && rimraf node_modules",
