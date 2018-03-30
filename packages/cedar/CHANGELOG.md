@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-beta.4]
+### Changed
+- treat arcgis libraries as external
+
 ## [1.0.0-beta.3]
 ### Added
 - One can now inline data as an array of attributes or array of objects
@@ -227,7 +231,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.4...master
+[1.0.0-beta.4]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/Esri/cedar/compare/v1.0.0-beta.2...v1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/Esri/cedar/compare/v1.0.0-beta.1...v1.0.0-beta.2
 [1.0.0-beta.1]: https://github.com/Esri/cedar/compare/v1.0.0-beta.0...v1.0.0-beta.1
