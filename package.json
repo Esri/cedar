@@ -6,7 +6,7 @@
     "build:prod": "lerna run build:prod --scope @esri/cedar-amcharts && lerna run build:prod --@esri/scope cedar",
     "build:watch": "onchange -v 'packages/*/src/**/*.ts' -- npm run copy:docs",
     "precopy:docs": "npm run build",
-    "clean:deps": "lerna run clean:deps",
+    "clean:deps": "lerna run clean:deps && rimraf node_modules",
     "clean:dist": "lerna run clean:dist",
     "copy:docs": "mkdir -p docs/scripts && cp -r packages/cedar/dist/umd/ docs/scripts/",
     "copy:readme": "cp README.md packages/cedar/README.md",
@@ -14,13 +14,14 @@
     "deploy": "surge ./docs cedar-v1.surge.sh",
     "prerelease": "npm run copy:readme && git add .",
     "release": "lerna publish",
-    "reset": "npm run clean:dist && npm run clean:deps && lerna bootstrap",
+    "reset": "npm run clean:dist && npm run clean:deps && yarn",
     "start": "npm run copy:docs && npm run build:watch",
     "test": "lerna run test"
   },
   "devDependencies": {
     "lerna": "^2.8.0",
-    "onchange": "^3.2.1"
+    "onchange": "^3.2.1",
+    "rimraf": "^2.6.2"
   },
   "workspaces": [
     "packages/*"

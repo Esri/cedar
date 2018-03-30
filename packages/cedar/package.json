@@ -25,7 +25,8 @@
     "start": "npm run test:watch",
     "test": "jest --coverage",
     "test:watch": "npm run test -- --watch",
-    "prepublish": "npm run build"
+    "prepare": "npm run build:prod",
+    "prepublishOnly": "npm test"
   },
   "repository": {
     "type": "git",
