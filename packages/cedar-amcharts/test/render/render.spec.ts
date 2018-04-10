@@ -1,6 +1,6 @@
 /* globals global:false */
 import { } from 'jest'
-import { fetchSpec, fillInSpec, renderChart } from '../../src/render/render'
+import { fetchSpec, fillInSpec, getPieBalloonText, renderChart } from '../../src/render/render'
 import bar from '../../src/specs/bar'
 import scatter from '../../src/specs/scatter'
 import timeline from '../../src/specs/timeline'
@@ -164,6 +164,14 @@ describe('when filling in a pie spec', () => {
   })
   test('it should set value field', () => {
     expect(result.valueField).toEqual('Number_of_SUM')
+  })
+})
+
+describe('when rendering a pie chart', () => {
+  const definition = definitions.pie
+  const balloonText = getPieBalloonText(definition)
+  test('It should set balloonText properly in chart', () => {
+    expect(balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
   })
 })
 
