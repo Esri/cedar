@@ -1,6 +1,7 @@
 /* globals global:false */
+/* globals AmCharts:false */
 import { } from 'jest'
-import { fetchSpec, fillInSpec, renderChart } from '../../src/render/render'
+import { fetchSpec, fillInSpec, getPieBalloonText, renderChart } from '../../src/render/render'
 import bar from '../../src/specs/bar'
 import scatter from '../../src/specs/scatter'
 import timeline from '../../src/specs/timeline'
@@ -164,6 +165,30 @@ describe('when filling in a pie spec', () => {
   })
   test('it should set value field', () => {
     expect(result.valueField).toEqual('Number_of_SUM')
+  })
+})
+
+describe('When rendering a pie chart', () => {
+  beforeEach(() => {
+    // @ts-ignore global
+    global.AmCharts = {
+      makeChart: jest.fn().mockReturnValue({
+        balloonText: undefined
+      })
+    }
+  })
+  test('balloonText should be properly filled in', () => {
+    const chart = renderChart('blah', definitions.pie, [])
+    expect(chart.balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
+  })
+  test('It should handle missing category labels', () => {
+    const chart = renderChart('blah', definitions.pieMissingLabels, [])
+    expect(chart.balloonText).toEqual('[[title]] [[percents]]% ([[value]])')
+  })
+  afterEach(() => {
+    // clean up
+    // @ts-ignore global
+    delete global.AmCharts
   })
 })
 
