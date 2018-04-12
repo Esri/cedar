@@ -168,17 +168,6 @@ describe('when filling in a pie spec', () => {
   })
 })
 
-describe('when rendering a pie chart', () => {
-  test('It should set balloonText properly in chart', () => {
-    const balloonText = getPieBalloonText(definitions.pie)
-    expect(balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
-  })
-  test('It should handle missing category labels', () => {
-    const balloonText = getPieBalloonText(definitions.pieMissingLabels)
-    expect(balloonText).toEqual('[[title]] [[percents]]% ([[value]])')
-  })
-})
-
 describe('When rendering a pie chart', () => {
   beforeEach(() => {
     // @ts-ignore global
@@ -191,6 +180,10 @@ describe('When rendering a pie chart', () => {
   test('balloonText should be properly filled in', () => {
     const chart = renderChart('blah', definitions.pie, [])
     expect(chart.balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
+  })
+  test('It should handle missing category labels', () => {
+    const chart = renderChart('blah', definitions.pieMissingLabels, [])
+    expect(chart.balloonText).toEqual('[[title]] [[percents]]% ([[value]])')
   })
   afterEach(() => {
     // clean up

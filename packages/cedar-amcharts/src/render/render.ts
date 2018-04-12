@@ -6,7 +6,7 @@ import specs from '../specs/specs'
 export function renderChart(elementId: string, definition: any, data?: any) {
   if (definition.type === 'custom') {
     const chart = AmCharts.makeChart(elementId, definition.specification)
-    return
+    return chart
   }
 
   // Clone/copy spec and data
@@ -42,7 +42,7 @@ export function renderChart(elementId: string, definition: any, data?: any) {
   return chart
 }
 
-export function getPieBalloonText(definition: any) {
+function getPieBalloonText(definition: any) {
   // Set label based on whether or not there actually is a category label
   const categoryLabel = !!definition.series[0].category.label ? `${definition.series[0].category.label}: ` : ''
   // Set label based on whether or not there actually is a value label
