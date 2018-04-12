@@ -1,4 +1,5 @@
 /* globals global:false */
+/* globals AmCharts:false */
 import { } from 'jest'
 import { fetchSpec, fillInSpec, getPieBalloonText, renderChart } from '../../src/render/render'
 import bar from '../../src/specs/bar'
@@ -168,10 +169,33 @@ describe('when filling in a pie spec', () => {
 })
 
 describe('when rendering a pie chart', () => {
-  const definition = definitions.pie
-  const balloonText = getPieBalloonText(definition)
   test('It should set balloonText properly in chart', () => {
+    const balloonText = getPieBalloonText(definitions.pie)
     expect(balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
+  })
+  test('It should handle missing category labels', () => {
+    const balloonText = getPieBalloonText(definitions.pieMissingLabels)
+    expect(balloonText).toEqual('[[title]] [[percents]]% ([[value]])')
+  })
+})
+
+describe('When rendering a pie chart', () => {
+  beforeEach(() => {
+    // @ts-ignore global
+    global.AmCharts = {
+      makeChart: jest.fn().mockReturnValue({
+        balloonText: undefined
+      })
+    }
+  })
+  test('balloonText should be properly filled in', () => {
+    const chart = renderChart('blah', definitions.pie, [])
+    expect(chart.balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
+  })
+  afterEach(() => {
+    // clean up
+    // @ts-ignore global
+    delete global.AmCharts
   })
 })
 
