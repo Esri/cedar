@@ -33,6 +33,18 @@ export const bar = {
   "legend": {
     "visible": true,
     "position": "right"
+  },
+  "style": {
+    "pie": {
+      "expand": 0,
+      "innerRadius": "50%"
+    },
+    "padding": {
+      "top": 10,
+      "bottom": 10,
+      "left": 10,
+      "right": 10
+    }
   }
 }
 

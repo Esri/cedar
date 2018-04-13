@@ -1,7 +1,7 @@
 /* globals global:false */
 /* globals AmCharts:false */
 import { } from 'jest'
-import { fetchSpec, fillInSpec, getPieBalloonText, renderChart } from '../../src/render/render'
+import { fetchSpec, fillInSpec, renderChart } from '../../src/render/render'
 import bar from '../../src/specs/bar'
 import scatter from '../../src/specs/scatter'
 import timeline from '../../src/specs/timeline'
@@ -132,6 +132,53 @@ describe('when overriding legend defaults', () => {
   afterAll(() => {
     // clean up
     delete definition.legend
+  })
+})
+
+describe('When filling in style', () => {
+  let result
+  let definition
+  beforeAll(() => {
+    definition = definitions.pie
+    definition.style = {
+      pie: {
+        innerRadius: '50%',
+        expand: 0
+      },
+      padding: {
+        top: 10,
+        bottom: 10,
+        right: 10,
+        left: 10
+      }
+    }
+    const spec = fetchSpec(definition.type)
+    result = fillInSpec(spec, definition)
+  })
+  test('spec.innerRadius should be 50% if definition.style.pie.innerRadius: 50% is passed in', () => {
+    expect(result.innerRadius).toEqual('50%')
+  })
+  test('spec.pullOutRadius should be 0 if definition.style.pie.expand: 0 is passed in', () => {
+    expect(result.pullOutRadius).toEqual(0)
+  })
+  test('spec.autoMargins should be false if definition.style.padding exists', () => {
+    expect(result.autoMargins).toBeFalsy()
+  })
+  test('spec.marginTop should be 10 if definition.style.padding.top: 10 is passed in', () => {
+    expect(result.marginTop).toEqual(10)
+  })
+  test('spec.marginBottom should be 10 if definition.style.padding.bottom: 10 is passed in', () => {
+    expect(result.marginBottom).toEqual(10)
+  })
+  test('spec.marginLeft should be 10 if definition.style.padding.left: 10 is passed in', () => {
+    expect(result.marginLeft).toEqual(10)
+  })
+  test('spec.marginRight should be 10 if definition.style.padding.right: 10 is passed in', () => {
+    expect(result.marginRight).toEqual(10)
+  })
+  afterAll(() => {
+    // clean up
+    delete definition.style
   })
 })
 

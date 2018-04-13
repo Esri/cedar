@@ -8,17 +8,35 @@ function clone(json) {
 
 // TODO: where should these interfaces live?
 export interface ILegend {
-  visible?: boolean,
+  visible?: boolean
   position?: 'top' | 'bottom' | 'left' | 'right'
 }
 
+export interface IPie {
+  innerRadius?: number | string
+  expand?: number | string
+}
+
+export interface IPadding {
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
+}
+
+export interface IStyle {
+  pie?: IPie
+  padding?: IPadding
+}
+
 export interface IDefinition {
-  datasets?: IDataset[],
-  series?: ISeries[],
+  datasets?: IDataset[]
+  series?: ISeries[]
   type?: string
   specification?: {}
-  overrides?: {},
+  overrides?: {}
   legend?: ILegend
+  style?: IStyle
 }
 
 export default class Chart {
@@ -84,6 +102,12 @@ export default class Chart {
   public legend(): ILegend
   public legend(newLegend?: any): any {
     return this._definitionAccessor('legend', newLegend)
+  }
+
+  public style(newStyle: IStyle): Chart
+  public style(): IStyle
+  public style(newStyle?: any): any {
+    return this._definitionAccessor('style', newStyle)
   }
 
   // data is read only
