@@ -3,9 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [1.0.0-beta.5]
 ### Added
 - One can now add a `style` property which contains `padding` and `pie` properties to `definition`
+### Changed
+- popup text for pie charts has a new format
 
 ## [1.0.0-beta.4]
 ### Changed
@@ -235,7 +237,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.4...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.5...master
+[1.0.0-beta.5]: https://github.com/Esri/cedar/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/Esri/cedar/compare/v1.0.0-beta.2...v1.0.0-beta.3
 [1.0.0-beta.2]: https://github.com/Esri/cedar/compare/v1.0.0-beta.1...v1.0.0-beta.2
