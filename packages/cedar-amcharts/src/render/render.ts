@@ -51,7 +51,7 @@ function getPieBalloonText(definition: any) {
   return `${categoryLabel}[[title]] [[percents]]% (${valueLabel}[[value]])`
 }
 
-export function fillInSpec(spec: any, definition: any) {
+export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how to split this function up
   // Grab the graphSpec from the spec
   const graphSpec = spec.graphs.pop()
   const isJoined = definition.datasets.length > 1
@@ -110,6 +110,27 @@ export function fillInSpec(spec: any, definition: any) {
     }
     if (legend.position && supportedLegendPositions.indexOf(legend.position) > -1) {
       spec.legend.position = legend.position
+    }
+  }
+
+  // Handle styles...
+  if (definition.style) {
+    // snag out style
+    const style = definition.style
+    // handle margins
+    if (style.hasOwnProperty('autoMargins')) { spec.autoMargins = style.autoMargins }
+    if (style.hasOwnProperty('marginTop')) { spec.marginTop = style.marginTop }
+    if (style.hasOwnProperty('marginBottom')) { spec.marginBottom = style.marginBottom }
+    if (style.hasOwnProperty('marginLeft')) { spec.marginLeft = style.marginLeft }
+    if (style.hasOwnProperty('marginRight')) { spec.marginRight = style.marginRight }
+    // If there is a pie property
+    if (style.pie) {
+      const pie = style.pie
+      // A range from 0 - n where n is the inner radius of the pie chart. Anything above a 0
+      // turns the chart into a donut chart. Can be a number for pixels or a percent.
+      if (pie.hasOwnProperty('innerRadius')) { spec.innerRadius = pie.innerRadius }
+      // How far a pie chart slice will pull out when selected. Can be a number for pixels or a percent
+      if (pie.hasOwnProperty('pullOutRadius')) { spec.pullOutRadius = pie.pullOutRadius }
     }
   }
 

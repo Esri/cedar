@@ -1,7 +1,7 @@
 /* globals global:false */
 /* globals AmCharts:false */
 import { } from 'jest'
-import { fetchSpec, fillInSpec, getPieBalloonText, renderChart } from '../../src/render/render'
+import { fetchSpec, fillInSpec, renderChart } from '../../src/render/render'
 import bar from '../../src/specs/bar'
 import scatter from '../../src/specs/scatter'
 import timeline from '../../src/specs/timeline'
