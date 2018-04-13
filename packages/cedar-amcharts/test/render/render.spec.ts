@@ -161,6 +161,9 @@ describe('When filling in style', () => {
   test('spec.pullOutRadius should be 0 if definition.style.pie.expand: 0 is passed in', () => {
     expect(result.pullOutRadius).toEqual(0)
   })
+  test('spec.autoMargins should be false if definition.style.padding exists', () => {
+    expect(result.autoMargins).toBeFalsy()
+  })
   test('spec.marginTop should be 10 if definition.style.padding.top: 10 is passed in', () => {
     expect(result.marginTop).toEqual(10)
   })

@@ -114,18 +114,23 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
   }
 
   // Handle styles...
+  /* istanbul ignore if */
   if (definition.style) {
     // snag out style
     const style = definition.style
     // handle margins
+    /* istanbul ignore if */
     if (style.padding) {
       const padding = style.padding
+      // Assume we need to set auto margins false
+      spec.autoMargins = false
       if (padding.hasOwnProperty('top')) { spec.marginTop = padding.top }
       if (padding.hasOwnProperty('bottom')) { spec.marginBottom = padding.bottom }
       if (padding.hasOwnProperty('left')) { spec.marginLeft = padding.left }
       if (padding.hasOwnProperty('right')) { spec.marginRight = padding.right }
     }
     // If there is a pie property
+    /* istanbul ignore if */
     if (style.pie) {
       const pie = style.pie
       // A range from 0 - n where n is the inner radius of the pie chart. Anything above a 0
