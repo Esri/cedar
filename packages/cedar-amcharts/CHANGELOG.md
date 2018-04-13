@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Added
+- One can now add a `style` property which contains `padding` and `pie` properties to `definition`
+### changed
+- popup text for pie charts has a new format
+
 ## 1.0.0-beta.4
 ### Changed
 - treat arcgis libraries as external
