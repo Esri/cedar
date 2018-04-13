@@ -58,6 +58,9 @@ describe('new Chart w/o definition', () => {
   test('legend should set the definition.legend', () => {
     expect(chart.legend(barDefinition.legend).legend()).toEqual(barDefinition.legend)
   })
+  test('style should set the definition.style', () => {
+    expect(chart.style(barDefinition.style).style()).toEqual(barDefinition.style)
+  })
 })
 
 describe('when updating data', () => {

@@ -118,11 +118,13 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
     // snag out style
     const style = definition.style
     // handle margins
-    if (style.hasOwnProperty('autoMargins')) { spec.autoMargins = style.autoMargins }
-    if (style.hasOwnProperty('marginTop')) { spec.marginTop = style.marginTop }
-    if (style.hasOwnProperty('marginBottom')) { spec.marginBottom = style.marginBottom }
-    if (style.hasOwnProperty('marginLeft')) { spec.marginLeft = style.marginLeft }
-    if (style.hasOwnProperty('marginRight')) { spec.marginRight = style.marginRight }
+    if (style.padding) {
+      const padding = style.padding
+      if (padding.hasOwnProperty('top')) { spec.marginTop = padding.top }
+      if (padding.hasOwnProperty('bottom')) { spec.marginBottom = padding.bottom }
+      if (padding.hasOwnProperty('left')) { spec.marginLeft = padding.left }
+      if (padding.hasOwnProperty('right')) { spec.marginRight = padding.right }
+    }
     // If there is a pie property
     if (style.pie) {
       const pie = style.pie
@@ -130,7 +132,7 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
       // turns the chart into a donut chart. Can be a number for pixels or a percent.
       if (pie.hasOwnProperty('innerRadius')) { spec.innerRadius = pie.innerRadius }
       // How far a pie chart slice will pull out when selected. Can be a number for pixels or a percent
-      if (pie.hasOwnProperty('pullOutRadius')) { spec.pullOutRadius = pie.pullOutRadius }
+      if (pie.hasOwnProperty('expand')) { spec.pullOutRadius = pie.expand }
     }
   }
 

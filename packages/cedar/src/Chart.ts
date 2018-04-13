@@ -14,16 +14,19 @@ export interface ILegend {
 
 export interface IPie {
   innerRadius?: number | string
-  pullOutRadius?: number | string
+  expand?: number | string
+}
+
+export interface IPadding {
+  top?: number
+  bottom?: number
+  left?: number
+  right?: number
 }
 
 export interface IStyle {
   pie?: IPie
-  autoMargins?: boolean
-  marginTop?: number
-  marginBottom?: number
-  marginLeft?: number
-  marginRight?: number
+  padding?: IPadding
 }
 
 export interface IDefinition {
