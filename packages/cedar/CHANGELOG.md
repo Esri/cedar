@@ -4,8 +4,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+
+## [1.0.0-beta.6]
 ### Changed
-- Defaults for pie charts with legends now specify legend valueAlign and spacing
+- Defaults for bar charts with legends now specify legend valueAlign and spacing
 
 ## [1.0.0-beta.5]
 ### Added
@@ -241,7 +243,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.5...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...master
+[1.0.0-beta.6]: https://github.com/Esri/cedar/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [1.0.0-beta.5]: https://github.com/Esri/cedar/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...v1.0.0-beta.4
 [1.0.0-beta.3]: https://github.com/Esri/cedar/compare/v1.0.0-beta.2...v1.0.0-beta.3
