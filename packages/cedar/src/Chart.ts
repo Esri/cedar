@@ -9,9 +9,7 @@ function clone(json) {
 // TODO: where should these interfaces live?
 export interface ILegend {
   visible?: boolean
-  position?: 'top' | 'bottom' | 'left' | 'right',
-  valueAlign?: 'left' | 'right',
-  spacing?: number
+  position?: 'top' | 'bottom' | 'left' | 'right'
 }
 
 export interface IPie {

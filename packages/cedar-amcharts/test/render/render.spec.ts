@@ -118,9 +118,7 @@ describe('when overriding legend defaults', () => {
     definition = definitions.bar
     definition.legend = {
       visible: true,
-      position: 'right',
-      valueAlign: 'right',
-      spacing: 35
+      position: 'right'
     }
     const spec = fetchSpec(definition.type)
     result = fillInSpec(spec, definition)
@@ -130,12 +128,6 @@ describe('when overriding legend defaults', () => {
   })
   test('Legend position should be right when position: right is passed in', () => {
     expect(result.legend.position).toEqual('right')
-  })
-  test('Legend valueAlign should be right when valueAlign: right is passed in', () => {
-    expect(result.legend.valueAlign).toEqual('right')
-  })
-  test('Legend spacing should be 35 when spacing: 35 is passed in', () => {
-    expect(result.legend.spacing).toEqual(35)
   })
   afterAll(() => {
     // clean up
