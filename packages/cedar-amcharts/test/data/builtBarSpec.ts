@@ -16,7 +16,9 @@ const builtBarSpec = {
     }
   ],
   "legend": {
-    "enabled": false
+    "enabled": false,
+    "valueAlign": "left",
+    "spacing": 25
   },
   "valueAxes": [
     {

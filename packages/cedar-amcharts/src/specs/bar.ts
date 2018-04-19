@@ -9,7 +9,10 @@ export const bar = {
     type: 'column',
     newStack: true
   }],
-  legend: {},
+  legend: {
+    valueAlign: 'left',
+    spacing: 25
+  },
   valueAxes: [ {
     stackType: 'regular'
   } ],
