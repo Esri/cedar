@@ -111,6 +111,8 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
     if (legend.position && supportedLegendPositions.indexOf(legend.position) > -1) {
       spec.legend.position = legend.position
     }
+    if (legend.valueAlign) { spec.legend.valueAlign = legend.valueAlign }
+    if (legend.hasOwnProperty('spacing')) { spec.legend.spacing = legend.spacing }
   }
 
   // Handle styles...
