@@ -2,19 +2,19 @@
 # yarn lockfile v1
 
 
-"@esri/arcgis-rest-common-types@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-common-types/-/arcgis-rest-common-types-1.1.1.tgz#fef9d9b0d0a9de2b8f9e7c2b007e707e0b35472c"
+"@esri/arcgis-rest-common-types@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-common-types/-/arcgis-rest-common-types-1.2.1.tgz#efcb3b80661972b541bc682fbd7abe5bda7c4a31"
 
-"@esri/arcgis-rest-feature-service@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-feature-service/-/arcgis-rest-feature-service-1.1.1.tgz#0c4112c848035fd3d29b55ef6bd2678d22381de1"
+"@esri/arcgis-rest-feature-service@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-feature-service/-/arcgis-rest-feature-service-1.2.1.tgz#1a2d3387743f318dc2abbe020a97405140f857ca"
   dependencies:
     tslib "^1.7.1"
 
-"@esri/arcgis-rest-request@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-request/-/arcgis-rest-request-1.1.1.tgz#7ae876901f6de43abdc71efd8c5894a996e20967"
+"@esri/arcgis-rest-request@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-request/-/arcgis-rest-request-1.2.1.tgz#ac7950eb5df556031a203819499e84802663ef63"
   dependencies:
     tslib "^1.7.1"
 
