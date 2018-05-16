@@ -5,6 +5,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+## [1.0.0-beta.7]
+### Changed
+- bumped arcgis-rest-js packages to 1.2.1 to support on premise (enterprise)
+
 ## [1.0.0-beta.6]
 ### Changed
 - Defaults for bar charts with legends now specify legend valueAlign and spacing
@@ -243,7 +247,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.7...master
+[1.0.0-beta.7]: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [1.0.0-beta.6]: https://github.com/Esri/cedar/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [1.0.0-beta.5]: https://github.com/Esri/cedar/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...v1.0.0-beta.4
