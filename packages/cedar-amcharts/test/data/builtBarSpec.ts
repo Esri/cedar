@@ -11,7 +11,7 @@ const builtBarSpec = {
       "type": "column",
       "title": "Number of Students",
       "valueField": "Number_of_SUM",
-      "balloonText": "Number of Students [[Type]]: <b>[[Number_of_SUM]]</b>",
+      "balloonText": "<div>Type: [[Type]]</div><div>Number of Students: [[Number_of_SUM]]</div>",
       "newStack": true
     }
   ],

@@ -191,7 +191,7 @@ describe('when filling in a line spec', () => {
   })
   test('should have graphed the series', () => {
     /* tslint:disable quotemark object-literal-key-quotes */
-    const expected = [{"balloonText": "Minor Injuries [[EXPR_1]]: <b>[[MINORINJURIES_SUM]]</b>", "bullet": "circle", "bulletAlpha": 1, "bulletBorderAlpha": 0.8, "bulletBorderThickness": 0, "dashLengthField": "dashLengthLine", "fillAlphas": 0, "title": "Minor Injuries", "useLineColorForBulletBorder": true, "valueField": "MINORINJURIES_SUM"}]
+    const expected = [{"balloonText": "<div>Year: [[EXPR_1]]</div><div>Minor Injuries: [[MINORINJURIES_SUM]]</div>", "bullet": "circle", "bulletAlpha": 1, "bulletBorderAlpha": 0.8, "bulletBorderThickness": 0, "dashLengthField": "dashLengthLine", "fillAlphas": 0, "title": "Minor Injuries", "useLineColorForBulletBorder": true, "valueField": "MINORINJURIES_SUM"}]
     /* tslint:enable */
     expect(result.graphs).toEqual(expected)
   })
@@ -226,11 +226,11 @@ describe('When rendering a pie chart', () => {
   })
   test('balloonText should be properly filled in', () => {
     const chart = renderChart('blah', definitions.pie, [])
-    expect(chart.balloonText).toEqual('Type: [[title]] [[percents]]% (Number of Students [[value]])')
+    expect(chart.balloonText).toEqual('<div>Type: [[title]]</div><div>Number of Students: [[percents]]% ([[value]])</div>')
   })
   test('It should handle missing category labels', () => {
     const chart = renderChart('blah', definitions.pieMissingLabels, [])
-    expect(chart.balloonText).toEqual('[[title]] [[percents]]% ([[value]])')
+    expect(chart.balloonText).toEqual('<div>[[title]]</div><div>[[percents]]% ([[value]])</div>')
   })
   afterEach(() => {
     // clean up

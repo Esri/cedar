@@ -46,9 +46,9 @@ function getPieBalloonText(definition: any) {
   // Set label based on whether or not there actually is a category label
   const categoryLabel = !!definition.series[0].category.label ? `${definition.series[0].category.label}: ` : ''
   // Set label based on whether or not there actually is a value label
-  const valueLabel = !!definition.series[0].value.label ? `${definition.series[0].value.label} ` : ''
+  const valueLabel = !!definition.series[0].value.label ? `${definition.series[0].value.label}: ` : ''
   // return balloonText
-  return `<div>${categoryLabel}: [[title]]</div><div>${valueLabel}: [[percents]]% ([[value]])</div>`
+  return `<div>${categoryLabel}[[title]]</div><div>${valueLabel}[[percents]]% ([[value]])</div>`
 }
 
 export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how to split this function up
