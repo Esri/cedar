@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+### Changed
+- Balloon Text for pie, and bar chart families has been updated to a more understandable format
+
 ## 1.0.0-beta.6
 ### Changed
 - Defaults for bar charts with legends now specify legend valueAlign and spacing

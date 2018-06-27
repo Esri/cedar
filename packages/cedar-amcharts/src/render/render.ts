@@ -48,7 +48,7 @@ function getPieBalloonText(definition: any) {
   // Set label based on whether or not there actually is a value label
   const valueLabel = !!definition.series[0].value.label ? `${definition.series[0].value.label} ` : ''
   // return balloonText
-  return `${categoryLabel}[[title]] [[percents]]% (${valueLabel}[[value]])`
+  return `<div>${categoryLabel}: [[title]]</div><div>${valueLabel}: [[percents]]% ([[value]])</div>`
 }
 
 export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how to split this function up
@@ -155,7 +155,7 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
         graph.valueField = isJoined ? `${datasetName}_${series.value.field}` : series.value.field
         // TODO: map other fields besides value like color, size, etc
         // tooltip
-        graph.balloonText = `${graph.title} [[${spec.categoryField}]]: <b>[[${graph.valueField}]]</b>`
+        graph.balloonText = `<div>${series.category.label}: [[${spec.categoryField}]]</div><div>${graph.title}: [[${graph.valueField}]]</div>`
 
         // Group vs. stack
         if (!!series.stack && graph.newStack) {
