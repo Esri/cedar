@@ -26,7 +26,8 @@ export interface IPadding {
 
 export interface IStyle {
   pie?: IPie
-  padding?: IPadding
+  padding?: IPadding,
+  colors?: string[]
 }
 
 export interface IDefinition {

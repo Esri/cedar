@@ -139,6 +139,10 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
       // How far a pie chart slice will pull out when selected. Can be a number for pixels or a percent
       if (pie.hasOwnProperty('expand')) { spec.pullOutRadius = pie.expand }
     }
+
+    if (style.colors && Array.isArray(style.colors)) {
+      spec.colors = style.colors
+    }
   }
 
   // Iterate over datasets

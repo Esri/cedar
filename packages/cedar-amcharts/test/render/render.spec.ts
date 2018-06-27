@@ -150,7 +150,8 @@ describe('When filling in style', () => {
         bottom: 10,
         right: 10,
         left: 10
-      }
+      },
+      colors: ['#BB4040', '#2C6175', '#95B23D']
     }
     const spec = fetchSpec(definition.type)
     result = fillInSpec(spec, definition)
@@ -175,6 +176,9 @@ describe('When filling in style', () => {
   })
   test('spec.marginRight should be 10 if definition.style.padding.right: 10 is passed in', () => {
     expect(result.marginRight).toEqual(10)
+  })
+  test('spec.colors should be an array that contains the proper colors', () => {
+    expect(result.colors).toEqual(['#BB4040', '#2C6175', '#95B23D'])
   })
   afterAll(() => {
     // clean up
