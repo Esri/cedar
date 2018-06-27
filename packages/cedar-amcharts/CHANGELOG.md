@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+### Added
+- style.colors accepts an array of colors that map to chart colors
 ### Changed
 - Balloon Text for pie, and bar chart families has been updated to a more understandable format
 
