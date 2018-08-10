@@ -6,6 +6,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Changed
 - bump @esri/arcgis-rest-js dependencies to 1.7.1
+- update dev dependencies
 
 ## [1.0.0-beta.8]
 ### Added
