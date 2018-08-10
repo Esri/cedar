@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## [Unreleased]
+### Changed
+- bump @esri/arcgis-rest-js dependencies to 1.7.0
+
+## [1.0.0-beta.8]
 ### Added
 - style.colors accepts an array of colors that map to chart colors
 ### Changed
@@ -251,8 +255,9 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.7...master
-[1.0.0-beta.7]: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...v1.0.0-beta.7
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.8...master
+[1.0.0-beta.8]: https://github.com/Esri/cedar/compare/v1.0.0-beta.7...v1.0.0-beta.8
+[1.0.0-beta.7: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [1.0.0-beta.6]: https://github.com/Esri/cedar/compare/v1.0.0-beta.5...v1.0.0-beta.6
 [1.0.0-beta.5]: https://github.com/Esri/cedar/compare/v1.0.0-beta.4...v1.0.0-beta.5
 [1.0.0-beta.4]: https://github.com/Esri/cedar/compare/v1.0.0-beta.3...v1.0.0-beta.4
