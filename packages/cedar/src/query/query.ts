@@ -1,4 +1,5 @@
-import { queryFeatures } from '@esri/arcgis-rest-feature-service'
+import { IQueryFeaturesRequestOptions, queryFeatures } from '@esri/arcgis-rest-feature-service'
+import config from '../config'
 import { IDataset } from '../dataset'
 import { createQueryParams } from './url'
 
@@ -13,10 +14,16 @@ export function queryDatasets(datasets: IDataset[]) {
         // TODO: make name required on datasets, or required if > 1 dataset?
         names.push(dataset.name || `dataset${i}`)
         const queryParams = createQueryParams(dataset.query)
-        requests.push(queryFeatures({
+        const options: IQueryFeaturesRequestOptions = {
           url: dataset.url,
           params: queryParams
-        }))
+        }
+        if (config.fetch && typeof config.fetch === 'function') {
+          // we are configured to use a custom fetch implementation
+          // send that along to rest-js
+          options.fetch = config.fetch
+        }
+        requests.push(queryFeatures(options))
       }
     })
   }

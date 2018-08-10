@@ -1,4 +1,5 @@
 import {} from 'jest'
+import config from '../../src/config'
 import { queryDatasets } from '../../src/query/query'
 import * as definitions from '../data/definitions'
 import { all, Dewitt, Fayetteville, Jordan } from '../data/queryResponses'
@@ -35,6 +36,25 @@ describe('when querying datasets', () => {
           expect(datasetsData).toEqual({
             dataset0: all
           })
+        })
+      })
+    })
+    describe('when passing in custom fetch', () => {
+      const datasets = definitions.bar.datasets
+      const expectedResult = {
+        Number_of_SUM: all
+      }
+      beforeAll(() => {
+        config.fetch = jest.fn()
+        config.fetch.mockReturnValueOnce(Promise.resolve(all))
+      })
+      afterAll(() => {
+        delete config.fetch
+      })
+      it('should pass fetch along to request', () => {
+        return queryDatasets(datasets).then((datasetsData) => {
+          expect(config.fetch.mock.calls.length).toEqual(1)
+          expect(datasetsData).toEqual(expectedResult)
         })
       })
     })
