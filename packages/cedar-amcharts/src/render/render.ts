@@ -1,4 +1,5 @@
 /* globals AmCharts:false */
+declare const AmCharts
 import merge from 'deepmerge'
 import specs from '../specs/specs'
 
