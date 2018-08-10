@@ -12,13 +12,16 @@ const copyright = `/**
 
 // TODO: treat AmCharts as an external and don't use the global
 export default {
-  entry: 'dist/esm/index.js',
+  input: 'dist/esm/index.js',
   // TODO: reconsider name after https://github.com/Esri/cedar/issues/279#issuecomment-335170913
-  moduleName: 'cedarAmCharts',
-  format: 'umd',
-  exports: 'named',
+  output: {
+    name: 'cedarAmCharts',
+    format: 'umd',
+    exports: 'named',
+    banner: copyright
+  },
+  
   // NOTE: using node resolve to bundle an older version of deepmerge
   // if we move to latest, we _may_ want to make that external instead
-  plugins: [json(), resolve()],
-  banner: copyright
+  plugins: [json(), resolve()]
 };

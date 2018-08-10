@@ -10,15 +10,17 @@ const copyright = `/**
 
 // TODO: treat AmCharts as an external and don't use the global
 export default {
-  entry: 'dist/esm/index.js',
-  moduleName: 'cedar',
-  format: 'umd',
-  external: ['@esri/arcgis-rest-feature-service'],
-  globals: {
-    '@esri/arcgis-rest-feature-service': 'arcgisRest'
+  input: 'dist/esm/index.js',
+  output: {
+    name: 'cedar',
+    format: 'umd',
+    external: ['@esri/arcgis-rest-feature-service'],
+    globals: {
+      '@esri/arcgis-rest-feature-service': 'arcgisRest'
+    },
+    banner: copyright  
   },
   // NOTE: using node resolve to bundle an older version of deepmerge
   // if we move to latest, we _may_ want to make that external instead
   plugins: [json(), resolve()],
-  banner: copyright
 };

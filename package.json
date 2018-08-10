@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "lerna": "^2.8.0",
-    "onchange": "^3.2.1",
+    "onchange": "^4.1.0",
     "rimraf": "^2.6.2"
   },
   "workspaces": [
