@@ -42,8 +42,8 @@ You can load Cedar and its dependencies by including script tags that point to t
 <!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <!-- load the arcgis-rest-js scripts -->
-<script src="https://unpkg.com/@esri/arcgis-rest-request@1.7.0/dist/umd/request.umd.min.js"></script>
-<script src="https://unpkg.com/@esri/arcgis-rest-feature-service@1.7.0/dist/umd/feature-service.umd.min.js"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-request@1.7.1/dist/umd/request.umd.min.js"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-feature-service@1.7.1/dist/umd/feature-service.umd.min.js"></script>
 <!-- optionally load an amcharts theme; cedar provides a calcite theme -->
 <script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
 <!-- load cedar -->
