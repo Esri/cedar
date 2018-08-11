@@ -1,6 +1,6 @@
 {
   "name": "@esri/cedar",
-  "version": "1.0.0-beta.8",
+  "version": "1.0.0-beta.9",
   "description": "Visualization framework for the ArcGIS Platform",
   "files": [
     "dist"
@@ -66,7 +66,7 @@
     "@esri/arcgis-rest-common-types": "^1.7.1",
     "@esri/arcgis-rest-feature-service": "^1.7.1",
     "@esri/arcgis-rest-request": "^1.7.1",
-    "@esri/cedar-amcharts": "^1.0.0-beta.8"
+    "@esri/cedar-amcharts": "^1.0.0-beta.9"
   },
   "devDependencies": {
     "@types/jest": "^23.3.1",
