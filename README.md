@@ -117,6 +117,9 @@ Then add a script that will configure cedar and render the chart:
 </script>
 ```
 
+### Configuring Cedar
+You can configure cedar to use a custom implementation of `fetch()` by setting `cedar.config.fetch = myCustomFetch`.
+
 ## Demos
 
 See [this code pen](https://codepen.io/tomwayson/pen/paxgeO) to try creating a simple bar chart like the one above.
