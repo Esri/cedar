@@ -9,6 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - bump @esri/arcgis-rest-js dependencies to 1.7.1
 - update dev dependencies
+- use jest mocks to inspect queryFeatures options
 
 ## [1.0.0-beta.8]
 ### Added
