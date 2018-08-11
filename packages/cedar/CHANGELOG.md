@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [1.0.0-beta.9]
 ### Added
 - enable passing a custom fetch implementation into queryFeatures()
 ### Changed
@@ -259,7 +259,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.8...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.9...master
+[1.0.0-beta.9]: https://github.com/Esri/cedar/compare/v1.0.0-beta.8...v1.0.0-beta.9
 [1.0.0-beta.8]: https://github.com/Esri/cedar/compare/v1.0.0-beta.7...v1.0.0-beta.8
 [1.0.0-beta.7: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...v1.0.0-beta.7
 [1.0.0-beta.6]: https://github.com/Esri/cedar/compare/v1.0.0-beta.5...v1.0.0-beta.6
