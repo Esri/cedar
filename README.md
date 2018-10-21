@@ -122,7 +122,7 @@ You can configure cedar to use a custom implementation of `fetch()` by setting `
 
 ## Demos
 
-See [this code pen](https://codepen.io/tomwayson/pen/paxgeO) to try creating a simple bar chart like the one above.
+On CodePen, see this [pen](https://codepen.io/tomwayson/pen/paxgeO) to try creating a simple bar chart like the one above.
 
 You can then [see and modify the definitions for different types of charts](http://cedar-v1.surge.sh/).
 
@@ -163,7 +163,7 @@ To run tests continually for any package as you update it's soruce code, `cd` in
 
 Cedar is a very thin wrapper around other libraries that do the heavy lifting. Cedar uses the [amCharts JavaScripts Charts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. Cedar also uses [@esri/arcgis-rest-feature-service](https://esri.github.io/arcgis-rest-js/api/feature-service/) and [@esri/arcgis-rest-request](https://esri.github.io/arcgis-rest-js/api/request/) to query feature data. You will need to include these libraries along with cedar in your application. If you [install cedar using npm or yarn](#installing-cedar) these libraries will be installed for you, but you will have to make sure that your module bundler can resolve and include them in your application. If you are loading cedar from the CDN, please refer to the [loading cedar](#loading-cedar) section above for the `<script>` tags that you will need to include.
 
-Cedar supports the [same browsers as ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/reference/browsers.htm), however you may need to include polyfills for [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), if your application has to support browers that don't support [fetch](https://caniuse.com/#search=fetch) or [Promise](https://caniuse.com/#search=promise) (i.e. IE or older versions of Safari/Android).
+Cedar supports the [same browsers as ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/reference/browsers.htm), however you may need to include polyfills for [`Fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), if your application has to support browers that don't support [Fetch](https://caniuse.com/#search=fetch) or [Promise](https://caniuse.com/#search=promise) (i.e. IE or older versions of Safari/Android).
 
 ### Versioning
 
