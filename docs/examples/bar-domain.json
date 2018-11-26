@@ -7,7 +7,7 @@
       "query": {
         "where": "facname = 'WHITE EAGLE ELEMENTARY' OR facname = 'FRY ELEMENTARY SCHOOL'"
       },
-      "fields": [
+      "domains": [
         {
           "name": "sheltstat",
           "domain": {

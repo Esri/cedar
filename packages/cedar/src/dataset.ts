@@ -1,4 +1,4 @@
-import { IField as IRestField, IFeature, IFeatureSet } from '@esri/arcgis-rest-common-types'
+import { IFeature, IFeatureSet, IField as IRestField } from '@esri/arcgis-rest-common-types'
 
 export interface IField {
   field: string,
@@ -6,12 +6,12 @@ export interface IField {
 }
 
 export interface IDataset {
-  name: string;
-  url?: string;
-  data?: IFeatureSet | Array<{}>;
-  query?: {};
-  join?: string;
-  fields?: IRestField[];
+  name: string,
+  url?: string,
+  data?: IFeatureSet | Array<{}>,
+  query?: {},
+  join?: string,
+  domains?: IRestField[]
 }
 
 // TODO: move to series.ts?

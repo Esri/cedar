@@ -1,9 +1,9 @@
 import {
-  IQueryFeaturesRequestOptions,
-  queryFeatures,
   decodeValues,
+  IDecodeValuesRequestOptions,
+  IQueryFeaturesRequestOptions,
   IQueryFeaturesResponse,
-  IDecodeValuesRequestOptions
+  queryFeatures
 } from '@esri/arcgis-rest-feature-service'
 import config from '../config'
 import { IDataset } from '../dataset'
@@ -17,11 +17,9 @@ export function queryDatasets(datasets: IDataset[]) {
       datasets.forEach((dataset, i) => {
       // only query datasets that don't have inline data
       if (dataset.url) {
-        names.push({
-          // TODO: make name required on datasets, or required if > 1 dataset?
-          name: dataset.name || `dataset${i}`,
-          url: dataset.url
-        })
+        // TODO: make name required on datasets, or required if > 1 dataset?
+        names.push(dataset.name || `dataset${i}`)
+
         const queryParams = createQueryParams(dataset.query)
         const options: IQueryFeaturesRequestOptions = {
           url: dataset.url,
@@ -30,21 +28,22 @@ export function queryDatasets(datasets: IDataset[]) {
         if (config.fetch && typeof config.fetch === 'function') {
           // we are configured to use a custom fetch implementation
           // send that along to rest-js
-          options.fetch = config.fetch;
+          options.fetch = config.fetch
         }
         requests.push(
           queryFeatures(options)
-            .then((queryResponse:IQueryFeaturesResponse) => {
+            .then((queryResponse: IQueryFeaturesResponse) => {
               // for now, we only decode CVDs when an array of fields is passed describing codes and names
-              if (dataset.fields && dataset.fields.length > 0) {
-                return decodeValues({
+              if (dataset.domains && dataset.domains.length > 0) {
+                const decodeOptions: IDecodeValuesRequestOptions = {
                   url: options.url,
                   queryResponse,
-                  fields: dataset.fields,
+                  fields: dataset.domains,
                   fetch: config.fetch
-                } as IDecodeValuesRequestOptions)
+                }
+                return decodeValues(decodeOptions)
               } else {
-                return queryResponse;
+                return queryResponse
               }
             })
         )
@@ -55,9 +54,9 @@ export function queryDatasets(datasets: IDataset[]) {
   .then((responses) => {
     // turn the array of responses into a hash keyed off the dataset names
     const responseHash = responses.reduce((hash, response, i) => {
-      hash[names[i].name] = response;
-      return hash;
+      hash[names[i]] = response
+      return hash
     }, {})
-    return Promise.resolve(responseHash);
+    return Promise.resolve(responseHash)
   })
 }
