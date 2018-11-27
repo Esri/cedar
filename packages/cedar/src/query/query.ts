@@ -33,12 +33,15 @@ export function queryDatasets(datasets: IDataset[]) {
         requests.push(
           queryFeatures(options)
             .then((queryResponse: IQueryFeaturesResponse) => {
+              const { domains } = dataset
+              const fields: any[] = domains && Object.keys(domains).map((name) => ({ name, domain: domains[name]}))
               // for now, we only decode CVDs when an array of fields is passed describing codes and names
-              if (dataset.domains && dataset.domains.length > 0) {
+              if (fields && fields.length > 0) {
                 const decodeOptions: IDecodeValuesRequestOptions = {
                   url: options.url,
                   queryResponse,
-                  fields: dataset.domains,
+                  // TODO: decodeValues() should take `domains?: IDomains` as an alternative to `fields?: IField[]`
+                  fields,
                   fetch: config.fetch
                 }
                 return decodeValues(decodeOptions)

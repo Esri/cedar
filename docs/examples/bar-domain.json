@@ -7,30 +7,27 @@
       "query": {
         "where": "facname = 'WHITE EAGLE ELEMENTARY' OR facname = 'FRY ELEMENTARY SCHOOL'"
       },
-      "domains": [
-        {
-          "name": "sheltstat",
-          "domain": {
-            "type": "codedValue",
-            "name": "ShelterCode",
-            "description": "Shelter Codes",
-            "codedValues": [
-              {
-                "name": "Open",
-                "code": 1
-              },
-              {
-                "name": "Closed",
-                "code": 2
-              },
-              {
-                "name": "Full",
-                "code": 3
-              }
-            ]
-          }
+      "domains": {
+        "sheltstat": {
+          "type": "codedValue",
+          "name": "ShelterCode",
+          "description": "Shelter Codes",
+          "codedValues": [
+            {
+              "name": "Open",
+              "code": 1
+            },
+            {
+              "name": "Closed",
+              "code": 2
+            },
+            {
+              "name": "Full",
+              "code": 3
+            }
+          ]
         }
-      ]
+      }
     }
   ],
   "series": [
