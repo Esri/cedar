@@ -53,3 +53,5 @@ packages/cedar/README.md
 docs/scripts/
 
 .vscode
+
+packages/*/.rpt2_cache

@@ -14,13 +14,18 @@ export default {
   output: {
     name: 'cedar',
     format: 'umd',
-    external: ['@esri/arcgis-rest-feature-service'],
     globals: {
       '@esri/arcgis-rest-feature-service': 'arcgisRest'
     },
-    banner: copyright  
+    banner: copyright
   },
+  external: [
+    '@esri/arcgis-rest-feature-service'
+  ],
   // NOTE: using node resolve to bundle an older version of deepmerge
   // if we move to latest, we _may_ want to make that external instead
-  plugins: [json(), resolve()],
+  plugins: [
+    json(),
+    resolve()
+  ],
 };

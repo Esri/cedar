@@ -38,7 +38,7 @@
       }
       .footer {
         text-align: center;
-      }      
+      }
     </style>
   </head>
   <body id="" onload="">
@@ -47,13 +47,13 @@
       <div class="col-md-12">
         <h1>@esri/cedar</h1>
         <p>Select a chart type to see the chart and the JSON used to create it. Update the JSON and click "Update Chart".
-          Learn more at our <a href="https://github.com/esri/cedar">GitHub repository</a>, or see the <a href="http://cedar-v0.surge.sh/">v0.x documentation</a>.</p>    
+          Learn more at our <a href="https://github.com/esri/cedar">GitHub repository</a>, or see the <a href="http://cedar-v0.surge.sh/">v0.x documentation</a>.</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-2">
         <div id="styleList">
-          <h3>Chart Type</h3>      
+          <h3>Chart Type</h3>
         </div>
       </div>
       <div class="col-md-4">
@@ -82,8 +82,8 @@
   <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
   <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
   <!-- load the arcgis-rest-js scripts -->
-  <script src="https://unpkg.com/@esri/arcgis-rest-request@1.7.1/dist/umd/request.umd.min.js"></script>
-  <script src="https://unpkg.com/@esri/arcgis-rest-feature-service@1.7.1/dist/umd/feature-service.umd.min.js"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-feature-service"></script>
     <!-- optionally load calcite theme -->
   <script src="./scripts/themes/amCharts/calcite.js"></script>
   <!-- load cedar -->
@@ -106,7 +106,7 @@
       };
       document.head.appendChild(js);
     }
-    
+
     function main(err) {
       // Initiate all other code paths.
       // If there's an error loading the polyfills, handle that
