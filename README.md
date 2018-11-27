@@ -12,7 +12,7 @@ Cedar is a library for crafting and sharing data visualizations powered by ArcGI
 At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
 -->
 
-**Currently Esri Cedar is in development and should be thought of as a beta or preview.**
+**Currently @esri/cedar is in development and should be thought of as a beta or preview.**
 
 ## Types of Charts
 
@@ -42,8 +42,8 @@ You can load Cedar and its dependencies by including script tags that point to t
 <!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <!-- load the arcgis-rest-js scripts -->
-<script src="https://unpkg.com/@esri/arcgis-rest-request@1.7.1/dist/umd/request.umd.min.js"></script>
-<script src="https://unpkg.com/@esri/arcgis-rest-feature-service@1.7.1/dist/umd/feature-service.umd.min.js"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-feature-service"></script>
 <!-- optionally load an amcharts theme; cedar provides a calcite theme -->
 <script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
 <!-- load cedar -->
@@ -132,7 +132,7 @@ You can also see how to use cedar with an ArcGIS API for JavaScript map in these
 
 ## Components of a Cedar Chart
 
-Cedar charts are defined by the following ingredients:
+Cedar charts contain the following ingredients:
 
 - an array of `datasets`, each has, either:
  - a `url` to an ArcGIS feature yayer along with optional `query` parameters;
@@ -157,13 +157,13 @@ This repository is a monorepo managed using [yarn workspaces](https://yarnpkg.co
 
 To run tests one time for all packages, run `yarn test` from the monorepo root.
 
-To run tests continually for any package as you update it's soruce code, `cd` into that package and run `yarn run test:watch` to continually run that package's tests as you update the source code
+To run tests for any package as you update it's source code, `cd` into that package and run `yarn run test:watch` to continually run that package's tests as you make your changes.
 
 ### Dependencies
 
-Cedar is a very thin wrapper around other libraries that do the heavy lifting. Cedar uses the [amCharts JavaScripts Charts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. Cedar also uses [@esri/arcgis-rest-feature-service](https://esri.github.io/arcgis-rest-js/api/feature-service/) and [@esri/arcgis-rest-request](https://esri.github.io/arcgis-rest-js/api/request/) to query feature data. You will need to include these libraries along with cedar in your application. If you [install cedar using npm or yarn](#installing-cedar) these libraries will be installed for you, but you will have to make sure that your module bundler can resolve and include them in your application. If you are loading cedar from the CDN, please refer to the [loading cedar](#loading-cedar) section above for the `<script>` tags that you will need to include.
+Cedar is a very thin wrapper around other libraries that do the heavy lifting. Cedar uses [amCharts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. Cedar also uses [@esri/arcgis-rest-feature-service](https://esri.github.io/arcgis-rest-js/api/feature-service/) and [@esri/arcgis-rest-request](https://esri.github.io/arcgis-rest-js/api/request/) to query feature data. You will need to include these libraries along with cedar in your application. If you [install cedar using npm or yarn](#installing-cedar) these libraries will be installed for you, but you will have to make sure that your module bundler can resolve and include them in your application. If you are loading cedar from a CDN, please refer to the [loading cedar](#loading-cedar) section above for the `<script>` tags that you will need to include.
 
-Cedar supports the [same browsers as ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/reference/browsers.htm), however you may need to include polyfills for [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), if your application has to support browers that don't support [fetch](https://caniuse.com/#search=fetch) or [Promise](https://caniuse.com/#search=promise) (i.e. IE or older versions of Safari/Android).
+Cedar supports the [same browsers as ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/reference/browsers.htm), however you may need to include polyfills for [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), if your application has to support browers that don't support them (i.e. IE or older versions of Safari/Android).
 
 ### Versioning
 
@@ -183,7 +183,7 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 
 ### Licensing
-Copyright 2018 Esri
+Copyright &copy; 2014-2018 Esri
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
