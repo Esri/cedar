@@ -40,7 +40,7 @@ export interface IDefinition {
   style?: IStyle
 }
 
-export default class Chart {
+export class Chart {
   private _container: string
   private _definition: IDefinition
   private _data: any[]
