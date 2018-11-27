@@ -63,9 +63,9 @@
     "mapCoverage": true
   },
   "dependencies": {
-    "@esri/arcgis-rest-common-types": "^1.7.1",
-    "@esri/arcgis-rest-feature-service": "^1.7.1",
-    "@esri/arcgis-rest-request": "^1.7.1",
+    "@esri/arcgis-rest-common-types": "^1.14.1",
+    "@esri/arcgis-rest-feature-service": "^1.14.1",
+    "@esri/arcgis-rest-request": "^1.14.1",
     "@esri/cedar-amcharts": "^1.0.0-beta.9"
   },
   "devDependencies": {

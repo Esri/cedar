@@ -1,5 +1,5 @@
 import { cedarAmCharts } from '@esri/cedar-amcharts'
-import { getChartData, IDataset, IField, ISeries } from './dataset'
+import { getChartData, IDataset, ISeries } from './dataset'
 import { queryDatasets } from './query/query'
 
 function clone(json) {

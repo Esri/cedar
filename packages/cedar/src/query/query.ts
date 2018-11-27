@@ -1,4 +1,10 @@
-import { IQueryFeaturesRequestOptions, queryFeatures } from '@esri/arcgis-rest-feature-service'
+import {
+  decodeValues,
+  IDecodeValuesRequestOptions,
+  IQueryFeaturesRequestOptions,
+  IQueryFeaturesResponse,
+  queryFeatures
+} from '@esri/arcgis-rest-feature-service'
 import config from '../config'
 import { IDataset } from '../dataset'
 import { createQueryParams } from './url'
@@ -13,6 +19,7 @@ export function queryDatasets(datasets: IDataset[]) {
       if (dataset.url) {
         // TODO: make name required on datasets, or required if > 1 dataset?
         names.push(dataset.name || `dataset${i}`)
+
         const queryParams = createQueryParams(dataset.query)
         const options: IQueryFeaturesRequestOptions = {
           url: dataset.url,
@@ -23,7 +30,26 @@ export function queryDatasets(datasets: IDataset[]) {
           // send that along to rest-js
           options.fetch = config.fetch
         }
-        requests.push(queryFeatures(options))
+        requests.push(
+          queryFeatures(options)
+            .then((queryResponse: IQueryFeaturesResponse) => {
+              const { domains } = dataset
+              const fields: any[] = domains && Object.keys(domains).map((name) => ({ name, domain: domains[name]}))
+              // for now, we only decode CVDs when an array of fields is passed describing codes and names
+              if (fields && fields.length > 0) {
+                const decodeOptions: IDecodeValuesRequestOptions = {
+                  url: options.url,
+                  queryResponse,
+                  // TODO: decodeValues() should take `domains?: IDomains` as an alternative to `fields?: IField[]`
+                  fields,
+                  fetch: config.fetch
+                }
+                return decodeValues(decodeOptions)
+              } else {
+                return queryResponse
+              }
+            })
+        )
       }
     })
   }
@@ -31,7 +57,7 @@ export function queryDatasets(datasets: IDataset[]) {
   .then((responses) => {
     // turn the array of responses into a hash keyed off the dataset names
     const responseHash = responses.reduce((hash, response, i) => {
-      hash[names[i]] = responses[i]
+      hash[names[i]] = response
       return hash
     }, {})
     return Promise.resolve(responseHash)
