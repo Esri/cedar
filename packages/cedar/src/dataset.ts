@@ -1,4 +1,4 @@
-import { IFeature, IFeatureSet } from '@esri/arcgis-rest-common-types'
+import { IField as IRestField, IFeature, IFeatureSet } from '@esri/arcgis-rest-common-types'
 
 export interface IField {
   field: string,
@@ -6,11 +6,12 @@ export interface IField {
 }
 
 export interface IDataset {
-  name: string,
-  url?: string,
-  data?: IFeatureSet | Array<{}>,
-  query?: {},
-  join?: string
+  name: string;
+  url?: string;
+  data?: IFeatureSet | Array<{}>;
+  query?: {};
+  join?: string;
+  fields?: IRestField[];
 }
 
 // TODO: move to series.ts?
@@ -66,7 +67,7 @@ function getDatasetData(dataset, datasetsData, name?) {
 // return only the attributes for each feature
 function flattenData(data) {
   const features = getFeatures(data)
-  if ((features[0] as IFeature).attributes) {
+  if (features.length > 0 && (features[0] as IFeature).attributes) {
     // these really are features, flatten them before
     return features.map(getAttributes)
   } else {

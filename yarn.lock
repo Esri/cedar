@@ -16,19 +16,22 @@
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-"@esri/arcgis-rest-common-types@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-common-types/-/arcgis-rest-common-types-1.7.1.tgz#6b0afa228c538eb15c6ec80097fd63d80f9705d0"
+"@esri/arcgis-rest-common-types@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-common-types/-/arcgis-rest-common-types-1.14.0.tgz#fbb659ca4de24c7e6d0a74b7e3db4e7d01fceb25"
+  integrity sha512-qTiOjlepsOveQSMdlucUs1Twi3NpKWBsl2GTmCMVhskzlu/93Jfs173Wj2pjVgrv/WCN6RvNWOSO5xuLwt9UCw==
 
-"@esri/arcgis-rest-feature-service@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-feature-service/-/arcgis-rest-feature-service-1.7.1.tgz#7f08db72b127ac4c8c1eea23225b079d569e5692"
+"@esri/arcgis-rest-feature-service@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-feature-service/-/arcgis-rest-feature-service-1.14.0.tgz#4820e43c7faa42cc52a577faf4082f4900e5a96f"
+  integrity sha512-BtwAcIw8dSFQs1or3LB/Nz4UDaD8N3p5wm7/j949/BJUzgcCW8KmdB03ckcFvdx3bXD4qbEv2c5IDZ6jOV6KqQ==
   dependencies:
     tslib "^1.7.1"
 
-"@esri/arcgis-rest-request@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-request/-/arcgis-rest-request-1.7.1.tgz#55e400bd98d8417f59a2fede4a96d3034f735412"
+"@esri/arcgis-rest-request@^1.14.0":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-request/-/arcgis-rest-request-1.14.0.tgz#54f60d0598bbfd254122b317e6c2ba12666d0416"
+  integrity sha512-4bo428NOgYOfpKJpmOXxecToIpL8vLnXO+G62BwEbtRQ/F1tty+XbY3CR1BmdF1a4LE/lI6Q36Salg8Wl6WvFQ==
   dependencies:
     tslib "^1.7.1"
 

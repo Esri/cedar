@@ -1,0 +1,43 @@
+{
+  "type": "bar",
+  "datasets": [
+    {
+      "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/MapServer/0",
+      "name": "sheltcap",
+      "query": {
+        "where": "facname = 'WHITE EAGLE ELEMENTARY' OR facname = 'FRY ELEMENTARY SCHOOL'"
+      },
+      "fields": [
+        {
+          "name": "sheltstat",
+          "domain": {
+            "type": "codedValue",
+            "name": "ShelterCode",
+            "description": "Shelter Codes",
+            "codedValues": [
+              {
+                "name": "Open",
+                "code": 1
+              },
+              {
+                "name": "Closed",
+                "code": 2
+              },
+              {
+                "name": "Full",
+                "code": 3
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "series": [
+    {
+      "category": {"field": "sheltstat", "label": "Status"},
+      "value": {"field": "sheltcap", "label": "Shelter Capacity"},
+      "source": "sheltcap"
+    }
+  ]
+}
