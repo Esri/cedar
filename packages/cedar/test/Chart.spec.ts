@@ -1,5 +1,5 @@
 import {} from 'jest'
-import Chart from '../src/Chart'
+import { Chart } from '../src/Chart'
 import * as definitions from './data/definitions'
 
 describe('new Chart', () => {
