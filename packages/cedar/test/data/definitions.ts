@@ -15,6 +15,27 @@ export const bar = {
             "outStatisticFieldName": "Number_of_SUM"
           }
         ]
+      },
+      "domains": {
+        "sheltstat": {
+          "type": "codedValue",
+          "name": "ShelterCode",
+          "description": "Shelter Codes",
+          "codedValues": [
+            {
+              "name": "Open",
+              "code": 1
+            },
+            {
+              "name": "Closed",
+              "code": 2
+            },
+            {
+              "name": "Full",
+              "code": 3
+            }
+          ]
+        }
       }
     }
   ],
