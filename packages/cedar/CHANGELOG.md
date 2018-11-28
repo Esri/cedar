@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.0-rc.1]
+
+### Fixed
+- @esri/arcgis-rest-request and @esri/arcgis-rest-feature-service are no longer bundled inside the package.
+
+### Added
+- when dataset.domains is provided, Cedar will convert coded value domain codes to names internally.
+
+### Changed
+- _everything_ is now exported in the ES6 build of the libary.
+
 ## [1.0.0-beta.9]
 ### Added
 - enable passing a custom fetch implementation into queryFeatures()
@@ -259,7 +270,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-beta.9...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-rc.1...master
+[1.0.0-beta.9]: https://github.com/Esri/cedar/compare/v1.0.0-beta.9...v1.0.0-rc.1
 [1.0.0-beta.9]: https://github.com/Esri/cedar/compare/v1.0.0-beta.8...v1.0.0-beta.9
 [1.0.0-beta.8]: https://github.com/Esri/cedar/compare/v1.0.0-beta.7...v1.0.0-beta.8
 [1.0.0-beta.7: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...v1.0.0-beta.7
