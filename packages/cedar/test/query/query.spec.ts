@@ -1,5 +1,5 @@
 // NOTE: this is auto-mocked in __mocks__
-import { queryFeatures } from '@esri/arcgis-rest-feature-service'
+import { queryFeatures, decodeValues } from '@esri/arcgis-rest-feature-service'
 import {} from 'jest'
 import config from '../../src/config'
 import { queryDatasets } from '../../src/query/query'
@@ -9,6 +9,9 @@ import * as definitions from '../data/definitions'
 // NOTE: we're only doing this so TS doesn't complain
 // TODO: how to tell TS that type of queryFeatures is a jest mock function???
 const mockQueryFeatures = (queryFeatures as any)
+
+const mockDecodeValues = (decodeValues as any)
+
 
 // TODO: ues actual requestOptions type
 const verifyRequestOptions = (dataset, requestOptions: any, expectedFetch = undefined) => {
@@ -33,6 +36,7 @@ describe('when querying datasets', () => {
   describe('when a single dataset', () => {
     beforeEach(() => {
       mockQueryFeatures.mockClear()
+      mockDecodeValues.mockClear()
     })
     describe('when that dataset has a name', () => {
       const datasets = definitions.bar.datasets
@@ -88,6 +92,7 @@ describe('when querying datasets', () => {
   describe('when multiple datasets', () => {
     beforeEach(() => {
       mockQueryFeatures.mockClear()
+      mockDecodeValues.mockClear()
     })
     describe('when one has inline data', () => {
       const barDataset = definitions.bar.datasets[0]
