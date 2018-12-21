@@ -1,42 +1,5 @@
 import { IFeature, IFeatureSet } from '@esri/arcgis-rest-common-types'
-
-export interface IField {
-  field: string,
-  label?: string
-}
-
-// TODO: move this and IDomain(s) to rest-js
-export interface ICodedValue {
-  name: string,
-  code: string | number
-}
-
-export interface IDomain {
-  type: string,
-  name: string,
-  description?: string,
-  codedValues?: ICodedValue[]
-}
-
-export interface IDomains {
-  [index: string]: IDomain
-}
-
-export interface IDataset {
-  name: string,
-  url?: string,
-  data?: IFeatureSet | Array<{}>,
-  query?: {},
-  join?: string,
-  domains?: IDomains
-}
-
-// TODO: move to series.ts?
-export interface ISeries {
-  source: string,
-  category?: IField,
-  value?: IField
-}
+import { IDataset, ISeries } from './common'
 
 export interface IGetChartDataOptions {
   datasetsData?: {},

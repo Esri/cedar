@@ -33,32 +33,48 @@
         background-color: #440000;
         color: #FFF;
       }
-      #update {
+      .buttons, .copyright {
         margin-top: 10px;
       }
       .footer {
         text-align: center;
+      }
+      nav li {
+        display: inline-block;
+        margin-right: 10px;
+        font-size: 1.2em;
       }
     </style>
   </head>
   <body id="" onload="">
   <div class="container">
     <div class="row">
+      <nav class="col-md-12">
+        <ul>
+          <li class="active"><h1>@esri/cedar</h1></li>
+          <li><a href="./api">API</a></li>
+          <li><a href="https://github.com/Esri/cedar/">GitHub</a></li>
+        </ul>
+      </nav>
+    <div class="row">
       <div class="col-md-12">
-        <h1>@esri/cedar</h1>
-        <p>Select a chart type to see the chart and the JSON used to create it. Update the JSON and click "Update Chart".
-          Learn more at our <a href="https://github.com/esri/cedar">GitHub repository</a>, or see the <a href="http://cedar-v0.surge.sh/">v0.x documentation</a>.</p>
+        <p>Cedar is a library for crafting and sharing data visualizations powered by <a href="https://developers.arcgis.com/documentation/core-concepts/rest-api/">ArcGIS services</a>. Learn more about cedar and how to <a href="https://github.com/esri/cedar#getting-started">get started</a> at our <a href="https://github.com/esri/cedar">GitHub repository</a>.</p>
+        <p>Try it out yourself by selecting a chart type below to see the chart and its <a href="./api/interfaces/idefinition.html">JSON definition</a>. Modify the JSON and click "Update Chart" to see your changes.</p>
       </div>
+    </div>
     </div>
     <div class="row">
       <div class="col-md-2">
         <div id="styleList">
-          <h3>Chart Type</h3>
+          <h4>Chart Type</h4>
         </div>
       </div>
       <div class="col-md-4">
         <div id="editor" class="text" rows="40" cols="100"/> </div>
-        <button id="update" class="btn btn-primary" onclick="loadEditor()">Update Chart</button>
+        <div class="buttons">
+          <button class="btn btn-primary" onclick="loadEditor()">Update Chart</button>
+          <a class="btn btn-default" href="https://github.com/Esri/cedar/#demos">Additional demos</a>
+        </div>
       </div>
       <div class="col-md-6">
         <div id="chart" class="chart"></div>
@@ -82,8 +98,8 @@
   <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
   <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
   <!-- load the arcgis-rest-js scripts -->
-  <script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
-  <script src="https://unpkg.com/@esri/arcgis-rest-feature-service"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-request/dist/umd/request.umd.js"></script>
+  <script src="https://unpkg.com/@esri/arcgis-rest-feature-service/dist/umd/feature-service.umd.js"></script>
     <!-- optionally load calcite theme -->
   <script src="./scripts/themes/amCharts/calcite.js"></script>
   <!-- load cedar -->

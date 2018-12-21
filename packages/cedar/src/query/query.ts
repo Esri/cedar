@@ -5,8 +5,8 @@ import {
   IQueryFeaturesResponse,
   queryFeatures
 } from '@esri/arcgis-rest-feature-service'
+import { IDataset } from '../common'
 import config from '../config'
-import { IDataset } from '../dataset'
 import { createQueryParams } from './url'
 
 export function queryDatasets(datasets: IDataset[]) {

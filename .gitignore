@@ -49,8 +49,9 @@ packages/*/yarn.lock
 # @esri/cedar package README is copied from root
 packages/cedar/README.md
 
-# umd build is copied from dist to docs site
+# docs content that is generated 
 docs/scripts/
+docs/api
 
 .vscode
 
