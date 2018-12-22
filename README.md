@@ -121,7 +121,7 @@ Then add a script that will configure cedar and render the chart:
 </script>
 ```
 
-See the [API documentation](http://esri.github.io/cedar/api) for further details on how to work with cedar charts.
+See the [API documentation](https://esri.github.io/cedar/api) for further details on how to work with cedar charts.
 
 ### Configuring Cedar
 You can configure cedar to use a custom implementation of `fetch()` by setting `cedar.config.fetch = myCustomFetch`.
@@ -141,7 +141,7 @@ Cedar charts are built from a [definition](https://esri.github.io/cedar/api/inte
 
 ### Types of Charts
 
-Cedar currently provides a set of commonly used chart types including [bar](http://cedar-v1.surge.sh/?type=bar), [line](http://cedar-v1.surge.sh/?type=line), [area](http://cedar-v1.surge.sh/?type=area), [scatter](http://cedar-v1.surge.sh/?type=scatter), [bubble](http://cedar-v1.surge.sh/?type=bubble), [pie](http://cedar-v1.surge.sh/?type=pie), and [radar](http://cedar-v1.surge.sh/?type=radar). In the future it will be possible for developers to create custom charts types that can be used by other developers with their own data sources.
+Cedar currently provides a set of commonly used chart types including [bar](https://esri.github.io/cedar/?type=bar), [line](https://esri.github.io/cedar/?type=line), [area](https://esri.github.io/cedar/?type=area), [scatter](https://esri.github.io/cedar/?type=scatter), [bubble](https://esri.github.io/cedar/?type=bubble), [pie](https://esri.github.io/cedar/?type=pie), and [radar](https://esri.github.io/cedar/?type=radar). In the future it will be possible for developers to create custom charts types that can be used by other developers with their own data sources.
 
 ### Presentations
 
@@ -155,7 +155,7 @@ Cedar currently provides a set of commonly used chart types including [bar](http
 
 See [this code pen](https://codepen.io/tomwayson/pen/paxgeO) to try creating a simple bar chart like the one above.
 
-You can then [see and modify the definitions for different types of charts](http://cedar-v1.surge.sh/).
+You can then [see and modify the definitions for different types of charts](https://esri.github.io/cedar/).
 
 You can also see how to use cedar with the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in these examples:
 - [A chart that aggregates map data](https://codepen.io/tomwayson/pen/YaKGjZ)
