@@ -1,5 +1,5 @@
 /**
-* @esri/cedar - v1.0.0-rc.1 - Fri Dec 21 2018 20:11:16 GMT-0800 (PST)
+* @esri/cedar - v1.0.0-rc.1 - Fri Dec 21 2018 20:28:30 GMT-0800 (PST)
 * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
 * Apache-2.0
 */
