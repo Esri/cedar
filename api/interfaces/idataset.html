@@ -987,7 +987,11 @@ img { max-width: 100%; }
 		<section class="tsd-panel tsd-comment">
 			<div class="tsd-comment tsd-typography">
 				<div class="lead">
-					<p>A source of data for the chart. Can be a query, or inline data (i.e. feature set, or an array of POJOs).</p>
+					<p>A source of data for the chart. Can be <em>either</em>:</p>
+					<ul>
+						<li>a <code>url</code> to an ArcGIS feature layer along with optional <a href="https://developers.arcgis.com/rest/services-reference/query-feature-service-layer-.htm">query parameters</a></li>
+						<li><em>or</em> inline <code>data</code>, which can be a <a href="https://esri.github.io/arcgis-rest-js/api/common-types/IFeatureSet/">FeatureSet</a>, or an array of <a href="https://esri.github.io/arcgis-rest-js/api/common-types/IFeature/">features</a> or <a href="http://blog.dreasgrech.com/2012/02/creating-pojos-in-javascript.html">POJO</a>s</li>
+					</ul>
 				</div>
 			</div>
 		</section>
@@ -1025,12 +1029,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">data<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IFeatureSet</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">__type</span><span class="tsd-signature-symbol">&gt;</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/Esri/cedar/blob/5d82011/packages/cedar/src/common.ts#L40">common.ts:40</a></li>
+						<li>Defined in <a href="https://github.com/Esri/cedar/blob/6ae6193/packages/cedar/src/common.ts#L62">common.ts:62</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Inline data, either a FeatureSet or an array of POJOs.</p>
+						<p>Inline data, either a <a href="https://esri.github.io/arcgis-rest-js/api/common-types/IFeatureSet/">FeatureSet</a>, or an array of <a href="https://esri.github.io/arcgis-rest-js/api/common-types/IFeature/">features</a> or <a href="http://blog.dreasgrech.com/2012/02/creating-pojos-in-javascript.html">POJO</a>s</p>
 					</div>
 				</div>
 			</section>
@@ -1040,7 +1044,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">domains<span class="tsd-signature-symbol">:</span> <a href="idomains.html" class="tsd-signature-type">IDomains</a></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/Esri/cedar/blob/5d82011/packages/cedar/src/common.ts#L52">common.ts:52</a></li>
+						<li>Defined in <a href="https://github.com/Esri/cedar/blob/6ae6193/packages/cedar/src/common.ts#L74">common.ts:74</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1055,12 +1059,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">join<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/Esri/cedar/blob/5d82011/packages/cedar/src/common.ts#L48">common.ts:48</a></li>
+						<li>Defined in <a href="https://github.com/Esri/cedar/blob/6ae6193/packages/cedar/src/common.ts#L70">common.ts:70</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>The field to be used when joining datasets. All datasets with a join field specified will be joined into a single &quot;table&quot; before passing to the chart rendering engine.</p>
+						<p>The field to be used when joining multiple datasets. All datasets with a join field will be joined into a single &quot;table&quot; before passing to the chart rendering engine.</p>
 					</div>
 				</div>
 			</section>
@@ -1070,7 +1074,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/Esri/cedar/blob/5d82011/packages/cedar/src/common.ts#L32">common.ts:32</a></li>
+						<li>Defined in <a href="https://github.com/Esri/cedar/blob/6ae6193/packages/cedar/src/common.ts#L54">common.ts:54</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1085,12 +1089,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">query<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">__type</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/Esri/cedar/blob/5d82011/packages/cedar/src/common.ts#L44">common.ts:44</a></li>
+						<li>Defined in <a href="https://github.com/Esri/cedar/blob/6ae6193/packages/cedar/src/common.ts#L66">common.ts:66</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Query params to apply when fetching data (does not apply to inline data)</p>
+						<p><a href="https://developers.arcgis.com/rest/services-reference/query-feature-service-layer-.htm">Query parameters</a> to apply when fetching data (does not apply to inline data)</p>
 					</div>
 				</div>
 			</section>
@@ -1100,12 +1104,12 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">url<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/Esri/cedar/blob/5d82011/packages/cedar/src/common.ts#L36">common.ts:36</a></li>
+						<li>Defined in <a href="https://github.com/Esri/cedar/blob/6ae6193/packages/cedar/src/common.ts#L58">common.ts:58</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>URL where data will be queried from for non-inline datasets</p>
+						<p>Feature layer URL where data will be queried from for non-inline datasets</p>
 					</div>
 				</div>
 			</section>

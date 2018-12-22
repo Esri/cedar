@@ -1,5 +1,5 @@
 /**
-* @esri/cedar - v1.0.0-rc.1 - Fri Dec 21 2018 20:28:30 GMT-0800 (PST)
+* @esri/cedar - v1.0.0-rc.1 - Fri Dec 21 2018 22:09:12 GMT-0800 (PST)
 * Copyright (c) 2018 Environmental Systems Research Institute, Inc.
 * Apache-2.0
 */
@@ -763,7 +763,13 @@
         return JSON.parse(JSON.stringify(json));
     }
     /**
-     * An instance of a cedar chart that will be rendered at a given DOM node (container).
+     * An instance of a cedar chart that will be rendered at a given DOM node (container) based on a [definition](../interfaces/idefinition.html).
+     * ```js
+     *   // initialize the chart
+     *   var chart = new Chart(elementId, definition);
+     *   // fetch chart data and render the chart
+     *   chart.show();
+     * ```
      */
     var Chart = /** @class */ (function () {
         /**
