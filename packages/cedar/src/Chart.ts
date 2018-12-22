@@ -54,20 +54,47 @@ export interface IStyle {
 }
 
 /**
- * Defines where a chart gets it's data from and how the data is rendered
+ * Defines where a chart gets it's data from and how the data is rendered in the chart
  */
 export interface IDefinition {
+  /**
+   * Where the chart's data comes from
+   */
   datasets?: IDataset[]
+  /**
+   * How that data is bound to plots (bars, lines, points, etc) on the chart
+   */
   series?: ISeries[]
+  /**
+   * A string representing one of the pre-defined (bar, line, pie, etc) chart specifications
+   */
   type?: string
+  /**
+   * An specification for custom chart type (used instead of `type`)
+   */
   specification?: {}
+  /**
+   * Overrides of specification properties
+   */
   overrides?: {}
+  /**
+   * Properties to control the visibility and position of the chart's legend
+   */
   legend?: ILegend
+  /**
+   * Additional properties to define how a chart is rendered
+   */
   style?: IStyle
 }
 
 /**
- * An instance of a cedar chart that will be rendered at a given DOM node (container).
+ * An instance of a cedar chart that will be rendered at a given DOM node (container) based on a [definition](../interfaces/idefinition.html).
+ * ```js
+ *   // initialize the chart
+ *   var chart = new Chart(elementId, definition);
+ *   // fetch chart data and render the chart
+ *   chart.show();
+ * ```
  */
 export class Chart {
   private _container: string

@@ -137,9 +137,9 @@ You can configure cedar to use a custom implementation of `fetch()` by setting `
 ### Components of a Cedar Chart
 
 Cedar charts are built from a [definition](https://esri.github.io/cedar/api/interfaces/idefinition.html), which consists of:
-- an array of [datasets](https://esri.github.io/cedar/api/interfaces/idataset.html), each has either:
-  - a `url` to an ArcGIS feature layer along with optional `query` parameters;
-  - ...or inline `data`, which can be a [feature set](https://esri.github.io/arcgis-rest-js/api/common-types/IFeatureSet/), or an array of [features](https://esri.github.io/arcgis-rest-js/api/common-types/IFeature/) or [POJO](http://blog.dreasgrech.com/2012/02/creating-pojos-in-javascript.html)s
+- an array of [datasets](https://esri.github.io/cedar/api/interfaces/idataset.html), each has _either_:
+  - a `url` to an ArcGIS feature layer along with optional [query parameters](https://developers.arcgis.com/rest/services-reference/query-feature-service-layer-.htm)
+  - _or_ inline `data`, which can be a [feature set](https://esri.github.io/arcgis-rest-js/api/common-types/IFeatureSet/), or an array of [features](https://esri.github.io/arcgis-rest-js/api/common-types/IFeature/) or [POJO](http://blog.dreasgrech.com/2012/02/creating-pojos-in-javascript.html)s
 - an array of [series](https://esri.github.io/cedar/api/interfaces/iseries.html) that bind that data to the plots (bars, lines, points, etc) on the chart
 - and `overrides` that are specific modifications to the chart type's default styles
 
