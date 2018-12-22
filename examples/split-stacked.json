@@ -1,0 +1,70 @@
+{
+  "type": "bar",
+  "datasets": [
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "name": "Jordan",
+      "query": {
+        "where": "City='Jordan'",
+        "orderByFields": "Number_of_SUM DESC",
+        "groupByFieldsForStatistics": "Type",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      },
+      "join": "Type"
+    },
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "name": "Dewitt",
+      "query": {
+        "where": "City='Dewitt'",
+        "orderByFields": "Number_of_SUM DESC",
+        "groupByFieldsForStatistics": "Type",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      },
+      "join": "Type"
+    },
+    {
+      "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+      "name": "Fayetteville",
+      "query": {
+        "where": "City='Fayetteville'",
+        "orderByFields": "Number_of_SUM DESC",
+        "groupByFieldsForStatistics": "Type",
+        "outStatistics": [{
+          "statisticType": "sum",
+          "onStatisticField": "Number_of",
+          "outStatisticFieldName": "Number_of_SUM"
+        }]
+      },
+      "join": "Type"
+    }
+  ],
+  "series": [
+    {
+      "category": {"field": "Type", "label": "Type"},
+      "value": { "field": "Number_of_SUM", "label": "Jordan Students"},
+      "source": "Jordan",
+      "stack": true
+    },
+    {
+      "category": {"field": "Type", "label": "Type"},
+      "value": { "field": "Number_of_SUM", "label": "Dewitt Students"},
+      "source": "Dewitt",
+      "stack": true
+    },
+    {
+      "category": {"field": "Type", "label": "Type"},
+      "value": { "field": "Number_of_SUM", "label": "Fayetteville Students"},
+      "source": "Fayetteville",
+      "stack": true
+    }
+  ]
+}

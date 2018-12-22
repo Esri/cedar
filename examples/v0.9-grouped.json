@@ -1,0 +1,34 @@
+{
+  "type": "grouped",
+  "tooltip": {
+    "title": "{STATE_NAME}",
+    "content": "{MaleVets2010} Male Vets | {FemaleVets2010} Female Vets"
+  },
+  "datasets": [
+    {
+      "url": "https://maps7.arcgisonline.com/arcgis/rest/services/Veterans_by_Gender/MapServer/1"
+    }
+  ],
+  "series": [
+    {
+      "category": {
+        "field": "STATE_NAME",
+        "label": "State"
+      },
+      "value": {
+        "field": "MaleVets2010",
+        "label": "Veterans by Gender"
+      }
+    },
+    {
+      "category": {
+        "field": "STATE_NAME",
+        "label": "State"
+      },
+      "value": {
+        "field": "FemaleVets2010",
+        "label": "Veterans by Gender"
+      }
+    }
+  ]
+}
