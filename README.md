@@ -4,6 +4,8 @@
 
 ## JavaScript Charts for ArcGIS
 
+![cedar](https://user-images.githubusercontent.com/662944/50370886-db42cc80-0563-11e9-8a3e-7d46fc378825.gif)
+
 Cedar is a library for crafting and sharing data visualizations that:
 - are powered by data from ArcGIS [maps, scenes,](https://developers.arcgis.com/javascript/) and [services](https://developers.arcgis.com/documentation/core-concepts/rest-api/)
 - include smart default visualization choices
@@ -11,7 +13,7 @@ Cedar is a library for crafting and sharing data visualizations that:
 
 See below for how to [get started](#getting-started), understand cedar's [core concepts](#concepts), or see [demos](#demos) of cedar in action.
 
-**Currently @esri/cedar is in development and should be thought of as a beta or preview.**
+You are looking at the documentation for v1.x of cedar (which is in beta), you can also view the [documentation for v0.x of cedar](https://github.com/Esri/cedar/tree/v0.x).
 
 <!--
 When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
@@ -128,7 +130,9 @@ You can configure cedar to use a custom implementation of `fetch()` by setting `
 
 ## Concepts
 
-At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
+<!--
+  At the highest level, Cedar provides a simple chart API. Beyond that it is possible to create new and unique chart types that can be loaded and customized through interactions and styling depending on your needs.
+-->
 
 ### Components of a Cedar Chart
 
@@ -160,6 +164,7 @@ You can then [see and modify the definitions for different types of charts](http
 You can also see how to use cedar with the [ArcGIS API for JavaScript](https://developers.arcgis.com/javascript/) in these examples:
 - [A chart that aggregates map data](https://codepen.io/tomwayson/pen/YaKGjZ)
 - [A chart using layer features as inline data](https://codepen.io/tomwayson/pen/mxdVqO)
+- [Using cedar w/ client-side LayerView queries](https://jsbin.com/juqafec/edit?html,output)
 
 ## Dependencies
 
