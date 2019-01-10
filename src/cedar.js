@@ -9,7 +9,7 @@ import * as vg from 'vega';
 // get cedar root URL for loading chart specs
 const baseUrl = (function () {
   var cdnProtocol = 'http:';
-  var cdnUrl = '//esri.github.io/cedar/js';
+  var cdnUrl = '//unpkg.com/arcgis-cedar/dist/';
   var src;
   if (window && window.document) {
     src = (window.document.currentScript && window.document.currentScript.src);
