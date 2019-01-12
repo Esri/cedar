@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/Esri/cedar.svg?branch=v0.x)](https://travis-ci.org/Esri/cedar)
 
-> **NOTE:** You're looking at the documentation for v0.x, but v1.x is in beta. For more info, see [the v1.x (beta) documentation](https://github.com/Esri/cedar)
+> **NOTE:** You're looking at the documentation for v0.x, but v1.x is in beta. For more info, see [the v1.x documentation](https://github.com/Esri/cedar)
 
 Cedar is a library for crafting, sharing and data visualizations powered by ArcGIS Services. Built with D3 and the Vega graphics grammar, Cedar extends them with bindings for making templated chart graphics that can be re-used with different datasets.
 
@@ -172,7 +172,7 @@ For more information on SemVer, please visit <http://semver.org/>.
 
 
 ### Licensing
-Copyright 2015 Esri
+Copyright &copy; 2015 Esri Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -187,6 +187,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 
 A copy of the license is available in the repository's [LICENSE](./LICENSE) file.
-
-[](Esri Tags: Visualization)
-[](Esri Language: JavaScript)

@@ -34,3 +34,5 @@ examples
 js
 
 *.zip
+
+bower_components/

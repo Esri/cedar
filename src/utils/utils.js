@@ -78,7 +78,7 @@ export function getTokenValue (tokens, tokenName) {
   return tmpTokens;
 }
 
- /**
+/**
   * Helper function that validates that the
   * mappings hash contains values for all
   * the inputs
@@ -95,7 +95,7 @@ export function validateMappings (inputs, mappings) {
   });
 }
 
- /**
+/**
   * Validate that the incoming data has the fields expected
   * in the mappings
   * @access private
@@ -117,7 +117,7 @@ export function validateData (data, mappings) {
   return missingInputs;
 }
 
- /**
+/**
   * TODO does nothing, must figure out.
   * Centralize and abstract the computation of
   * expected field names, based on the mapping name
@@ -127,9 +127,9 @@ export function getMappingFieldName (mappingName, fieldName) {
   // this function why?
 
   let name = fieldName;
-   // if(mappingName.toLowerCase() === 'count'){
-   //  name = fieldName + '_SUM';
-   // }
+  // if(mappingName.toLowerCase() === 'count'){
+  //  name = fieldName + '_SUM';
+  // }
   return name;
 }
 

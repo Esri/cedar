@@ -706,7 +706,7 @@ export default class Cedar {
     });
   }
 
-   /**
+  /**
     * EVENT LOGIC HERE
     *
     *
@@ -857,7 +857,7 @@ export default class Cedar {
     return items;
   }
 
-   /**
+  /**
     * Removes highlighted chart items
     *
     * If "options" are used, only clear specific items, otherwise clears all highlights.
