@@ -1,0 +1,126 @@
+{
+  "inputs":[
+    {"name":"time","type":["time"], "required":true},
+    {"name":"value","type":["numeric"], "required":true}
+  ],
+  "template":{
+    "padding": "strict",
+    "data": [
+      {
+        "name": "table",
+        "url":"{data}&orderByFields={time.field}",
+        "format": {"type": "json", "property": "features", "parse": {"attributes.{time.field}":"date"}}
+      },
+      {
+        "name": "exports",
+        "source": "table",
+        "transform": [
+          {"type": "formula", "field": "export", "expr": "datum"}
+        ]
+      }
+    ],
+    "scales": [
+      {
+        "name": "x",
+        "type": "time",
+        "range": "width",
+        "zero": false,
+        "domain": {"data": "table", "field": "attributes.{time.field}"}
+      },
+      {
+        "name": "y",
+        "type": "linear",
+        "range": "height",
+        "nice": true,
+        "domain": {"data": "table", "field": "attributes.{value.field}"}
+      }
+    ],
+    "axes": [
+      {
+        "type": "x",
+        "scale": "x",
+        "titleOffset": 60,
+        "title": "{time.label}",
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"},
+             "strokeWidth": {"value": 1}
+          }
+        }
+      },
+      {
+        "type": "y",
+        "scale": "y",
+        "ticks": 5,
+        "titleOffset": 45,
+        "title": "{value.label}",
+        "properties": {
+          "title": {
+            "fontSize": {"value": 15},
+            "fill": {"value": "#999"},
+            "fontWeight": {"value": "normal"}
+          },
+          "ticks": {
+             "stroke": {"value": "#dbdad9"}
+          },
+          "labels": {
+            "fill": {"value": "#999"},
+            "fontSize": {"value": 13}
+          },
+          "axis": {
+             "stroke": {"value": "#dbdad9"}
+          }
+        }
+      }
+    ],
+    "marks": [
+      {
+        "type": "symbol",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
+            "stroke": {"value": "#0079c1"},
+            "fill": {"value": "#0079c1"},
+            "size": {"value": 20},
+            "fillOpacity": {
+              "value": 0.8
+            },
+            "hover": {
+              "fill": {"value": "#0079c1"},
+              "size": {"value": 25}
+            },
+            "update": {
+              "fill": {"value": "#f00"}
+            }
+          }
+        }
+      },
+      {
+        "type": "line",
+        "from": {"data": "table"},
+        "properties": {
+          "enter": {
+            "x": {"scale": "x", "field": "attributes.{time.field}"},
+            "y": {"scale": "y", "field": "attributes.{value.field}"},
+            "y2": {"scale": "y", "value": 0},
+            "stroke": {"value": "#0079c1"}
+          }
+        }
+      }
+    ]
+  }
+}

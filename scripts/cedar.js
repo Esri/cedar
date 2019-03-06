@@ -1,6 +1,6 @@
 /**
-* @esri/cedar - v1.0.0-rc.1 - Fri Dec 21 2018 22:09:12 GMT-0800 (PST)
-* Copyright (c) 2018 Environmental Systems Research Institute, Inc.
+* @esri/cedar - v1.0.0-rc.1 - Wed Mar 06 2019 00:36:02 GMT-0800 (PST)
+* Copyright (c) 2019 Environmental Systems Research Institute, Inc.
 * Apache-2.0
 */
 (function (global, factory) {
