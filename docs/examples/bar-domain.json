@@ -2,7 +2,7 @@
   "type": "bar",
   "datasets": [
     {
-      "url": "http://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/MapServer/0",
+      "url": "https://sampleserver6.arcgisonline.com/arcgis/rest/services/NapervilleShelters/MapServer/0",
       "name": "sheltcap",
       "query": {
         "where": "facname = 'WHITE EAGLE ELEMENTARY' OR facname = 'FRY ELEMENTARY SCHOOL'"
