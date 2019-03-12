@@ -6,6 +6,7 @@ const builtBarSpec = {
   "chartCursor": {
     "categoryBalloonEnabled": false
   },
+  "tabIndex": 0,
   "graphs": [
     {
       "type": "column",
