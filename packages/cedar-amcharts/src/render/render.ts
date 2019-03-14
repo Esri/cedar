@@ -61,6 +61,9 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
   // otherwise get it from the first series
   spec.categoryField = isJoined ? 'categoryField' : definition.series[0].category.field
 
+  // Set tabIndex for the chart
+  spec.tabIndex = 0
+
   // Add a legend in case it's not on the spec
   if (!spec.legend) { spec.legend = {} }
   // TODO This is needed as 'legend.enable' has been renamed 'legend.visible'. We are only introducing
@@ -108,6 +111,8 @@ export function fillInSpec(spec: any, definition: any) { // TODO: Figure out how
     const supportedLegendPositions: string[] = ['top', 'bottom', 'left', 'right']
     if (legend.hasOwnProperty('visible')) {
       spec.legend.enabled = legend.visible
+      // If there is a legend on the page add a tabIndex
+      spec.legend.tabIndex = 0
     }
     if (legend.position && supportedLegendPositions.indexOf(legend.position) > -1) {
       spec.legend.position = legend.position
