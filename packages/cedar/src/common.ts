@@ -1,4 +1,4 @@
-import { IFeatureSet } from '@esri/arcgis-rest-common-types'
+import { IFeatureSet } from '@esri/arcgis-rest-types'
 
 export interface IField {
   /**

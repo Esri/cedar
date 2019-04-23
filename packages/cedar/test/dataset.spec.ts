@@ -1,4 +1,4 @@
-import { IFeatureSet } from '@esri/arcgis-rest-common-types'
+import { IFeatureSet } from '@esri/arcgis-rest-types'
 import {} from 'jest'
 import { getChartData, IDataset } from '../src/dataset'
 import * as chartData from './data/chartData'

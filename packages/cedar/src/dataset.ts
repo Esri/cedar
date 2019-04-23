@@ -1,4 +1,4 @@
-import { IFeature, IFeatureSet } from '@esri/arcgis-rest-common-types'
+import { IFeature, IFeatureSet } from '@esri/arcgis-rest-types'
 import { IDataset, ISeries } from './common'
 
 export interface IGetChartDataOptions {
