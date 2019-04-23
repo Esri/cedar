@@ -1,5 +1,5 @@
 // NOTE: this is auto-mocked in __mocks__
-import { queryFeatures, decodeValues } from '@esri/arcgis-rest-feature-service'
+import { queryFeatures, decodeValues } from '@esri/arcgis-rest-feature-layer'
 import {} from 'jest'
 import config from '../../src/config'
 import { queryDatasets } from '../../src/query/query'

@@ -1,10 +1,10 @@
 import {
   decodeValues,
-  IDecodeValuesRequestOptions,
-  IQueryFeaturesRequestOptions,
+  IDecodeValuesOptions,
+  IQueryFeaturesOptions,
   IQueryFeaturesResponse,
   queryFeatures
-} from '@esri/arcgis-rest-feature-service'
+} from '@esri/arcgis-rest-feature-layer'
 import { IDataset } from '../common'
 import config from '../config'
 import { createQueryParams } from './url'
@@ -21,7 +21,7 @@ export function queryDatasets(datasets: IDataset[]) {
         names.push(dataset.name || `dataset${i}`)
 
         const queryParams = createQueryParams(dataset.query)
-        const options: IQueryFeaturesRequestOptions = {
+        const options: IQueryFeaturesOptions = {
           url: dataset.url,
           params: queryParams
         }
@@ -37,7 +37,7 @@ export function queryDatasets(datasets: IDataset[]) {
               const fields: any[] = domains && Object.keys(domains).map((name) => ({ name, domain: domains[name]}))
               // for now, we only decode CVDs when an array of fields is passed describing codes and names
               if (fields && fields.length > 0) {
-                const decodeOptions: IDecodeValuesRequestOptions = {
+                const decodeOptions: IDecodeValuesOptions = {
                   url: options.url,
                   queryResponse,
                   // TODO: decodeValues() should take `domains?: IDomains` as an alternative to `fields?: IField[]`
