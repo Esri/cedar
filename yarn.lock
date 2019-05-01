@@ -19,7 +19,6 @@
 "@esri/arcgis-rest-feature-layer@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-feature-layer/-/arcgis-rest-feature-layer-2.0.0.tgz#f3530a4c88253731a608561a3f4a6b24e5713a55"
-  integrity sha512-3ipCveA3rZrn+s+z4J6ApBXBFj8UDLgljsuWGRKqXSZlOXvlBE7gSnedkZjlKLijIVlwHxEJn+cZM1v4f2FMyg==
   dependencies:
     "@esri/arcgis-rest-types" "^2.0.0"
     tslib "^1.9.3"
@@ -27,14 +26,12 @@
 "@esri/arcgis-rest-request@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-request/-/arcgis-rest-request-2.0.0.tgz#af46847d3f397035f42c451fdb4ee3cb07a1d2cd"
-  integrity sha512-iWTSEVzcLB2f08sWlFK8OlzlH5bEUMlmw2CrS/sS8NVcNSifILNXcQ/2zUo7oCD9biJ/05+gpssh9S3BBEg6QQ==
   dependencies:
     tslib "^1.9.3"
 
 "@esri/arcgis-rest-types@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@esri/arcgis-rest-types/-/arcgis-rest-types-2.0.0.tgz#02eae051f117a12a99d31e4e680823f0efde95d0"
-  integrity sha512-QGx2vjEUvsEQW2e1bQrWAmg5G5HyCOK3lseduXfLSMCcHSpKFsU/1T34Eg5B16ULN2WF3414GjVA2yxlwtqsgQ==
 
 "@types/amcharts@^3.21.2":
   version "3.21.2"

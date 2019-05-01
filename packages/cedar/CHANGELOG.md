@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Fixed
+- make @esri/arcis-rest-* `peerDependencies` of @esri/cedar
+
+## [1.0.0]
+
+### Changed
+- Bumped @esri/arcgis-rest-request dependency to 2.0.0 and now depend on @esri/arcgis-rest-feature-layer instead of @esri/arcgis-rest-feature-service
+
 ## [1.0.0-rc.1]
 
 ### Fixed
@@ -270,8 +280,9 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0-rc.1...master
-[1.0.0-beta.9]: https://github.com/Esri/cedar/compare/v1.0.0-beta.9...v1.0.0-rc.1
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0...master
+[1.0.0]: https://github.com/Esri/cedar/compare/v1.0.0-rc.1...v1.0.0
+[1.0.0-rc.1]: https://github.com/Esri/cedar/compare/v1.0.0-beta.9...v1.0.0-rc.1
 [1.0.0-beta.9]: https://github.com/Esri/cedar/compare/v1.0.0-beta.8...v1.0.0-beta.9
 [1.0.0-beta.8]: https://github.com/Esri/cedar/compare/v1.0.0-beta.7...v1.0.0-beta.8
 [1.0.0-beta.7: https://github.com/Esri/cedar/compare/v1.0.0-beta.6...v1.0.0-beta.7
