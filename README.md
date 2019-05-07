@@ -13,11 +13,7 @@ Cedar is a library for crafting and sharing data visualizations that:
 
 See below for how to [get started](#getting-started), understand cedar's [core concepts](#concepts), or see [demos](#demos) of cedar in action.
 
-You are looking at the documentation for v1.x of cedar (which is in beta), you can also view the [documentation for v0.x of cedar](https://github.com/Esri/cedar/tree/v0.x).
-
-<!--
-When starting with Cedar, we suggest that you begin by exploring the simple charts using your own data services. As you experiment with the interactions with Maps and more complex interaction you can also customize these charts with new capabilities such as legends, size scaling or labeling. Finally, you can fork and create completely custom chart templates that you then provide for other developers to use through Cedar.
--->
+You are looking at the documentation for v1.x of cedar. You can also view the [documentation for v0.x of cedar](https://github.com/Esri/cedar/tree/v0.x).
 
 ## Getting Started
 
@@ -53,7 +49,7 @@ You can load Cedar and its [dependencies](#dependencies) by including script tag
 <script src="https://www.amcharts.com/lib/3/serial.js"></script>
 <!-- load the arcgis-rest-js scripts -->
 <script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
-<script src="https://unpkg.com/@esri/arcgis-rest-feature-service"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-feature-layer"></script>
 <!-- optionally load an amcharts theme; cedar provides a calcite theme -->
 <script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
 <!-- load cedar -->

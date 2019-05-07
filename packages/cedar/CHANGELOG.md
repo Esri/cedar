@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - make @esri/arcis-rest-* `peerDependencies` of @esri/cedar
+### Changed
+- update README and CHANGELOG for v1.0.0 release
 
 ## [1.0.0]
 
