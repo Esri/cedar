@@ -23,12 +23,16 @@ You are looking at the documentation for v1.x of cedar. You can also view the [d
 
 You can install cedar and it's [dependencies](#dependencies) from npm:
 ```bash
+npm install @esri/arcgis-rest-feature-layer@^2.0.0
+npm install @esri/arcgis-rest-request@^2.0.0
 npm install @esri/cedar
 ```
 
 or yarn:
 
 ```bash
+yarn add @esri/arcgis-rest-feature-layer@^2.0.0
+yarn add @esri/arcgis-rest-request@^2.0.0
 yarn add @esri/cedar
 ```
 
@@ -164,7 +168,7 @@ You can also see how to use cedar with the [ArcGIS API for JavaScript](https://d
 
 ## Dependencies
 
-Cedar isn't yet another JavaScript charting library. Instead, cedar is a very thin wrapper around other libraries that do the heavy lifting. Cedar uses [amCharts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. Cedar also uses [@esri/arcgis-rest-feature-layer](https://esri.github.io/arcgis-rest-js/api/feature-layer/) and [@esri/arcgis-rest-request](https://esri.github.io/arcgis-rest-js/api/request/) to query feature data. You will need to include these libraries along with cedar in your application. If you [install cedar using npm or yarn](#installing-cedar) these libraries will be installed for you, but you will have to make sure that your module bundler can resolve and include them in your application. If you are loading cedar from a CDN, please refer to the [loading cedar](#loading-cedar) section above for the `<script>` tags that you will need to include.
+Cedar isn't yet another JavaScript charting library. Instead, cedar is a very thin wrapper around other libraries that do the heavy lifting. Cedar uses [amCharts](https://www.amcharts.com/javascript-charts/) library as it's charting engine. Cedar also uses [@esri/arcgis-rest-feature-layer](https://esri.github.io/arcgis-rest-js/api/feature-layer/) and [@esri/arcgis-rest-request](https://esri.github.io/arcgis-rest-js/api/request/) to query feature data. You will need to [install](#installing-cedar) these libraries along with cedar in your application. If you are loading cedar from a CDN, please refer to the [loading cedar](#loading-cedar) section above for the `<script>` tags that you will need to include.
 
 Cedar supports the [same browsers as ArcGIS Online](https://doc.arcgis.com/en/arcgis-online/reference/browsers.htm), however you may need to include polyfills for [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch) and [`Promise`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise), if your application has to support browers that don't support them (i.e. IE or older versions of Safari/Android).
 

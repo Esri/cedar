@@ -64,12 +64,12 @@
     "mapCoverage": true
   },
   "dependencies": {
-    "@esri/arcgis-rest-feature-layer": "^2.0.0",
-    "@esri/arcgis-rest-request": "^2.0.0",
-    "@esri/arcgis-rest-types": "^2.0.0",
     "@esri/cedar-amcharts": "^1.0.0"
   },
   "devDependencies": {
+    "@esri/arcgis-rest-feature-layer": "^2.0.0",
+    "@esri/arcgis-rest-request": "^2.0.0",
+    "@esri/arcgis-rest-types": "^2.0.0",
     "@types/jest": "^23.3.1",
     "@types/node": "^10.5.7",
     "jest": "^23.5.0",
@@ -85,5 +85,10 @@
     "tslint": "^5.5.0",
     "typedoc": "^0.13.0",
     "typescript": "^3.0.1"
+  },
+  "peerDependencies": {
+    "@esri/arcgis-rest-feature-layer": "^2.0.0",
+    "@esri/arcgis-rest-request": "^2.0.0",
+    "@esri/arcgis-rest-types": "^2.0.0"
   }
 }
