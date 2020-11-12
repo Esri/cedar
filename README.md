@@ -46,7 +46,7 @@ import "amcharts3/amcharts/serial";
 // optionally import an amcharts theme; cedar provides a calcite theme
 import "@esri/cedar/dist/umd/themes/amCharts/calcite.js";
 // import the cedar Chart class
-import { Cedar } from "@esri/cedar"
+import { Chart } from "@esri/cedar"
 ```
 
 If you need to use other chart types, or want to use amCharts plugins, import the appropriate amCharts modules _before importing cedar_:
