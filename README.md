@@ -60,41 +60,7 @@ import "amcharts3/amcharts/xy";
 import "amcharts3/amcharts/radar";
 ```
 
-See the [amCharts documentation](https://github.com/amcharts/amcharts3) for more information on the available amCharts modules.
-
-### Loading Cedar
-
-Instead of [installing](installing-cedar) and [importing](importing-cedar) Cedar, you can load Cedar and its [dependencies](#dependencies) by including script tags that point to the CDN (or your locally installed versions of these libraries). This will make the `cedar` global available to your application.
-
-#### From a CDN
-
-```html
-<!-- load the amCharts base library -->
-<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-<!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
-<script src="https://www.amcharts.com/lib/3/serial.js"></script>
-<!-- load the arcgis-rest-js scripts -->
-<script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
-<script src="https://unpkg.com/@esri/arcgis-rest-feature-layer"></script>
-<!-- optionally load an amcharts theme; cedar provides a calcite theme -->
-<script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
-<!-- load cedar -->
-<script src="https://unpkg.com/@esri/cedar/dist/umd/cedar.js"></script>
-```
-
-If you need to use other chart types, or want to use amCharts plugins, load the appropriate amCharts scripts before loading cedar:
-
-```html
-<!-- for pie charts -->
-<script src="https://www.amcharts.com/lib/3/pie.js"></script>
-<!-- for scatter and bubble charts -->
-<script src="https://www.amcharts.com/lib/3/xy.js"></script>
-<!-- for radar charts -->
-<script src="https://www.amcharts.com/lib/3/radar.js"></script>
-<!-- optioinally load the amcharts plugin to export the chart as and image or table -->
-<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-```
+See the [amCharts documentation](https://github.com/amcharts/amcharts3) for more information on importing amCharts modules.
 
 ### Using Cedar
 
@@ -155,6 +121,8 @@ chart.show();
 
 See the [API documentation](https://esri.github.io/cedar/api) for further details on how to work with cedar charts.
 
+See the [Demos](#demos) section below for examples of Cedar working with other libraries like ArcGIS API for JavaScript or React.
+
 ### Configuring Cedar
 You can configure cedar to use a custom implementation of `fetch()` by setting `cedar.config.fetch = myCustomFetch`.
 
@@ -195,6 +163,42 @@ You can also see how to use cedar with the [ArcGIS API for JavaScript](https://d
 - [A chart that aggregates map data](https://codepen.io/tomwayson/pen/YaKGjZ)
 - [A chart using layer features as inline data](https://codepen.io/tomwayson/pen/mxdVqO)
 - [Using cedar w/ client-side LayerView queries](https://jsbin.com/juqafec/edit?html,output)
+
+See [this CodeSandbox](https://codesandbox.io/s/esri-cedar-in-react-forked-kyoc2?file=/src/App.js) for an example of how to use Cedar in React.
+
+### Loading Cedar
+
+Instead of [installing](installing-cedar) and [importing](importing-cedar) Cedar, you can load Cedar and its [dependencies](#dependencies) by including script tags that point to the CDN (or your locally installed versions of these libraries). This will make the `cedar` global available to your application.
+
+#### From a CDN
+
+```html
+<!-- load the amCharts base library -->
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<!-- in this case, we only need bar charts, so we'll load the appropriate amCharts script -->
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<!-- load the arcgis-rest-js scripts -->
+<script src="https://unpkg.com/@esri/arcgis-rest-request"></script>
+<script src="https://unpkg.com/@esri/arcgis-rest-feature-layer"></script>
+<!-- optionally load an amcharts theme; cedar provides a calcite theme -->
+<script src="https://unpkg.com/@esri/cedar/dist/umd/themes/amCharts/calcite.js"></script>
+<!-- load cedar -->
+<script src="https://unpkg.com/@esri/cedar/dist/umd/cedar.js"></script>
+```
+
+If you need to use other chart types, or want to use amCharts plugins, load the appropriate amCharts scripts before loading cedar:
+
+```html
+<!-- for pie charts -->
+<script src="https://www.amcharts.com/lib/3/pie.js"></script>
+<!-- for scatter and bubble charts -->
+<script src="https://www.amcharts.com/lib/3/xy.js"></script>
+<!-- for radar charts -->
+<script src="https://www.amcharts.com/lib/3/radar.js"></script>
+<!-- optioinally load the amcharts plugin to export the chart as and image or table -->
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+```
 
 ## Dependencies
 
