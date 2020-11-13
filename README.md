@@ -21,26 +21,52 @@ You are looking at the documentation for v1.x of cedar. You can also view the [d
 
 **NOTE:** If you want to use cedar in an Ember.js application, see [ember-cli-cedar](https://github.com/Esri/ember-cli-cedar) instead.
 
-You can install cedar and it's [dependencies](#dependencies) from npm:
+You can install cedar and it's [dependencies](#dependencies) with npm:
 ```bash
-npm install @esri/arcgis-rest-feature-layer@^2.0.0
-npm install @esri/arcgis-rest-request@^2.0.0
-npm install @esri/cedar
+npm install --save @esri/arcgis-rest-feature-layer@^2.0.0 @esri/arcgis-rest-request@^2.0.0 amcharts3 @esri/cedar 
 ```
 
 or yarn:
 
 ```bash
-yarn add @esri/arcgis-rest-feature-layer@^2.0.0
-yarn add @esri/arcgis-rest-request@^2.0.0
-yarn add @esri/cedar
+yarn add @esri/arcgis-rest-feature-layer@^2.0.0 @esri/arcgis-rest-request@^2.0.0 amcharts3 @esri/cedar
 ```
 
-Alternatively, you can get cedar from the [unpkg.com](https://unpkg.com/) CDN as shown below.
+Alternatively, you can get cedar from the [unpkg.com](https://unpkg.com/) CDN as [shown below](#from-a-cdn).
+
+### Importing Cedar
+
+If you're using Cedar in a modern web application built with a bundler like [webpack](https://webpack.js.org/), you can load Cedar and its [dependencies](#dependencies) using `import` statements.
+
+```js
+// import the amCharts base library
+import "amcharts3/amcharts/amcharts";
+// in this case, we only need bar charts, so we'll import the appropriate amCharts module
+import "amcharts3/amcharts/serial";
+// optionally import an amcharts theme; cedar provides a calcite theme
+import "@esri/cedar/dist/umd/themes/amCharts/calcite.js";
+// import the cedar Chart class
+import { Chart } from "@esri/cedar"
+```
+
+If you need to use other chart types, or want to use amCharts plugins, import the appropriate amCharts modules _before importing cedar_:
+
+```js
+// for pie charts
+import "amcharts3/amcharts/pie";
+// for scatter and bubble charts
+import "amcharts3/amcharts/xy";
+// for radar charts
+import "amcharts3/amcharts/radar";
+```
+
+See the [amCharts documentation](https://github.com/amcharts/amcharts3) for more information on the available amCharts modules.
 
 ### Loading Cedar
 
-You can load Cedar and its [dependencies](#dependencies) by including script tags that point to the CDN or your locally installed versions of these libraries. This will make the `cedar` global available to your application.
+Instead of [installing](installing-cedar) and [importing](importing-cedar) Cedar, you can load Cedar and its [dependencies](#dependencies) by including script tags that point to the CDN (or your locally installed versions of these libraries). This will make the `cedar` global available to your application.
+
+#### From a CDN
 
 ```html
 <!-- load the amCharts base library -->
@@ -80,47 +106,51 @@ Once cedar is loaded you can create and show the chart at a designated element. 
 
 Then add a script that will configure cedar and render the chart:
 
-```html
-<script>
-  // connect to the data
-  var datasets = [{
-    "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
-    "name": "schools",
-    "query": {
-      "orderByFields": "Number_of_SUM DESC",
-      "groupByFieldsForStatistics": "Type",
-      "outStatistics": [{
-        "statisticType": "sum",
-        "onStatisticField": "Number_of",
-        "outStatisticFieldName": "Number_of_SUM"
-      }]
-    }
-  }];
-
-  // designate a one or more series to show the data on the chart
-  var series = [{
-    "category": {"field": "Type", "label": "Type"},
-    "value": {"field": "Number_of_SUM", "label": "Number of Students"},
-    "source": "schools"
-  }];
-
-  // optionally override any of the cart type's default styles
-  var overrides = {
-    "categoryAxis": {
-      "labelRotation": -45
-    }
+```js
+// connect to the data
+var datasets = [{
+  "url": "https://services.arcgis.com/uDTUpUPbk8X8mXwl/arcgis/rest/services/Public_Schools_in_Onondaga_County/FeatureServer/0",
+  "name": "schools",
+  "query": {
+    "orderByFields": "Number_of_SUM DESC",
+    "groupByFieldsForStatistics": "Type",
+    "outStatistics": [{
+      "statisticType": "sum",
+      "onStatisticField": "Number_of",
+      "outStatisticFieldName": "Number_of_SUM"
+    }]
   }
+}];
 
-  //create a cedar chart using the known 'bar' type
-  var elementId = 'chart';
-  var chart = new cedar.Chart(elementId, {"type": "bar"})
-    .datasets(datasets)
-    .series(series)
-    .overrides(overrides);
+// designate a one or more series to show the data on the chart
+var series = [{
+  "category": {"field": "Type", "label": "Type"},
+  "value": {"field": "Number_of_SUM", "label": "Number of Students"},
+  "source": "schools"
+}];
 
-  // render the chart
-  chart.show();
-</script>
+// optionally override any of the cart type's default styles
+var overrides = {
+  "categoryAxis": {
+    "labelRotation": -45
+  }
+}
+
+//create a cedar chart using the known 'bar' type
+var elementId = 'chart';
+// NOTE: the following line assumes you've imported Chart like:
+// import { Chart } from "@esri/cedar";
+// if you've loaded the Cedar using script tags
+// and are using the cedar global instead
+// you should replace this line with:
+// var chart = new cedar.Chart(elementId, {"type": "bar"}) 
+var chart = new Chart(elementId, {"type": "bar"})
+  .datasets(datasets)
+  .series(series)
+  .overrides(overrides);
+
+// render the chart
+chart.show();
 ```
 
 See the [API documentation](https://esri.github.io/cedar/api) for further details on how to work with cedar charts.
