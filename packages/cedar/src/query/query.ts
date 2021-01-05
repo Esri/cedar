@@ -17,13 +17,15 @@ export function queryDatasets(datasets: IDataset[]) {
       datasets.forEach((dataset, i) => {
       // only query datasets that don't have inline data
       if (dataset.url) {
+        const { url, name, query, requestOptions } = dataset
         // TODO: make name required on datasets, or required if > 1 dataset?
-        names.push(dataset.name || `dataset${i}`)
+        names.push(name || `dataset${i}`)
 
-        const queryParams = createQueryParams(dataset.query)
+        const params = { ...(requestOptions && requestOptions.params), ...createQueryParams(query) }
         const options: IQueryFeaturesOptions = {
-          url: dataset.url,
-          params: queryParams
+          ...requestOptions,
+          url,
+          params,
         }
         if (config.fetch && typeof config.fetch === 'function') {
           // we are configured to use a custom fetch implementation

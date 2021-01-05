@@ -1,6 +1,7 @@
 // NOTE: this is auto-mocked in __mocks__
 import { queryFeatures, decodeValues } from '@esri/arcgis-rest-feature-layer'
 import {} from 'jest'
+import { IDataset } from '../../src/common'
 import config from '../../src/config'
 import { queryDatasets } from '../../src/query/query'
 import { createQueryParams } from '../../src/query/url'
@@ -82,6 +83,33 @@ describe('when querying datasets', () => {
           // verify that it called queryFeatures once w/ the right parameters
           expect(mockQueryFeatures.mock.calls.length).toEqual(1)
           verifyRequestOptions(datasets[0], mockQueryFeatures.mock.calls[0][0], config.fetch)
+          expect(datasetsData).toEqual({
+            Number_of_SUM: mockQueryResponse
+          })
+        })
+      })
+    })
+    describe('when that dataset has requestOptions', () => {
+      const datasets = definitions.bar.datasets
+      it('should merge them into those passed to queryFeatures', () => {
+        const httpMethod = 'POST'
+        const dataset: IDataset = {
+          ...datasets[0],
+          requestOptions: {
+            // override default HTTP method
+            httpMethod,
+            params: {
+              // invalid param should NOT be used
+              f: 'html'
+            }
+          }
+        }
+        return queryDatasets([ dataset ]).then((datasetsData) => {
+          // verify that it called queryFeatures once w/ the right parameters
+          expect(mockQueryFeatures.mock.calls.length).toEqual(1)
+          const requestOptions = mockQueryFeatures.mock.calls[0][0]
+          verifyRequestOptions(dataset, requestOptions)
+          expect(requestOptions.httpMethod).toEqual(httpMethod)
           expect(datasetsData).toEqual({
             Number_of_SUM: mockQueryResponse
           })

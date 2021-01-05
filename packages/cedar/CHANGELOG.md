@@ -5,6 +5,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- pass dataset request options to `queryFeatures()`
+
+## [1.0.1]
+
 ### Fixed
 - make @esri/arcis-rest-* `peerDependencies` of @esri/cedar
 ### Changed
@@ -282,7 +287,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.0...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.0.1...master
+[1.0.1]: https://github.com/Esri/cedar/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Esri/cedar/compare/v1.0.0-rc.1...v1.0.0
 [1.0.0-rc.1]: https://github.com/Esri/cedar/compare/v1.0.0-beta.9...v1.0.0-rc.1
 [1.0.0-beta.9]: https://github.com/Esri/cedar/compare/v1.0.0-beta.8...v1.0.0-beta.9
