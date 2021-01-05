@@ -93,11 +93,18 @@ describe('when querying datasets', () => {
       const datasets = definitions.bar.datasets
       it('should merge them into those passed to queryFeatures', () => {
         const httpMethod = 'POST'
-        const dataset: IDataset = datasets[0]
-        dataset.requestOptions = {
-          httpMethod
+        const dataset: IDataset = {
+          ...datasets[0],
+          requestOptions: {
+            // override default HTTP method
+            httpMethod,
+            params: {
+              // invalid param should NOT be used
+              f: 'html'
+            }
+          }
         }
-        return queryDatasets(datasets).then((datasetsData) => {
+        return queryDatasets([ dataset ]).then((datasetsData) => {
           // verify that it called queryFeatures once w/ the right parameters
           expect(mockQueryFeatures.mock.calls.length).toEqual(1)
           const requestOptions = mockQueryFeatures.mock.calls[0][0]
