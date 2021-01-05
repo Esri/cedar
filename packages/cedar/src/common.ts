@@ -1,3 +1,4 @@
+import { IRequestOptions } from '@esri/arcgis-rest-request'
 import { IFeatureSet } from '@esri/arcgis-rest-types'
 
 export interface IField {
@@ -72,6 +73,10 @@ export interface IDataset {
    * Values in these fields will be decoded using the coded value domain specified.
    */
   domains?: IDomains
+  /**
+   * Options to use for requests to this dataset. See: https://esri.github.io/arcgis-rest-js/api/request/IRequestOptions/
+   */
+  requestOptions?: IRequestOptions
 }
 
 /**

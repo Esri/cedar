@@ -22,8 +22,9 @@ export function queryDatasets(datasets: IDataset[]) {
 
         const queryParams = createQueryParams(dataset.query)
         const options: IQueryFeaturesOptions = {
+          ...dataset.requestOptions,
           url: dataset.url,
-          params: queryParams
+          params: queryParams,
         }
         if (config.fetch && typeof config.fetch === 'function') {
           // we are configured to use a custom fetch implementation
