@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.1.1]
+
 ### Fixed
 - fix constructor casts dataset authentication to a POJO
 
@@ -292,7 +294,8 @@ Baseline version.
 - Basic interaction events: on, off, clicked
 - Map to Chart interaction demos
 
-[Unreleased]: https://github.com/Esri/cedar/compare/v1.1.0...master
+[Unreleased]: https://github.com/Esri/cedar/compare/v1.1.1...master
+[1.1.1]: https://github.com/Esri/cedar/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/Esri/cedar/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/Esri/cedar/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Esri/cedar/compare/v1.0.0-rc.1...v1.0.0
