@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- fix constructor casts dataset authentication to a POJO
+
 ## [1.1.0]
 
 ### Added

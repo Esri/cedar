@@ -3,10 +3,6 @@ import { IDataset, ISeries } from './common'
 import { getChartData } from './dataset'
 import { queryDatasets } from './query/query'
 
-function clone(json) {
-  return JSON.parse(JSON.stringify(json))
-}
-
 // TODO: where should these interfaces live?
 
 /**
@@ -114,7 +110,7 @@ export class Chart {
 
     if (definition) {
       // set the definition
-      this.definition(clone(definition))
+      this.definition(definition)
     }
   }
 
