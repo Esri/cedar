@@ -3,7 +3,7 @@ import { IFeatureSet } from '@esri/arcgis-rest-types'
 
 export interface IField {
   /**
-   * The name of the filed in the soruce dataset
+   * The name of the field in the source dataset
    */
   field: string,
   /**
